@@ -1,6 +1,7 @@
 package com.grasshouse.dorandoran.member.domain;
 
 import com.grasshouse.dorandoran.comment.domain.Comment;
+import com.grasshouse.dorandoran.post.domain.Post;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
@@ -27,6 +28,9 @@ public class Member {
 
     @Column(unique = true, nullable = false)
     private String nickname;
+
+    @OneToMany(mappedBy = "author")
+    private List<Post> posts = new ArrayList<>();
 
     @OneToMany(mappedBy = "author")
     private List<Comment> comments = new ArrayList<>();

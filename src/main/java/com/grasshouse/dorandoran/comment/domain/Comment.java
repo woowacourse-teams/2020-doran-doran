@@ -1,6 +1,7 @@
 package com.grasshouse.dorandoran.comment.domain;
 
 import com.grasshouse.dorandoran.member.domain.Member;
+import com.grasshouse.dorandoran.post.domain.Post;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Entity;
@@ -28,6 +29,9 @@ public class Comment {
 
     @ManyToOne
     private Member author;
+
+    @ManyToOne
+    private Post post;
 
     private String content;
 
