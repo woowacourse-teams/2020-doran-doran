@@ -4,8 +4,11 @@ import static com.grasshouse.dorandoran.fixture.LocationFixture.LOCATION;
 import static com.grasshouse.dorandoran.fixture.MemberFixture.MEMBER;
 import static com.grasshouse.dorandoran.fixture.PostFixture.POST;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -62,9 +65,9 @@ class PostControllerTest {
             .build();
         PostCreateResponse postCreateResponse = new PostCreateResponse(1L);
 
+        String request = objectMapper.writeValueAsString(postCreateRequest);
         when(postService.createPost(any())).thenReturn(postCreateResponse);
 
-        String request = objectMapper.writeValueAsString(postCreateRequest);
         this.mockMvc.perform(post("/posts")
             .contentType(MediaType.APPLICATION_JSON_VALUE)
             .content(request))
@@ -74,9 +77,11 @@ class PostControllerTest {
         verify(postService).createPost(any());
     }
 
+    @DisplayName("글 목록을 조회한다.")
     @Test
     void showPost() throws Exception {
         when(postService.showPosts()).thenReturn(postResponses());
+
         this.mockMvc.perform(get("/posts")
             .accept(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(status().isOk())
@@ -86,6 +91,18 @@ class PostControllerTest {
             .andDo(print());
 
         verify(postService).showPosts();
+    }
+
+    @DisplayName("글을 삭제한다.")
+    @Test
+    void deletePost() throws Exception {
+        doNothing().when(postService).deletePost(anyLong());
+
+        this.mockMvc.perform(delete("/posts/1"))
+            .andExpect(status().isNoContent())
+            .andDo(print());
+
+        verify(postService).deletePost(anyLong());
     }
 
     private List<PostResponse> postResponses() {

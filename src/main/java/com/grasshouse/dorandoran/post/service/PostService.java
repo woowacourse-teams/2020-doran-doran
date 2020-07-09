@@ -30,4 +30,8 @@ public class PostService {
             .map(PostResponse::of)
             .collect(Collectors.toList());
     }
+
+    public void deletePost(Long id) {
+
+    }
 }
