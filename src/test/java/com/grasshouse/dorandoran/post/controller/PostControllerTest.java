@@ -2,17 +2,23 @@ package com.grasshouse.dorandoran.post.controller;
 
 import static com.grasshouse.dorandoran.fixture.LocationFixture.LOCATION;
 import static com.grasshouse.dorandoran.fixture.MemberFixture.MEMBER;
+import static com.grasshouse.dorandoran.fixture.PostFixture.POST;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.grasshouse.dorandoran.post.service.PostService;
 import com.grasshouse.dorandoran.post.service.dto.PostCreateRequest;
 import com.grasshouse.dorandoran.post.service.dto.PostCreateResponse;
+import com.grasshouse.dorandoran.post.service.dto.PostResponse;
+import java.util.Arrays;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -66,5 +72,23 @@ class PostControllerTest {
             .andDo(print());
 
         verify(postService).createPost(any());
+    }
+
+    @Test
+    void showPost() throws Exception {
+        when(postService.showPosts()).thenReturn(postResponses());
+        this.mockMvc.perform(get("/posts")
+            .accept(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$[*].id").isNotEmpty())
+            .andExpect(jsonPath("$[*].content").isNotEmpty())
+            .andExpect(jsonPath("$[*].location").isNotEmpty())
+            .andDo(print());
+
+        verify(postService).showPosts();
+    }
+
+    private List<PostResponse> postResponses() {
+        return Arrays.asList(PostResponse.of(POST));
     }
 }

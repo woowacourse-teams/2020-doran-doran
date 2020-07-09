@@ -4,6 +4,9 @@ import com.grasshouse.dorandoran.post.domain.Post;
 import com.grasshouse.dorandoran.post.repository.PostRepository;
 import com.grasshouse.dorandoran.post.service.dto.PostCreateRequest;
 import com.grasshouse.dorandoran.post.service.dto.PostCreateResponse;
+import com.grasshouse.dorandoran.post.service.dto.PostResponse;
+import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -19,5 +22,12 @@ public class PostService {
         Post post = postCreateRequest.toPost();
         postRepository.save(post);
         return PostCreateResponse.of(post);
+    }
+
+    public List<PostResponse> showPosts() {
+        return postRepository.findAll()
+            .stream()
+            .map(PostResponse::of)
+            .collect(Collectors.toList());
     }
 }
