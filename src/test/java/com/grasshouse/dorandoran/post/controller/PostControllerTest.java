@@ -14,6 +14,7 @@ import com.grasshouse.dorandoran.post.service.PostService;
 import com.grasshouse.dorandoran.post.service.dto.PostCreateRequest;
 import com.grasshouse.dorandoran.post.service.dto.PostCreateResponse;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -45,6 +46,7 @@ class PostControllerTest {
             .build();
     }
 
+    @DisplayName("글을 작성한다.")
     @Test
     void addPost() throws Exception {
         PostCreateRequest postCreateRequest = PostCreateRequest.builder()
