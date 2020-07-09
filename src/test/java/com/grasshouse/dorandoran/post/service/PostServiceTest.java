@@ -54,4 +54,17 @@ class PostServiceTest {
         assertThat(postResponses).hasSize(1);
         assertThat(postResponses.get(0).getContent()).isEqualTo(POST.getContent());
     }
+
+    @DisplayName("글을 삭제한다.")
+    @Test
+    void deletePostTest() {
+        memberRepository.save(MEMBER);
+        postRepository.save(POST);
+
+        assertThat(postRepository.findAll()).hasSize(1);
+
+        postService.deletePost(POST.getId());
+
+        assertThat(postRepository.findAll()).hasSize(0);
+    }
 }
