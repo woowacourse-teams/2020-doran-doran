@@ -35,4 +35,6 @@ class PostServiceTest {
         PostCreateResponse createResponse = postService.createPost(postCreateRequest);
         assertThat(createResponse.getId()).isNotNull();
     }
+
+
 }
