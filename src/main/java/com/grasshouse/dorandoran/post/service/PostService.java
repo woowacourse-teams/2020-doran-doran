@@ -1,5 +1,6 @@
 package com.grasshouse.dorandoran.post.service;
 
+import com.grasshouse.dorandoran.common.exception.PostNotFoundException;
 import com.grasshouse.dorandoran.post.domain.Post;
 import com.grasshouse.dorandoran.post.repository.PostRepository;
 import com.grasshouse.dorandoran.post.service.dto.PostCreateRequest;
@@ -32,6 +33,9 @@ public class PostService {
     }
 
     public void deletePost(Long id) {
+        Post post = postRepository.findById(id)
+            .orElseThrow(PostNotFoundException::new);
 
+        postRepository.delete(post);
     }
 }
