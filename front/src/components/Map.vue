@@ -4,8 +4,9 @@
 
 <script>
 export default {
-  mounted() {
-    this.$drawMap(this.$refs.map);
+  async mounted() {
+    await this.$drawMap(this.$refs.map);
+    this.$setLocation(await this.$getCurrentLocation());
   },
 };
 </script>
