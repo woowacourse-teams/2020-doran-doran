@@ -3,8 +3,10 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import vuetify from "./plugins/vuetify";
+import KakaoMap from "./plugins/kakao-map";
 
 Vue.config.productionTip = false;
+Vue.use(KakaoMap);
 
 new Vue({
   router,
