@@ -1,4 +1,5 @@
 import { KAKAO_MAP_APP_KEY } from "../secure/appkey";
+import INITIAL_LOCATION from "../config/config";
 
 const KakaoMap = {
   install(Vue) {
@@ -11,10 +12,14 @@ const KakaoMap = {
       script.onload = () => kakao.maps.load(resolve);
     });
 
+    const createKakaoLocation = (location) => {
+      return new kakao.maps.LatLng(location.latitude, location.longitude);
+    };
+
     Vue.prototype.$drawMap = async (mapContainer) => {
       await loadApi;
       const options = {
-        center: new kakao.maps.LatLng(36.5152, 127.103),
+        center: createKakaoLocation(INITIAL_LOCATION),
         level: 2,
       };
       this.map = new kakao.maps.Map(mapContainer, options);
@@ -39,11 +44,19 @@ const KakaoMap = {
       if (!this.map || !location) {
         return;
       }
-      const target = new kakao.maps.LatLng(
-        location.latitude,
-        location.longitude,
-      );
-      this.map.setCenter(target);
+      const targetLocation = createKakaoLocation(location);
+      this.map.setCenter(targetLocation);
+    };
+
+    Vue.prototype.$setMarker = (location) => {
+      if (!this.map || !location) {
+        return;
+      }
+      const targetLocation = createKakaoLocation(location);
+      const marker = new kakao.maps.Marker({
+        position: targetLocation,
+      });
+      marker.setMap(this.map);
     };
   },
 };

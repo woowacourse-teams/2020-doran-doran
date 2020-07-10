@@ -6,7 +6,9 @@
 export default {
   async mounted() {
     await this.$drawMap(this.$refs.map);
-    this.$setLocation(await this.$getCurrentLocation());
+    const currentLocation = await this.$getCurrentLocation();
+    this.$setLocation(currentLocation);
+    this.$setMarker(currentLocation);
   },
 };
 </script>
