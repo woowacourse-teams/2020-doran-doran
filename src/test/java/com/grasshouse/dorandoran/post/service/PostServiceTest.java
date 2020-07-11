@@ -29,7 +29,7 @@ class PostServiceTest {
     @Autowired
     private PostRepository postRepository;
 
-    @DisplayName("글이 작성된다.")
+    @DisplayName("글을 작성한다.")
     @Test
     void createPostTest() {
         Member persistMember = memberRepository.save(MEMBER);

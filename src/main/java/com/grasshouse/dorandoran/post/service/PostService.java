@@ -7,7 +7,6 @@ import com.grasshouse.dorandoran.post.service.dto.PostCreateRequest;
 import com.grasshouse.dorandoran.post.service.dto.PostCreateResponse;
 import com.grasshouse.dorandoran.post.service.dto.PostResponse;
 import java.util.List;
-import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -26,10 +25,7 @@ public class PostService {
     }
 
     public List<PostResponse> showPosts() {
-        return postRepository.findAll()
-            .stream()
-            .map(PostResponse::of)
-            .collect(Collectors.toList());
+        return PostResponse.listOf(postRepository.findAll());
     }
 
     public void deletePost(Long id) {
