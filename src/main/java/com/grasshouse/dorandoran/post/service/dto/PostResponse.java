@@ -22,6 +22,7 @@ public class PostResponse {
     private String content;
     private Location location;
     private Address address;
+    //TODO : comment, post_like 정보 추후에 추가하기
 
     public static PostResponse of(Post post) {
         return PostResponse.builder()

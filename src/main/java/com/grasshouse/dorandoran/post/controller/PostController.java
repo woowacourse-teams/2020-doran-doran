@@ -31,6 +31,11 @@ public class PostController {
         return ResponseEntity.created(URI.create("/posts/" + response.getId())).build();
     }
 
+    @GetMapping("/{postId}")
+    public ResponseEntity<PostResponse> showPost(@PathVariable Long postId) {
+        return ResponseEntity.ok(postService.showPost(postId));
+    }
+
     @GetMapping
     public ResponseEntity<List<PostResponse>> showPosts() {
         return ResponseEntity.ok(postService.showPosts());

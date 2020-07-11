@@ -24,14 +24,22 @@ public class PostService {
         return PostCreateResponse.of(post);
     }
 
+    public PostResponse showPost(Long id) {
+        Post post = findPostById(id);
+        return PostResponse.of(post);
+    }
+
     public List<PostResponse> showPosts() {
         return PostResponse.listOf(postRepository.findAll());
     }
 
     public void deletePost(Long id) {
-        Post post = postRepository.findById(id)
-            .orElseThrow(PostNotFoundException::new);
-
+        Post post = findPostById(id);
         postRepository.delete(post);
+    }
+
+    private Post findPostById(Long id) {
+        return postRepository.findById(id)
+            .orElseThrow(PostNotFoundException::new);
     }
 }

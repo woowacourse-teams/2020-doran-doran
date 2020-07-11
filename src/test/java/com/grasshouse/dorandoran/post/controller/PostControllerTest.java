@@ -2,7 +2,7 @@ package com.grasshouse.dorandoran.post.controller;
 
 import static com.grasshouse.dorandoran.fixture.LocationFixture.LOCATION;
 import static com.grasshouse.dorandoran.fixture.MemberFixture.MEMBER;
-import static com.grasshouse.dorandoran.fixture.PostFixture.POST;
+import static com.grasshouse.dorandoran.fixture.PostFixture.PERSIST_POST;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.doNothing;
@@ -77,9 +77,25 @@ class PostControllerTest {
         verify(postService).createPost(any());
     }
 
-    @DisplayName("글 목록을 조회한다.")
+    @DisplayName("글 하나를 조회한다.")
     @Test
     void showPost() throws Exception {
+        when(postService.showPost(anyLong())).thenReturn(PostResponse.of(PERSIST_POST));
+
+        this.mockMvc.perform(get("/posts/" + PERSIST_POST.getId())
+            .accept(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.id").isNotEmpty())
+            .andExpect(jsonPath("$.content").isNotEmpty())
+            .andExpect(jsonPath("$.location").isNotEmpty())
+            .andDo(print());
+
+        verify(postService).showPost(any());
+    }
+
+    @DisplayName("글 목록을 조회한다.")
+    @Test
+    void showPosts() throws Exception {
         when(postService.showPosts()).thenReturn(postResponses());
 
         this.mockMvc.perform(get("/posts")
@@ -98,7 +114,7 @@ class PostControllerTest {
     void deletePost() throws Exception {
         doNothing().when(postService).deletePost(anyLong());
 
-        this.mockMvc.perform(delete("/posts/1"))
+        this.mockMvc.perform(delete("/posts/" + PERSIST_POST.getId()))
             .andExpect(status().isNoContent())
             .andDo(print());
 
@@ -106,6 +122,6 @@ class PostControllerTest {
     }
 
     private List<PostResponse> postResponses() {
-        return Arrays.asList(PostResponse.of(POST));
+        return Arrays.asList(PostResponse.of(PERSIST_POST));
     }
 }
