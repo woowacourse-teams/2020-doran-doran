@@ -43,7 +43,18 @@ class PostServiceTest {
         assertThat(createResponse.getId()).isNotNull();
     }
 
-    @DisplayName("글을 조회한다.")
+    @DisplayName("하나의 글을 조회한다.")
+    @Test
+    void showPost() {
+        memberRepository.save(MEMBER);
+        postRepository.save(POST);
+
+        PostResponse postResponse = postService.showPost(POST.getId());
+
+        assertThat(postResponse.getContent()).isEqualTo(POST.getContent());
+    }
+
+    @DisplayName("전체 글을 조회한다.")
     @Test
     void showPostsTest() {
         memberRepository.save(MEMBER);
