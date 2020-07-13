@@ -1,11 +1,11 @@
 import { KAKAO_MAP_APP_KEY } from "../secure/appkey";
 import INITIAL_LOCATION from "../config/config";
-import ERROR_MESSAGE from "../utils/constants";
+import { ERROR_MESSAGE, API_BASE_URL } from "../utils/constants";
 
 const KakaoMap = {
   install(Vue) {
     const script = document.createElement("script");
-    script.src = `http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=${KAKAO_MAP_APP_KEY}`;
+    script.src = API_BASE_URL.KAKAO_MAP + KAKAO_MAP_APP_KEY;
     document.head.appendChild(script);
 
     /* global kakao */
