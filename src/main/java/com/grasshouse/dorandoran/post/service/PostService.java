@@ -21,16 +21,16 @@ public class PostService {
     public PostCreateResponse createPost(PostCreateRequest postCreateRequest) {
         Post post = postCreateRequest.toPost();
         postRepository.save(post);
-        return PostCreateResponse.of(post);
+        return PostCreateResponse.from(post);
     }
 
     public PostResponse showPost(Long id) {
         Post post = findPostById(id);
-        return PostResponse.of(post);
+        return PostResponse.from(post);
     }
 
     public List<PostResponse> showPosts() {
-        return PostResponse.listOf(postRepository.findAll());
+        return PostResponse.listFrom(postRepository.findAll());
     }
 
     public void deletePost(Long id) {

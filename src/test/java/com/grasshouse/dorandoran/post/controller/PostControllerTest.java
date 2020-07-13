@@ -80,7 +80,7 @@ class PostControllerTest {
     @DisplayName("글 하나를 조회한다.")
     @Test
     void showPost() throws Exception {
-        when(postService.showPost(anyLong())).thenReturn(PostResponse.of(PERSIST_POST));
+        when(postService.showPost(anyLong())).thenReturn(PostResponse.from(PERSIST_POST));
 
         this.mockMvc.perform(get("/posts/" + PERSIST_POST.getId())
             .accept(MediaType.APPLICATION_JSON_VALUE))
@@ -122,6 +122,6 @@ class PostControllerTest {
     }
 
     private List<PostResponse> postResponses() {
-        return Arrays.asList(PostResponse.of(PERSIST_POST));
+        return Arrays.asList(PostResponse.from(PERSIST_POST));
     }
 }

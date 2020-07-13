@@ -10,7 +10,7 @@ public class PostCreateResponse {
 
     private Long id;
 
-    public static PostCreateResponse of(Post post) {
+    public static PostCreateResponse from(Post post) {
         return new PostCreateResponse(post.getId());
     }
 }

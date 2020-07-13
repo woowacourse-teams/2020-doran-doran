@@ -24,19 +24,19 @@ public class PostResponse {
     private Address address;
     //TODO : comment, post_like 정보 추후에 추가하기
 
-    public static PostResponse of(Post post) {
+    public static PostResponse from(Post post) {
         return PostResponse.builder()
             .id(post.getId())
-            .memberResponse(MemberResponse.of(post.getAuthor()))
+            .memberResponse(MemberResponse.from(post.getAuthor()))
             .content(post.getContent())
             .location(post.getLocation())
             .address(post.getAddress())
             .build();
     }
 
-    public static List<PostResponse> listOf(List<Post> posts) {
+    public static List<PostResponse> listFrom(List<Post> posts) {
         return posts.stream()
-            .map(PostResponse::of)
+            .map(PostResponse::from)
             .collect(Collectors.toList());
     }
 }
