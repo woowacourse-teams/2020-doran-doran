@@ -1,6 +1,6 @@
 package com.grasshouse.dorandoran.common;
 
-import com.grasshouse.dorandoran.common.exception.DoranDoranException;
+import com.grasshouse.dorandoran.common.exception.ExpectedException;
 import com.grasshouse.dorandoran.common.exception.dto.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,8 +18,8 @@ public class CommonAdvice {
             .body(new ErrorResponse(UNEXPECTED_EXCEPTION_MESSAGE));
     }
 
-    @ExceptionHandler(DoranDoranException.class)
-    public ResponseEntity<ErrorResponse> handleExpectedException(DoranDoranException e) {
+    @ExceptionHandler(ExpectedException.class)
+    public ResponseEntity<ErrorResponse> handleExpectedException(ExpectedException e) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
             .body(new ErrorResponse(e.getMessage()));
     }
