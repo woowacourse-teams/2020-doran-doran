@@ -1,5 +1,6 @@
 import { KAKAO_MAP_APP_KEY } from "../secure/appkey";
 import INITIAL_LOCATION from "../config/config";
+import ERROR_MESSAGE from "../utils/constants";
 
 const KakaoMap = {
   install(Vue) {
@@ -37,7 +38,7 @@ const KakaoMap = {
             longitude: location.coords.longitude,
           };
         })
-        .catch(() => alert("위치 정보를 확인할 수 없습니다."));
+        .catch(() => alert(ERROR_MESSAGE.UNIDENTIFIABLE_LOCATION));
     };
 
     Vue.prototype.$setLocation = (location) => {
