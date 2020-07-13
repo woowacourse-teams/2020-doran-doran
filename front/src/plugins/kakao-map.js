@@ -1,6 +1,6 @@
 import { KAKAO_MAP_APP_KEY } from "../secure/appkey";
 import INITIAL_LOCATION from "../config/config";
-import { ERROR_MESSAGE, API_BASE_URL } from "../utils/constants";
+import { API_BASE_URL, ERROR_MESSAGE } from "../utils/constants";
 
 const KakaoMap = {
   install(Vue) {
@@ -49,14 +49,28 @@ const KakaoMap = {
       this.map.setCenter(targetLocation);
     };
 
-    Vue.prototype.$setMarker = (location) => {
-      if (!this.map || !location) {
+    const createMarkerImage = (src, size, options) => {
+      return new kakao.maps.MarkerImage(src, size, options);
+    };
+
+    const createMarker = (position, image) => {
+      return new kakao.maps.Marker({
+        position: position,
+        image: image,
+      });
+    };
+
+    Vue.prototype.$setCurrentLocationMarker = (currentLocation) => {
+      if (!this.map || !currentLocation) {
         return;
       }
-      const targetLocation = createKakaoLocation(location);
-      const marker = new kakao.maps.Marker({
-        position: targetLocation,
-      });
+      const currentLocationImage =
+        "https://sheengroup.com.au/assets/Uploads/misc/current-location.png";
+      const markerSize = new kakao.maps.Size(36, 36);
+      const markerImage = createMarkerImage(currentLocationImage, markerSize);
+
+      const currentKakaoLocation = createKakaoLocation(currentLocation);
+      const marker = createMarker(currentKakaoLocation, markerImage);
       marker.setMap(this.map);
     };
   },

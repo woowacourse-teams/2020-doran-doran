@@ -8,7 +8,7 @@ export default {
     await this.$drawMap(this.$refs.map);
     const currentLocation = await this.$getCurrentLocation();
     this.$setLocation(currentLocation);
-    this.$setMarker(currentLocation);
+    this.$setCurrentLocationMarker(currentLocation);
   },
 };
 </script>
