@@ -1,0 +1,79 @@
+import { KAKAO_MAP_APP_KEY } from "../secure/appkey";
+import INITIAL_LOCATION from "../config/config";
+import { API_BASE_URL, ERROR_MESSAGE } from "../utils/constants";
+
+const KakaoMap = {
+  install(Vue) {
+    const script = document.createElement("script");
+    script.src = API_BASE_URL.KAKAO_MAP + KAKAO_MAP_APP_KEY;
+    document.head.appendChild(script);
+
+    /* global kakao */
+    const loadApi = new Promise((resolve) => {
+      script.onload = () => kakao.maps.load(resolve);
+    });
+
+    const createKakaoLocation = (location) => {
+      return new kakao.maps.LatLng(location.latitude, location.longitude);
+    };
+
+    Vue.prototype.$drawMap = async (mapContainer) => {
+      await loadApi;
+      const options = {
+        center: createKakaoLocation(INITIAL_LOCATION),
+        level: 2,
+      };
+      this.map = new kakao.maps.Map(mapContainer, options);
+    };
+
+    Vue.prototype.$getCurrentLocation = async () => {
+      const getLocation = () =>
+        new Promise((resolve, reject) =>
+          navigator.geolocation.getCurrentPosition(resolve, reject),
+        );
+      return await getLocation()
+        .then((location) => {
+          return {
+            latitude: location.coords.latitude,
+            longitude: location.coords.longitude,
+          };
+        })
+        .catch(() => alert(ERROR_MESSAGE.UNIDENTIFIABLE_LOCATION));
+    };
+
+    Vue.prototype.$setLocation = (location) => {
+      if (!this.map || !location) {
+        return;
+      }
+      const targetLocation = createKakaoLocation(location);
+      this.map.setCenter(targetLocation);
+    };
+
+    const createMarkerImage = (src, size, options) => {
+      return new kakao.maps.MarkerImage(src, size, options);
+    };
+
+    const createMarker = (position, image) => {
+      return new kakao.maps.Marker({
+        position: position,
+        image: image,
+      });
+    };
+
+    Vue.prototype.$setCurrentLocationMarker = (currentLocation) => {
+      if (!this.map || !currentLocation) {
+        return;
+      }
+      const currentLocationImage =
+        "https://sheengroup.com.au/assets/Uploads/misc/current-location.png";
+      const markerSize = new kakao.maps.Size(36, 36);
+      const markerImage = createMarkerImage(currentLocationImage, markerSize);
+
+      const currentKakaoLocation = createKakaoLocation(currentLocation);
+      const marker = createMarker(currentKakaoLocation, markerImage);
+      marker.setMap(this.map);
+    };
+  },
+};
+
+export default KakaoMap;
