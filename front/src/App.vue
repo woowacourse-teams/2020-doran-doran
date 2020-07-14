@@ -1,20 +1,18 @@
 <template>
   <div>
-    <Map />
+    <router-link to="/">Map</router-link>
+    <router-link to="/create-post">글 작성</router-link>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import Map from "./components/Map";
-
 export default {
   name: "app",
-  components: {
-    Map,
-  },
+  components: {},
 };
 </script>
 
 <style>
-  @import './assets/styles/post-overlay.css';
+@import "./assets/styles/post-overlay.css";
 </style>
