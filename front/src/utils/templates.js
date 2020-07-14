@@ -1,2 +1,3 @@
 export const POST_OVERLAY_TEMPLATES = (content) =>
-  `<span class="v-chip theme--light">${content}</span>`;
+  `<div class="post-overlay">${content}
+</div>`;
