@@ -29,7 +29,9 @@ const KakaoMap = {
     Vue.prototype.$getCurrentLocation = async () => {
       const getLocation = () =>
         new Promise((resolve, reject) =>
-          navigator.geolocation.getCurrentPosition(resolve, reject),
+          navigator.geolocation.getCurrentPosition(resolve, reject, {
+            timeout: 3000,
+          }),
         );
       return await getLocation()
         .then((location) => {
@@ -72,6 +74,16 @@ const KakaoMap = {
       const currentKakaoLocation = createKakaoLocation(currentLocation);
       const marker = createMarker(currentKakaoLocation, markerImage);
       marker.setMap(this.map);
+    };
+
+    Vue.prototype.$setOverlay = (content, location) => {
+      const kakaoLocation = createKakaoLocation(location);
+      const customOverlay = new kakao.maps.CustomOverlay({
+        position: kakaoLocation,
+        content: content,
+      });
+
+      customOverlay.setMap(this.map);
     };
   },
 };

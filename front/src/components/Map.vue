@@ -4,11 +4,22 @@
 
 <script>
 export default {
+  created() {
+    this.$store.dispatch("loadPosts");
+  },
   async mounted() {
     await this.$drawMap(this.$refs.map);
     const currentLocation = await this.$getCurrentLocation();
     this.$setLocation(currentLocation);
     this.$setCurrentLocationMarker(currentLocation);
+    this.drawPosts();
+  },
+  methods: {
+    drawPosts() {
+      this.$store.getters.getPosts.forEach((post) => {
+        this.$setOverlay(post.content, post.location);
+      });
+    },
   },
 };
 </script>

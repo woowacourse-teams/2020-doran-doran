@@ -1,4 +1,4 @@
-const MOCK_POSTS = [
+export const MOCK_POSTS = [
   {
     id: 1,
     content: "내용1",
