@@ -31,4 +31,12 @@ export const MOCK_POSTS = [
       latitude: 37.515911,
     },
   },
+  {
+    id: 5,
+    content: "한강 물 온도 어떤가요?",
+    location: {
+      longitude: 127.091956,
+      latitude: 37.525087,
+    },
+  },
 ];

@@ -21,7 +21,7 @@ const KakaoMap = {
     Vue.prototype.$drawMap = async (mapContainer) => {
       await loadApi;
       const options = {
-        center: createKakaoLocation(INITIAL_LOCATION),
+        center: createKakaoLocation(INITIAL_LOCATION.JAMSIL_LUTHER),
         level: 2,
       };
       this.map = new kakao.maps.Map(mapContainer, options);
