@@ -1,6 +1,7 @@
 import { KAKAO_MAP_APP_KEY } from "../secure/appkey";
 import INITIAL_LOCATION from "../config/config";
 import { API_BASE_URL, ERROR_MESSAGE } from "../utils/constants";
+import { POST_OVERLAY_TEMPLATES } from "../utils/templates";
 
 const KakaoMap = {
   install(Vue) {
@@ -80,7 +81,7 @@ const KakaoMap = {
       const kakaoLocation = createKakaoLocation(location);
       const customOverlay = new kakao.maps.CustomOverlay({
         position: kakaoLocation,
-        content: content,
+        content: POST_OVERLAY_TEMPLATES(content),
       });
 
       customOverlay.setMap(this.map);
