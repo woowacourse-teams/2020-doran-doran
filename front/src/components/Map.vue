@@ -5,7 +5,7 @@
 <script>
 export default {
   created() {
-    this.$store.dispatch("loadPosts");
+    this.$store.dispatch("post/loadPosts");
   },
   async mounted() {
     await this.$drawMap(this.$refs.map);
@@ -16,7 +16,7 @@ export default {
   },
   methods: {
     drawPosts() {
-      this.$store.getters.getPosts.forEach((post) => {
+      this.$store.getters["post/getPosts"].forEach((post) => {
         this.$setOverlay(post.content, post.location);
       });
     },
