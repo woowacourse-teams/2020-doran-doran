@@ -1,15 +1,18 @@
 <template>
-  <div>
-    <router-link to="/">Map</router-link>
-    <router-link to="/create-post">글 작성</router-link>
+  <v-app>
+    <Header />
     <router-view></router-view>
-  </div>
+  </v-app>
 </template>
 
 <script>
+import Header from "./components/Header";
+
 export default {
   name: "app",
-  components: {},
+  components: {
+    Header,
+  },
 };
 </script>
 
