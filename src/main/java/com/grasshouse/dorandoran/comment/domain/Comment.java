@@ -35,7 +35,7 @@ public class Comment {
 
     private String content;
 
-    private Long distance;
+    private Double distance;
 
     @OneToMany
     @JoinColumn(name = "COMMENT_LIKE_ID")
