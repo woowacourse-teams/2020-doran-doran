@@ -38,6 +38,7 @@ public class Post {
 
     private String content;
 
+    @Builder.Default
     @OneToMany(mappedBy = "post")
     private List<Comment> comments = new ArrayList<>();
 

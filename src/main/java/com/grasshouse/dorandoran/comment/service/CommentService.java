@@ -33,6 +33,7 @@ public class CommentService {
             .orElseThrow(PostNotFoundException::new);
         Double distance = post.getLocation()
             .calculateDistance(commentRequest.getLocation());
+
         return Comment.builder()
             .author(member)
             .content(commentRequest.getContent())
