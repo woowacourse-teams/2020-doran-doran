@@ -1,47 +1,43 @@
 <template>
   <div>
-    <p>글</p>
-    <textarea
-      type="text"
-      placeholder="글 내용을 입력해주세요."
-      name="content"
-      maxlength="20"
-      cols="40"
-      rows="20"
-      required="true"
-    />
-    <p>글이 올라갈 위치</p>
-    <div>
-      <label for="radio-current-location">
-        <input
-          type="radio"
-          id="radio-current-location"
-          name="location-selection"
-          value="1"
+    <v-form class="form">
+      <Map style="height: 200px;"/>
+      <div class="content">
+        <v-textarea
+          type="text"
+          name="content"
+          placeholder="글 내용을 입력해주세요."
+          maxlength="200"
+          rows="10"
+          :counter="200"
+          required
+          solo
+          autofocus
+          no-resize
         />
-        현재 위치
-        <input value="서울시 송파구" readonly />
-      </label>
-      <label for="radio-map-location">
-        <input
-          type="radio"
-          id="radio-map-location"
-          name="location-selection"
-          value="2"
-        />
-        지도 위치
-        <input value="서울시 서초구" readonly />
-      </label>
-      <button>위치 변경</button>
-    </div>
-    <div>
-      <button type="submit">등록</button>
-    </div>
+      </div>
+      <v-btn class="register-button" color="amber accent-4" type="submit"
+        >등록</v-btn
+      >
+    </v-form>
   </div>
 </template>
 
 <script>
-export default {};
+import Map from "./Map";
+export default {
+  components: { Map },
+};
 </script>
 
-<style></style>
+<style>
+.form {
+  margin: 30px;
+}
+.content {
+  margin-top: 30px;
+}
+.register-button {
+  float:right;
+}
+</style>
