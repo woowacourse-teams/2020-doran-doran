@@ -1,6 +1,6 @@
 package com.grasshouse.dorandoran.post.service;
 
-import static com.grasshouse.dorandoran.fixture.LocationFixture.LOCATION;
+import static com.grasshouse.dorandoran.fixture.LocationFixture.JAMSIL_STATION;
 import static com.grasshouse.dorandoran.fixture.MemberFixture.MEMBER;
 import static com.grasshouse.dorandoran.fixture.PostFixture.POST;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -36,7 +36,7 @@ class PostServiceTest {
         PostCreateRequest postCreateRequest = PostCreateRequest.builder()
             .author(persistMember)
             .content("내용")
-            .location(LOCATION)
+            .location(JAMSIL_STATION)
             .build();
 
         PostCreateResponse createResponse = postService.createPost(postCreateRequest);

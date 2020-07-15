@@ -1,6 +1,6 @@
 package com.grasshouse.dorandoran.post.controller;
 
-import static com.grasshouse.dorandoran.fixture.LocationFixture.LOCATION;
+import static com.grasshouse.dorandoran.fixture.LocationFixture.JAMSIL_STATION;
 import static com.grasshouse.dorandoran.fixture.MemberFixture.MEMBER;
 import static com.grasshouse.dorandoran.fixture.PostFixture.PERSIST_POST;
 import static org.mockito.ArgumentMatchers.any;
@@ -34,12 +34,13 @@ class PostControllerTest extends CommonControllerTest {
 
     @DisplayName("글을 작성한다.")
     @Test
-    void addPost() throws Exception {
+    void createPost() throws Exception {
         PostCreateRequest postCreateRequest = PostCreateRequest.builder()
             .author(MEMBER)
             .content("new post")
-            .location(LOCATION)
+            .location(JAMSIL_STATION)
             .build();
+
         PostCreateResponse postCreateResponse = new PostCreateResponse(1L);
 
         String request = objectMapper.writeValueAsString(postCreateRequest);
