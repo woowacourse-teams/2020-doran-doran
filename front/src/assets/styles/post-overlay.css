@@ -1,4 +1,4 @@
-.post-overlay {
+.speech-bubble {
   position: relative;
   background: white;
   border-radius: 1.0em;
@@ -6,17 +6,26 @@
   bottom: 32px;
   box-shadow: 2px 2px 10px grey;
 }
-
-.post-overlay:after {
-  content: '';
+.speech-bubble.arrow {
+  border-style: solid;
+  position: absolute;
+}
+.bottom {
   position: absolute;
   bottom: 0;
   left: 50%;
-  width: 0;
-  height: 0;
   border: 9px solid transparent;
-  border-top-color: white;
+  border-top-color: rgba(0,0,0,0.08);
   border-bottom: 0;
   margin-left: -9px;
   margin-bottom: -9px;
+}
+.bottom:after {
+  content: "";
+  border-color: white transparent transparent transparent;
+  border-style: solid;
+  border-width: 7px 7px 0 7px;
+  bottom: 2.6px;
+  position: absolute;
+  left: -7px;
 }
