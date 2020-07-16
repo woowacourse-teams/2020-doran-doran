@@ -56,4 +56,8 @@ public class Post {
         @AttributeOverride(name = "depth3", column = @Column(name = "ADDRESS_DEPTH_3"))
     })
     private Address address;
+
+    public void removeComment(Comment comment) {
+        comments.remove(comment);
+    }
 }

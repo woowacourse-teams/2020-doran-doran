@@ -3,6 +3,7 @@ package com.grasshouse.dorandoran.comment.service;
 import com.grasshouse.dorandoran.comment.domain.Comment;
 import com.grasshouse.dorandoran.comment.repository.CommentRepository;
 import com.grasshouse.dorandoran.comment.service.dto.CommentCreateRequest;
+import com.grasshouse.dorandoran.common.exception.CommentNotFoundException;
 import com.grasshouse.dorandoran.common.exception.MemberNotFoundException;
 import com.grasshouse.dorandoran.common.exception.PostNotFoundException;
 import com.grasshouse.dorandoran.member.domain.Member;
@@ -44,7 +45,17 @@ public class CommentService {
             .build();
     }
 
-    public void deleteComment(Long commentId) {
+    @Transactional
+    public void deleteComment(Long postId, Long commentId) {
+        Comment comment = findCommentById(commentId);
+        Post post = postRepository.findById(postId)
+            .orElseThrow(PostNotFoundException::new);
+        post.removeComment(comment);
+        commentRepository.delete(comment);
+    }
 
+    private Comment findCommentById(Long commentId) {
+        return commentRepository.findById(commentId)
+            .orElseThrow(CommentNotFoundException::new);
     }
 }

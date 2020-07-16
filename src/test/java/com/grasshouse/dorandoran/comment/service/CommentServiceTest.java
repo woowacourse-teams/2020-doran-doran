@@ -5,6 +5,7 @@ import static com.grasshouse.dorandoran.fixture.LocationFixture.GANGNAM_STATION;
 import static com.grasshouse.dorandoran.fixture.LocationFixture.JAMSIL_STATION;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.grasshouse.dorandoran.comment.domain.Comment;
 import com.grasshouse.dorandoran.comment.repository.CommentRepository;
 import com.grasshouse.dorandoran.comment.service.dto.CommentCreateRequest;
 import com.grasshouse.dorandoran.member.domain.Member;
@@ -66,6 +67,23 @@ class CommentServiceTest {
         Long commentId = commentService.createComment(post.getId(), request);
 
         assertThat(commentId).isNotNull();
+    }
+
+    @DisplayName("댓글을 삭제한다.")
+    @Test
+    void deleteComment() {
+        Comment comment = Comment.builder()
+            .author(member)
+            .post(post)
+            .content("댓글입니다.")
+            .distance(1.0)
+            .build();
+
+        Comment persistComment = commentRepository.save(comment);
+        assertThat(commentRepository.findAll()).hasSize(1);
+
+        commentService.deleteComment(post.getId(), persistComment.getId());
+        assertThat(commentRepository.findAll()).hasSize(0);
     }
 
     @AfterEach

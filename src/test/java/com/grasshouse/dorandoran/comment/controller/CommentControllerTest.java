@@ -51,7 +51,8 @@ class CommentControllerTest extends CommonControllerTest {
     @DisplayName("댓글을 삭제한다.")
     @Test
     void deleteComment() throws Exception {
-        doNothing().when(commentService).deleteComment(PERSIST_COMMENT.getId());
+        doNothing().when(commentService)
+            .deleteComment(PERSIST_POST.getId(), PERSIST_COMMENT.getId());
         this.mockMvc.perform(delete("/comments/" + PERSIST_COMMENT.getId()))
             .andExpect(status().isNoContent())
             .andDo(print());
