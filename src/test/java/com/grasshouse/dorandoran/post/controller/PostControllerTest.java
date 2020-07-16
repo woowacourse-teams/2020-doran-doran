@@ -1,7 +1,7 @@
 package com.grasshouse.dorandoran.post.controller;
 
 import static com.grasshouse.dorandoran.fixture.LocationFixture.JAMSIL_STATION;
-import static com.grasshouse.dorandoran.fixture.MemberFixture.MEMBER;
+import static com.grasshouse.dorandoran.fixture.MemberFixture.PERSIST_MEMBER;
 import static com.grasshouse.dorandoran.fixture.PostFixture.PERSIST_POST;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
@@ -36,7 +36,7 @@ class PostControllerTest extends CommonControllerTest {
     @Test
     void createPost() throws Exception {
         PostCreateRequest postCreateRequest = PostCreateRequest.builder()
-            .author(MEMBER)
+            .author(PERSIST_MEMBER)
             .content("new post")
             .location(JAMSIL_STATION)
             .build();

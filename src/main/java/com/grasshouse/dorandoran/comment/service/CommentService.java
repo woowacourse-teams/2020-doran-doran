@@ -11,6 +11,7 @@ import com.grasshouse.dorandoran.post.domain.Post;
 import com.grasshouse.dorandoran.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -20,6 +21,7 @@ public class CommentService {
     private final MemberRepository memberRepository;
     private final PostRepository postRepository;
 
+    @Transactional
     public Long createComment(Long postId, CommentCreateRequest commentRequest) {
         Comment comment = convertToComment(postId, commentRequest);
         commentRepository.save(comment);
@@ -36,6 +38,7 @@ public class CommentService {
 
         return Comment.builder()
             .author(member)
+            .post(post)
             .content(commentRequest.getContent())
             .distance(distance)
             .build();

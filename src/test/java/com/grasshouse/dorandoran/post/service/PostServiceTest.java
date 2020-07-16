@@ -1,10 +1,10 @@
 package com.grasshouse.dorandoran.post.service;
 
+import static com.grasshouse.dorandoran.fixture.AddressFixture.ADDRESS;
 import static com.grasshouse.dorandoran.fixture.LocationFixture.JAMSIL_STATION;
-import static com.grasshouse.dorandoran.fixture.MemberFixture.MEMBER;
-import static com.grasshouse.dorandoran.fixture.PostFixture.POST;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.grasshouse.dorandoran.member.domain.Member;
 import com.grasshouse.dorandoran.member.repository.MemberRepository;
 import com.grasshouse.dorandoran.post.domain.Post;
 import com.grasshouse.dorandoran.post.repository.PostRepository;
@@ -31,16 +31,22 @@ class PostServiceTest {
     @Autowired
     private PostRepository postRepository;
 
+    private Member member;
+
     @BeforeEach
     void setUp() {
-        memberRepository.save(MEMBER);
+        member = Member.builder()
+            .nickname("오구")
+            .build();
+
+        memberRepository.save(member);
     }
 
     @DisplayName("글을 작성한다.")
     @Test
     void createPostTest() {
         PostCreateRequest postCreateRequest = PostCreateRequest.builder()
-            .author(MEMBER)
+            .author(member)
             .content("내용")
             .location(JAMSIL_STATION)
             .build();
@@ -52,7 +58,9 @@ class PostServiceTest {
     @DisplayName("하나의 글을 조회한다.")
     @Test
     void showPost() {
-        Post persistPost = postRepository.save(POST);
+        Post post = dummyPost();
+
+        Post persistPost = postRepository.save(post);
 
         PostResponse postResponse = postService.showPost(persistPost.getId());
 
@@ -62,7 +70,9 @@ class PostServiceTest {
     @DisplayName("전체 글을 조회한다.")
     @Test
     void showPostsTest() {
-        Post persistPost = postRepository.save(POST);
+        Post post = dummyPost();
+
+        Post persistPost = postRepository.save(post);
 
         List<PostResponse> postResponses = postService.showPosts();
 
@@ -73,15 +83,28 @@ class PostServiceTest {
     @DisplayName("글을 삭제한다.")
     @Test
     void deletePostTest() {
-        Post persistPost = postRepository.save(POST);
+        Post post = dummyPost();
+
+        Post persistPost = postRepository.save(post);
+
         assertThat(postRepository.findAll()).hasSize(1);
 
         postService.deletePost(persistPost.getId());
         assertThat(postRepository.findAll()).hasSize(0);
     }
 
+    private Post dummyPost() {
+        return Post.builder()
+            .author(member)
+            .content("내용")
+            .address(ADDRESS)
+            .location(JAMSIL_STATION)
+            .build();
+    }
+
     @AfterEach
     void tearDown() {
         postRepository.deleteAll();
+        memberRepository.deleteAll();
     }
 }

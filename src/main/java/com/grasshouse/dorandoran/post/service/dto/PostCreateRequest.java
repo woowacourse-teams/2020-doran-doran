@@ -17,6 +17,7 @@ public class PostCreateRequest {
     private Member author;
     private String content;
     private Location location;
+    //TODO: Address 추가하기
 
     public Post toPost() {
         return Post.builder()
