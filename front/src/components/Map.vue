@@ -17,7 +17,7 @@ export default {
   methods: {
     drawPosts() {
       this.$store.getters["post/getPosts"].forEach((post) => {
-        this.$setOverlay(post.content, post.location);
+        this.$setPostOverlay(post.content, post.location);
       });
     },
   },

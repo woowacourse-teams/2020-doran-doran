@@ -77,7 +77,7 @@ const KakaoMap = {
       marker.setMap(this.map);
     };
 
-    Vue.prototype.$setOverlay = (content, location) => {
+    Vue.prototype.$setPostOverlay = (content, location) => {
       const kakaoLocation = createKakaoLocation(location);
       const customOverlay = new kakao.maps.CustomOverlay({
         position: kakaoLocation,
