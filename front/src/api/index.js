@@ -1,3 +1,5 @@
+import axios from "axios";
+
 const METHOD = {
   POST(data) {
     return {
@@ -18,22 +20,24 @@ const METHOD = {
 };
 
 const api = (() => {
-  const request = (uri, config) => fetch(uri, config);
-  const requestWithJsonData = (uri, config) =>
-    fetch(uri, config).then((data) => data.json());
+  const deleteRequest = (uri, config) => axios.delete(uri, config);
+  const getRequestWithJsonData = (uri, config) =>
+    axios.get(uri, config).then((response) => response.data.json());
+  const postRequestWithJsonData = (uri, config) =>
+    axios.post(uri, config).then((response) => response.data.json());
 
   const post = {
     get(id) {
-      return requestWithJsonData(`/posts/${id}`);
+      return getRequestWithJsonData(`/posts/${id}`);
     },
     getAll() {
-      return requestWithJsonData(`/posts`);
+      return getRequestWithJsonData(`/posts`);
     },
     create(data) {
-      return requestWithJsonData(`/posts`, METHOD.POST(data));
+      return postRequestWithJsonData(`/posts`, METHOD.POST(data));
     },
     delete(id) {
-      return request(`/posts/${id}`, METHOD.DELETE());
+      return deleteRequest(`/posts/${id}`, METHOD.DELETE());
     },
   };
   return {
