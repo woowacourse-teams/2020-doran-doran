@@ -1,6 +1,7 @@
 import { KAKAO_MAP_APP_KEY } from "../secure/appkey";
 import INITIAL_LOCATION from "../config/config";
 import { API_BASE_URL, ERROR_MESSAGE } from "../utils/constants";
+import { POST_OVERLAY_TEMPLATES } from "../utils/templates";
 
 const KakaoMap = {
   install(Vue) {
@@ -20,7 +21,7 @@ const KakaoMap = {
     Vue.prototype.$drawMap = async (mapContainer) => {
       await loadApi;
       const options = {
-        center: createKakaoLocation(INITIAL_LOCATION),
+        center: createKakaoLocation(INITIAL_LOCATION.JAMSIL_LUTHER),
         level: 2,
       };
       this.map = new kakao.maps.Map(mapContainer, options);
@@ -29,7 +30,9 @@ const KakaoMap = {
     Vue.prototype.$getCurrentLocation = async () => {
       const getLocation = () =>
         new Promise((resolve, reject) =>
-          navigator.geolocation.getCurrentPosition(resolve, reject),
+          navigator.geolocation.getCurrentPosition(resolve, reject, {
+            timeout: 3000,
+          }),
         );
       return await getLocation()
         .then((location) => {
@@ -72,6 +75,16 @@ const KakaoMap = {
       const currentKakaoLocation = createKakaoLocation(currentLocation);
       const marker = createMarker(currentKakaoLocation, markerImage);
       marker.setMap(this.map);
+    };
+
+    Vue.prototype.$setPostOverlay = (content, location) => {
+      const kakaoLocation = createKakaoLocation(location);
+      const customOverlay = new kakao.maps.CustomOverlay({
+        position: kakaoLocation,
+        content: POST_OVERLAY_TEMPLATES(content),
+      });
+
+      customOverlay.setMap(this.map);
     };
   },
 };

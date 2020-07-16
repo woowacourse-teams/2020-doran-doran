@@ -1,0 +1,22 @@
+.post-overlay {
+  position: relative;
+  background: white;
+  border-radius: 1.0em;
+  padding: 10px;
+  bottom: 32px;
+  box-shadow: 2px 2px 10px grey;
+}
+
+.post-overlay:after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border: 9px solid transparent;
+  border-top-color: white;
+  border-bottom: 0;
+  margin-left: -9px;
+  margin-bottom: -9px;
+}
