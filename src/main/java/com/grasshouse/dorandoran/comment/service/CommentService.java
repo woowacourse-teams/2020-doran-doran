@@ -43,4 +43,8 @@ public class CommentService {
             .distance(distance)
             .build();
     }
+
+    public void deleteComment(Long commentId) {
+
+    }
 }

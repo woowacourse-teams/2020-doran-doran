@@ -1,12 +1,15 @@
 package com.grasshouse.dorandoran.comment.controller;
 
+import static com.grasshouse.dorandoran.fixture.CommentFixture.PERSIST_COMMENT;
 import static com.grasshouse.dorandoran.fixture.LocationFixture.GANGNAM_STATION;
 import static com.grasshouse.dorandoran.fixture.MemberFixture.PERSIST_MEMBER;
 import static com.grasshouse.dorandoran.fixture.PostFixture.PERSIST_POST;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -43,5 +46,14 @@ class CommentControllerTest extends CommonControllerTest {
             .andDo(print());
 
         verify(commentService).createComment(anyLong(), any());
+    }
+
+    @DisplayName("댓글을 삭제한다.")
+    @Test
+    void deleteComment() throws Exception {
+        doNothing().when(commentService).deleteComment(PERSIST_COMMENT.getId());
+        this.mockMvc.perform(delete("/comments/" + PERSIST_COMMENT.getId()))
+            .andExpect(status().isNoContent())
+            .andDo(print());
     }
 }

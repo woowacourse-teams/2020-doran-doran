@@ -4,6 +4,7 @@ import com.grasshouse.dorandoran.comment.service.CommentService;
 import com.grasshouse.dorandoran.comment.service.dto.CommentCreateRequest;
 import java.net.URI;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,5 +27,11 @@ public class CommentController {
         return ResponseEntity
             .created(URI.create("/posts/" + postId + "/comments/" + commentId))
             .build();
+    }
+
+    @DeleteMapping("/comments/{commentId}")
+    public ResponseEntity<Void> deleteComment(@PathVariable Long commentId) {
+        commentService.deleteComment(commentId);
+        return ResponseEntity.noContent().build();
     }
 }
