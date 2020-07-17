@@ -53,7 +53,8 @@ class CommentControllerTest extends CommonControllerTest {
     void deleteComment() throws Exception {
         doNothing().when(commentService)
             .deleteComment(PERSIST_POST.getId(), PERSIST_COMMENT.getId());
-        this.mockMvc.perform(delete("/comments/" + PERSIST_COMMENT.getId()))
+        this.mockMvc.perform(
+            delete("/posts/" + PERSIST_POST.getId() + "/comments/" + PERSIST_COMMENT.getId()))
             .andExpect(status().isNoContent())
             .andDo(print());
     }

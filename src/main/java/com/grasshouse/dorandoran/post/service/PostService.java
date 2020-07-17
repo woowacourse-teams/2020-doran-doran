@@ -8,6 +8,7 @@ import com.grasshouse.dorandoran.post.service.dto.PostCreateResponse;
 import com.grasshouse.dorandoran.post.service.dto.PostResponse;
 import java.util.List;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class PostService {
@@ -24,11 +25,13 @@ public class PostService {
         return PostCreateResponse.from(post);
     }
 
+    @Transactional
     public PostResponse showPost(Long id) {
         Post post = findPostById(id);
         return PostResponse.from(post);
     }
 
+    @Transactional
     public List<PostResponse> showPosts() {
         return PostResponse.listFrom(postRepository.findAll());
     }
