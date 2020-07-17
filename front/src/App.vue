@@ -1,17 +1,17 @@
 <template>
   <v-app>
-    <Header />
+    <doran-app-bar />
     <router-view></router-view>
   </v-app>
 </template>
 
 <script>
-import Header from "./components/Header";
+import doranAppBar from "./components/DoranAppBar";
 
 export default {
   name: "app",
   components: {
-    Header,
+    doranAppBar,
   },
 };
 </script>

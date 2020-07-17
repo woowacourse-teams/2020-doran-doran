@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-app-bar flat="true">
+    <v-app-bar flat>
       <a href="#">
         <i class="mdi mdi-chevron-left"></i>
       </a>
@@ -16,7 +16,9 @@
 </template>
 
 <script>
-export default {};
+export default {
+  name: "doran-app-bar",
+};
 </script>
 
 <style>
