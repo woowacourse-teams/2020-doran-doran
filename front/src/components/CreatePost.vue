@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-form class="form">
-      <Map style="height: 200px;" />
+      <MapWithCenterMarker style="height: 200px;" />
       <div class="content">
         <v-textarea
           v-model="content"
@@ -25,19 +25,18 @@
         >등록</v-btn
       >
     </v-form>
-
   </div>
 </template>
 
 <script>
-import Map from "./Map";
+import MapWithCenterMarker from "./MapWithCenterMarker";
 export default {
   data() {
     return {
       content: "",
     };
   },
-  components: { Map },
+  components: { MapWithCenterMarker },
   methods: {
     addPost() {
       this.$store.dispatch("post/addPost", this.content);
