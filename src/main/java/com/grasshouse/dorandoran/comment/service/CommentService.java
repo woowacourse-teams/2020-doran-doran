@@ -51,7 +51,6 @@ public class CommentService {
         Post post = postRepository.findById(postId)
             .orElseThrow(PostNotFoundException::new);
         post.removeComment(comment);
-        commentRepository.delete(comment);
     }
 
     private Comment findCommentById(Long commentId) {

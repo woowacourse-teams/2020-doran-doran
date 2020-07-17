@@ -4,6 +4,8 @@ import static com.grasshouse.dorandoran.fixture.AddressFixture.ADDRESS;
 import static com.grasshouse.dorandoran.fixture.LocationFixture.JAMSIL_STATION;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.grasshouse.dorandoran.comment.domain.Comment;
+import com.grasshouse.dorandoran.comment.repository.CommentRepository;
 import com.grasshouse.dorandoran.member.domain.Member;
 import com.grasshouse.dorandoran.member.repository.MemberRepository;
 import com.grasshouse.dorandoran.post.domain.Post;
@@ -30,6 +32,9 @@ class PostServiceTest {
 
     @Autowired
     private PostRepository postRepository;
+
+    @Autowired
+    private CommentRepository commentRepository;
 
     private Member member;
 
@@ -91,6 +96,26 @@ class PostServiceTest {
 
         postService.deletePost(persistPost.getId());
         assertThat(postRepository.findAll()).hasSize(0);
+    }
+
+    @DisplayName("글을 삭제 시 댓글도 삭제된다.")
+    @Test
+    void deletePostWithCommentTest() {
+        Post post = dummyPost();
+        Post persistPost = postRepository.save(post);
+
+        Comment comment = Comment.builder()
+            .author(member)
+            .content("코맨트")
+            .post(persistPost)
+            .distance(5.7)
+            .build();
+        commentRepository.save(comment);
+
+        assertThat(commentRepository.findAll()).hasSize(1);
+
+        postService.deletePost(persistPost.getId());
+        assertThat(commentRepository.findAll()).hasSize(0);
     }
 
     private Post dummyPost() {
