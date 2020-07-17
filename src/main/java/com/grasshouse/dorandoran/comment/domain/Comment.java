@@ -50,7 +50,7 @@ public class Comment {
         this.likes = likes;
     }
 
-    public void setPost(Post post) {
+    private void setPost(Post post) {
         if (Objects.isNull(this.post)) {
             this.post = post;
             this.post.getComments().add(this);
