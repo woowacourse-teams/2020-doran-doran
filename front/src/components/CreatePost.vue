@@ -1,9 +1,10 @@
 <template>
   <div>
     <v-form class="form">
-      <Map style="height: 200px;"/>
+      <Map style="height: 200px;" />
       <div class="content">
         <v-textarea
+          v-model="content"
           type="text"
           name="content"
           placeholder="글 내용을 입력해주세요."
@@ -16,17 +17,32 @@
           no-resize
         />
       </div>
-      <v-btn class="register-button" color="amber accent-4" type="submit"
+      <v-btn
+        @click="addPost"
+        class="register-button"
+        color="amber accent-4"
+        type="submit"
         >등록</v-btn
       >
     </v-form>
+
   </div>
 </template>
 
 <script>
 import Map from "./Map";
 export default {
+  data() {
+    return {
+      content: "",
+    };
+  },
   components: { Map },
+  methods: {
+    addPost() {
+      this.$store.dispatch("post/addPost", this.content);
+    },
+  },
 };
 </script>
 
@@ -38,6 +54,6 @@ export default {
   margin-top: 30px;
 }
 .register-button {
-  float:right;
+  float: right;
 }
 </style>
