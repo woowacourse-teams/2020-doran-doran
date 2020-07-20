@@ -13,7 +13,6 @@ export default {
     this.$setLocation(currentLocation);
     this.$setCurrentLocationMarker(currentLocation);
   },
-  methods: {},
 };
 </script>
 
