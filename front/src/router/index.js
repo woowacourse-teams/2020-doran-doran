@@ -8,8 +8,8 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
-    name: "map",
-    component: Map,
+    name: "kakaoMap",
+    component: KakaoMap,
   },
   {
     path: "/create-post",
