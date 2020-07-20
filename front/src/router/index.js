@@ -1,7 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Map from "../components/Map";
-import CreatePost from "../components/CreatePost";
+import CreatePost from "../components/PostCreate";
 
 Vue.use(VueRouter);
 
