@@ -1,22 +1,21 @@
-.post-overlay {
+.speech-bubble {
   position: relative;
   background: white;
-  border-radius: 1.0em;
+  border-radius: 1em;
   padding: 10px;
   bottom: 32px;
-  box-shadow: 2px 2px 10px grey;
+  box-shadow: 1px 1px 5px grey;
 }
 
-.post-overlay:after {
-  content: '';
+.speech-arrow {
   position: absolute;
-  bottom: 0;
+  background-color: white;
   left: 50%;
-  width: 0;
-  height: 0;
-  border: 9px solid transparent;
-  border-top-color: white;
-  border-bottom: 0;
-  margin-left: -9px;
-  margin-bottom: -9px;
+  width: 10px;
+  height: 10px;
+  bottom: -6px;
+  margin-left: -5px;
+  transform: rotate(45deg);
+  box-shadow: -5px 0px 0px white, 0px -5px 0px white, -5px -5px 0px white,
+    1px 1px 5px gray;
 }
