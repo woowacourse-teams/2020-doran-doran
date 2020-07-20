@@ -6,12 +6,12 @@
 </template>
 
 <script>
-import doranAppBar from "./components/DoranAppBar";
+import DoranAppBar from "./components/DoranAppBar";
 
 export default {
   name: "app",
   components: {
-    doranAppBar,
+    DoranAppBar,
   },
 };
 </script>
