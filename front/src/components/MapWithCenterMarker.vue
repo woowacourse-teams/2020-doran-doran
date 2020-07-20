@@ -8,11 +8,10 @@
 export default {
   async mounted() {
     await this.$drawMap(this.$refs.map);
+    // TODO 사용자가 설정한 위치로 지도 중심을 지정하도록 변경
     const currentLocation = await this.$getCurrentLocation();
-    this.$setCenterLocationMarker();
     this.$setLocation(currentLocation);
     this.$setCurrentLocationMarker(currentLocation);
-    this.drawPosts();
   },
   methods: {},
 };
