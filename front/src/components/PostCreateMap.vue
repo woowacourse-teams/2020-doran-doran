@@ -26,7 +26,6 @@ export default {
   position: relative;
   left: 50%;
   top: 50%;
-  color: blue;
   z-index: 2;
   margin-top: -25px;
   margin-left: -25px;
