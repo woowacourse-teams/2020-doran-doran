@@ -1,20 +1,21 @@
 <template>
-  <div>
-    <Map />
-  </div>
+  <v-app>
+    <DoranAppBar />
+    <RouterView />
+  </v-app>
 </template>
 
 <script>
-import Map from "./components/Map";
+import DoranAppBar from "./components/DoranAppBar";
 
 export default {
   name: "app",
   components: {
-    Map,
+    DoranAppBar,
   },
 };
 </script>
 
 <style>
-  @import './assets/styles/post-overlay.css';
+@import "./assets/styles/post-overlay.css";
 </style>
