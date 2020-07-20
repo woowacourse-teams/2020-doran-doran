@@ -8,6 +8,7 @@ import com.grasshouse.dorandoran.post.service.dto.PostCreateResponse;
 import com.grasshouse.dorandoran.post.service.dto.PostResponse;
 import java.util.List;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class PostService {
@@ -18,21 +19,26 @@ public class PostService {
         this.postRepository = postRepository;
     }
 
-    public PostCreateResponse createPost(PostCreateRequest postCreateRequest) {
-        Post post = postCreateRequest.toPost();
+    @Transactional
+    public PostCreateResponse createPost(PostCreateRequest request) {
+        Post post = request.toPost();
         postRepository.save(post);
         return PostCreateResponse.from(post);
     }
 
+    @Transactional
     public PostResponse showPost(Long id) {
         Post post = findPostById(id);
         return PostResponse.from(post);
     }
 
+    @Transactional
     public List<PostResponse> showPosts() {
-        return PostResponse.listFrom(postRepository.findAll());
+        List<Post> posts = postRepository.findAll();
+        return PostResponse.listFrom(posts);
     }
 
+    @Transactional
     public void deletePost(Long id) {
         Post post = findPostById(id);
         postRepository.delete(post);

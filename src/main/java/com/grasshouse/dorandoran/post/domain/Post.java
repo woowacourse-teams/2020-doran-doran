@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Set;
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -38,7 +39,8 @@ public class Post {
 
     private String content;
 
-    @OneToMany(mappedBy = "post")
+    @Builder.Default
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>();
 
     @OneToMany
@@ -55,4 +57,8 @@ public class Post {
         @AttributeOverride(name = "depth3", column = @Column(name = "ADDRESS_DEPTH_3"))
     })
     private Address address;
+
+    public void removeComment(Comment comment) {
+        comments.remove(comment);
+    }
 }

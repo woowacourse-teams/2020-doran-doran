@@ -26,8 +26,8 @@ public class PostController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> createPost(@RequestBody PostCreateRequest postCreateRequest) {
-        PostCreateResponse response = postService.createPost(postCreateRequest);
+    public ResponseEntity<Void> createPost(@RequestBody PostCreateRequest request) {
+        PostCreateResponse response = postService.createPost(request);
         return ResponseEntity.created(URI.create("/posts/" + response.getId())).build();
     }
 

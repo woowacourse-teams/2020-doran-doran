@@ -29,9 +29,11 @@ public class Member {
     @Column(unique = true, nullable = false)
     private String nickname;
 
+    @Builder.Default
     @OneToMany(mappedBy = "author")
     private List<Post> posts = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "author")
     private List<Comment> comments = new ArrayList<>();
 }
