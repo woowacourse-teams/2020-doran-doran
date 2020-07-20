@@ -1,5 +1,4 @@
 <template>
-  <div>
     <v-form class="form">
       <PostCreateMap />
       <div class="content">
@@ -25,7 +24,6 @@
         >등록</v-btn
       >
     </v-form>
-  </div>
 </template>
 
 <script>
