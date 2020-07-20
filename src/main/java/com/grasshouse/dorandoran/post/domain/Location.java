@@ -17,18 +17,21 @@ public class Location {
     private Double longitude;
     private Double latitude;
 
-    public Double calculateDistance(Location targetLocation) {
-        double targetLongitude = targetLocation.getLongitude();
-        double targetLatitude = targetLocation.getLatitude();
-        double longitudeDistance = Math.toRadians(targetLongitude) - Math.toRadians(longitude);
-        double latitudeDistance = Math.toRadians(targetLatitude) - Math.toRadians(latitude);
+    public Double calculateDistance(Location location) {
+        Double targetLatitude = location.getLatitude();
+        Double targetLongitude = location.getLongitude();
 
-        double arcSin = Math.pow(Math.sin(latitudeDistance / 2), 2)
-            + Math.cos(latitude) * Math.cos(targetLatitude)
-            * Math.pow(Math.sin(longitudeDistance / 2), 2);
+        Double latitudeDistance = toRadian(targetLatitude - this.latitude);
+        Double longitudeDistance = toRadian(targetLongitude - this.longitude);
+        Double arcSin = Math.sin(latitudeDistance / 2) * Math.sin(latitudeDistance / 2) +
+            Math.cos(toRadian(this.latitude)) * Math.cos(toRadian(targetLatitude)) *
+                Math.sin(longitudeDistance / 2) * Math.sin(longitudeDistance / 2);
+        Double angularDistance = 2 * Math.atan2(Math.sqrt(arcSin), Math.sqrt(1 - arcSin));
 
-        double distance = 2 * Math.asin(Math.sqrt(arcSin));
-        return distance * EARTH_RADIUS;
+        return EARTH_RADIUS * angularDistance;
     }
 
+    private Double toRadian(Double value) {
+        return value * Math.PI / 180;
+    }
 }
