@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-form class="form">
-      <PostCreateMap style="height: 200px;" />
+      <PostCreateMap />
       <div class="content">
         <v-textarea
           v-model="content"

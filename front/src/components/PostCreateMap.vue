@@ -20,7 +20,7 @@ export default {
 <style scoped>
 #map {
   width: auto;
-  height: 500px;
+  height: 200px;
 }
 .center-marker {
   position: relative;
