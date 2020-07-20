@@ -1,6 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Map from "../components/Map";
+import KakaoMap from "../components/KakaoMap";
 import CreatePost from "../components/PostCreate";
 
 Vue.use(VueRouter);
@@ -13,7 +13,7 @@ const routes = [
   },
   {
     path: "/create-post",
-    name: "create-post",
+    name: "createPost",
     component: CreatePost,
   },
 ];

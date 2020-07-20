@@ -1,41 +1,27 @@
 <template>
   <div>
     <v-app-bar flat>
-      <a href="#">
-        <i class="mdi mdi-chevron-left"></i>
-      </a>
-      <div class="location-title">
-        <i class="mdi mdi-map-marker pr-1"></i>
-        <v-toolbar-title id="current-location"
-          >서울특별시 송파구 가락본동</v-toolbar-title
-        >
-      </div>
-      <div></div>
+      <v-btn icon fab text href="/">
+        <v-icon>mdi-chevron-left</v-icon>
+      </v-btn>
+      <VSpacer />
+      <v-icon class="mdi pr-1">mdi-map-marker</v-icon>
+      <v-toolbar-title class="app-bar-title">
+        서울특별시 송파구 가락본동
+      </v-toolbar-title>
+      <VSpacer />
     </v-app-bar>
   </div>
 </template>
 
 <script>
 export default {
-  name: "doran-app-bar",
+  name: "doranAppBar",
 };
 </script>
 
-<style>
-.v-toolbar__content {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.mdi.mdi-chevron-left {
-  color: black;
-}
-#current-location {
+<style scoped>
+.app-bar-title {
   font-size: 1rem;
-}
-.location-title {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <v-app>
-    <doran-app-bar />
-    <router-view></router-view>
+    <DoranAppBar />
+    <RouterView />
   </v-app>
 </template>
 
