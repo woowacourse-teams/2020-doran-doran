@@ -1,5 +1,5 @@
 <template>
-  <v-form class="pa-3" fill-height>
+  <v-form class="pa-3 fill-height">
     <v-container fluid class="map-container ma-0 pa-0 mb-6">
       <KakaoMap :usage="'create-post'" />
     </v-container>
