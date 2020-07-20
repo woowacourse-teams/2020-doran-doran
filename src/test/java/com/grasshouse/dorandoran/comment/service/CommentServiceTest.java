@@ -60,11 +60,12 @@ class CommentServiceTest {
     void createComment() {
         CommentCreateRequest request = CommentCreateRequest.builder()
             .memberId(member.getId())
+            .postId(post.getId())
             .content("댓글댓글")
             .location(GANGNAM_STATION)
             .build();
 
-        Long commentId = commentService.createComment(post.getId(), request);
+        Long commentId = commentService.createComment(request);
 
         assertThat(commentId).isNotNull();
     }
@@ -82,7 +83,7 @@ class CommentServiceTest {
         Comment persistComment = commentRepository.save(comment);
         assertThat(commentRepository.findAll()).hasSize(1);
 
-        commentService.deleteComment(post.getId(), persistComment.getId());
+        commentService.deleteComment(persistComment.getId());
         assertThat(commentRepository.findAll()).hasSize(0);
     }
 

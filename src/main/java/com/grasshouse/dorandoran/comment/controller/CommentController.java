@@ -20,19 +20,17 @@ public class CommentController {
         this.commentService = commentService;
     }
 
-    @PostMapping("/posts/{postId}/comments")
-    public ResponseEntity<Void> createComment(@PathVariable Long postId,
-        @RequestBody CommentCreateRequest commentRequest) {
-        Long commentId = commentService.createComment(postId, commentRequest);
+    @PostMapping("/comments")
+    public ResponseEntity<Void> createComment(@RequestBody CommentCreateRequest commentRequest) {
+        Long commentId = commentService.createComment(commentRequest);
         return ResponseEntity
-            .created(URI.create("/posts/" + postId + "/comments/" + commentId))
+            .created(URI.create("/comments/" + commentId))
             .build();
     }
 
-    @DeleteMapping("/posts/{postId}/comments/{commentId}")
-    public ResponseEntity<Void> deleteComment(@PathVariable Long postId,
-        @PathVariable Long commentId) {
-        commentService.deleteComment(postId, commentId);
+    @DeleteMapping("comments/{commentId}")
+    public ResponseEntity<Void> deleteComment(@PathVariable Long commentId) {
+        commentService.deleteComment(commentId);
         return ResponseEntity.noContent().build();
     }
 }

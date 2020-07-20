@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 public class CommentCreateRequest {
 
     private Long memberId;
+    private Long postId;
     private String content;
     private Location location;
 

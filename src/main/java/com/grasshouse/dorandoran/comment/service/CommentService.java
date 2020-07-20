@@ -23,16 +23,16 @@ public class CommentService {
     private final PostRepository postRepository;
 
     @Transactional
-    public Long createComment(Long postId, CommentCreateRequest commentRequest) {
-        Comment comment = convertToComment(postId, commentRequest);
+    public Long createComment(CommentCreateRequest commentRequest) {
+        Comment comment = convertToComment(commentRequest);
         commentRepository.save(comment);
         return comment.getId();
     }
 
-    private Comment convertToComment(Long postId, CommentCreateRequest commentRequest) {
+    private Comment convertToComment(CommentCreateRequest commentRequest) {
         Member member = memberRepository.findById(commentRequest.getMemberId())
             .orElseThrow(MemberNotFoundException::new);
-        Post post = postRepository.findById(postId)
+        Post post = postRepository.findById(commentRequest.getPostId())
             .orElseThrow(PostNotFoundException::new);
         Double distance = post.getLocation()
             .calculateDistance(commentRequest.getLocation());
@@ -46,15 +46,10 @@ public class CommentService {
     }
 
     @Transactional
-    public void deleteComment(Long postId, Long commentId) {
-        Comment comment = findCommentById(commentId);
-        Post post = postRepository.findById(postId)
-            .orElseThrow(PostNotFoundException::new);
-        post.removeComment(comment);
-    }
-
-    private Comment findCommentById(Long commentId) {
-        return commentRepository.findById(commentId)
+    public void deleteComment(Long commentId) {
+        Comment comment = commentRepository.findById(commentId)
             .orElseThrow(CommentNotFoundException::new);
+        Post post = comment.getPost();
+        post.removeComment(comment);
     }
 }

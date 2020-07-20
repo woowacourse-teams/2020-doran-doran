@@ -3,9 +3,7 @@ package com.grasshouse.dorandoran.comment.controller;
 import static com.grasshouse.dorandoran.fixture.CommentFixture.PERSIST_COMMENT;
 import static com.grasshouse.dorandoran.fixture.LocationFixture.GANGNAM_STATION;
 import static com.grasshouse.dorandoran.fixture.MemberFixture.PERSIST_MEMBER;
-import static com.grasshouse.dorandoran.fixture.PostFixture.PERSIST_POST;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -37,24 +35,24 @@ class CommentControllerTest extends CommonControllerTest {
             .build();
 
         String request = objectMapper.writeValueAsString(commentCreateRequest);
-        when(commentService.createComment(anyLong(), any())).thenReturn(1L);
+        when(commentService.createComment(any())).thenReturn(1L);
 
-        this.mockMvc.perform(post("/posts/" + PERSIST_POST.getId() + "/comments")
+        this.mockMvc.perform(post("/comments")
             .contentType(MediaType.APPLICATION_JSON_VALUE)
             .content(request))
             .andExpect(status().isCreated())
             .andDo(print());
 
-        verify(commentService).createComment(anyLong(), any());
+        verify(commentService).createComment(any());
     }
 
     @DisplayName("댓글을 삭제한다.")
     @Test
     void deleteComment() throws Exception {
         doNothing().when(commentService)
-            .deleteComment(PERSIST_POST.getId(), PERSIST_COMMENT.getId());
+            .deleteComment(PERSIST_COMMENT.getId());
         this.mockMvc.perform(
-            delete("/posts/" + PERSIST_POST.getId() + "/comments/" + PERSIST_COMMENT.getId()))
+            delete("/comments/" + PERSIST_COMMENT.getId()))
             .andExpect(status().isNoContent())
             .andDo(print());
     }
