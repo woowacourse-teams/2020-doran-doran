@@ -4,26 +4,18 @@
   border-radius: 1em;
   padding: 10px;
   bottom: 32px;
-  box-shadow: 2px 2px 10px grey;
+  box-shadow: 1px 1px 5px grey;
 }
 
-.bottom {
+.speech-arrow {
   position: absolute;
-  border: 9px solid transparent;
-  border-top-color: rgba(0, 0, 0, 0.08);
-  border-bottom: 0;
-  bottom: 0;
+  background-color: white;
   left: 50%;
-  margin-left: -9px;
-  margin-bottom: -9px;
-}
-
-.bottom:after {
-  content: "";
-  position: absolute;
-  border: 7px solid transparent;
-  border-top-color: white;
-  border-bottom: 0;
-  bottom: 2.6px;
-  left: -7px;
+  width: 10px;
+  height: 10px;
+  bottom: -6px;
+  margin-left: -5px;
+  transform: rotate(45deg);
+  box-shadow: -5px 0px 0px white, 0px -5px 0px white, -5px -5px 0px white,
+    1px 1px 5px gray;
 }

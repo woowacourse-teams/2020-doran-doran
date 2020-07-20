@@ -1,5 +1,5 @@
 export const POST_OVERLAY_TEMPLATES = (content) =>
   `<div class="speech-bubble">
-     <div class="bottom"></div>
+     <div class="speech-arrow"></div>
      ${content}
     </div>`;
