@@ -19,7 +19,7 @@
       </div>
       <v-btn
         @click="addPost"
-        class="register-button"
+        class="float-right"
         color="amber accent-4"
         type="submit"
         >등록</v-btn
@@ -51,8 +51,5 @@ export default {
 }
 .content {
   margin-top: 30px;
-}
-.register-button {
-  float: right;
 }
 </style>
