@@ -17,7 +17,7 @@
         />
       </div>
       <v-btn
-        @click="addPost"
+        @click="createPost"
         class="float-right"
         color="amber accent-4"
         type="submit"
@@ -36,8 +36,8 @@ export default {
   },
   components: { PostCreateMap },
   methods: {
-    addPost() {
-      this.$store.dispatch("post/addPost", this.content);
+    createPost() {
+      this.$store.dispatch("post/createPost", this.content);
     },
   },
 };

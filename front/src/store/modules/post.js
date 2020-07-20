@@ -18,7 +18,7 @@ export default {
       //TODO API 요청
       commit("SET_POSTS", MOCK_POSTS);
     },
-    addPost({ commit }, newPost) {
+    createPost({ commit }, newPost) {
       commit("ADD_POST", newPost);
     },
   },
