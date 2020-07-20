@@ -1,5 +1,5 @@
 <template>
-    <v-form class="form">
+    <v-form class="pa-7">
       <PostCreateMap />
       <div class="content">
         <v-textarea
@@ -44,9 +44,6 @@ export default {
 </script>
 
 <style scoped>
-.form {
-  margin: 30px;
-}
 .content {
   margin-top: 30px;
 }
