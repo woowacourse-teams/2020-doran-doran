@@ -21,8 +21,8 @@ public class CommentController {
     }
 
     @PostMapping("/comments")
-    public ResponseEntity<Void> createComment(@RequestBody CommentCreateRequest commentRequest) {
-        Long commentId = commentService.createComment(commentRequest);
+    public ResponseEntity<Void> createComment(@RequestBody CommentCreateRequest request) {
+        Long commentId = commentService.createComment(request);
         return ResponseEntity
             .created(URI.create("/comments/" + commentId))
             .build();

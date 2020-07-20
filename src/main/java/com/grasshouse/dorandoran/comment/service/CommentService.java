@@ -23,24 +23,24 @@ public class CommentService {
     private final PostRepository postRepository;
 
     @Transactional
-    public Long createComment(CommentCreateRequest commentRequest) {
-        Comment comment = convertToComment(commentRequest);
+    public Long createComment(CommentCreateRequest request) {
+        Comment comment = convertToComment(request);
         commentRepository.save(comment);
         return comment.getId();
     }
 
-    private Comment convertToComment(CommentCreateRequest commentRequest) {
-        Member member = memberRepository.findById(commentRequest.getMemberId())
+    private Comment convertToComment(CommentCreateRequest request) {
+        Member member = memberRepository.findById(request.getMemberId())
             .orElseThrow(MemberNotFoundException::new);
-        Post post = postRepository.findById(commentRequest.getPostId())
+        Post post = postRepository.findById(request.getPostId())
             .orElseThrow(PostNotFoundException::new);
         Double distance = post.getLocation()
-            .calculateDistance(commentRequest.getLocation());
+            .calculateDistance(request.getLocation());
 
         return Comment.builder()
             .author(member)
             .post(post)
-            .content(commentRequest.getContent())
+            .content(request.getContent())
             .distance(distance)
             .build();
     }
