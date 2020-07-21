@@ -51,7 +51,7 @@ class PostServiceTest {
     @Test
     void createPostTest() {
         PostCreateRequest postCreateRequest = PostCreateRequest.builder()
-            .author(member)
+            .memberId(member.getId())
             .content("내용")
             .location(JAMSIL_STATION)
             .build();

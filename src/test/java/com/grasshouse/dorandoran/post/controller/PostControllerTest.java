@@ -36,7 +36,7 @@ class PostControllerTest extends CommonControllerTest {
     @Test
     void createPost() throws Exception {
         PostCreateRequest postCreateRequest = PostCreateRequest.builder()
-            .author(PERSIST_MEMBER)
+            .memberId(PERSIST_MEMBER.getId())
             .content("new post")
             .location(JAMSIL_STATION)
             .build();

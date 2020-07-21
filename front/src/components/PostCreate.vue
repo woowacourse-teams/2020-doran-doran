@@ -41,7 +41,14 @@ export default {
   },
   methods: {
     createPost() {
-      this.$store.dispatch("post/createPost", this.content);
+      const data = {
+        memberId: 1,
+        content: this.content,
+        location: this.$getCenterLocation(),
+      };
+      this.$store
+        .dispatch("post/createPost", data)
+        .then(() => alert("글이 등록되었습니다."));
     },
   },
 };
