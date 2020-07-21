@@ -4,6 +4,7 @@ const ERROR_MESSAGE = {
 
 const API_BASE_URL = {
   KAKAO_MAP: "http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=",
+  EC2: "http://3.34.2.114:8080/posts",
 };
 
 export { ERROR_MESSAGE, API_BASE_URL };

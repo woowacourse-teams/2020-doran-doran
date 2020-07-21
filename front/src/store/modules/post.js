@@ -13,7 +13,7 @@ export default {
       state.posts = posts;
     },
     REMOVE_POST(state, postId) {
-      const deleteIndex = state.posts.findIndex((val) => val.id === postId);
+      const deleteIndex = state.posts.findIndex((post) => post.id === postId);
       state.posts.splice(deleteIndex, 1);
     },
   },

@@ -27,10 +27,14 @@ public class PostService {
 
     @Transactional
     public PostCreateResponse createPost(PostCreateRequest request) {
-        Member member = memberRepository.findById(request.getMemberId())
-            .orElseThrow(MemberNotFoundException::new);
-        Post post = request.toPost(member);
+        Member member = findMemberById(request.getMemberId());
+        Post post = Post.builder()
+            .author(member)
+            .content(request.getContent())
+            .location(request.getLocation())
+            .build();
         postRepository.save(post);
+
         return PostCreateResponse.from(post);
     }
 
@@ -50,6 +54,11 @@ public class PostService {
     public void deletePost(Long id) {
         Post post = findPostById(id);
         postRepository.delete(post);
+    }
+
+    private Member findMemberById(Long id) {
+        return memberRepository.findById(id)
+            .orElseThrow(MemberNotFoundException::new);
     }
 
     private Post findPostById(Long id) {

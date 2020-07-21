@@ -1,7 +1,8 @@
+import { API_BASE_URL } from "../utils/constants";
 import axios from "axios";
 
 const client = axios.create({
-  baseURL: "http://3.34.2.114:8080/posts",
+  baseURL: API_BASE_URL.EC2,
 });
 export const createPost = (newPost) => client.post("", newPost);
 export const loadPost = (postId) => client.get(`/${postId}`);
