@@ -44,6 +44,14 @@ const KakaoMap = {
         .catch(() => alert(ERROR_MESSAGE.UNIDENTIFIABLE_LOCATION));
     };
 
+    Vue.prototype.$getCenterLocation = () => {
+      const center = this.map.getCenter();
+      return {
+        longitude: center.getLng(),
+        latitude: center.getLat(),
+      };
+    };
+
     Vue.prototype.$setLocation = (location) => {
       if (!this.map || !location) {
         return;
