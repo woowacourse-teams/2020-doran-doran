@@ -1,4 +1,4 @@
-import * as POST_API from "../../api/posts";
+import * as api from "../../api/posts";
 
 export default {
   namespaced: true,
@@ -8,9 +8,6 @@ export default {
   mutations: {
     ADD_POST(state, post) {
       state.posts.push(post);
-    },
-    SET_POST(state, posts) {
-      state.posts = posts;
     },
     SET_POSTS(state, posts) {
       state.posts = posts;
@@ -22,19 +19,18 @@ export default {
   },
   actions: {
     async createPost({ commit }, newPost) {
-      await POST_API.createPost(newPost);
+      await api.createPost(newPost);
       commit("ADD_POST", newPost);
     },
-    async loadPost({ commit }, postId) {
-      const { data } = await POST_API.loadPost(postId);
-      commit("SET_POST", data);
+    async loadPost(context, postId) {
+      return await api.loadPost(postId);
     },
     async loadPosts({ commit }) {
-      const { data } = await POST_API.loadPosts();
+      const { data } = await api.loadPosts();
       commit("SET_POSTS", data);
     },
     async deletePost({ commit }, postId) {
-      await POST_API.deletePost(postId);
+      await api.deletePost(postId);
       commit("REMOVE_POST", postId);
     },
   },
