@@ -42,6 +42,7 @@ export default {
   methods: {
     createPost() {
       const data = {
+        memberId: 1,
         content: this.content,
         location: this.$getCenterLocation(),
       };

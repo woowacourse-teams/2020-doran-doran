@@ -14,14 +14,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class PostCreateRequest {
 
-    private Member author;
+    private Long memberId;
     private String content;
     private Location location;
     //TODO: Address 추가하기
 
-    public Post toPost() {
+    public Post toPost(Member member) {
         return Post.builder()
-            .author(author)
+            .author(member)
             .content(content)
             .location(location)
             .build();

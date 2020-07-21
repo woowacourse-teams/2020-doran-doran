@@ -1,6 +1,9 @@
 package com.grasshouse.dorandoran.post.service;
 
+import com.grasshouse.dorandoran.common.exception.MemberNotFoundException;
 import com.grasshouse.dorandoran.common.exception.PostNotFoundException;
+import com.grasshouse.dorandoran.member.domain.Member;
+import com.grasshouse.dorandoran.member.repository.MemberRepository;
 import com.grasshouse.dorandoran.post.domain.Post;
 import com.grasshouse.dorandoran.post.repository.PostRepository;
 import com.grasshouse.dorandoran.post.service.dto.PostCreateRequest;
@@ -14,14 +17,19 @@ import org.springframework.transaction.annotation.Transactional;
 public class PostService {
 
     private PostRepository postRepository;
+    private MemberRepository memberRepository;
 
-    public PostService(PostRepository postRepository) {
+    public PostService(PostRepository postRepository,
+        MemberRepository memberRepository) {
         this.postRepository = postRepository;
+        this.memberRepository = memberRepository;
     }
 
     @Transactional
     public PostCreateResponse createPost(PostCreateRequest request) {
-        Post post = request.toPost();
+        Member member = memberRepository.findById(request.getMemberId())
+            .orElseThrow(MemberNotFoundException::new);
+        Post post = request.toPost(member);
         postRepository.save(post);
         return PostCreateResponse.from(post);
     }
