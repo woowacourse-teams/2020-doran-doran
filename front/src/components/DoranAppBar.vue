@@ -1,6 +1,6 @@
 <template>
   <v-app-bar flat max-height="64">
-    <v-btn icon fab text href="/">
+    <v-btn icon fab text @click="goToPreviousPage">
       <v-icon>mdi-chevron-left</v-icon>
     </v-btn>
     <VSpacer />
@@ -13,8 +13,15 @@
 </template>
 
 <script>
+import router from "../router/index";
+
 export default {
   name: "doranAppBar",
+  methods: {
+    goToPreviousPage() {
+      router.go(-1);
+    }
+  }
 };
 </script>
 

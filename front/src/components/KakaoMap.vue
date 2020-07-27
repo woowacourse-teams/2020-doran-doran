@@ -1,5 +1,5 @@
 <template>
-  <v-container class="fill-height fluid" ref="map">
+  <v-container fill-height fluid ref="map">
     <v-icon
       class="center-marker"
       color="blue"

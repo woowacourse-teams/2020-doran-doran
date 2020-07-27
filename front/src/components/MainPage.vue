@@ -1,5 +1,5 @@
 <template>
-  <v-container class="fill-height fluid px-0 py-0">
+  <v-container fill-height fluid class="pa-0">
     <KakaoMap />
     <PostCreateButton />
   </v-container>
