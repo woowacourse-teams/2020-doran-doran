@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar flat>
+  <v-app-bar flat max-height="64">
     <v-btn icon fab text href="/">
       <v-icon>mdi-chevron-left</v-icon>
     </v-btn>
