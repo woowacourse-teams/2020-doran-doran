@@ -1,11 +1,10 @@
 <template>
   <router-link to="/create-post">
     <v-btn
-      class="mb-12"
       fab
       dark
       large
-      absolute
+      fixed
       right
       bottom
       color="amber accent-4"

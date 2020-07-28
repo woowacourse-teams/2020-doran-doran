@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app style="overflow: hidden">
     <DoranAppBar />
     <RouterView />
   </v-app>
