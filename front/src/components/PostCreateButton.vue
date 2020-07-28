@@ -17,7 +17,7 @@
 
 <script>
 export default {
-  name: "postCreateButton",
+  name: "PostCreateButton",
 };
 </script>
 

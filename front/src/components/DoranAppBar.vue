@@ -16,7 +16,7 @@
 import router from "../router/index";
 
 export default {
-  name: "doranAppBar",
+  name: "DoranAppBar",
   methods: {
     goToPreviousPage() {
       router.go(-1);

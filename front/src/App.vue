@@ -9,7 +9,7 @@
 import DoranAppBar from "./components/DoranAppBar";
 
 export default {
-  name: "app",
+  name: "App",
   components: {
     DoranAppBar,
   },
