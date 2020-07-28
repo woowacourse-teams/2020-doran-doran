@@ -10,14 +10,14 @@
       bottom
       color="amber accent-4"
     >
-      <v-icon dark>mdi-pencil</v-icon>
+      <v-icon>mdi-pencil</v-icon>
     </v-btn>
   </router-link>
 </template>
 
 <script>
 export default {
-  name: "PostCreateButton",
+  name: "postCreateButton",
 };
 </script>
 

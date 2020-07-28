@@ -20,8 +20,8 @@ export default {
   methods: {
     goToPreviousPage() {
       router.go(-1);
-    }
-  }
+    },
+  },
 };
 </script>
 

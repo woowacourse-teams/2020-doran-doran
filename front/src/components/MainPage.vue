@@ -10,8 +10,11 @@ import KakaoMap from "./KakaoMap";
 import PostCreateButton from "./PostCreateButton";
 
 export default {
-  name: "MainPage",
-  components: { PostCreateButton, KakaoMap },
+  name: "mainPage",
+  components: {
+    PostCreateButton,
+    KakaoMap,
+  },
 };
 </script>
 
