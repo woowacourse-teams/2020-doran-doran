@@ -3,8 +3,8 @@ const ERROR_MESSAGE = {
 };
 
 const API_BASE_URL = {
-  KAKAO_MAP: "http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=",
-  EC2: "http://15.164.220.212:8080/posts",
+  KAKAO_MAP: "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=",
+  EC2: "//woowacourse.com:8080/posts",
 };
 
 export { ERROR_MESSAGE, API_BASE_URL };
