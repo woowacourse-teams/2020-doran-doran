@@ -13,7 +13,7 @@
 
 <script>
 export default {
-  name: "kakaoMap",
+  name: "KakaoMap",
   props: {
     usage: {
       type: String,

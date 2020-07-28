@@ -30,7 +30,7 @@
 import KakaoMap from "./KakaoMap";
 
 export default {
-  name: "postCreate",
+  name: "PostCreate",
   components: {
     KakaoMap,
   },

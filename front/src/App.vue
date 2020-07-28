@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app style="overflow: hidden">
     <DoranAppBar />
     <RouterView />
   </v-app>
@@ -9,7 +9,7 @@
 import DoranAppBar from "./components/DoranAppBar";
 
 export default {
-  name: "app",
+  name: "App",
   components: {
     DoranAppBar,
   },

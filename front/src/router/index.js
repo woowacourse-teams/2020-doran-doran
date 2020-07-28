@@ -1,15 +1,15 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import KakaoMap from "../components/KakaoMap";
-import CreatePost from "../components/PostCreate";
+import CreatePost from "../components/PostCreatePage";
+import MainPage from "../components/MainPage";
 
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: "/",
-    name: "kakaoMap",
-    component: KakaoMap,
+    name: "mainPage",
+    component: MainPage,
   },
   {
     path: "/create-post",
