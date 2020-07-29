@@ -26,7 +26,7 @@ export default {
       return await api.loadPost(postId);
     },
     async loadPosts({ commit }) {
-      const { data } = await api.loadPosts();
+      const data = await api.loadPosts();
       commit("SET_POSTS", data);
     },
     async deletePost({ commit }, postId) {
