@@ -14,23 +14,28 @@
       <span class="mx-1">0</span>
       <div class="text--disabled float-right">서울시 송파구 방이동에서</div>
     </div>
-    <VDivider class="mt-3" />
+    <VDivider class="my-3" />
+    <CommentInput :post-id="post.id" />
   </div>
 </template>
 
 <script>
+import CommentInput from "./CommentInput";
 export default {
   name: "PostDetailPage",
+  components: {
+    CommentInput
+  },
   data() {
     return {
       post: {
-        id: null,
+        id: 0,
         memberResponse: {
-          id: null,
-          nickname: null,
+          id: 0,
+          nickname: "",
         },
-        content: null,
-        address: null,
+        content: "",
+        address: "",
         comments: [],
       },
     };
