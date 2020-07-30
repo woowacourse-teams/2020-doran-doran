@@ -10,13 +10,12 @@
   <property name="LOG_BACKUP" value="./log/backup"/>
   <property name="MAX_HISTORY" value="30"/>
   <property name="LOG_PATTERN"
-    value="[%d{yyyy-MM-dd HH:mm:ss}:%-3relative] %green([%thread]) %highlight(%-5level) %C.%M :%msg%n"/>
+    value="[%d{yyyy-MM-dd HH:mm:ss}:%-3relative] %green([%thread]) %highlight(%-5level) %C.%M.%L :%msg%n"/>
 
   <springProfile name="!prod">
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
       <encoder>
-        <pattern>${LOG_PATTERN}
-        </pattern>
+        <pattern>${LOG_PATTERN}</pattern>
       </encoder>
     </appender>
 
