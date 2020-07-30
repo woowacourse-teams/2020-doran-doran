@@ -22,6 +22,10 @@ const routes = [
     name: "postDetailPage",
     component: PostDetailPage,
   },
+  {
+    path: "/posts/:id",
+    name: "detailPage",
+  },
 ];
 
 const router = new VueRouter({
