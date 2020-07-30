@@ -14,6 +14,8 @@
 </template>
 
 <script>
+import router from "../router";
+
 export default {
   name: "CommentInput",
   props: {
@@ -37,7 +39,8 @@ export default {
       };
       this.$store
         .dispatch("comment/createComment", data)
-        .then(() => alert("댓글이 등록되었습니다."));
+        .then(() => alert("댓글이 등록되었습니다."))
+        .then(() => router.go(0));
     },
   },
 };

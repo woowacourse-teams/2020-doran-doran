@@ -7,4 +7,8 @@ const API_BASE_URL = {
   EC2: "//woowacourse.com:8080",
 };
 
-export { ERROR_MESSAGE, API_BASE_URL };
+const EVENT_TYPE = {
+  CLICK: "click",
+};
+
+export { ERROR_MESSAGE, API_BASE_URL, EVENT_TYPE };
