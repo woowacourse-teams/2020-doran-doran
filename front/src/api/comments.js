@@ -7,11 +7,11 @@ const client = axios.create({
 
 export const createComment = (newComment) => client.post("", newComment);
 
-const api = () => {
+const api = (() => {
   const createComment = (newComment) => client.post("", newComment);
   return {
     createComment,
   };
-};
+})();
 
 export default api;
