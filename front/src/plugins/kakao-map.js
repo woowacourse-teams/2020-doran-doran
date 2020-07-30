@@ -1,6 +1,7 @@
 import { KAKAO_MAP_APP_KEY } from "../secure/appkey";
 import INITIAL_LOCATION from "../config/config";
-import { API_BASE_URL, ERROR_MESSAGE, EVENT_TYPE } from "../utils/constants";
+import { API_BASE_URL, ERROR_MESSAGE } from "../utils/constants";
+import { POST_OVERLAY_TEMPLATES } from "../utils/template";
 
 const KakaoMap = {
   install(Vue) {
@@ -84,26 +85,12 @@ const KakaoMap = {
       marker.setMap(this.map);
     };
 
-    Vue.prototype.$setPostOverlay = (post, router) => {
+    Vue.prototype.$setPostOverlay = (post) => {
       const kakaoLocation = createKakaoLocation(post.location);
-      const overlay = document.createElement("div");
-      overlay.classList.add("speech-bubble");
-      overlay.innerHTML = `
-        <div class="speech-arrow"></div>
-        ${post.content}
-      `;
-      const toDetailPage = () =>
-        router.push({
-          name: "detailPage",
-          params: {
-            id: post.id,
-          },
-        });
-      overlay.addEventListener(EVENT_TYPE.CLICK, toDetailPage);
 
       const customOverlay = new kakao.maps.CustomOverlay({
         position: kakaoLocation,
-        content: overlay,
+        content: POST_OVERLAY_TEMPLATES(post),
       });
       customOverlay.setMap(this.map);
     };
