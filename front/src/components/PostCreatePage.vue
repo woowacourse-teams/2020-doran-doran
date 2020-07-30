@@ -48,8 +48,8 @@ export default {
       };
       this.$store
         .dispatch("post/createPost", data)
-        .then(() => alert("글이 등록되었습니다."));
-      router.push("/");
+        .then(() => alert("글이 등록되었습니다."))
+        .then(() => router.push("/"));
     },
   },
 };
