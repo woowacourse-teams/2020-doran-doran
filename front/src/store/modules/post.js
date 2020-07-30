@@ -1,4 +1,4 @@
-import * as api from "../../api/posts";
+import api from "../../api/posts";
 
 export default {
   namespaced: true,
@@ -26,7 +26,7 @@ export default {
       return await api.loadPost(postId);
     },
     async loadPosts({ commit }) {
-      const { data } = await api.loadPosts();
+      const data = await api.loadPosts();
       commit("SET_POSTS", data);
     },
     async deletePost({ commit }, postId) {

@@ -16,10 +16,9 @@
       no-resize
     />
     <v-btn
-      @click="createPost"
+      @click.prevent="createPost"
       class="float-right"
       color="amber accent-4"
-      type="submit"
     >
       등록
     </v-btn>
@@ -28,6 +27,7 @@
 
 <script>
 import KakaoMap from "./KakaoMap";
+import router from "../router";
 
 export default {
   name: "PostCreate",
@@ -49,6 +49,7 @@ export default {
       this.$store
         .dispatch("post/createPost", data)
         .then(() => alert("글이 등록되었습니다."));
+      router.push("/");
     },
   },
 };

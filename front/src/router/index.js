@@ -1,7 +1,8 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import CreatePost from "../components/PostCreatePage";
 import MainPage from "../components/MainPage";
+import PostCreatePage from "../components/PostCreatePage";
+import PostDetailPage from "../components/PostDetailPage";
 
 Vue.use(VueRouter);
 
@@ -13,8 +14,13 @@ const routes = [
   },
   {
     path: "/create-post",
-    name: "createPost",
-    component: CreatePost,
+    name: "postCreatePage",
+    component: PostCreatePage,
+  },
+  {
+    path: "/posts/:id",
+    name: "postDetailPage",
+    component: PostDetailPage,
   },
 ];
 

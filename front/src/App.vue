@@ -1,5 +1,5 @@
 <template>
-  <v-app style="overflow: hidden">
+  <v-app style="overflow: hidden;">
     <DoranAppBar />
     <RouterView />
   </v-app>
@@ -18,4 +18,9 @@ export default {
 
 <style>
 @import "./assets/styles/post-overlay.css";
+
+html,
+body {
+  letter-spacing: -0.7px;
+}
 </style>

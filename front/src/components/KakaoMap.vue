@@ -20,9 +20,6 @@ export default {
       default: "default-map",
     },
   },
-  created() {
-    this.$store.dispatch("post/loadPosts");
-  },
   async mounted() {
     await this.$drawMap(this.$refs.map);
     if (!this.isCreatePost) {
@@ -39,7 +36,8 @@ export default {
       const currentLocation = await this.$getCurrentLocation();
       this.$setLocation(currentLocation);
       this.$setCurrentLocationMarker(currentLocation);
-      this.drawPosts();
+      await this.$store.dispatch("post/loadPosts");
+      await this.drawPosts();
     },
     drawPosts() {
       this.$store.getters["post/getPosts"].forEach((post) => {
