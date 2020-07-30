@@ -1,4 +1,4 @@
-import * as api from "../../api/posts";
+import api from "../../api/posts";
 
 export default {
   namespaced: true,
