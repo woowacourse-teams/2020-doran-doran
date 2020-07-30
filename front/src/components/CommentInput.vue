@@ -16,16 +16,16 @@
 <script>
 export default {
   name: "CommentInput",
-  data() {
-    return {
-      content: "",
-    };
-  },
   props: {
     postId: {
       type: Number,
       required: true,
     },
+  },
+  data() {
+    return {
+      content: "",
+    };
   },
   methods: {
     async createComment() {
