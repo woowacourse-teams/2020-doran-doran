@@ -5,26 +5,31 @@
       <span class="post-author">{{ post.memberResponse.nickname }}</span>
       <div class="float-right mt-2">1분 전</div>
     </div>
-    <div class="text--disabled">서울시 중구 장충동에 외침</div>
+    <div class="text--disabled post-address">서울시 중구 장충동에서 외침</div>
     <div class="my-5">{{ post.content }}</div>
     <div>
       <v-icon small>mdi-comment-processing-outline</v-icon>
       <span class="mx-1">{{ post.comments.length }}</span>
       <v-icon small>mdi-heart-outline</v-icon>
       <span class="mx-1">0</span>
-      <div class="text--disabled float-right">서울시 송파구 방이동에서</div>
+      <div class="text--disabled float-right post-address">
+        서울시 송파구 방이동에서
+      </div>
     </div>
-    <VDivider class="my-3" />
+    <CommentList :comments="post.comments" />
     <CommentInput :post-id="post.id" />
   </div>
 </template>
 
 <script>
 import CommentInput from "./CommentInput";
+import CommentList from "./CommentList";
+
 export default {
   name: "PostDetailPage",
   components: {
-    CommentInput
+    CommentList,
+    CommentInput,
   },
   data() {
     return {
@@ -52,5 +57,8 @@ export default {
 <style scoped>
 .post-author {
   font-weight: bold;
+}
+.post-address {
+  font-size: 0.9rem;
 }
 </style>
