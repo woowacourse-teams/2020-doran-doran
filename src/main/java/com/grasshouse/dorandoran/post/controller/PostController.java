@@ -6,6 +6,7 @@ import com.grasshouse.dorandoran.post.service.dto.PostCreateResponse;
 import com.grasshouse.dorandoran.post.service.dto.PostResponse;
 import java.net.URI;
 import java.util.List;
+import javax.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -28,7 +29,7 @@ public class PostController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> createPost(@RequestBody PostCreateRequest request) {
+    public ResponseEntity<Void> createPost(@RequestBody @Valid PostCreateRequest request) {
         PostCreateResponse response = postService.createPost(request);
         return ResponseEntity.created(URI.create("/posts/" + response.getId())).build();
     }

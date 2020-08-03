@@ -5,6 +5,7 @@ import static com.grasshouse.dorandoran.fixture.AuthorAddressFixture.AUTHOR_ADDR
 import static com.grasshouse.dorandoran.fixture.LocationFixture.GANGNAM_STATION;
 import static com.grasshouse.dorandoran.fixture.LocationFixture.JAMSIL_STATION;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.grasshouse.dorandoran.comment.domain.Comment;
 import com.grasshouse.dorandoran.comment.repository.CommentRepository;
@@ -13,6 +14,7 @@ import com.grasshouse.dorandoran.member.domain.Member;
 import com.grasshouse.dorandoran.member.repository.MemberRepository;
 import com.grasshouse.dorandoran.post.domain.Post;
 import com.grasshouse.dorandoran.post.repository.PostRepository;
+import javax.validation.ConstraintViolationException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -87,6 +89,27 @@ class CommentServiceTest {
 
         commentService.deleteComment(persistComment.getId());
         assertThat(commentRepository.findAll()).hasSize(0);
+    }
+
+    @DisplayName("댓글 내용이 200자를 넘을 경우 예외를 발생시킨다.")
+    @Test
+    void maxLengthComment() {
+        Comment comment = longDummyComment();
+        assertThatThrownBy(
+            () -> commentRepository.save(comment)
+        ).isInstanceOf(ConstraintViolationException.class)
+            .hasMessageContaining("120자");
+    }
+
+    private Comment longDummyComment() {
+        return Comment.builder()
+            .author(member)
+            .post(post)
+            .content("댓글입니다댓글입니다댓글입니다댓글입니다댓글입니다댓글입니다댓글입니다댓글입니다"
+                + "댓글입니다댓글입니다댓글입니다댓글입니다댓글입니다댓글입니다댓글입니다댓글입니다"
+                + "댓글입니다댓글입니다댓글입니다댓글입니다댓글입니다댓글입니다댓글입니다댓글입니다꽝")
+            .distance(1.0)
+            .build();
     }
 
     @AfterEach

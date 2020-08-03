@@ -2,6 +2,7 @@ package com.grasshouse.dorandoran.common;
 
 import com.grasshouse.dorandoran.common.exception.ExpectedException;
 import com.grasshouse.dorandoran.common.exception.dto.ErrorResponse;
+import javax.validation.ConstraintViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -30,5 +31,10 @@ public class CommonAdvice {
         e.printStackTrace();
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
             .body(new ErrorResponse(e.getMessage()));
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<ErrorResponse> handleValidationException(ConstraintViolationException e) {
+        return ResponseEntity.badRequest().body(new ErrorResponse(e.getMessage()));
     }
 }

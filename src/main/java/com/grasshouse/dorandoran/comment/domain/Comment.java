@@ -20,6 +20,7 @@ import javax.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -41,6 +42,7 @@ public class Comment {
     @NotNull
     private Post post;
 
+    @Length(max = 120, message = "댓글은 120자를 초과할 수 없습니다.")
     @NotBlank(message = "댓글 내용은 비어 있을 수 없습니다.")
     private String content;
 
