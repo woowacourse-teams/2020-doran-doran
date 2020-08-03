@@ -1,9 +1,7 @@
 <template>
-  <router-link to="/create-post">
-    <v-btn fab dark large fixed right bottom color="amber accent-4">
-      <v-icon>mdi-pencil</v-icon>
-    </v-btn>
-  </router-link>
+  <v-btn fab dark large fixed right bottom color="amber accent-4">
+    <v-icon>mdi-pencil</v-icon>
+  </v-btn>
 </template>
 
 <script>

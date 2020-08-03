@@ -5,7 +5,10 @@ export const POST_OVERLAY_TEMPLATES = (post) => {
   const postOverlay = document.createElement("div");
   postOverlay.classList.add("speech-bubble");
   postOverlay.innerText = post.content;
-  postOverlay.insertAdjacentHTML("afterbegin", `<div class="speech-arrow"></div>`);
+  postOverlay.insertAdjacentHTML(
+    "afterbegin",
+    `<div class="speech-arrow"></div>`,
+  );
 
   const routePage = () => router.push("posts/" + post.id);
   postOverlay.addEventListener(EVENT_TYPE.CLICK, routePage);
