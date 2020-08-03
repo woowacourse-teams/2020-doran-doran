@@ -42,6 +42,8 @@ public class Post {
     @ManyToOne
     private Member author;
 
+    private String authorAddress;
+
     private String content;
 
     @CreatedDate

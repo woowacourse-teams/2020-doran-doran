@@ -1,5 +1,6 @@
 package com.grasshouse.dorandoran.post.controller;
 
+import static com.grasshouse.dorandoran.fixture.AuthorAddressFixture.AUTHOR_ADDRESS;
 import static com.grasshouse.dorandoran.fixture.LocationFixture.JAMSIL_STATION;
 import static com.grasshouse.dorandoran.fixture.MemberFixture.PERSIST_MEMBER;
 import static com.grasshouse.dorandoran.fixture.PostFixture.PERSIST_POST;
@@ -39,6 +40,7 @@ class PostControllerTest extends CommonControllerTest {
             .memberId(PERSIST_MEMBER.getId())
             .content("new post")
             .location(JAMSIL_STATION)
+            .authorAddress(AUTHOR_ADDRESS)
             .build();
 
         PostCreateResponse postCreateResponse = new PostCreateResponse(1L);

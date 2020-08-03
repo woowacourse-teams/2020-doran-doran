@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 public class PostCreateRequest {
 
     private Long memberId;
+    private String authorAddress;
     private String content;
     private Location location;
     //TODO: Address 추가하기
@@ -22,6 +23,7 @@ public class PostCreateRequest {
     public Post toPost(Member member) {
         return Post.builder()
             .author(member)
+            .authorAddress(authorAddress)
             .content(content)
             .location(location)
             .build();
