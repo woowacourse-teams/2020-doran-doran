@@ -1,8 +1,8 @@
 <template>
-  <v-app style="overflow: hidden;">
+  <div class="v-application v-application--is-ltr theme--light app-container">
     <DoranAppBar />
     <RouterView />
-  </v-app>
+  </div>
 </template>
 
 <script>
@@ -21,6 +21,14 @@ export default {
 
 html,
 body {
+  width: 100%;
+  height: 100%;
   letter-spacing: -0.7px;
+}
+
+.app-container {
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
 }
 </style>
