@@ -46,7 +46,7 @@ class PostControllerTest extends CommonControllerTest {
             .authorAddress(AUTHOR_ADDRESS)
             .build();
 
-        PostCreateResponse postCreateResponse = new PostCreateResponse(1L, postCreateRequest.getContent());
+        PostCreateResponse postCreateResponse = new PostCreateResponse(1L);
 
         String request = objectMapper.writeValueAsString(postCreateRequest);
         when(postService.createPost(any())).thenReturn(postCreateResponse);
