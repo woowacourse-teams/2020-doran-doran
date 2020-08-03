@@ -14,6 +14,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,13 +33,17 @@ public class Comment {
     private Long id;
 
     @ManyToOne
+    @NotNull
     private Member author;
 
     @ManyToOne
+    @NotNull
     private Post post;
 
+    @NotBlank(message = "댓글 내용은 비어 있을 수 없습니다.")
     private String content;
 
+    @NotNull
     private Double distance;
 
     @CreatedDate

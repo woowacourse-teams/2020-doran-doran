@@ -4,6 +4,8 @@ import com.grasshouse.dorandoran.comment.domain.Comment;
 import com.grasshouse.dorandoran.member.service.dto.MemberResponse;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,10 +17,19 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CommentResponse {
 
+    @NotNull
     private Long id;
+
+    @NotNull
     private MemberResponse author;
+
+    @NotNull
     private Long postId;
+
+    @NotBlank(message = "댓글 내용은 비어 있을 수 없습니다.")
     private String content;
+
+    @NotNull
     private Double distance;
     //TODO : comment_like 정보 추후에 추가하기
 
