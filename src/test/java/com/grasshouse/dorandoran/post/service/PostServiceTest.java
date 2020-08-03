@@ -1,6 +1,7 @@
 package com.grasshouse.dorandoran.post.service;
 
 import static com.grasshouse.dorandoran.fixture.AddressFixture.ADDRESS;
+import static com.grasshouse.dorandoran.fixture.AuthorAddressFixture.AUTHOR_ADDRESS;
 import static com.grasshouse.dorandoran.fixture.LocationFixture.JAMSIL_STATION;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -52,6 +53,7 @@ class PostServiceTest {
     void createPostTest() {
         PostCreateRequest postCreateRequest = PostCreateRequest.builder()
             .memberId(member.getId())
+            .authorAddress(AUTHOR_ADDRESS)
             .content("내용")
             .location(JAMSIL_STATION)
             .build();
@@ -123,6 +125,7 @@ class PostServiceTest {
             .author(member)
             .content("내용")
             .address(ADDRESS)
+            .authorAddress(AUTHOR_ADDRESS)
             .location(JAMSIL_STATION)
             .build();
     }

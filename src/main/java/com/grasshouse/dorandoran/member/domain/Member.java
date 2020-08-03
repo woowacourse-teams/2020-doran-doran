@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -33,6 +34,7 @@ public class Member {
     private Long id;
 
     @Column(unique = true, nullable = false)
+    @NotBlank(message = "닉네임은 비어 있을 수 없습니다.")
     private String nickname;
 
     @CreatedDate

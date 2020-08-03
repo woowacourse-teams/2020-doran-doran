@@ -1,5 +1,6 @@
 package com.grasshouse.dorandoran.comment.domain;
 
+import com.sun.istack.NotNull;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,5 +17,7 @@ public class CommentLike {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
     private Long memberId;
+
 }
