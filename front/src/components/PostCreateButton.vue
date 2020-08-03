@@ -1,5 +1,5 @@
 <template>
-  <v-btn fab dark large fixed right bottom color="amber accent-4">
+  <v-btn fab dark large fixed right bottom color="amber accent-3">
     <v-icon>mdi-pencil</v-icon>
   </v-btn>
 </template>

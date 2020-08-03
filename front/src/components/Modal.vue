@@ -44,17 +44,10 @@ export default {
 .modal-container {
   width: 80%;
   margin: 0px auto;
-  padding: 10px 10px;
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
   transition: all 0.3s ease;
-  font-family: Helvetica, Arial, sans-serif;
-}
-
-.modal-header h3 {
-  margin-top: 0;
-  color: #42b983;
 }
 
 .modal-content {

@@ -19,15 +19,22 @@
             :counter="200"
             required
             solo
-            autofocus
             no-resize
           />
+
           <v-btn
             @click.prevent="createPost"
-            class="float-right"
-            color="amber accent-4"
+            class="float-right my-6 mx-1 rounded-pill"
+            color="amber accent-3"
           >
             등록
+          </v-btn>
+          <v-btn
+            @click.prevent="showModal = false"
+            class="float-right my-6 mx-1 rounded-pill"
+            color="grey lighten-4"
+          >
+            취소
           </v-btn>
         </v-form>
       </template>
@@ -39,8 +46,8 @@
 import KakaoMap from "./KakaoMap";
 import PostCreateButton from "./PostCreateButton";
 import Modal from "./Modal";
-import router from "../router";
 import { ERROR_MESSAGE } from "../utils/constants";
+import router from "../router"
 
 export default {
   name: "MainPage",
@@ -69,8 +76,9 @@ export default {
       this.$store
         .dispatch("post/createPost", data)
         .then(() => alert("글이 등록되었습니다."))
-        .then(() => (this.showModal = false))
-        .then(() => router.push("/")); //not working
+        .then(() => (this.content = ""))
+        .then(() => (this.showModal = false));
+      router.go(0);
     },
   },
 };
