@@ -1,5 +1,5 @@
 <template>
-  <div class="pa-4 pb-16">
+  <div class="pa-4">
     <div class="mb-3">
       <v-icon x-large class="mr-3">mdi-account-circle</v-icon>
       <span class="post-author">{{ post.memberResponse.nickname }}</span>
@@ -17,6 +17,7 @@
       </div>
     </div>
     <CommentList :comments="post.comments" />
+    <VSpacer class="bottom-spacer" />
     <CommentInput :post-id="post.id" />
   </div>
 </template>
@@ -60,5 +61,8 @@ export default {
 }
 .post-address {
   font-size: 0.9rem;
+}
+.bottom-spacer {
+  height: 60px;
 }
 </style>
