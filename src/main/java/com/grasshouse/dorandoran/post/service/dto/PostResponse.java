@@ -21,6 +21,7 @@ public class PostResponse {
 
     private Long id;
     private MemberResponse memberResponse;
+    private String authorAddress;
     private String content;
     private Location location;
     private Address address;
@@ -32,6 +33,7 @@ public class PostResponse {
         return PostResponse.builder()
             .id(post.getId())
             .memberResponse(MemberResponse.from(post.getAuthor()))
+            .authorAddress(post.getAuthorAddress())
             .content(post.getContent())
             .location(post.getLocation())
             .address(post.getAddress())

@@ -30,6 +30,7 @@ public class PostService {
         Member member = findMemberById(request.getMemberId());
         Post post = Post.builder()
             .author(member)
+            .authorAddress(request.getAuthorAddress())
             .content(request.getContent())
             .location(request.getLocation())
             .build();
