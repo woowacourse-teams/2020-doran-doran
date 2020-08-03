@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
 
 @Builder
 @Getter
@@ -22,6 +23,7 @@ public class PostCreateRequest {
     @NotNull
     private String authorAddress;
 
+    @Length(max = 200)
     @NotBlank(message = "글의 내용은 비어 있을 수 없습니다.")
     private String content;
 

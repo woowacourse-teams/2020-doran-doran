@@ -27,6 +27,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -49,6 +50,7 @@ public class Post {
     @NotBlank(message = "작성자의 위치 주소는 비어 있을 수 없습니다.")
     private String authorAddress;
 
+    @Length(max = 200, message = "글은 200자를 초과할 수 없습니다.")
     @NotBlank(message = "글의 내용은 비어 있을 수 없습니다.")
     private String content;
 

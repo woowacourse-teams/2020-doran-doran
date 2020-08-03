@@ -3,6 +3,7 @@ package com.grasshouse.dorandoran.comment.controller;
 import com.grasshouse.dorandoran.comment.service.CommentService;
 import com.grasshouse.dorandoran.comment.service.dto.CommentCreateRequest;
 import java.net.URI;
+import javax.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -23,7 +24,7 @@ public class CommentController {
     }
 
     @PostMapping("/comments")
-    public ResponseEntity<Void> createComment(@RequestBody CommentCreateRequest request) {
+    public ResponseEntity<Void> createComment(@RequestBody @Valid CommentCreateRequest request) {
         Long commentId = commentService.createComment(request);
         return ResponseEntity
             .created(URI.create("/comments/" + commentId))

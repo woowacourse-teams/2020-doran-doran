@@ -4,6 +4,7 @@ import static com.grasshouse.dorandoran.fixture.AddressFixture.ADDRESS;
 import static com.grasshouse.dorandoran.fixture.AuthorAddressFixture.AUTHOR_ADDRESS;
 import static com.grasshouse.dorandoran.fixture.LocationFixture.JAMSIL_STATION;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.grasshouse.dorandoran.comment.domain.Comment;
 import com.grasshouse.dorandoran.comment.repository.CommentRepository;
@@ -15,6 +16,7 @@ import com.grasshouse.dorandoran.post.service.dto.PostCreateRequest;
 import com.grasshouse.dorandoran.post.service.dto.PostCreateResponse;
 import com.grasshouse.dorandoran.post.service.dto.PostResponse;
 import java.util.List;
+import javax.validation.ConstraintViolationException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -120,10 +122,34 @@ class PostServiceTest {
         assertThat(commentRepository.findAll()).hasSize(0);
     }
 
+    @DisplayName("글 내용이 200자를 넘을 경우 예외를 발생시킨다.")
+    @Test
+    void maxLengthPost() {
+        Post post = longDummyPost();
+        assertThatThrownBy(
+            () -> postRepository.save(post)
+        ).isInstanceOf(ConstraintViolationException.class)
+            .hasMessageContaining("200자");
+    }
+
     private Post dummyPost() {
         return Post.builder()
             .author(member)
             .content("내용")
+            .address(ADDRESS)
+            .authorAddress(AUTHOR_ADDRESS)
+            .location(JAMSIL_STATION)
+            .build();
+    }
+
+    private Post longDummyPost() {
+        return Post.builder()
+            .author(member)
+            .content("안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요"
+                + "안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요"
+                + "안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요"
+                + "안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요"
+                + "안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요꽝꽝")
             .address(ADDRESS)
             .authorAddress(AUTHOR_ADDRESS)
             .location(JAMSIL_STATION)
