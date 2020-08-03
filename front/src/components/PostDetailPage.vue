@@ -2,7 +2,7 @@
   <div class="pa-4">
     <div class="mb-3">
       <v-icon x-large class="mr-3">mdi-account-circle</v-icon>
-      <span class="post-author">{{ post.memberResponse.nickname }}</span>
+      <span class="font-weight-bold">{{ post.memberResponse.nickname }}</span>
       <div class="float-right mt-2">1분 전</div>
     </div>
     <div class="text--disabled post-address">서울시 중구 장충동에서 외침</div>
@@ -56,9 +56,6 @@ export default {
 </script>
 
 <style scoped>
-.post-author {
-  font-weight: bold;
-}
 .post-address {
   font-size: 0.9rem;
 }
