@@ -3,6 +3,7 @@
     <v-text-field
       v-model="content"
       placeholder="댓글을 입력해주세요."
+      maxlength="120"
       append-icon="mdi-pencil"
       @click:append="createComment"
       color="black"
