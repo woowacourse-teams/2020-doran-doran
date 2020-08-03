@@ -3,23 +3,29 @@ import VueRouter from "vue-router";
 import MainPage from "../components/MainPage";
 import PostCreatePage from "../components/PostCreatePage";
 import PostDetailPage from "../components/PostDetailPage";
+import TimelinePage from "../components/TimelinePage";
 
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: "/",
-    name: "mainPage",
+    name: "MainPage",
     component: MainPage,
   },
   {
+    path: "/timeline",
+    name: "TimeLine",
+    component: TimelinePage,
+  },
+  {
     path: "/create-post",
-    name: "postCreatePage",
+    name: "PostCreatePage",
     component: PostCreatePage,
   },
   {
     path: "/posts/:id",
-    name: "postDetailPage",
+    name: "PostDetailPage",
     component: PostDetailPage,
   },
 ];
