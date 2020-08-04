@@ -1,8 +1,8 @@
 <template>
   <v-container fill-height fluid class="pa-0">
-    <KakaoMap />
+    <KakaoMap :show-overlay="showOverlay" />
 
-    <PostCreateButton @click.native="showModal = true" />
+    <PostCreateButton @click.native="showPostCreateModal" />
 
     <Modal v-if="showModal" @close="showModal = false">
       <template slot="content">
@@ -47,7 +47,7 @@ import KakaoMap from "./KakaoMap";
 import PostCreateButton from "./PostCreateButton";
 import Modal from "./Modal";
 import { ERROR_MESSAGE } from "../utils/constants";
-import router from "../router"
+import router from "../router";
 
 export default {
   name: "MainPage",
@@ -59,10 +59,15 @@ export default {
   data() {
     return {
       showModal: false,
+      showOverlay: true,
       content: "",
     };
   },
   methods: {
+    showPostCreateModal() {
+      this.showOverlay = false;
+      // this.showModal = true;
+    },
     createPost() {
       if (this.content === "") {
         alert(ERROR_MESSAGE.POST_CONTENT_NOT_FOUND);

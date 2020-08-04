@@ -19,6 +19,9 @@ export default {
       type: String,
       default: "default-map",
     },
+    showOverlay: {
+      type: Boolean,
+    },
   },
   async mounted() {
     await this.$drawMap(this.$refs.map);
@@ -29,6 +32,15 @@ export default {
   computed: {
     isCreatePost() {
       return this.usage === "create-post";
+    },
+  },
+  watch: {
+    showOverlay() {
+      if (this.showOverlay) {
+        this.$showOverlays();
+      } else {
+        this.$closeOverlays();
+      }
     },
   },
   methods: {
