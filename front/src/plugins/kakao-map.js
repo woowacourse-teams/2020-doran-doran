@@ -1,12 +1,15 @@
 import { KAKAO_MAP_APP_KEY } from "../secure/appkey";
 import INITIAL_LOCATION from "../config/config";
-import { API_BASE_URL, ERROR_MESSAGE } from "../utils/constants";
+import { ERROR_MESSAGE } from "../utils/constants";
 import { POST_OVERLAY_TEMPLATES } from "../utils/template";
+
+const KAKAO_MAP_URL = "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=";
+const LIBRARY = "&libraries=services";
 
 const KakaoMap = {
   install(Vue) {
     const script = document.createElement("script");
-    script.src = API_BASE_URL.KAKAO_MAP + KAKAO_MAP_APP_KEY;
+    script.src = KAKAO_MAP_URL + KAKAO_MAP_APP_KEY + LIBRARY;
     document.head.appendChild(script);
 
     /* global kakao */
@@ -93,6 +96,18 @@ const KakaoMap = {
         content: POST_OVERLAY_TEMPLATES(post),
       });
       customOverlay.setMap(this.map);
+    };
+
+    Vue.prototype.$getAddress = async (location) => {
+      const geocoder = new kakao.maps.services.Geocoder();
+
+      return await new Promise((resolve) =>
+        geocoder.coord2RegionCode(
+          location.longitude,
+          location.latitude,
+          resolve,
+        ),
+      ).then((result) => result[1].address_name);
     };
   },
 };
