@@ -2,8 +2,8 @@
   <v-container fill-height fluid ref="map">
     <v-icon
       class="center-marker"
-      color="blue"
-      size="50"
+      color="red"
+      size="40"
       v-if="this.isCreatePost"
     >
       mdi-map-marker
