@@ -8,6 +8,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.grasshouse.dorandoran.comment.domain.Comment;
 import com.grasshouse.dorandoran.comment.repository.CommentRepository;
+import com.grasshouse.dorandoran.common.exception.PostNotFoundException;
 import com.grasshouse.dorandoran.member.domain.Member;
 import com.grasshouse.dorandoran.member.repository.MemberRepository;
 import com.grasshouse.dorandoran.post.domain.Post;
@@ -129,6 +130,21 @@ class PostServiceTest {
         assertThatThrownBy(() -> postRepository.save(post))
             .isInstanceOf(ConstraintViolationException.class)
             .hasMessageContaining("200자");
+    }
+
+    @DisplayName("글을 작성할 때 createdAt 필드가 추가된다.")
+    @Test
+    void checkPostCreatedAt() {
+        PostCreateRequest postCreateRequest = PostCreateRequest.builder()
+            .memberId(member.getId())
+            .authorAddress(AUTHOR_ADDRESS)
+            .content("내용")
+            .location(JAMSIL_STATION)
+            .build();
+
+        PostCreateResponse createResponse = postService.createPost(postCreateRequest);
+        Post createdPost = postRepository.findById(createResponse.getId()).orElseThrow(PostNotFoundException::new);
+        assertThat(createdPost.getCreatedAt()).isNotNull();
     }
 
     private Post dummyPost() {

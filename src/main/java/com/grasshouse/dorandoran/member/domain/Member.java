@@ -20,7 +20,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @Getter
 @Builder
@@ -28,7 +27,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 @NoArgsConstructor
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-@EnableJpaAuditing
 public class Member {
 
     @Id
@@ -47,11 +45,11 @@ public class Member {
 
     @Builder.Default
     @OneToMany(mappedBy = "author")
-    private List<Post> posts = new ArrayList<>();
+    private final List<Post> posts = new ArrayList<>();
 
     @Builder.Default
     @OneToMany(mappedBy = "author")
-    private List<Comment> comments = new ArrayList<>();
+    private final List<Comment> comments = new ArrayList<>();
 }
 
 

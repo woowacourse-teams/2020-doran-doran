@@ -30,7 +30,6 @@ import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @Getter
 @Builder
@@ -38,7 +37,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 @NoArgsConstructor
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-@EnableJpaAuditing
 public class Post {
 
     @Id

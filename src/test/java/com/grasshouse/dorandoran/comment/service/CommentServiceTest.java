@@ -10,6 +10,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import com.grasshouse.dorandoran.comment.domain.Comment;
 import com.grasshouse.dorandoran.comment.repository.CommentRepository;
 import com.grasshouse.dorandoran.comment.service.dto.CommentCreateRequest;
+import com.grasshouse.dorandoran.common.exception.CommentNotFoundException;
 import com.grasshouse.dorandoran.member.domain.Member;
 import com.grasshouse.dorandoran.member.repository.MemberRepository;
 import com.grasshouse.dorandoran.post.domain.Post;
@@ -91,13 +92,29 @@ class CommentServiceTest {
         assertThat(commentRepository.findAll()).hasSize(0);
     }
 
-    @DisplayName("댓글 내용이 200자를 넘을 경우 예외를 발생시킨다.")
+    @DisplayName("댓글 내용이 120자를 넘을 경우 예외를 발생시킨다.")
     @Test
     void maxLengthComment() {
         Comment comment = longDummyComment();
         assertThatThrownBy(() -> commentRepository.save(comment))
             .isInstanceOf(ConstraintViolationException.class)
             .hasMessageContaining("120자");
+    }
+
+    @DisplayName("댓글 작성할 때 createdAt 필드가 추가된다.")
+    @Test
+    void checkCommentCreatedAt() {
+        CommentCreateRequest commentCreateRequest = CommentCreateRequest.builder()
+            .memberId(member.getId())
+            .postId(post.getId())
+            .content("내용")
+            .location(JAMSIL_STATION)
+            .build();
+
+        Comment createdComment = commentRepository
+            .findById(commentService.createComment(commentCreateRequest))
+            .orElseThrow(CommentNotFoundException::new);
+        assertThat(createdComment.getCreatedAt()).isNotNull();
     }
 
     private Comment longDummyComment() {

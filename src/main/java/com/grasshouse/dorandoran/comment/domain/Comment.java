@@ -23,13 +23,11 @@ import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @Getter
 @NoArgsConstructor
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-@EnableJpaAuditing
 public class Comment {
 
     @Id
