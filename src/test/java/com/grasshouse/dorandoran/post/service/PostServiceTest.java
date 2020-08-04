@@ -126,9 +126,8 @@ class PostServiceTest {
     @Test
     void maxLengthPost() {
         Post post = longDummyPost();
-        assertThatThrownBy(
-            () -> postRepository.save(post)
-        ).isInstanceOf(ConstraintViolationException.class)
+        assertThatThrownBy(() -> postRepository.save(post))
+            .isInstanceOf(ConstraintViolationException.class)
             .hasMessageContaining("200자");
     }
 
