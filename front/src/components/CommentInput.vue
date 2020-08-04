@@ -1,5 +1,5 @@
 <template>
-  <div class="my-3">
+  <div class="pt-3 comment-input">
     <v-text-field
       v-model="content"
       placeholder="댓글을 입력해주세요."
@@ -47,4 +47,13 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.comment-input {
+  position: fixed;
+  width: 90vw;
+  bottom: -1%;
+  left: 50%;
+  transform: translate(-50%);
+  background-color: white;
+}
+</style>

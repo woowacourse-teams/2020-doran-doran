@@ -6,7 +6,7 @@
       <div class="float-right mt-2">1분 전</div>
     </div>
     <div class="text--disabled post-address">서울시 중구 장충동에서 외침</div>
-    <div class="my-5">{{ post.content }}</div>
+    <div class="my-5 text-break">{{ post.content }}</div>
     <div>
       <v-icon small>mdi-comment-processing-outline</v-icon>
       <span class="mx-1">{{ post.comments.length }}</span>
@@ -17,6 +17,7 @@
       </div>
     </div>
     <CommentList :comments="post.comments" />
+    <VSpacer class="bottom-spacer" />
     <CommentInput :post-id="post.id" />
   </div>
 </template>
@@ -60,5 +61,8 @@ export default {
 }
 .post-address {
   font-size: 0.9rem;
+}
+.bottom-spacer {
+  height: 60px;
 }
 </style>
