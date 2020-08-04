@@ -1,6 +1,6 @@
 package com.grasshouse.dorandoran.post.controller;
 
-import static com.grasshouse.dorandoran.fixture.AuthorAddressFixture.AUTHOR_ADDRESS;
+import static com.grasshouse.dorandoran.fixture.AddressFixture.AUTHOR_ADDRESS;
 import static com.grasshouse.dorandoran.fixture.LocationFixture.GANGNAM_STATION;
 import static com.grasshouse.dorandoran.fixture.LocationFixture.JAMSIL_STATION;
 import static com.grasshouse.dorandoran.fixture.MemberFixture.PERSIST_MEMBER;

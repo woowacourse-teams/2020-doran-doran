@@ -1,7 +1,7 @@
 package com.grasshouse.dorandoran.comment.service;
 
 import static com.grasshouse.dorandoran.fixture.AddressFixture.ADDRESS;
-import static com.grasshouse.dorandoran.fixture.AuthorAddressFixture.AUTHOR_ADDRESS;
+import static com.grasshouse.dorandoran.fixture.AddressFixture.AUTHOR_ADDRESS;
 import static com.grasshouse.dorandoran.fixture.LocationFixture.GANGNAM_STATION;
 import static com.grasshouse.dorandoran.fixture.LocationFixture.JAMSIL_STATION;
 import static org.assertj.core.api.Assertions.assertThat;

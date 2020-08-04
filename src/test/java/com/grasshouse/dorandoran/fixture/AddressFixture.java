@@ -10,4 +10,9 @@ public class AddressFixture {
         .depth3("방이동")
         .build();
 
+    public static final Address AUTHOR_ADDRESS = Address.builder()
+        .depth1("부산광역시")
+        .depth2("연제구")
+        .depth3("연산동")
+        .build();
 }

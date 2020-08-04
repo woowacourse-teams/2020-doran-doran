@@ -1,6 +1,7 @@
 package com.grasshouse.dorandoran.post.service.dto;
 
 import com.grasshouse.dorandoran.member.domain.Member;
+import com.grasshouse.dorandoran.post.domain.Address;
 import com.grasshouse.dorandoran.post.domain.Location;
 import com.grasshouse.dorandoran.post.domain.Post;
 import javax.validation.constraints.NotBlank;
@@ -21,7 +22,7 @@ public class PostCreateRequest {
     private Long memberId;
 
     @NotNull
-    private String authorAddress;
+    private Address authorAddress;
 
     @Length(max = 200)
     @NotBlank(message = "글의 내용은 비어 있을 수 없습니다.")

@@ -28,7 +28,7 @@ public class PostResponse {
     private MemberResponse memberResponse;
 
     @NotNull
-    private String authorAddress;
+    private Address authorAddress;
 
     @NotBlank(message = "글의 내용은 비어 있을 수 없습니다.")
     private String content;
