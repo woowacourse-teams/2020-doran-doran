@@ -17,7 +17,7 @@
       </div>
     </div>
     <CommentList :comments="post.comments" />
-    <VSpacer class="bottom-spacer" />
+    <div class="bottom-spacer" />
     <CommentInput :post-id="post.id" />
   </div>
 </template>
