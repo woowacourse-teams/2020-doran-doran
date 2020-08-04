@@ -95,9 +95,8 @@ class CommentServiceTest {
     @Test
     void maxLengthComment() {
         Comment comment = longDummyComment();
-        assertThatThrownBy(
-            () -> commentRepository.save(comment)
-        ).isInstanceOf(ConstraintViolationException.class)
+        assertThatThrownBy(() -> commentRepository.save(comment))
+            .isInstanceOf(ConstraintViolationException.class)
             .hasMessageContaining("120자");
     }
 
