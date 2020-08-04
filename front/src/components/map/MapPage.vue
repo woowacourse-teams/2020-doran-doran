@@ -7,7 +7,7 @@
 
     <PostCreateButton @click.native="showMarker" />
 
-    <Modal v-if="showModal" @close="showModal = false">
+    <modal v-if="showModal" @close="showModal = false">
       <template slot="content">
         <v-icon class="mdi pt-3 px-3">mdi-map-marker</v-icon>
         <span class="pt-3">글 위치 글 위치</span>
@@ -41,19 +41,19 @@
           </v-btn>
         </v-form>
       </template>
-    </Modal>
+    </modal>
   </v-container>
 </template>
 
 <script>
 import KakaoMap from "./KakaoMap";
 import PostCreateButton from "./PostCreateButton";
-import Modal from "./Modal";
-import { ERROR_MESSAGE } from "../utils/constants";
-import router from "../router";
+import Modal from "../Modal";
+import { ERROR_MESSAGE } from "../../utils/constants";
+import router from "../../router";
 
 export default {
-  name: "MainPage",
+  name: "MapPage",
   components: {
     KakaoMap,
     PostCreateButton,

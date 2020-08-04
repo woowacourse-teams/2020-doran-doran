@@ -36,7 +36,7 @@ const KakaoMap = {
       const getLocation = () =>
         new Promise((resolve, reject) =>
           navigator.geolocation.getCurrentPosition(resolve, reject, {
-            timeout: 3000,
+            timeout: 1000,
           }),
         );
       return await getLocation()
