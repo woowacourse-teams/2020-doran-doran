@@ -21,7 +21,6 @@ public class PostCreateRequest {
     @NotNull
     private Long memberId;
 
-    @NotNull
     private Address authorAddress;
 
     @Length(max = 200)
@@ -30,7 +29,6 @@ public class PostCreateRequest {
 
     @NotNull
     private Location location;
-    //TODO: Address 추가하기
 
     public Post toPost(Member member) {
         return Post.builder()

@@ -53,7 +53,6 @@ public class Post {
         @AttributeOverride(name = "depth2", column = @Column(name = "AUTHOR_ADDRESS_DEPTH_2")),
         @AttributeOverride(name = "depth3", column = @Column(name = "AUTHOR_ADDRESS_DEPTH_3"))
     })
-    @NotNull
     private Address authorAddress;
 
     @Length(max = 200, message = "글은 200자를 초과할 수 없습니다.")
