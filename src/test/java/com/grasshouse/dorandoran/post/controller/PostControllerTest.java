@@ -1,9 +1,11 @@
 package com.grasshouse.dorandoran.post.controller;
 
 import static com.grasshouse.dorandoran.fixture.AuthorAddressFixture.AUTHOR_ADDRESS;
+import static com.grasshouse.dorandoran.fixture.LocationFixture.GANGNAM_STATION;
 import static com.grasshouse.dorandoran.fixture.LocationFixture.JAMSIL_STATION;
 import static com.grasshouse.dorandoran.fixture.MemberFixture.PERSIST_MEMBER;
 import static com.grasshouse.dorandoran.fixture.PostFixture.PERSIST_POST;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.doNothing;
@@ -27,6 +29,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
 class PostControllerTest extends CommonControllerTest {
 
@@ -100,6 +103,31 @@ class PostControllerTest extends CommonControllerTest {
             .andDo(print());
 
         verify(postService).deletePost(anyLong());
+    }
+
+
+    @DisplayName("PostCreateRequest DTO의 내용이 200자를 넘는다.")
+    @Test
+    void wrongPostCreateDto() throws Exception {
+        PostCreateRequest postCreateRequest = PostCreateRequest.builder()
+            .memberId(PERSIST_MEMBER.getId())
+            .authorAddress(null)
+            .content("안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요"
+                + "안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요"
+                + "안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요"
+                + "안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요"
+                + "안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요꽝꽝")
+            .location(GANGNAM_STATION)
+            .build();
+
+        String request = objectMapper.writeValueAsString(postCreateRequest);
+
+        this.mockMvc.perform(post("/posts")
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
+            .content(request))
+            .andExpect(result -> assertTrue(
+                result.getResolvedException() instanceof MethodArgumentNotValidException))
+            .andDo(print());
     }
 
     private List<PostResponse> postResponses() {
