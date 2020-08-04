@@ -98,7 +98,7 @@ const KakaoMap = {
       customOverlay.setMap(this.map);
     };
 
-    Vue.prototype.$locationToAddress = async (location) => {
+    Vue.prototype.$getAddress = async (location) => {
       const geocoder = new kakao.maps.services.Geocoder();
 
       return await new Promise((resolve) =>
