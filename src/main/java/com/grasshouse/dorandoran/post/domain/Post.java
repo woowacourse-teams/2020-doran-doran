@@ -49,8 +49,14 @@ public class Post {
     @NotNull
     private Member author;
 
-    @NotBlank(message = "작성자의 위치 주소는 비어 있을 수 없습니다.")
-    private String authorAddress;
+    @Embedded
+    @AttributeOverrides({
+        @AttributeOverride(name = "depth1", column = @Column(name = "AUTHOR_ADDRESS_DEPTH_1")),
+        @AttributeOverride(name = "depth2", column = @Column(name = "AUTHOR_ADDRESS_DEPTH_2")),
+        @AttributeOverride(name = "depth3", column = @Column(name = "AUTHOR_ADDRESS_DEPTH_3"))
+    })
+    @NotNull
+    private Address authorAddress;
 
     @Length(max = 200, message = "글은 200자를 초과할 수 없습니다.")
     @NotBlank(message = "글의 내용은 비어 있을 수 없습니다.")
@@ -61,11 +67,11 @@ public class Post {
 
     @Builder.Default
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Comment> comments = new ArrayList<>();
+    private final List<Comment> comments = new ArrayList<>();
 
     @OneToMany
     @JoinColumn(name = "POST_LIKE_ID")
-    private Set<PostLike> likes = new HashSet<>();
+    private final Set<PostLike> likes = new HashSet<>();
 
     @Embedded
     @NotNull
