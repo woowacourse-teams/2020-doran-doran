@@ -3,17 +3,11 @@ const ERROR_MESSAGE = {
 };
 
 const API_BASE_URL = {
-  KAKAO_MAP: "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=",
   EC2: "//woowacourse.com:8080",
-  LIBRARY: "&libraries="
 };
-
-const KAKAO_MAP_LIBRARY = {
-  SERVICE: "services",
-}
 
 const EVENT_TYPE = {
   CLICK: "click",
 };
 
-export { ERROR_MESSAGE, API_BASE_URL, KAKAO_MAP_LIBRARY, EVENT_TYPE };
+export { ERROR_MESSAGE, API_BASE_URL, EVENT_TYPE };
