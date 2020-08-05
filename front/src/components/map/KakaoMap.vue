@@ -4,7 +4,7 @@
       class="center-marker"
       color="red"
       size="40"
-      v-if="this.isMarkerState"
+      v-if="this.isMarkerMode"
     >
       mdi-map-marker
     </v-icon>
@@ -15,21 +15,9 @@
 export default {
   name: "KakaoMap",
   computed: {
-    isMapState() {
-      return this.$store.getters["modal/isDefaultMode"];
-    },
-    isMarkerState() {
+    isMarkerMode() {
       return this.$store.getters["modal/isMarkerMode"];
     }
-  },
-  watch: {
-    showOverlay() {
-      if (this.isMapState()) {
-        this.$closeOverlays();
-      } else {
-        this.$showOverlays();
-      }
-    },
   },
   async mounted() {
     await this.$drawMap(this.$refs.map);

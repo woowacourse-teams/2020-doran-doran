@@ -7,7 +7,7 @@
 
     <PostCreateButton @click.native="showMarker" />
 
-    <PostCreateModal v-if="this.postCreateState" />
+    <PostCreateModal v-if="this.postMode" />
   </v-container>
 </template>
 
@@ -28,41 +28,43 @@ export default {
     return {
       showModal: false,
       showOverlay: true,
-      mapUsage: "default-map",
       snackbarMarker: false,
-      snackbarCreated: false,
       content: "",
     };
   },
   computed: {
-    mapState() {
+    mapMode() {
       return this.$store.getters["modal/isDefaultMode"];
     },
-    markerState() {
+    markerMode() {
       return this.$store.getters["modal/isMarkerMode"];
     },
-    postCreateState() {
+    postMode() {
       return this.$store.getters["modal/isPostMode"];
     },
   },
+  watch: {
+    showOverlay(val) {
+      if (val) {
+        this.$showOverlays();
+      } else {
+        this.$closeOverlays();
+      }
+    }
+  },
   methods: {
     showMarker() {
-      if (this.mapState) {
+      if (this.mapMode) {
         this.$store.commit("modal/CHANGE_STATE", MAP_MODE.MARKER);
         this.showOverlay = false;
         this.snackbarMarker = true;
-      } else if (this.markerState) {
+      } else if (this.markerMode) {
         this.$store.commit("modal/CHANGE_STATE", MAP_MODE.POST);
-        this.mapUsage = "";
         this.showModal = true;
       }
     },
   },
-};
+}
 </script>
 
-<style scoped>
-.map-container {
-  height: 40vh;
-}
-</style>
+<style scoped></style>

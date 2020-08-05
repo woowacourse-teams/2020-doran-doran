@@ -46,7 +46,6 @@ export default {
     return {
       content: "",
       snackbarWarning: false,
-      snackbarCreated: false,
       postErrorMessage: ERROR_MESSAGE.CONTENT_NOT_FOUND,
     };
   },
