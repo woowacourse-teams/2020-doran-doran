@@ -122,7 +122,13 @@ const KakaoMap = {
           location.latitude,
           resolve,
         ),
-      ).then((result) => result[1].address_name);
+      ).then((result) => {
+        return {
+          depth1: result[1].region_1depth_name,
+          depth2: result[1].region_2depth_name,
+          depth3: result[1].region_3depth_name,
+        };
+      });
     };
   },
 };
