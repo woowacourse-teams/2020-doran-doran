@@ -15,6 +15,7 @@ import com.grasshouse.dorandoran.member.domain.Member;
 import com.grasshouse.dorandoran.member.repository.MemberRepository;
 import com.grasshouse.dorandoran.post.domain.Post;
 import com.grasshouse.dorandoran.post.repository.PostRepository;
+import com.grasshouse.dorandoran.post.repository.PostRepositorySupport;
 import javax.validation.ConstraintViolationException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,6 +32,9 @@ class CommentServiceTest {
 
     @Autowired
     private CommentRepository commentRepository;
+
+    @Autowired
+    private PostRepositorySupport postRepositorySupport;
 
     @Autowired
     private PostRepository postRepository;
@@ -70,9 +74,10 @@ class CommentServiceTest {
             .location(GANGNAM_STATION)
             .build();
 
-        Long commentId = commentService.createComment(request);
+        commentService.createComment(request);
+        Post persistPost = postRepositorySupport.findPostWithComment(this.post.getId());
 
-        assertThat(commentId).isNotNull();
+        assertThat(persistPost.getComments()).hasSize(1);
     }
 
     @DisplayName("댓글을 삭제한다.")
