@@ -126,7 +126,18 @@ class PostServiceTest {
     @DisplayName("글 내용이 200자를 넘을 경우 예외를 발생시킨다.")
     @Test
     void maxLengthPost() {
-        Post post = longDummyPost();
+        Post post = Post.builder()
+            .author(member)
+            .content("안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요"
+                + "안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요"
+                + "안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요"
+                + "안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요"
+                + "안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요꽝꽝")
+            .address(ADDRESS)
+            .authorAddress(AUTHOR_ADDRESS)
+            .location(JAMSIL_STATION)
+            .build();
+
         assertThatThrownBy(() -> postRepository.save(post))
             .isInstanceOf(ConstraintViolationException.class)
             .hasMessageContaining("200자");
@@ -143,7 +154,8 @@ class PostServiceTest {
             .build();
 
         PostCreateResponse createResponse = postService.createPost(postCreateRequest);
-        Post createdPost = postRepository.findById(createResponse.getId()).orElseThrow(PostNotFoundException::new);
+        Post createdPost = postRepository.findById(createResponse.getId())
+            .orElseThrow(PostNotFoundException::new);
         assertThat(createdPost.getCreatedAt()).isNotNull();
     }
 
@@ -151,20 +163,6 @@ class PostServiceTest {
         return Post.builder()
             .author(member)
             .content("내용")
-            .address(ADDRESS)
-            .authorAddress(AUTHOR_ADDRESS)
-            .location(JAMSIL_STATION)
-            .build();
-    }
-
-    private Post longDummyPost() {
-        return Post.builder()
-            .author(member)
-            .content("안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요"
-                + "안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요"
-                + "안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요"
-                + "안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요"
-                + "안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요꽝꽝")
             .address(ADDRESS)
             .authorAddress(AUTHOR_ADDRESS)
             .location(JAMSIL_STATION)
