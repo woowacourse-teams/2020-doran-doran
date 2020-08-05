@@ -30,6 +30,8 @@ public class PostCreateRequest {
     @NotNull
     private Location location;
 
+    private Address address;
+
     public Post toPost(Member member) {
         return Post.builder()
             .author(member)
