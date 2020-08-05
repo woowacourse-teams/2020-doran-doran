@@ -1,5 +1,5 @@
 <template>
-  <v-container fill-height fluid className="pa-0">
+  <v-container fill-height fluid class="pa-0">
     <v-snackbar v-model="locationAlert" timeout="1500" top>
       ✏️ 글을 작성할 위치를 선택해주세요.
     </v-snackbar>
