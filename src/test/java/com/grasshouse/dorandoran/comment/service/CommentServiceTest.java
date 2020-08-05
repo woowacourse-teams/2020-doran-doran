@@ -119,8 +119,8 @@ class CommentServiceTest {
             .location(JAMSIL_STATION)
             .build();
 
-        Comment createdComment = commentRepository
-            .findById(commentService.createComment(commentCreateRequest))
+        Long commentId = commentService.createComment(commentCreateRequest);
+        Comment createdComment = commentRepository.findById(commentId)
             .orElseThrow(CommentNotFoundException::new);
         assertThat(createdComment.getCreatedAt()).isNotNull();
     }
