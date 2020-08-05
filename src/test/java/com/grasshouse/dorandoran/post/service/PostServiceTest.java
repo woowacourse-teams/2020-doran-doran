@@ -124,12 +124,12 @@ class PostServiceTest {
         assertThat(commentRepository.findAll()).hasSize(0);
     }
 
-    @DisplayName("글 내용이 200자를 넘을 경우 예외를 발생시킨다.")
+    @DisplayName("[예외] 글 내용이 200자를 넘는다.")
     @Test
-    void maxLengthPost() {
+    void postTooLong() {
         PostCreateRequest postCreateRequest = PostCreateRequest.builder()
             .memberId(member.getId())
-            .authorAddress(null)
+            .authorAddress(AUTHOR_ADDRESS)
             .content("안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요"
                 + "안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요"
                 + "안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요"

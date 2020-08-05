@@ -105,13 +105,12 @@ class PostControllerTest extends CommonControllerTest {
         verify(postService).deletePost(anyLong());
     }
 
-
-    @DisplayName("PostCreateRequest DTO의 내용이 200자를 넘는다.")
+    @DisplayName("[예외] PostCreateRequest DTO의 내용이 200자를 넘는다.")
     @Test
-    void wrongPostCreateDto() throws Exception {
+    void postCreateDtoTooLong() throws Exception {
         PostCreateRequest postCreateRequest = PostCreateRequest.builder()
             .memberId(PERSIST_MEMBER.getId())
-            .authorAddress(null)
+            .authorAddress(AUTHOR_ADDRESS)
             .content("안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요"
                 + "안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요"
                 + "안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요"
@@ -120,7 +119,10 @@ class PostControllerTest extends CommonControllerTest {
             .location(GANGNAM_STATION)
             .build();
 
+        PostCreateResponse postCreateResponse = new PostCreateResponse(1L);
+
         String request = objectMapper.writeValueAsString(postCreateRequest);
+        when(postService.createPost(any())).thenReturn(postCreateResponse);
 
         this.mockMvc.perform(post("/posts")
             .contentType(MediaType.APPLICATION_JSON_VALUE)
