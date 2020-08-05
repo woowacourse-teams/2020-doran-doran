@@ -64,11 +64,11 @@ public class Post {
 
     @Builder.Default
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
-    private final List<Comment> comments = new ArrayList<>();
+    private List<Comment> comments = new ArrayList<>();
 
     @OneToMany
     @JoinColumn(name = "POST_LIKE_ID")
-    private final Set<PostLike> likes = new HashSet<>();
+    private Set<PostLike> likes = new HashSet<>();
 
     @Embedded
     @NotNull

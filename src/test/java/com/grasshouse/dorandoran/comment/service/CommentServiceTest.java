@@ -95,16 +95,16 @@ class CommentServiceTest {
     @DisplayName("댓글 내용이 120자를 넘을 경우 예외를 발생시킨다.")
     @Test
     void maxLengthComment() {
-        Comment comment = Comment.builder()
-            .author(member)
-            .post(post)
+        CommentCreateRequest comment = CommentCreateRequest.builder()
+            .memberId(member.getId())
+            .postId(post.getId())
             .content("댓글입니다댓글입니다댓글입니다댓글입니다댓글입니다댓글입니다댓글입니다댓글입니다"
                 + "댓글입니다댓글입니다댓글입니다댓글입니다댓글입니다댓글입니다댓글입니다댓글입니다"
                 + "댓글입니다댓글입니다댓글입니다댓글입니다댓글입니다댓글입니다댓글입니다댓글입니다꽝")
-            .distance(1.0)
+            .location(GANGNAM_STATION)
             .build();
 
-        assertThatThrownBy(() -> commentRepository.save(comment))
+        assertThatThrownBy(() -> commentService.createComment(comment))
             .isInstanceOf(ConstraintViolationException.class)
             .hasMessageContaining("120자");
     }

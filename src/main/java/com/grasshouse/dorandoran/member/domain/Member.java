@@ -45,11 +45,11 @@ public class Member {
 
     @Builder.Default
     @OneToMany(mappedBy = "author")
-    private final List<Post> posts = new ArrayList<>();
+    private List<Post> posts = new ArrayList<>();
 
     @Builder.Default
     @OneToMany(mappedBy = "author")
-    private final List<Comment> comments = new ArrayList<>();
+    private List<Comment> comments = new ArrayList<>();
 }
 
 
