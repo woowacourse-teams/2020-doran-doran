@@ -17,6 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,8 +25,10 @@ import org.hibernate.validator.constraints.Length;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+@Builder
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 public class Comment {
@@ -54,17 +57,16 @@ public class Comment {
 
     @OneToMany
     @JoinColumn(name = "COMMENT_LIKE_ID")
+    @Builder.Default
     private Set<CommentLike> likes = new HashSet<>();
 
     @Builder
-    public Comment(Long id, Member author, Post post, String content, Double distance,
-        Set<CommentLike> likes) {
+    public Comment(Long id, Member author, Post post, String content, Double distance) {
         this.id = id;
         this.author = author;
         setPost(post);
         this.content = content;
         this.distance = distance;
-        this.likes = likes;
     }
 
     private void setPost(Post post) {

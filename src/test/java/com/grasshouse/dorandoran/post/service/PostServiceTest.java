@@ -2,6 +2,7 @@ package com.grasshouse.dorandoran.post.service;
 
 import static com.grasshouse.dorandoran.fixture.AddressFixture.ADDRESS;
 import static com.grasshouse.dorandoran.fixture.AddressFixture.AUTHOR_ADDRESS;
+import static com.grasshouse.dorandoran.fixture.LocationFixture.GANGNAM_STATION;
 import static com.grasshouse.dorandoran.fixture.LocationFixture.JAMSIL_STATION;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -126,19 +127,18 @@ class PostServiceTest {
     @DisplayName("글 내용이 200자를 넘을 경우 예외를 발생시킨다.")
     @Test
     void maxLengthPost() {
-        Post post = Post.builder()
-            .author(member)
+        PostCreateRequest postCreateRequest = PostCreateRequest.builder()
+            .memberId(member.getId())
+            .authorAddress(null)
             .content("안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요"
                 + "안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요"
                 + "안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요"
                 + "안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요"
                 + "안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요꽝꽝")
-            .address(ADDRESS)
-            .authorAddress(AUTHOR_ADDRESS)
-            .location(JAMSIL_STATION)
+            .location(GANGNAM_STATION)
             .build();
 
-        assertThatThrownBy(() -> postRepository.save(post))
+        assertThatThrownBy(() -> postService.createPost(postCreateRequest))
             .isInstanceOf(ConstraintViolationException.class)
             .hasMessageContaining("200자");
     }
