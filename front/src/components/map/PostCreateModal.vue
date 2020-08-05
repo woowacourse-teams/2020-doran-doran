@@ -26,7 +26,7 @@
         <v-btn
           @click.prevent="createPost"
           class="my-6 mx-1 rounded-pill"
-          color="amber accent-3"
+          :color="buttonColor"
         >
           등록
         </v-btn>
@@ -38,13 +38,14 @@
 <script>
 import { MAP_MODE } from "@/utils/constants";
 import router from "@/router";
-import { ERROR_MESSAGE } from "../../utils/constants";
+import { ERROR_MESSAGE, DORAN_DORAN_COLORS } from "../../utils/constants";
 
 export default {
   name: "PostCreateModal",
   data() {
     return {
       content: "",
+      buttonColor: DORAN_DORAN_COLORS.POINT_COLOR,
       snackbarWarning: false,
       postErrorMessage: ERROR_MESSAGE.CONTENT_NOT_FOUND,
     };

@@ -8,21 +8,32 @@
       fixed
       right
       bottom
-      :color="buttonColor"
+      :color="buttonType.color"
     >
-      <v-icon v-html="buttonIcon"></v-icon>
+      <v-icon>{{buttonType.icon}}</v-icon>
     </v-btn>
   </div>
 </template>
 
 <script>
-import { MAP_MODE } from "@/utils/constants";
+import { MAP_MODE, DORAN_DORAN_COLORS } from "@/utils/constants";
+
+const BUTTON_TYPE = {
+  DEFAULT: {
+    color: DORAN_DORAN_COLORS.POINT_COLOR,
+    icon: "mdi-pencil",
+  },
+  MARKER: {
+    color: "red",
+    icon: "mdi-check",
+  },
+};
+
 export default {
   name: "PostCreateButton",
   data() {
     return {
-      buttonColor: "amber accent-3",
-      buttonIcon: "mdi-pencil",
+      buttonType: BUTTON_TYPE.DEFAULT,
     };
   },
   computed: {
@@ -40,12 +51,10 @@ export default {
     changeMode() {
       if (this.isDefaultMode) {
         this.$store.commit("modal/CHANGE_STATE", MAP_MODE.MARKER);
-        this.buttonColor = "red";
-        this.buttonIcon = "mdi-check";
+        this.buttonType = BUTTON_TYPE.MARKER;
       } else if (this.isMarkerMode) {
         this.$store.commit("modal/CHANGE_STATE", MAP_MODE.POST);
-        this.buttonColor = "amber accent-3";
-        this.buttonIcon = "mdi-pencil";
+        this.buttonType = BUTTON_TYPE.DEFAULT;
       }
     },
   },
