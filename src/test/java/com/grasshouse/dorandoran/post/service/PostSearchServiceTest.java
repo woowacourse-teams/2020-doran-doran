@@ -10,6 +10,7 @@ import com.grasshouse.dorandoran.member.repository.MemberRepository;
 import com.grasshouse.dorandoran.post.domain.Post;
 import com.grasshouse.dorandoran.post.repository.PostRepository;
 import java.util.Arrays;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -75,5 +76,11 @@ class PostSearchServiceTest {
     @Test
     void showSearchResults() {
         assertThat(postSearchService.showSearchResults(SEARCH_KEYWORD)).hasSize(2);
+    }
+
+    @AfterEach
+    void tearDown() {
+        postRepository.deleteAll();
+        memberRepository.deleteAll();
     }
 }
