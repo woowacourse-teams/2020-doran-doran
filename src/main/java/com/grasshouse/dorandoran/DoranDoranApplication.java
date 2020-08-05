@@ -8,6 +8,7 @@ public class DoranDoranApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(DoranDoranApplication.class, args);
+        System.out.println("pr revert practice");
     }
 
 }
