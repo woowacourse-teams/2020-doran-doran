@@ -101,13 +101,13 @@ const KakaoMap = {
       postOverlays.push(customOverlay);
     };
 
-    Vue.prototype.$closeOverlays = () => {
+    Vue.prototype.$closePostOverlays = () => {
       postOverlays.forEach((overlay) => {
         overlay.setMap(null);
       });
     };
 
-    Vue.prototype.$showOverlays = () => {
+    Vue.prototype.$showPostOverlays = () => {
       postOverlays.forEach((overlay) => {
         overlay.setMap(this.map);
       });

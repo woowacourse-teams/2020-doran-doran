@@ -30,7 +30,7 @@ export default {
   },
   watch: {
     isDefaultMode: function (isDefaultMode) {
-      isDefaultMode ? this.$showOverlays() : this.$closeOverlays();
+      isDefaultMode ? this.$showPostOverlays() : this.$closePostOverlays();
     },
   },
   methods: {

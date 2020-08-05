@@ -35,8 +35,8 @@ export default {
     },
   },
   watch: {
-    isMarkerMode(val) {
-      this.locationAlert = val;
+    isMarkerMode(newMarkerMode) {
+      this.locationAlert = newMarkerMode;
     },
   },
 };
