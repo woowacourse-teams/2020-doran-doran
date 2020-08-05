@@ -11,4 +11,10 @@ const EVENT_TYPE = {
   CLICK: "click",
 };
 
-export { ERROR_MESSAGE, API_BASE_URL, EVENT_TYPE };
+const MAP_MODE = {
+  DEFAULT: "default",
+  MARKER: "marker",
+  POST: "post",
+};
+
+export { ERROR_MESSAGE, API_BASE_URL, EVENT_TYPE, MAP_MODE };

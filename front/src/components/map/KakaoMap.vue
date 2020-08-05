@@ -4,7 +4,7 @@
       class="center-marker"
       color="red"
       size="40"
-      v-if="this.isCreatePost"
+      v-if="this.isMarkerState"
     >
       mdi-map-marker
     </v-icon>
@@ -14,13 +14,21 @@
 <script>
 export default {
   name: "KakaoMap",
-  props: {
-    usage: {
-      type: String,
-      default: "default-map",
+  computed: {
+    isMapState() {
+      return this.$store.getters["modal/isDefaultMode"];
     },
-    showOverlay: {
-      type: Boolean,
+    isMarkerState() {
+      return this.$store.getters["modal/isMarkerMode"];
+    }
+  },
+  watch: {
+    showOverlay() {
+      if (this.isMapState()) {
+        this.$closeOverlays();
+      } else {
+        this.$showOverlays();
+      }
     },
   },
   async mounted() {
@@ -28,20 +36,6 @@ export default {
     if (!this.isCreatePost) {
       await this.initMainMap();
     }
-  },
-  computed: {
-    isCreatePost() {
-      return this.usage === "create-post";
-    },
-  },
-  watch: {
-    showOverlay() {
-      if (this.showOverlay) {
-        this.$showOverlays();
-      } else {
-        this.$closeOverlays();
-      }
-    },
   },
   methods: {
     async initMainMap() {
