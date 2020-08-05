@@ -43,12 +43,16 @@ public class CommonAdvice {
             .stream()
             .map(DefaultMessageSourceResolvable::getDefaultMessage)
             .collect(Collectors.joining(" "));
+        logger.error(errorMessage);
+        e.printStackTrace();
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
             .body(new ErrorResponse(errorMessage));
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<ErrorResponse> handleValidationException(ConstraintViolationException e) {
+        logger.error(e.getMessage());
+        e.printStackTrace();
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
             .body(new ErrorResponse(e.getMessage()));
     }
