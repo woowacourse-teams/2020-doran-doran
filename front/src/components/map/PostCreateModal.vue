@@ -1,7 +1,7 @@
 <template>
   <div class="modal-mask" @click.self="closeModal">
     <v-snackbar v-model="snackbarWarning" timeout="1500" top>
-      ❗️ 내용을 입력해주세요.
+      {{ postErrorMessage }}
     </v-snackbar>
     <div class="pa-3 modal-container">
       <VTextarea
@@ -38,6 +38,7 @@
 <script>
 import { MAP_MODE } from "@/utils/constants";
 import router from "@/router";
+import { ERROR_MESSAGE } from "../../utils/constants";
 
 export default {
   name: "PostCreateModal",
@@ -46,6 +47,7 @@ export default {
       content: "",
       snackbarWarning: false,
       snackbarCreated: false,
+      postErrorMessage: ERROR_MESSAGE.CONTENT_NOT_FOUND,
     };
   },
   methods: {
