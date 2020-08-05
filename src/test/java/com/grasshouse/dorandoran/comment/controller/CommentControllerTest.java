@@ -60,12 +60,12 @@ class CommentControllerTest extends CommonControllerTest {
             .andDo(print());
     }
 
-    @DisplayName("CommentCreateRequest DTO의 내용이 120자를 넘는다.")
+    @DisplayName("[예외] CommentCreateRequest DTO의 내용이 120자를 넘는다.")
     @Test
-    void wrongCommentCreateDto() throws Exception {
+    void commentCreateDtoTooLong() throws Exception {
         CommentCreateRequest commentCreateRequest = CommentCreateRequest.builder()
             .memberId(PERSIST_MEMBER.getId())
-            .postId(null)
+            .postId(1L)
             .content("댓글입니다댓글입니다댓글입니다댓글입니다댓글입니다댓글입니다댓글입니다댓글입니다"
                 + "댓글입니다댓글입니다댓글입니다댓글입니다댓글입니다댓글입니다댓글입니다댓글입니다"
                 + "댓글입니다댓글입니다댓글입니다댓글입니다댓글입니다댓글입니다댓글입니다댓글입니다꽝")

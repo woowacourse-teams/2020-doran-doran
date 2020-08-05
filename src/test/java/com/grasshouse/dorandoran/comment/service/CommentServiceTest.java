@@ -92,9 +92,9 @@ class CommentServiceTest {
         assertThat(commentRepository.findAll()).hasSize(0);
     }
 
-    @DisplayName("댓글 내용이 120자를 넘을 경우 예외를 발생시킨다.")
+    @DisplayName("[예외] 댓글 내용이 120자를 넘는다.")
     @Test
-    void maxLengthComment() {
+    void commentTooLong() {
         CommentCreateRequest comment = CommentCreateRequest.builder()
             .memberId(member.getId())
             .postId(post.getId())
