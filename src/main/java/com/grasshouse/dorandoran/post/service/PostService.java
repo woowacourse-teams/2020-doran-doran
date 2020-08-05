@@ -19,8 +19,7 @@ public class PostService {
     private PostRepository postRepository;
     private MemberRepository memberRepository;
 
-    public PostService(PostRepository postRepository,
-        MemberRepository memberRepository) {
+    public PostService(PostRepository postRepository, MemberRepository memberRepository) {
         this.postRepository = postRepository;
         this.memberRepository = memberRepository;
     }
@@ -60,9 +59,5 @@ public class PostService {
     private Post findPostById(Long id) {
         return postRepository.findById(id)
             .orElseThrow(PostNotFoundException::new);
-    }
-
-    public List<PostResponse> showSearchResults(String keyword) {
-        return null;
     }
 }

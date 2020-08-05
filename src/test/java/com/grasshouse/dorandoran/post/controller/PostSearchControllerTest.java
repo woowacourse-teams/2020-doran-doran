@@ -9,7 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.grasshouse.dorandoran.common.CommonControllerTest;
-import com.grasshouse.dorandoran.post.service.PostService;
+import com.grasshouse.dorandoran.post.service.PostSearchService;
 import com.grasshouse.dorandoran.post.service.dto.PostResponse;
 import java.util.Arrays;
 import java.util.List;
@@ -21,21 +21,21 @@ import org.springframework.http.MediaType;
 class PostSearchControllerTest extends CommonControllerTest {
 
     @MockBean
-    private PostService postService;
+    private PostSearchService postSearchService;
 
     @DisplayName("키워드로 검색된 글을 반환한다.")
     @Test
     void getSearchResultsPosts() throws Exception {
         String url = "/posts/search?keyword=내용";
 
-        when(postService.showSearchResults(anyString())).thenReturn(postResponses());
+        when(postSearchService.showSearchResults(anyString())).thenReturn(postResponses());
 
         this.mockMvc.perform(get(url)
             .accept(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(status().isOk())
             .andDo(print());
 
-        verify(postService).showSearchResults(anyString());
+        verify(postSearchService).showSearchResults(anyString());
     }
 
     private List<PostResponse> postResponses() {
