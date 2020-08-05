@@ -31,28 +31,26 @@ public class CommonAdvice {
     @ExceptionHandler(ExpectedException.class)
     public ResponseEntity<ErrorResponse> handleExpectedException(ExpectedException e) {
         logger.error(e.getMessage());
-        e.printStackTrace();
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
             .body(new ErrorResponse(e.getMessage()));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ErrorResponse> handleValidationException(
+    public ResponseEntity<ErrorResponse> handleDtoValidationException(
         MethodArgumentNotValidException e) {
         String errorMessage = e.getBindingResult().getAllErrors()
             .stream()
             .map(DefaultMessageSourceResolvable::getDefaultMessage)
             .collect(Collectors.joining(" "));
         logger.error(errorMessage);
-        e.printStackTrace();
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
             .body(new ErrorResponse(errorMessage));
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
-    public ResponseEntity<ErrorResponse> handleValidationException(ConstraintViolationException e) {
+    public ResponseEntity<ErrorResponse> handleEntityValidationException(
+        ConstraintViolationException e) {
         logger.error(e.getMessage());
-        e.printStackTrace();
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
             .body(new ErrorResponse(e.getMessage()));
     }
