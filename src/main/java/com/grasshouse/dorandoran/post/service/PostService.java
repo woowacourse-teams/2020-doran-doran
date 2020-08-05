@@ -61,4 +61,8 @@ public class PostService {
         return postRepository.findById(id)
             .orElseThrow(PostNotFoundException::new);
     }
+
+    public List<PostResponse> showSearchResults(String keyword) {
+        return null;
+    }
 }
