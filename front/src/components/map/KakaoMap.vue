@@ -15,15 +15,23 @@
 export default {
   name: "KakaoMap",
   computed: {
+    isDefaultMode() {
+      return this.$store.getters["modal/isDefaultMode"];
+    },
     isMarkerMode() {
       return this.$store.getters["modal/isMarkerMode"];
-    }
+    },
   },
   async mounted() {
     await this.$drawMap(this.$refs.map);
-    if (!this.isCreatePost) {
+    if (this.isDefaultMode) {
       await this.initMainMap();
     }
+  },
+  watch: {
+    isDefaultMode: function (isDefaultMode) {
+      isDefaultMode ? this.$showOverlays() : this.$closeOverlays();
+    },
   },
   methods: {
     async initMainMap() {

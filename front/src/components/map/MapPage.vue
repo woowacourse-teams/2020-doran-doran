@@ -1,12 +1,10 @@
 <template>
-  <v-container fill-height fluid class="pa-0">
-    <v-snackbar v-model="snackbarMarker" timeout="1500" top>
+  <v-container fill-height fluid className="pa-0">
+    <v-snackbar v-model="locationAlert" timeout="1500" top>
       ✏️ 글을 작성할 위치를 선택해주세요.
     </v-snackbar>
     <KakaoMap />
-
-    <PostCreateButton @click.native="showMarker" />
-
+    <PostCreateButton />
     <PostCreateModal v-if="this.isPostMode" />
   </v-container>
 </template>
@@ -15,7 +13,6 @@
 import KakaoMap from "./KakaoMap";
 import PostCreateButton from "./PostCreateButton";
 import PostCreateModal from "./PostCreateModal";
-import { MAP_MODE } from "@/utils/constants";
 
 export default {
   name: "MapPage",
@@ -26,16 +23,10 @@ export default {
   },
   data() {
     return {
-      showModal: false,
-      showOverlay: true,
-      snackbarMarker: false,
-      content: "",
+      locationAlert: this.isMarkerMode,
     };
   },
   computed: {
-    isMapMode() {
-      return this.$store.getters["modal/isDefaultMode"];
-    },
     isMarkerMode() {
       return this.$store.getters["modal/isMarkerMode"];
     },
@@ -43,28 +34,7 @@ export default {
       return this.$store.getters["modal/isPostMode"];
     },
   },
-  watch: {
-    showOverlay(val) {
-      if (val) {
-        this.$showOverlays();
-      } else {
-        this.$closeOverlays();
-      }
-    }
-  },
-  methods: {
-    showMarker() {
-      if (this.isMapMode) {
-        this.$store.commit("modal/CHANGE_STATE", MAP_MODE.MARKER);
-        this.showOverlay = false;
-        this.snackbarMarker = true;
-      } else if (this.isMarkerMode) {
-        this.$store.commit("modal/CHANGE_STATE", MAP_MODE.POST);
-        this.showModal = true;
-      }
-    },
-  },
-}
+};
 </script>
 
 <style scoped></style>
