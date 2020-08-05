@@ -56,5 +56,7 @@ export default {
   z-index: 2;
   left: 50%;
   margin-left: -20px;
+  margin-top: -35px;
+  text-shadow: 2px 2px 3px gray;
 }
 </style>
