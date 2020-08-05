@@ -34,6 +34,11 @@ export default {
       return this.$store.getters["modal/isPostMode"];
     },
   },
+  watch: {
+    isMarkerMode(val) {
+      this.locationAlert = val;
+    },
+  },
 };
 </script>
 
