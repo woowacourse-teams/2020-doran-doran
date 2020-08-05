@@ -36,12 +36,14 @@ public class PostController {
 
     @GetMapping("/{postId}")
     public ResponseEntity<PostResponse> showPost(@PathVariable Long postId) {
-        return ResponseEntity.ok(postService.showPost(postId));
+        PostResponse response = postService.showPost(postId);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping
     public ResponseEntity<List<PostResponse>> showPosts() {
-        return ResponseEntity.ok(postService.showPosts());
+        List<PostResponse> responses = postService.showPosts();
+        return ResponseEntity.ok(responses);
     }
 
     @DeleteMapping("/{postId}")
