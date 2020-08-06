@@ -29,8 +29,8 @@ export default {
     }
   },
   watch: {
-    isDefaultMode: function (isDefaultMode) {
-      isDefaultMode ? this.$showPostOverlays() : this.$closePostOverlays();
+    isDefaultMode(val) {
+      val ? this.$showPostOverlays() : this.$closePostOverlays();
     },
   },
   methods: {
@@ -41,6 +41,7 @@ export default {
       await this.$store.dispatch("post/loadPosts");
       await this.drawPosts();
     },
+
     drawPosts() {
       this.$store.getters["post/getPosts"].forEach((post) => {
         this.$setPostOverlay(post);

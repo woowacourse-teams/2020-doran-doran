@@ -1,7 +1,7 @@
 <template>
   <div class="modal-mask" @click.self="closeModal">
     <v-snackbar v-model="snackbarWarning" timeout="1500" top>
-      {{ postErrorMessage }}
+      🤔 내용을 입력해주세요.
     </v-snackbar>
     <div class="pa-3 modal-container">
       <VTextarea
@@ -38,7 +38,7 @@
 <script>
 import { MAP_MODE } from "@/utils/constants";
 import router from "@/router";
-import { ERROR_MESSAGE, DORAN_DORAN_COLORS } from "../../utils/constants";
+import { DORAN_DORAN_COLORS } from "../../utils/constants";
 
 export default {
   name: "PostCreateModal",
@@ -47,7 +47,6 @@ export default {
       content: "",
       buttonColor: DORAN_DORAN_COLORS.POINT_COLOR,
       snackbarWarning: false,
-      postErrorMessage: ERROR_MESSAGE.CONTENT_NOT_FOUND,
     };
   },
   methods: {
