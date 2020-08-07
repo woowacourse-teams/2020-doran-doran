@@ -8,7 +8,7 @@
 
 <script>
 import PostCreateButton from "@/components/map/PostCreateButton";
-import PostItem from "@/components/PostItem";
+import PostItem from "@/components/timeline/PostItem";
 
 export default {
   name: "TimelinePage",
