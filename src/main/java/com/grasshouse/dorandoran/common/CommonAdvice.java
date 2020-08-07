@@ -2,10 +2,14 @@ package com.grasshouse.dorandoran.common;
 
 import com.grasshouse.dorandoran.common.exception.ExpectedException;
 import com.grasshouse.dorandoran.common.exception.dto.ErrorResponse;
+import java.util.stream.Collectors;
+import javax.validation.ConstraintViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -27,7 +31,26 @@ public class CommonAdvice {
     @ExceptionHandler(ExpectedException.class)
     public ResponseEntity<ErrorResponse> handleExpectedException(ExpectedException e) {
         logger.error(e.getMessage());
-        e.printStackTrace();
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body(new ErrorResponse(e.getMessage()));
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ErrorResponse> handleDtoValidationException(
+        MethodArgumentNotValidException e) {
+        String errorMessage = e.getBindingResult().getAllErrors()
+            .stream()
+            .map(DefaultMessageSourceResolvable::getDefaultMessage)
+            .collect(Collectors.joining(" "));
+        logger.error(errorMessage);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body(new ErrorResponse(errorMessage));
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<ErrorResponse> handleEntityValidationException(
+        ConstraintViolationException e) {
+        logger.error(e.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
             .body(new ErrorResponse(e.getMessage()));
     }

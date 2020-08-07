@@ -1,1 +1,1 @@
-insert into member values (1, '오구');
+insert into member (id, nickname) values (1, '오구');

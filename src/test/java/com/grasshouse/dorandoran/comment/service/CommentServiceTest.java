@@ -1,17 +1,21 @@
 package com.grasshouse.dorandoran.comment.service;
 
 import static com.grasshouse.dorandoran.fixture.AddressFixture.ADDRESS;
+import static com.grasshouse.dorandoran.fixture.AddressFixture.AUTHOR_ADDRESS;
 import static com.grasshouse.dorandoran.fixture.LocationFixture.GANGNAM_STATION;
 import static com.grasshouse.dorandoran.fixture.LocationFixture.JAMSIL_STATION;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.grasshouse.dorandoran.comment.domain.Comment;
 import com.grasshouse.dorandoran.comment.repository.CommentRepository;
 import com.grasshouse.dorandoran.comment.service.dto.CommentCreateRequest;
+import com.grasshouse.dorandoran.common.exception.CommentNotFoundException;
 import com.grasshouse.dorandoran.member.domain.Member;
 import com.grasshouse.dorandoran.member.repository.MemberRepository;
 import com.grasshouse.dorandoran.post.domain.Post;
 import com.grasshouse.dorandoran.post.repository.PostRepository;
+import javax.validation.ConstraintViolationException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -46,6 +50,7 @@ class CommentServiceTest {
 
         post = Post.builder()
             .author(member)
+            .authorAddress(AUTHOR_ADDRESS)
             .content("내용")
             .address(ADDRESS)
             .location(JAMSIL_STATION)
@@ -85,6 +90,39 @@ class CommentServiceTest {
 
         commentService.deleteComment(persistComment.getId());
         assertThat(commentRepository.findAll()).hasSize(0);
+    }
+
+    @DisplayName("[예외] 댓글 내용이 120자를 넘는다.")
+    @Test
+    void commentTooLong() {
+        CommentCreateRequest comment = CommentCreateRequest.builder()
+            .memberId(member.getId())
+            .postId(post.getId())
+            .content("댓글입니다댓글입니다댓글입니다댓글입니다댓글입니다댓글입니다댓글입니다댓글입니다"
+                + "댓글입니다댓글입니다댓글입니다댓글입니다댓글입니다댓글입니다댓글입니다댓글입니다"
+                + "댓글입니다댓글입니다댓글입니다댓글입니다댓글입니다댓글입니다댓글입니다댓글입니다꽝")
+            .location(GANGNAM_STATION)
+            .build();
+
+        assertThatThrownBy(() -> commentService.createComment(comment))
+            .isInstanceOf(ConstraintViolationException.class)
+            .hasMessageContaining("120자");
+    }
+
+    @DisplayName("댓글 작성할 때 createdAt 필드가 추가된다.")
+    @Test
+    void checkCommentCreatedAt() {
+        CommentCreateRequest commentCreateRequest = CommentCreateRequest.builder()
+            .memberId(member.getId())
+            .postId(post.getId())
+            .content("내용")
+            .location(JAMSIL_STATION)
+            .build();
+
+        Long commentId = commentService.createComment(commentCreateRequest);
+        Comment createdComment = commentRepository.findById(commentId)
+            .orElseThrow(CommentNotFoundException::new);
+        assertThat(createdComment.getCreatedAt()).isNotNull();
     }
 
     @AfterEach

@@ -1,11 +1,15 @@
 package com.grasshouse.dorandoran.post.service;
 
 import static com.grasshouse.dorandoran.fixture.AddressFixture.ADDRESS;
+import static com.grasshouse.dorandoran.fixture.AddressFixture.AUTHOR_ADDRESS;
+import static com.grasshouse.dorandoran.fixture.LocationFixture.GANGNAM_STATION;
 import static com.grasshouse.dorandoran.fixture.LocationFixture.JAMSIL_STATION;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.grasshouse.dorandoran.comment.domain.Comment;
 import com.grasshouse.dorandoran.comment.repository.CommentRepository;
+import com.grasshouse.dorandoran.common.exception.PostNotFoundException;
 import com.grasshouse.dorandoran.member.domain.Member;
 import com.grasshouse.dorandoran.member.repository.MemberRepository;
 import com.grasshouse.dorandoran.post.domain.Post;
@@ -14,6 +18,7 @@ import com.grasshouse.dorandoran.post.service.dto.PostCreateRequest;
 import com.grasshouse.dorandoran.post.service.dto.PostCreateResponse;
 import com.grasshouse.dorandoran.post.service.dto.PostResponse;
 import java.util.List;
+import javax.validation.ConstraintViolationException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -52,6 +57,7 @@ class PostServiceTest {
     void createPostTest() {
         PostCreateRequest postCreateRequest = PostCreateRequest.builder()
             .memberId(member.getId())
+            .authorAddress(AUTHOR_ADDRESS)
             .content("내용")
             .location(JAMSIL_STATION)
             .build();
@@ -118,11 +124,47 @@ class PostServiceTest {
         assertThat(commentRepository.findAll()).hasSize(0);
     }
 
+    @DisplayName("[예외] 글 내용이 200자를 넘는다.")
+    @Test
+    void postTooLong() {
+        PostCreateRequest postCreateRequest = PostCreateRequest.builder()
+            .memberId(member.getId())
+            .authorAddress(AUTHOR_ADDRESS)
+            .content("안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요"
+                + "안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요"
+                + "안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요"
+                + "안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요"
+                + "안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요꽝꽝")
+            .location(GANGNAM_STATION)
+            .build();
+
+        assertThatThrownBy(() -> postService.createPost(postCreateRequest))
+            .isInstanceOf(ConstraintViolationException.class)
+            .hasMessageContaining("200자");
+    }
+
+    @DisplayName("글을 작성할 때 createdAt 필드가 추가된다.")
+    @Test
+    void checkPostCreatedAt() {
+        PostCreateRequest postCreateRequest = PostCreateRequest.builder()
+            .memberId(member.getId())
+            .authorAddress(AUTHOR_ADDRESS)
+            .content("내용")
+            .location(JAMSIL_STATION)
+            .build();
+
+        PostCreateResponse createResponse = postService.createPost(postCreateRequest);
+        Post createdPost = postRepository.findById(createResponse.getId())
+            .orElseThrow(PostNotFoundException::new);
+        assertThat(createdPost.getCreatedAt()).isNotNull();
+    }
+
     private Post dummyPost() {
         return Post.builder()
             .author(member)
             .content("내용")
             .address(ADDRESS)
+            .authorAddress(AUTHOR_ADDRESS)
             .location(JAMSIL_STATION)
             .build();
     }

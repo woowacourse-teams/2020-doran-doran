@@ -8,6 +8,8 @@ import com.grasshouse.dorandoran.post.domain.Post;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,11 +21,24 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PostResponse {
 
+    @NotNull
     private Long id;
+
+    @NotNull
     private MemberResponse memberResponse;
+
+    @NotNull
+    private Address authorAddress;
+
+    @NotBlank(message = "글의 내용은 비어 있을 수 없습니다.")
     private String content;
+
+    @NotNull
     private Location location;
+
+    @NotNull
     private Address address;
+
     @Builder.Default
     private final List<CommentResponse> comments = new ArrayList<>();
     //TODO : post_like 정보 추후에 추가하기
@@ -32,6 +47,7 @@ public class PostResponse {
         return PostResponse.builder()
             .id(post.getId())
             .memberResponse(MemberResponse.from(post.getAuthor()))
+            .authorAddress(post.getAuthorAddress())
             .content(post.getContent())
             .location(post.getLocation())
             .address(post.getAddress())

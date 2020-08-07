@@ -6,6 +6,7 @@ import com.grasshouse.dorandoran.post.service.dto.PostCreateResponse;
 import com.grasshouse.dorandoran.post.service.dto.PostResponse;
 import java.net.URI;
 import java.util.List;
+import javax.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -28,19 +29,21 @@ public class PostController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> createPost(@RequestBody PostCreateRequest request) {
+    public ResponseEntity<Void> createPost(@RequestBody @Valid PostCreateRequest request) {
         PostCreateResponse response = postService.createPost(request);
         return ResponseEntity.created(URI.create("/posts/" + response.getId())).build();
     }
 
     @GetMapping("/{postId}")
     public ResponseEntity<PostResponse> showPost(@PathVariable Long postId) {
-        return ResponseEntity.ok(postService.showPost(postId));
+        PostResponse response = postService.showPost(postId);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping
     public ResponseEntity<List<PostResponse>> showPosts() {
-        return ResponseEntity.ok(postService.showPosts());
+        List<PostResponse> responses = postService.showPosts();
+        return ResponseEntity.ok(responses);
     }
 
     @DeleteMapping("/{postId}")

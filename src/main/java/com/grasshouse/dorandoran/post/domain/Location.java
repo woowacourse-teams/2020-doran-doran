@@ -1,6 +1,7 @@
 package com.grasshouse.dorandoran.post.domain;
 
 import javax.persistence.Embeddable;
+import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,7 +15,11 @@ import lombok.NoArgsConstructor;
 public class Location {
 
     private static final int EARTH_RADIUS = 6371;
+
+    @NotNull
     private Double longitude;
+
+    @NotNull
     private Double latitude;
 
     public Double calculateDistance(Location location) {
