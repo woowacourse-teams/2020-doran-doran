@@ -129,6 +129,10 @@ const KakaoMap = {
         };
       });
     };
+
+    Vue.prototype.$addEventToMap = (func) => {
+      return this.map.addListener("center_changed", func);
+    };
   },
 };
 

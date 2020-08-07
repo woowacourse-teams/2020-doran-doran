@@ -43,6 +43,12 @@ export default {
       this.$setCurrentLocationMarker(currentLocation);
       await this.$store.dispatch("post/loadPosts");
       await this.drawPosts();
+      await this.$addEventToMap(this.changeAppBarAddressByCenterLocation);
+    },
+    async changeAppBarAddressByCenterLocation() {
+      const centerLocation = await this.$getCenterLocation();
+      const centerAddress = await this.$getAddress(centerLocation);
+      this.$store.commit("appBar/CHANGE_ADDRESS", centerAddress);
     },
 
     drawPosts() {
