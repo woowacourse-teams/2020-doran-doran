@@ -7,8 +7,8 @@
 </template>
 
 <script>
-import PostCreateButton from "./PostCreateButton";
-import PostItem from "./PostItem";
+import PostCreateButton from "@/components/map/PostCreateButton";
+import PostItem from "@/components/timeline/PostItem";
 
 export default {
   name: "TimelinePage",

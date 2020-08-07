@@ -10,9 +10,9 @@
 </template>
 
 <script>
-import KakaoMap from "./KakaoMap";
-import PostCreateButton from "./PostCreateButton";
-import PostCreateModal from "./PostCreateModal";
+import KakaoMap from "@/components/map/KakaoMap";
+import PostCreateButton from "@/components/map/PostCreateButton";
+import PostCreateModal from "@/components/map/PostCreateModal";
 
 export default {
   name: "MapPage",
