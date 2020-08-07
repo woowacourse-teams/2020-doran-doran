@@ -6,7 +6,7 @@
     <VSpacer />
     <v-icon class="mdi pr-1">mdi-map-marker</v-icon>
     <v-toolbar-title class="app-bar-title">
-      서울특별시 송파구 가락본동
+      {{ centerAddress }}
     </v-toolbar-title>
     <VSpacer />
   </v-app-bar>
@@ -20,6 +20,11 @@ export default {
   methods: {
     goToPreviousPage() {
       router.go(-1);
+    },
+  },
+  computed: {
+    centerAddress() {
+      return this.$store.getters["appBar/centerAddress"];
     },
   },
 };

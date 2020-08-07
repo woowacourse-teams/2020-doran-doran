@@ -36,6 +36,9 @@ export default {
   methods: {
     async initMainMap() {
       const currentLocation = await this.$getCurrentLocation();
+      await this.$getAddress(currentLocation).then((address) => {
+        this.$store.commit("appBar/CHANGE_ADDRESS", address);
+      });
       this.$setLocation(currentLocation);
       this.$setCurrentLocationMarker(currentLocation);
       await this.$store.dispatch("post/loadPosts");
