@@ -1,6 +1,5 @@
 import { KAKAO_MAP_APP_KEY } from "@/secure/appkey";
 import INITIAL_LOCATION from "@/config/config";
-import { ERROR_MESSAGE } from "@/utils/constants";
 import { POST_OVERLAY_TEMPLATES } from "@/utils/template";
 
 const KAKAO_MAP_URL = "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=";
@@ -46,7 +45,7 @@ const KakaoMap = {
             longitude: location.coords.longitude,
           };
         })
-        .catch(() => console.log(ERROR_MESSAGE.UNIDENTIFIABLE_LOCATION));
+        .catch((e) => console.log(e));
     };
 
     Vue.prototype.$getCenterLocation = () => {
