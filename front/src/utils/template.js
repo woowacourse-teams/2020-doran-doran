@@ -1,12 +1,20 @@
 import router from "../router/index";
 import { EVENT_TYPE } from "./constants";
 
+const POST_OVERLAY_CONTENT_LENGTH = 20;
+
 export const POST_OVERLAY_TEMPLATES = (post) => {
   const postOverlay = document.createElement("div");
   postOverlay.classList.add("speech-bubble");
-  postOverlay.innerText = post.content;
+
+  const shortContent = post.content
+    .substring(0, POST_OVERLAY_CONTENT_LENGTH)
+    .trim();
+  const contentTail = post.content.length > 20 ? "..." : "";
+  postOverlay.innerText = shortContent + contentTail;
+
   postOverlay.insertAdjacentHTML(
-    "afterbegin",
+    "beforeend",
     `<div class="speech-arrow"></div>`,
   );
 

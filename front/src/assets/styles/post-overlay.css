@@ -5,6 +5,8 @@
   padding: 10px;
   bottom: 32px;
   box-shadow: 1px 1px 5px grey;
+  min-width: 35px;
+  text-align: center;
 }
 
 .speech-arrow {
