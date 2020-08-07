@@ -50,15 +50,20 @@ export default {
     };
   },
   methods: {
-    createPost() {
+    async createPost() {
       if (this.content === "") {
         this.snackbarWarning = true;
         return;
       }
+      const postLocation = this.$getCenterLocation();
+      const authorLocation = await this.$getCurrentLocation();
+
       const data = {
         memberId: 1,
         content: this.content,
-        location: this.$getCenterLocation(),
+        location: postLocation,
+        address: await this.$getAddress(postLocation),
+        authorAddress: await this.$getAddress(authorLocation),
       };
       this.$store
         .dispatch("post/createPost", data)

@@ -28,12 +28,7 @@ public class PostService {
     @Transactional
     public PostCreateResponse createPost(PostCreateRequest request) {
         Member member = findMemberById(request.getMemberId());
-        Post post = Post.builder()
-            .author(member)
-            .authorAddress(request.getAuthorAddress())
-            .content(request.getContent())
-            .location(request.getLocation())
-            .build();
+        Post post = request.toPost(member);
         postRepository.save(post);
 
         return PostCreateResponse.from(post);
