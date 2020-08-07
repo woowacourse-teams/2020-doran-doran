@@ -15,6 +15,11 @@ export const POST_OVERLAY_TEMPLATES = (post) => {
 
   postOverlay.insertAdjacentHTML(
     "beforeend",
+    `<span class="red--text"> [${post.comments.length}]</span>`,
+  );
+
+  postOverlay.insertAdjacentHTML(
+    "beforeend",
     `<div class="speech-arrow"></div>`,
   );
 
