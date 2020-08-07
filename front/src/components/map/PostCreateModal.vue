@@ -1,7 +1,7 @@
 <template>
   <div class="modal-mask" @click.self="closeModal">
     <v-snackbar v-model="snackbarWarning" timeout="1500" top>
-      🤔 내용을 입력해주세요.
+      {{ snackbarMessage }}
     </v-snackbar>
     <div class="pa-3 modal-container">
       <VTextarea
@@ -39,6 +39,7 @@
 import { MAP_MODE } from "@/utils/constants";
 import router from "@/router";
 import { DORAN_DORAN_COLORS } from "@/utils/constants";
+import { ERROR_MESSAGE } from "../../utils/constants";
 
 export default {
   name: "PostCreateModal",
@@ -47,9 +48,19 @@ export default {
       content: "",
       buttonColor: DORAN_DORAN_COLORS.POINT_COLOR,
       snackbarWarning: false,
+      snackbarMessage: "🤔 내용을 입력해주세요.",
     };
   },
   methods: {
+    checkLocation(location) {
+      if (location === undefined) {
+        this.snackbarMessage = ERROR_MESSAGE.UNIDENTIFIABLE_LOCATION;
+        this.snackbarWarning = true;
+        return false;
+      } else {
+        return true;
+      }
+    },
     async createPost() {
       if (this.content === "") {
         this.snackbarWarning = true;
@@ -58,18 +69,21 @@ export default {
       const postLocation = this.$getCenterLocation();
       const authorLocation = await this.$getCurrentLocation();
 
-      const data = {
-        memberId: 1,
-        content: this.content,
-        location: postLocation,
-        address: await this.$getAddress(postLocation),
-        authorAddress: await this.$getAddress(authorLocation),
-      };
-      this.$store
-        .dispatch("post/createPost", data)
-        .then(() => (this.content = ""))
-        .then(() => this.closeModal())
-        .then(() => router.go(0));
+      //   사용자의 위치를 받을 수 없는 경우
+      if (await this.checkLocation(authorLocation)) {
+        const data = {
+          memberId: 1,
+          content: this.content,
+          location: postLocation,
+          address: await this.$getAddress(postLocation),
+          authorAddress: await this.$getAddress(authorLocation),
+        };
+        await this.$store
+          .dispatch("post/createPost", data)
+          .then(() => (this.content = ""))
+          .then(() => this.closeModal())
+          .then(() => router.go(0));
+      }
     },
     closeModal() {
       this.$store.commit("modal/CHANGE_STATE", MAP_MODE.DEFAULT);
