@@ -5,7 +5,11 @@
       <span class="font-weight-bold">{{ post.memberResponse.nickname }}</span>
       <div class="float-right mt-2">1분 전</div>
     </div>
-    <div class="text--disabled post-address">서울시 중구 장충동에서 외침</div>
+    <div class="text--disabled post-address">
+      {{ post.authorAddress.depth1 }}
+      {{ post.authorAddress.depth2 }}
+      {{ post.authorAddress.depth3 }}에 외침
+    </div>
     <div class="my-5 text-break">{{ post.content }}</div>
     <div>
       <v-icon small>mdi-comment-processing-outline</v-icon>
@@ -13,7 +17,9 @@
       <v-icon small>mdi-heart-outline</v-icon>
       <span class="mx-1">0</span>
       <div class="text--disabled float-right post-address">
-        서울시 송파구 방이동에서
+        {{ post.address.depth1 }}
+        {{ post.address.depth2 }}
+        {{ post.address.depth3 }}에서
       </div>
     </div>
     <CommentList :comments="post.comments" />
@@ -41,7 +47,17 @@ export default {
           nickname: "",
         },
         content: "",
-        address: "",
+        address: {
+          depth1: "",
+          depth2: "",
+          depth3: "",
+        },
+        authorAddress: {
+          depth1: "",
+          depth2: "",
+          depth3: "",
+        },
+        createdAt: "",
         comments: [],
       },
     };

@@ -36,6 +36,7 @@ public class PostCreateRequest {
         return Post.builder()
             .author(member)
             .authorAddress(authorAddress)
+            .address(address)
             .content(content)
             .location(location)
             .build();
