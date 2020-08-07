@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import CommentItem from "./CommentItem";
+import CommentItem from "@/components/post/CommentItem";
 export default {
   name: "CommentList",
   components: {

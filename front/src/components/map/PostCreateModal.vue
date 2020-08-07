@@ -38,7 +38,7 @@
 <script>
 import { MAP_MODE } from "@/utils/constants";
 import router from "@/router";
-import { DORAN_DORAN_COLORS } from "../../utils/constants";
+import { DORAN_DORAN_COLORS } from "@/utils/constants";
 
 export default {
   name: "PostCreateModal",

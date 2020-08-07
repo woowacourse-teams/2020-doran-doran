@@ -23,8 +23,8 @@
 </template>
 
 <script>
-import CommentInput from "./CommentInput";
-import CommentList from "./CommentList";
+import CommentInput from "@/components/post/CommentInput";
+import CommentList from "@/components/post/CommentList";
 
 export default {
   name: "PostDetailPage",
