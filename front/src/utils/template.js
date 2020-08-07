@@ -1,5 +1,5 @@
-import router from "../router/index";
-import { EVENT_TYPE } from "./constants";
+import router from "@/router";
+import { EVENT_TYPE } from "@/utils/constants";
 
 const POST_OVERLAY_CONTENT_LENGTH = 20;
 
