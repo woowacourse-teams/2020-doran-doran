@@ -1,7 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import MainPage from "../components/MainPage";
-import PostCreatePage from "../components/PostCreatePage";
 import PostDetailPage from "../components/PostDetailPage";
 import TimelinePage from "../components/TimelinePage";
 
@@ -17,11 +16,6 @@ const routes = [
     path: "/timeline",
     name: "TimeLine",
     component: TimelinePage,
-  },
-  {
-    path: "/create-post",
-    name: "PostCreatePage",
-    component: PostCreatePage,
   },
   {
     path: "/posts/:id",

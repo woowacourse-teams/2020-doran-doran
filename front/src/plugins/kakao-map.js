@@ -12,6 +12,8 @@ const KakaoMap = {
     script.src = KAKAO_MAP_URL + KAKAO_MAP_APP_KEY + LIBRARY;
     document.head.appendChild(script);
 
+    const postOverlays = [];
+
     /* global kakao */
     const loadApi = new Promise((resolve) => {
       script.onload = () => kakao.maps.load(resolve);
@@ -34,7 +36,7 @@ const KakaoMap = {
       const getLocation = () =>
         new Promise((resolve, reject) =>
           navigator.geolocation.getCurrentPosition(resolve, reject, {
-            timeout: 3000,
+            timeout: 1000,
           }),
         );
       return await getLocation()
@@ -96,6 +98,19 @@ const KakaoMap = {
         content: POST_OVERLAY_TEMPLATES(post),
       });
       customOverlay.setMap(this.map);
+      postOverlays.push(customOverlay);
+    };
+
+    Vue.prototype.$closePostOverlays = () => {
+      postOverlays.forEach((overlay) => {
+        overlay.setMap(null);
+      });
+    };
+
+    Vue.prototype.$showPostOverlays = () => {
+      postOverlays.forEach((overlay) => {
+        overlay.setMap(this.map);
+      });
     };
 
     Vue.prototype.$getAddress = async (location) => {

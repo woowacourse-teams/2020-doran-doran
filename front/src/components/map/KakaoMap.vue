@@ -2,9 +2,9 @@
   <v-container fill-height fluid ref="map">
     <v-icon
       class="center-marker"
-      color="blue"
-      size="50"
-      v-if="this.isCreatePost"
+      color="red"
+      size="40"
+      v-if="this.isMarkerMode"
     >
       mdi-map-marker
     </v-icon>
@@ -14,21 +14,23 @@
 <script>
 export default {
   name: "KakaoMap",
-  props: {
-    usage: {
-      type: String,
-      default: "default-map",
+  computed: {
+    isDefaultMode() {
+      return this.$store.getters["modal/isDefaultMode"];
+    },
+    isMarkerMode() {
+      return this.$store.getters["modal/isMarkerMode"];
     },
   },
   async mounted() {
     await this.$drawMap(this.$refs.map);
-    if (!this.isCreatePost) {
+    if (this.isDefaultMode) {
       await this.initMainMap();
     }
   },
-  computed: {
-    isCreatePost() {
-      return this.usage === "create-post";
+  watch: {
+    isDefaultMode(val) {
+      val ? this.$showPostOverlays() : this.$closePostOverlays();
     },
   },
   methods: {
@@ -39,6 +41,7 @@ export default {
       await this.$store.dispatch("post/loadPosts");
       await this.drawPosts();
     },
+
     drawPosts() {
       this.$store.getters["post/getPosts"].forEach((post) => {
         this.$setPostOverlay(post);
@@ -54,5 +57,7 @@ export default {
   z-index: 2;
   left: 50%;
   margin-left: -20px;
+  margin-top: -35px;
+  text-shadow: 2px 2px 3px gray;
 }
 </style>
