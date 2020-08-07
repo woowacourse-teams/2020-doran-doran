@@ -4,6 +4,8 @@ import static com.grasshouse.dorandoran.post.domain.QPost.post;
 
 import com.grasshouse.dorandoran.post.domain.Post;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import java.time.LocalDateTime;
+import java.util.List;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Repository;
 
@@ -23,5 +25,11 @@ public class PostRepositorySupport extends QuerydslRepositorySupport {
             .fetchJoin()
             .where(post.id.eq(postId))
             .fetchFirst();
+    }
+
+    public List<Post> findPostBetweenDateTime(LocalDateTime startDate, LocalDateTime endDate) {
+        return jpaQueryFactory.selectFrom(post)
+            .where(post.createdAt.between(startDate,endDate))
+            .fetch();
     }
 }
