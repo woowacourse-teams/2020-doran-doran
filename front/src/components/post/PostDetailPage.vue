@@ -3,7 +3,7 @@
     <div class="mb-3">
       <v-icon x-large class="mr-3">mdi-account-circle</v-icon>
       <span class="font-weight-bold">{{ post.memberResponse.nickname }}</span>
-      <div class="float-right mt-2">1분 전</div>
+      <div class="float-right mt-2">{{ postDate }}</div>
     </div>
     <div class="text--disabled post-address">
       {{ post.authorAddress.depth1 }}
@@ -22,60 +22,70 @@
         {{ post.address.depth3 }}에서
       </div>
     </div>
-    <CommentList :comments="post.comments" />
-    <div class="bottom-spacer" />
-    <CommentInput :post-id="post.id" />
+    <CommentList :comments="post.comments"/>
+    <div class="bottom-spacer"/>
+    <CommentInput :post-id="post.id"/>
   </div>
 </template>
 
 <script>
-import CommentInput from "@/components/post/CommentInput";
-import CommentList from "@/components/post/CommentList";
+  import CommentInput from "@/components/post/CommentInput";
+  import CommentList from "@/components/post/CommentList";
+  import moment from "moment";
 
-export default {
-  name: "PostDetailPage",
-  components: {
-    CommentList,
-    CommentInput,
-  },
-  data() {
-    return {
-      post: {
-        id: 0,
-        memberResponse: {
+  export default {
+    name: "PostDetailPage",
+    components: {
+      CommentList,
+      CommentInput,
+    },
+    data() {
+      return {
+        post: {
           id: 0,
-          nickname: "",
+          memberResponse: {
+            id: 0,
+            nickname: "",
+          },
+          content: "",
+          address: {
+            depth1: "",
+            depth2: "",
+            depth3: "",
+          },
+          authorAddress: {
+            depth1: "",
+            depth2: "",
+            depth3: "",
+          },
+          createdAt: "",
+          comments: [],
         },
-        content: "",
-        address: {
-          depth1: "",
-          depth2: "",
-          depth3: "",
-        },
-        authorAddress: {
-          depth1: "",
-          depth2: "",
-          depth3: "",
-        },
-        createdAt: "",
-        comments: [],
-      },
-    };
-  },
-  async created() {
-    this.post = await this.$store.dispatch(
-      "post/loadPost",
-      this.$route.params.id,
-    );
-  },
-};
+        postDate: "",
+      };
+    },
+    async created() {
+      this.post = await this.$store.dispatch(
+          "post/loadPost",
+          this.$route.params.id,
+      );
+    },
+    watch: {
+      post() {
+        console.log(this.post.createdAt);
+        const date = new Date(moment(this.post.createdAt).format('YYYY-MM-DD HH:mm:ss'));
+        this.postDate = moment(date).fromNow();
+      }
+    }
+  };
 </script>
 
 <style scoped>
-.post-address {
-  font-size: 0.9rem;
-}
-.bottom-spacer {
-  height: 60px;
-}
+  .post-address {
+    font-size: 0.9rem;
+  }
+
+  .bottom-spacer {
+    height: 60px;
+  }
 </style>

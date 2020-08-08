@@ -7,6 +7,7 @@ import KakaoMap from "@/plugins/kakao-map";
 
 Vue.config.productionTip = false;
 Vue.use(KakaoMap);
+Vue.use(require("vue-moment"));
 
 new Vue({
   router,
