@@ -36,11 +36,23 @@ class PostRepositorySupportTest {
     @DisplayName("특정 시간 사이의 글을 가져온다.")
     @ParameterizedTest
     @MethodSource("generateDays")
-    void dateTimeBetweenTest(int dayBefore, int dayAfter, int expectedPostSize) {
-        LocalDateTime pivotDay = LocalDateTime.of(2020, 6, 13, 1, 1, 1);
+    void findPostBetweenDate(int dayBefore, int dayAfter, int expectedPostSize) {
+        LocalDateTime pivotDay = LocalDateTime.of(2020, 6, 13, 0, 0, 0);
+
         List<Post> posts = postRepositorySupport
-            .findPostBetweenDateTime(pivotDay.minusDays(dayBefore), pivotDay.plusDays(dayAfter));
+            .findPostContainsKeywordBetweenDate("", pivotDay.minusDays(dayBefore), pivotDay.plusDays(dayAfter));
 
         assertThat(posts).hasSize(expectedPostSize);
+    }
+
+    @Sql(value = "/dateTimePost.sql", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
+    @Sql(value = "/dateTimePostDelete.sql", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
+    @DisplayName("특정 키워드를 포함한 글을 가져온다.")
+    @Test
+    void findPostBetween() {
+        List<Post> posts = postRepositorySupport
+            .findPostContainsKeywordBetweenDate("오늘", null, null);
+
+        assertThat(posts).hasSize(2);
     }
 }

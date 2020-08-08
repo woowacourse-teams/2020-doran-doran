@@ -3,11 +3,13 @@ package com.grasshouse.dorandoran.post.repository;
 import static com.grasshouse.dorandoran.post.domain.QPost.post;
 
 import com.grasshouse.dorandoran.post.domain.Post;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.StringUtils;
 
 @Repository
 public class PostRepositorySupport extends QuerydslRepositorySupport {
@@ -27,9 +29,31 @@ public class PostRepositorySupport extends QuerydslRepositorySupport {
             .fetchFirst();
     }
 
-    public List<Post> findPostBetweenDateTime(LocalDateTime startDate, LocalDateTime endDate) {
-        return jpaQueryFactory.selectFrom(post)
-            .where(post.createdAt.between(startDate,endDate))
-            .fetch();
+    public List<Post> findPostContainsKeywordBetweenDate(String keyword, LocalDateTime startDate, LocalDateTime endDate) {
+        return jpaQueryFactory
+                .selectFrom(post)
+                .where(containsKeyword(keyword), afterDate(startDate), beforeDate((endDate)))
+                .fetch();
+    }
+
+    private BooleanExpression containsKeyword(String keyword) {
+        if (StringUtils.isEmpty(keyword)) {
+            return null;
+        }
+        return post.content.contains(keyword);
+    }
+
+    private BooleanExpression afterDate(LocalDateTime startDate) {
+        if (StringUtils.isEmpty(startDate)) {
+            return null;
+        }
+        return post.createdAt.after(startDate);
+    }
+
+    private BooleanExpression beforeDate(LocalDateTime endDate) {
+        if (StringUtils.isEmpty(endDate)) {
+            return null;
+        }
+        return post.createdAt.before(endDate);
     }
 }
