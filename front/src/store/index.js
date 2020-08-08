@@ -1,8 +1,8 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import post from "./modules/post";
-import comment from "./modules/comment";
-import modal from "./modules/modal";
+import post from "@/store/modules/post";
+import comment from "@/store/modules/comment";
+import modal from "@/store/modules/modal";
 
 Vue.use(Vuex);
 
