@@ -26,16 +26,16 @@ class PostSearchControllerTest extends CommonControllerTest {
     @DisplayName("키워드로 검색된 글을 반환한다.")
     @Test
     void getSearchResultsPosts() throws Exception {
-        String url = "/posts/search?keyword=내용";
+        String url = "/posts/search?keyword=내용&startDate='2020-05-05 00:00:00'&endDate='2020-08-08 23:59:59";
 
-        when(postSearchService.showSearchResults(anyString())).thenReturn(postResponses());
+        when(postSearchService.showSearchResults(anyString(), anyString(), anyString())).thenReturn(postResponses());
 
         this.mockMvc.perform(get(url)
             .accept(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(status().isOk())
             .andDo(print());
 
-        verify(postSearchService).showSearchResults(anyString());
+        verify(postSearchService).showSearchResults(anyString(), anyString(), anyString());
     }
 
     private List<PostResponse> postResponses() {

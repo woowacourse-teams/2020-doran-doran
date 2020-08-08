@@ -68,6 +68,7 @@ public class Post {
 
     @OneToMany
     @JoinColumn(name = "POST_LIKE_ID")
+    @Builder.Default
     private Set<PostLike> likes = new HashSet<>();
 
     @Embedded

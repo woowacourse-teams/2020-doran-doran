@@ -22,8 +22,8 @@ public class PostSearchController {
     }
 
     @GetMapping
-    public ResponseEntity<List<PostResponse>> showSearchResults(@RequestParam String keyword) {
-        List<PostResponse> responses = postSearchService.showSearchResults(keyword);
+    public ResponseEntity<List<PostResponse>> showSearchResults(@RequestParam String keyword, @RequestParam String startDate, @RequestParam String endDate) {
+        List<PostResponse> responses = postSearchService.showSearchResults(keyword, startDate, endDate);
         return ResponseEntity.ok(responses);
     }
 }
