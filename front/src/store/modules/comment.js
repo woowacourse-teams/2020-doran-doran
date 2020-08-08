@@ -1,4 +1,4 @@
-import api from "../../api/comments";
+import api from "@/api/comments";
 
 export default {
   namespaced: true,
