@@ -11,7 +11,7 @@
       </div>
       <div>{{ comment.content }}</div>
       <div>
-        <span class="text--disabled comment-created">1분 전</span>
+        <span class="text--disabled comment-created">{{ commentDate }}</span>
         <span class="float-right">
           <v-icon small>mdi-heart-outline</v-icon>
           <span class="mx-1">0</span>
@@ -22,13 +22,24 @@
 </template>
 
 <script>
+import { CHANGE_DATE_FROM_NOW } from "@/utils/moment";
+
 export default {
   name: "CommentItem",
+  data() {
+    return {
+      commentDate: "",
+    };
+  },
   props: {
     comment: {
       type: Object,
       required: true,
     },
+  },
+  async mounted() {
+    console.log(this.comment);
+    this.commentDate = CHANGE_DATE_FROM_NOW(this.comment.createdAt);
   },
 };
 </script>

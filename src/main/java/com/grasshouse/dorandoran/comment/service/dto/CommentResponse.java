@@ -2,6 +2,7 @@ package com.grasshouse.dorandoran.comment.service.dto;
 
 import com.grasshouse.dorandoran.comment.domain.Comment;
 import com.grasshouse.dorandoran.member.service.dto.MemberResponse;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.validation.constraints.NotBlank;
@@ -31,6 +32,10 @@ public class CommentResponse {
 
     @NotNull
     private Double distance;
+
+    @NotNull
+    private LocalDateTime createdAt;
+
     //TODO : comment_like 정보 추후에 추가하기
 
     public static CommentResponse from(Comment comment) {
@@ -40,6 +45,7 @@ public class CommentResponse {
             .postId(comment.getPost().getId())
             .content(comment.getContent())
             .distance(comment.getDistance())
+            .createdAt(comment.getCreatedAt())
             .build();
     }
 
