@@ -7,6 +7,7 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
@@ -44,7 +45,7 @@ public class PostRepositorySupport extends QuerydslRepositorySupport {
     }
 
     private BooleanExpression betweenDate(LocalDateTime startDate, LocalDateTime endDate) {
-        if (StringUtils.isEmpty(startDate) || StringUtils.isEmpty(endDate)) {
+        if (Objects.isNull(startDate) || Objects.isNull(endDate)) {
             return null;
         }
         return post.createdAt.between(startDate, endDate);
