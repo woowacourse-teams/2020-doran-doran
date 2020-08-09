@@ -3,7 +3,7 @@
     <div class="my-2">
       <v-icon large class="mr-3">mdi-account-circle</v-icon>
       <span class="font-weight-bold">{{ post.memberResponse.nickname }}</span>
-      <div class="float-right mt-1">1분 전</div>
+      <div class="float-right mt-1">{{ postDate }}</div>
     </div>
     <div class="text-break">{{ post.content }}</div>
     <div class="text-right">
@@ -18,14 +18,23 @@
 
 <script>
 import router from "@/router";
+import { CHANGE_DATE_FROM_NOW } from "@/utils/moment";
 
 export default {
   name: "PostItem",
+  data() {
+    return {
+      postDate: "",
+    };
+  },
   props: {
     post: {
       type: Object,
       required: true,
     },
+  },
+  async mounted() {
+    this.postDate = CHANGE_DATE_FROM_NOW(this.post.createdAt);
   },
   methods: {
     routePage() {

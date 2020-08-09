@@ -22,70 +22,68 @@
         {{ post.address.depth3 }}에서
       </div>
     </div>
-    <CommentList :comments="post.comments"/>
-    <div class="bottom-spacer"/>
-    <CommentInput :post-id="post.id"/>
+    <CommentList :comments="post.comments" />
+    <div class="bottom-spacer" />
+    <CommentInput :post-id="post.id" />
   </div>
 </template>
 
 <script>
-  import CommentInput from "@/components/post/CommentInput";
-  import CommentList from "@/components/post/CommentList";
-  import moment from "moment";
+import CommentInput from "@/components/post/CommentInput";
+import CommentList from "@/components/post/CommentList";
+import { CHANGE_DATE_FROM_NOW } from "@/utils/moment";
 
-  export default {
-    name: "PostDetailPage",
-    components: {
-      CommentList,
-      CommentInput,
-    },
-    data() {
-      return {
-        post: {
+export default {
+  name: "PostDetailPage",
+  components: {
+    CommentList,
+    CommentInput,
+  },
+  data() {
+    return {
+      post: {
+        id: 0,
+        memberResponse: {
           id: 0,
-          memberResponse: {
-            id: 0,
-            nickname: "",
-          },
-          content: "",
-          address: {
-            depth1: "",
-            depth2: "",
-            depth3: "",
-          },
-          authorAddress: {
-            depth1: "",
-            depth2: "",
-            depth3: "",
-          },
-          createdAt: "",
-          comments: [],
+          nickname: "",
         },
-        postDate: "",
-      };
+        content: "",
+        address: {
+          depth1: "",
+          depth2: "",
+          depth3: "",
+        },
+        authorAddress: {
+          depth1: "",
+          depth2: "",
+          depth3: "",
+        },
+        createdAt: "",
+        comments: [],
+      },
+      postDate: "",
+    };
+  },
+  async created() {
+    this.post = await this.$store.dispatch(
+      "post/loadPost",
+      this.$route.params.id,
+    );
+  },
+  watch: {
+    post() {
+      this.postDate = this.postDate = CHANGE_DATE_FROM_NOW(this.post.createdAt);
     },
-    async created() {
-      this.post = await this.$store.dispatch(
-          "post/loadPost",
-          this.$route.params.id,
-      );
-    },
-    watch: {
-      post() {
-        console.log(this.post.createdAt);
-        const date = new Date(moment(this.post.createdAt).format('YYYY-MM-DD HH:mm:ss'));
-        this.postDate = moment(date).fromNow();
-      }
-    }
-  };
+  },
+};
 </script>
 
 <style scoped>
-  .post-address {
-    font-size: 0.9rem;
-  }
+.post-address {
+  font-size: 0.9rem;
+}
 
-  .bottom-spacer {
-    height: 60px;
-  }
+.bottom-spacer {
+  height: 60px;
+}
 </style>
