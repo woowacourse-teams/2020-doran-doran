@@ -31,9 +31,9 @@ public class PostRepositorySupport extends QuerydslRepositorySupport {
 
     public List<Post> findPostContainsKeywordBetweenDate(String keyword, LocalDateTime startDate, LocalDateTime endDate) {
         return jpaQueryFactory
-                .selectFrom(post)
-                .where(containsKeyword(keyword), afterDate(startDate), beforeDate((endDate)))
-                .fetch();
+            .selectFrom(post)
+            .where(containsKeyword(keyword), betweenDate(startDate, endDate))
+            .fetch();
     }
 
     private BooleanExpression containsKeyword(String keyword) {
@@ -43,17 +43,10 @@ public class PostRepositorySupport extends QuerydslRepositorySupport {
         return post.content.contains(keyword);
     }
 
-    private BooleanExpression afterDate(LocalDateTime startDate) {
-        if (StringUtils.isEmpty(startDate)) {
+    private BooleanExpression betweenDate(LocalDateTime startDate, LocalDateTime endDate) {
+        if (StringUtils.isEmpty(startDate) || StringUtils.isEmpty(endDate)) {
             return null;
         }
-        return post.createdAt.after(startDate);
-    }
-
-    private BooleanExpression beforeDate(LocalDateTime endDate) {
-        if (StringUtils.isEmpty(endDate)) {
-            return null;
-        }
-        return post.createdAt.before(endDate);
+        return post.createdAt.between(startDate, endDate);
     }
 }
