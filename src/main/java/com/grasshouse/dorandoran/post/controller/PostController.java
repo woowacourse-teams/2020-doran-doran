@@ -62,4 +62,9 @@ public class PostController {
         return ResponseEntity.created(URI.create("/posts/likes/" + postLikeId)).build();
     }
 
+    @DeleteMapping("/likes/{postLikeId}")
+    public ResponseEntity<Void> deletePostLike(@PathVariable Long postLikeId) {
+        postLikeService.deletePostLike(postLikeId);
+        return ResponseEntity.noContent().build();
+    }
 }

@@ -5,6 +5,7 @@ import static com.grasshouse.dorandoran.fixture.LocationFixture.GANGNAM_STATION;
 import static com.grasshouse.dorandoran.fixture.LocationFixture.JAMSIL_STATION;
 import static com.grasshouse.dorandoran.fixture.MemberFixture.PERSIST_MEMBER;
 import static com.grasshouse.dorandoran.fixture.PostFixture.PERSIST_POST;
+import static com.grasshouse.dorandoran.fixture.PostLikeFixture.PERSIST_POST_LIKE;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
@@ -148,6 +149,15 @@ class PostControllerTest extends CommonControllerTest {
             .andDo(print());
 
         verify(postLikeService).createPostLike(any(), any());
+    }
+
+    @DisplayName("게시물의 좋아요를 취소(삭제)한다.")
+    @Test
+    void deletePostLike() throws Exception {
+        doNothing().when(postLikeService).deletePostLike(PERSIST_POST_LIKE.getId());
+        this.mockMvc.perform(delete("/posts/likes/" + PERSIST_POST_LIKE.getId()))
+            .andExpect(status().isNoContent())
+            .andDo(print());
     }
 
     private List<PostResponse> postResponses() {
