@@ -98,6 +98,10 @@ const KakaoMap = {
       marker.setMap(this.map);
     };
 
+    Vue.prototype.$resetPostOverlay = () => {
+      postOverlays.length = 0;
+    };
+
     Vue.prototype.$setPostOverlay = (container, location) => {
       const kakaoLocation = createKakaoLocation(location);
 
