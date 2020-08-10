@@ -48,4 +48,10 @@ public class CommentController {
             .created(URI.create("/comments/likes/" + commentLikeId))
             .build();
     }
+
+    @DeleteMapping("/comments/likes/{commentLikeId}")
+    public ResponseEntity<Void> deleteCommentLike(@PathVariable Long commentLikeId) {
+        commentLikeService.deleteCommentLike(commentLikeId);
+        return ResponseEntity.noContent().build();
+    }
 }

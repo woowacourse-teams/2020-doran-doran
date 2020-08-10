@@ -102,4 +102,15 @@ class CommentControllerTest extends CommonControllerTest {
 
         verify(commentLikeService).createCommentLike(any(), any());
     }
+
+    @DisplayName("댓글 좋아요를 취소(삭제)한다.")
+    @Test
+    void cancelCommentLike() throws Exception {
+        doNothing().when(commentLikeService)
+            .deleteCommentLike(PERSIST_COMMENT_LIKE.getId());
+        this.mockMvc
+            .perform(delete("/comments/likes/" + PERSIST_COMMENT_LIKE.getId()))
+            .andExpect(status().isNoContent())
+            .andDo(print());
+    }
 }
