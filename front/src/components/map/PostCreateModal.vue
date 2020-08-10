@@ -37,7 +37,6 @@
 
 <script>
 import { MAP_MODE } from "@/utils/constants";
-import router from "@/router";
 import { DORAN_DORAN_COLORS } from "@/utils/constants";
 import { ERROR_MESSAGE } from "@/utils/constants";
 
@@ -75,13 +74,11 @@ export default {
         address: await this.$getAddress(postLocation),
         authorAddress: await this.$getAddress(authorLocation),
       };
-      this.$store
-        .dispatch("post/createPost", data)
-        .then(() => (this.content = ""))
-        .then(() => this.closeModal())
-        .then(() => router.go(0));
+      await this.$store.dispatch("post/createPost", data);
+      this.closeModal();
     },
     closeModal() {
+      this.content = "";
       this.$store.commit("modal/CHANGE_STATE", MAP_MODE.DEFAULT);
     },
   },
