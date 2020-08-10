@@ -66,7 +66,7 @@ public class Post {
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>();
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "POST_LIKE_ID")
     @Builder.Default
     private Set<PostLike> likes = new HashSet<>();
