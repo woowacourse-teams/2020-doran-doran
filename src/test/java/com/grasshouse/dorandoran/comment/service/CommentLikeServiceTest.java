@@ -6,6 +6,7 @@ import static com.grasshouse.dorandoran.fixture.LocationFixture.JAMSIL_STATION;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.grasshouse.dorandoran.comment.domain.Comment;
+import com.grasshouse.dorandoran.comment.domain.CommentLike;
 import com.grasshouse.dorandoran.comment.repository.CommentLikeRepository;
 import com.grasshouse.dorandoran.comment.repository.CommentRepository;
 import com.grasshouse.dorandoran.member.domain.Member;
@@ -84,11 +85,26 @@ class CommentLikeServiceTest {
         assertThat(commentLikeId).isNotNull();
     }
 
+    @DisplayName("댓글에 추가한 좋아요를 취소(삭제)한다.")
+    @Test
+    void deleteCommentLike() {
+        CommentLike commentLike = CommentLike.builder()
+            .memberId(commentLiker.getId())
+            .comment(comment)
+            .build();
+
+        CommentLike persistCommentLike = commentLikeRepository.save(commentLike);
+        assertThat(commentLikeRepository.findAll()).hasSize(1);
+
+        commentLikeService.deleteCommentLike(persistCommentLike.getId());
+        assertThat(commentLikeRepository.findAll()).hasSize(0);
+    }
+
     @AfterEach
     void tearDown() {
-        commentRepository.deleteAll();
         commentLikeRepository.deleteAll();
-        memberRepository.deleteAll();
+        commentRepository.deleteAll();
         postRepository.deleteAll();
+        memberRepository.deleteAll();
     }
 }

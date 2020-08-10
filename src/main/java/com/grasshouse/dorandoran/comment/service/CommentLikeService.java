@@ -4,6 +4,7 @@ import com.grasshouse.dorandoran.comment.domain.Comment;
 import com.grasshouse.dorandoran.comment.domain.CommentLike;
 import com.grasshouse.dorandoran.comment.repository.CommentLikeRepository;
 import com.grasshouse.dorandoran.comment.repository.CommentRepository;
+import com.grasshouse.dorandoran.common.exception.CommentLikeNotFoundException;
 import com.grasshouse.dorandoran.common.exception.CommentNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,5 +28,12 @@ public class CommentLikeService {
             .build();
         commentLikeRepository.save(commentLike);
         return commentLike.getId();
+    }
+
+    @Transactional
+    public void deleteCommentLike(Long commentLikeId) {
+        CommentLike commentLike = commentLikeRepository.findById(commentLikeId)
+            .orElseThrow(CommentLikeNotFoundException::new);
+        commentLikeRepository.delete(commentLike);
     }
 }
