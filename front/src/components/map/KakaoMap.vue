@@ -41,7 +41,9 @@ export default {
       await this.setInitialAppBarAddress();
       await this.$store.dispatch("post/loadPosts");
       await this.drawPosts();
-      await this.$addEventToMap(this.changeAppBarAddressByCenterLocation);
+      await this.$watchMapCenterChange(
+        this.changeAppBarAddressByCenterLocation,
+      );
     },
     async setInitialAppBarAddress() {
       const centerLocation = await this.$getCenterLocation();
