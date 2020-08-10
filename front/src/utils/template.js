@@ -2,7 +2,7 @@ import router from "@/router";
 import { EVENT_TYPE } from "@/utils/constants";
 
 export const POST_OVERLAY_TEMPLATES = (post) => {
-  const CONTENT_LENGTH = 20;
+  const CONTENT_LENGTH = 15;
 
   const postOverlay = document.createElement("div");
   postOverlay.classList.add("speech-bubble");
