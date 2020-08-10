@@ -19,15 +19,13 @@ export default {
       require: true,
     },
   },
-  data() {
-    return {
-      shortContent: "",
-      contentTail: "",
-    };
-  },
-  created() {
-    this.shortContent = this.post.content.substring(0, CONTENT_LENGTH).trim();
-    this.contentTail = this.post.content.length > CONTENT_LENGTH ? "..." : "";
+  computed: {
+    shortContent() {
+      return this.post.content.substring(0, CONTENT_LENGTH).trim();
+    },
+    contentTail() {
+      return this.post.content.length > CONTENT_LENGTH ? "..." : "";
+    },
   },
   mounted() {
     this.$setPostOverlay(this.$refs.post, this.post.location);
