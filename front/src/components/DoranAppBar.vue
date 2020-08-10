@@ -1,10 +1,9 @@
 <template>
-  <v-app-bar flat max-height="64">
-    <v-btn icon fab text @click="goToPreviousPage">
+  <v-app-bar flat max-height="56" color="white" color="white">
+    <v-btn icon fab text @click="goToPreviousPage" fixed left>
       <v-icon>mdi-chevron-left</v-icon>
     </v-btn>
     <VSpacer />
-    <v-icon class="mdi pr-1">mdi-map-marker</v-icon>
     <v-toolbar-title class="app-bar-title">
       {{ centerAddress }}
     </v-toolbar-title>
