@@ -4,8 +4,8 @@ export default {
     centerAddress: "",
   },
   mutations: {
-    CHANGE_ADDRESS(state, value) {
-      state.centerAddress = value;
+    CHANGE_ADDRESS(state, newAddress) {
+      state.centerAddress = newAddress;
     },
   },
   getters: {
