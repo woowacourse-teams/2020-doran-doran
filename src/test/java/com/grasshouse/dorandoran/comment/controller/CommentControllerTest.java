@@ -87,16 +87,15 @@ class CommentControllerTest extends CommonControllerTest {
             .andDo(print());
     }
 
-    @DisplayName("댓글에 좋아요를 누른다.")
+    @DisplayName("댓글에 좋아요를 추가한다.")
     @Test
     void likesComment() throws Exception {
         when(commentLikeService.createCommentLike(any(), any()))
             .thenReturn(PERSIST_COMMENT_LIKE.getId());
 
-        this.mockMvc
-            .perform(post("/comments/likes")
-                .queryParam("commentId", "10")
-                .queryParam("memberId", "5"))
+        this.mockMvc.perform(post("/comments/likes")
+            .queryParam("commentId", "10")
+            .queryParam("memberId", "5"))
             .andExpect(status().isCreated())
             .andDo(print());
 
@@ -108,9 +107,12 @@ class CommentControllerTest extends CommonControllerTest {
     void cancelCommentLike() throws Exception {
         doNothing().when(commentLikeService)
             .deleteCommentLike(PERSIST_COMMENT_LIKE.getId());
+
         this.mockMvc
             .perform(delete("/comments/likes/" + PERSIST_COMMENT_LIKE.getId()))
             .andExpect(status().isNoContent())
             .andDo(print());
+
+        verify(commentLikeService).deleteCommentLike(any());
     }
 }

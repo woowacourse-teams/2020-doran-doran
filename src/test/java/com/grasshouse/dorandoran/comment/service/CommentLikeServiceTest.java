@@ -24,7 +24,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 class CommentLikeServiceTest {
 
     @Autowired
-    CommentLikeService commentLikeService;
+    private CommentLikeService commentLikeService;
 
     @Autowired
     private CommentRepository commentRepository;
