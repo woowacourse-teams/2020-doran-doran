@@ -36,14 +36,18 @@ export default {
   methods: {
     async initMainMap() {
       const currentLocation = await this.$getCurrentLocation();
-      await this.$getAddress(currentLocation).then((address) => {
-        this.$store.commit("appBar/CHANGE_ADDRESS", address);
-      });
       this.$setLocation(currentLocation);
       this.$setCurrentLocationMarker(currentLocation);
+      await this.setInitialAppBarAddress();
       await this.$store.dispatch("post/loadPosts");
       await this.drawPosts();
       await this.$addEventToMap(this.changeAppBarAddressByCenterLocation);
+    },
+    async setInitialAppBarAddress() {
+      const centerLocation = await this.$getCenterLocation();
+      await this.$getAddress(centerLocation).then((centerAddress) => {
+        this.$store.commit("appBar/CHANGE_ADDRESS", centerAddress);
+      });
     },
     async changeAppBarAddressByCenterLocation() {
       const centerLocation = await this.$getCenterLocation();
