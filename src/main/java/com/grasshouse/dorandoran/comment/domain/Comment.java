@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
@@ -55,7 +56,7 @@ public class Comment {
     @CreatedDate
     private LocalDateTime createdAt;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "COMMENT_LIKE_ID")
     @Builder.Default
     private Set<CommentLike> likes = new HashSet<>();
