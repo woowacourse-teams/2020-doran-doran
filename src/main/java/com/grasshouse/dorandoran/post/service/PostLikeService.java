@@ -28,4 +28,10 @@ public class PostLikeService {
         postLikeRepository.save(postLike);
         return postLike.getId();
     }
+
+    @Transactional
+    public void deletePostLike(Long postLikeId) {
+        PostLike postLike = postLikeRepository.findById(postLikeId).orElseThrow(PostLikeNotFoundException::new);
+        postLikeRepository.delete(postLike);
+    }
 }

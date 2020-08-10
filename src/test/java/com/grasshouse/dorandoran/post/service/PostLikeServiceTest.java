@@ -8,6 +8,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import com.grasshouse.dorandoran.member.domain.Member;
 import com.grasshouse.dorandoran.member.repository.MemberRepository;
 import com.grasshouse.dorandoran.post.domain.Post;
+import com.grasshouse.dorandoran.post.domain.PostLike;
 import com.grasshouse.dorandoran.post.repository.PostLikeRepository;
 import com.grasshouse.dorandoran.post.repository.PostRepository;
 import org.junit.jupiter.api.AfterEach;
@@ -66,6 +67,21 @@ public class PostLikeServiceTest {
     void createPostLike() {
         Long postLikeId = postLikeService.createPostLike(post.getId(), postLiker.getId());
         assertThat(postLikeId).isNotNull();
+    }
+
+    @DisplayName("게시글의 좋아요를 취소(삭제)한다.")
+    @Test
+    void deletePostLike() {
+        PostLike postLike = PostLike.builder()
+            .memberId(postLiker.getId())
+            .post(post)
+            .build();
+
+        PostLike persistPostLike = postLikeRepository.save(postLike);
+        assertThat(postLikeRepository.findAll()).hasSize(1);
+
+        postLikeService.deletePostLike(persistPostLike.getId());
+        assertThat(postLikeRepository.findAll()).hasSize(0);
     }
 
     @AfterEach
