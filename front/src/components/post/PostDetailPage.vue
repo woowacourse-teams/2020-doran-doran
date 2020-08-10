@@ -72,7 +72,7 @@ export default {
   },
   watch: {
     post() {
-      this.postDate = this.postDate = CHANGE_DATE_FROM_NOW(this.post.createdAt);
+      this.postDate = CHANGE_DATE_FROM_NOW(this.post.createdAt);
     },
   },
 };
