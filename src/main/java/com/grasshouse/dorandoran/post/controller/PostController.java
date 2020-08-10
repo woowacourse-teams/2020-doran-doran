@@ -1,5 +1,6 @@
 package com.grasshouse.dorandoran.post.controller;
 
+import com.grasshouse.dorandoran.post.service.PostLikeService;
 import com.grasshouse.dorandoran.post.service.PostService;
 import com.grasshouse.dorandoran.post.service.dto.PostCreateRequest;
 import com.grasshouse.dorandoran.post.service.dto.PostCreateResponse;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -22,9 +24,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class PostController {
 
     private PostService postService;
+    private PostLikeService postLikeService;
 
-    public PostController(PostService postService) {
+    public PostController(PostService postService, PostLikeService postLikeService) {
         this.postService = postService;
+        this.postLikeService = postLikeService;
     }
 
     @PostMapping
@@ -49,6 +53,13 @@ public class PostController {
     public ResponseEntity<Void> deletePost(@PathVariable Long postId) {
         postService.deletePost(postId);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/likes")
+    public ResponseEntity<Void> createPostLike(@RequestParam Long postId,
+        @RequestParam Long memberId) {
+        Long postLikeId = postLikeService.createPostLike(postId, memberId);
+        return ResponseEntity.created(URI.create("/posts/likes/" + postLikeId)).build();
     }
 
 }
