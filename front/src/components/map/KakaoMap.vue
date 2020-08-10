@@ -46,7 +46,7 @@ export default {
       );
     },
     async setInitialAppBarAddress() {
-      const centerLocation = await this.$getCenterLocation();
+      const centerLocation = this.$getCenterLocation();
       await this.$getAddress(centerLocation).then((centerAddress) => {
         this.$store.commit("appBar/CHANGE_ADDRESS", centerAddress);
       });
