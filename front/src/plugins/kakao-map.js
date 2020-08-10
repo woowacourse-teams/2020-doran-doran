@@ -1,6 +1,5 @@
 import { KAKAO_MAP_APP_KEY } from "@/secure/appkey";
 import INITIAL_LOCATION from "@/config/config";
-import { POST_OVERLAY_TEMPLATES } from "@/utils/template";
 
 const KAKAO_MAP_URL = "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=";
 const LIBRARY = "&libraries=services,clusterer";
@@ -99,12 +98,12 @@ const KakaoMap = {
       marker.setMap(this.map);
     };
 
-    Vue.prototype.$setPostOverlay = (post) => {
-      const kakaoLocation = createKakaoLocation(post.location);
+    Vue.prototype.$setPostOverlay = (container, location) => {
+      const kakaoLocation = createKakaoLocation(location);
 
       const customOverlay = new kakao.maps.CustomOverlay({
         position: kakaoLocation,
-        content: POST_OVERLAY_TEMPLATES(post),
+        content: container,
       });
       customOverlay.setMap(this.map);
       this.clusterer.addMarker(customOverlay);

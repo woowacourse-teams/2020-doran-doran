@@ -8,20 +8,35 @@
     >
       mdi-map-marker
     </v-icon>
+    <template v-if="isMapRendered" class="d-none">
+      <PostOverlay v-for="post in posts" :key="post.id" :post="post" />
+    </template>
   </v-container>
 </template>
 
 <script>
+import PostOverlay from "@/components/map/PostOverlay";
 import { EVENT_TYPE } from "@/utils/constants";
 
 export default {
   name: "KakaoMap",
+  components: {
+    PostOverlay,
+  },
+  data() {
+    return {
+      isMapRendered: false,
+    };
+  },
   computed: {
     isDefaultMode() {
       return this.$store.getters["modal/isDefaultMode"];
     },
     isMarkerMode() {
       return this.$store.getters["modal/isMarkerMode"];
+    },
+    posts() {
+      return this.$store.getters["post/getPosts"];
     },
   },
   async mounted() {
@@ -47,6 +62,7 @@ export default {
         EVENT_TYPE.CENTER_CHANGE,
         this.changeAppBarAddressByCenterLocation,
       );
+      this.isMapRendered = true;
     },
     async changeAppBarAddressByCenterLocation() {
       const centerLocation = await this.$getCenterLocation();
