@@ -13,7 +13,7 @@ export const POST_OVERLAY_TEMPLATES = (post) => {
 
   postOverlay.insertAdjacentHTML(
     "beforeend",
-    `<span class="red--text"> [${post.comments.length}]</span>`,
+    `<span class="red--text text-caption"> [${post.comments.length}]</span>`,
   );
 
   postOverlay.insertAdjacentHTML(
