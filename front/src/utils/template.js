@@ -1,12 +1,23 @@
-import router from "../router/index";
-import { EVENT_TYPE } from "./constants";
+import router from "@/router";
+import { EVENT_TYPE } from "@/utils/constants";
 
 export const POST_OVERLAY_TEMPLATES = (post) => {
+  const CONTENT_LENGTH = 15;
+
   const postOverlay = document.createElement("div");
   postOverlay.classList.add("speech-bubble");
-  postOverlay.innerText = post.content;
+
+  const shortContent = post.content.substring(0, CONTENT_LENGTH).trim();
+  const contentTail = post.content.length > CONTENT_LENGTH ? "..." : "";
+  postOverlay.innerText = shortContent + contentTail;
+
   postOverlay.insertAdjacentHTML(
-    "afterbegin",
+    "beforeend",
+    `<span class="red--text text-caption"> [${post.comments.length}]</span>`,
+  );
+
+  postOverlay.insertAdjacentHTML(
+    "beforeend",
     `<div class="speech-arrow"></div>`,
   );
 
