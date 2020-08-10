@@ -18,8 +18,9 @@ public class CommentLikeService {
 
     @Transactional
     public Long createCommentLike(Long commentId, Long memberId) {
-        Comment comment = commentRepository.findById(commentId).orElseThrow(
-            CommentNotFoundException::new);
+        Comment comment = commentRepository
+            .findById(commentId)
+            .orElseThrow(CommentNotFoundException::new);
         CommentLike commentLike = CommentLike.builder()
             .memberId(memberId)
             .comment(comment)
