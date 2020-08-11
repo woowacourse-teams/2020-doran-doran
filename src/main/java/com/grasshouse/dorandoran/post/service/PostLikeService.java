@@ -1,5 +1,6 @@
 package com.grasshouse.dorandoran.post.service;
 
+import com.grasshouse.dorandoran.common.exception.LikeAlreadyExistException;
 import com.grasshouse.dorandoran.common.exception.PostLikeNotFoundException;
 import com.grasshouse.dorandoran.post.domain.Post;
 import com.grasshouse.dorandoran.post.domain.PostLike;
@@ -21,12 +22,19 @@ public class PostLikeService {
         Post post = postRepository
             .findById(postId)
             .orElseThrow(PostLikeNotFoundException::new);
+        validatePostLikeDuplication(memberId, post);
         PostLike postLike = PostLike.builder()
             .memberId(memberId)
             .post(post)
             .build();
         postLikeRepository.save(postLike);
         return postLike.getId();
+    }
+
+    private void validatePostLikeDuplication(Long memberId, Post post) {
+        if (!postLikeRepository.findByMemberIdAndPost(memberId, post).isEmpty()) {
+            throw new LikeAlreadyExistException();
+        }
     }
 
     @Transactional
