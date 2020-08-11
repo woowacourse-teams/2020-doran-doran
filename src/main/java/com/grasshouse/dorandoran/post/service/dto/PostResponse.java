@@ -45,7 +45,9 @@ public class PostResponse {
 
     @Builder.Default
     private final List<CommentResponse> comments = new ArrayList<>();
-    //TODO : post_like 정보 추후에 추가하기
+
+    @NotNull
+    private int likes;
 
     public static PostResponse from(Post post) {
         return PostResponse.builder()
@@ -57,6 +59,7 @@ public class PostResponse {
             .address(post.getAddress())
             .createdAt(post.getCreatedAt())
             .comments(CommentResponse.listFrom(post.getComments()))
+            .likes(post.getLikes().size())
             .build();
     }
 
