@@ -43,6 +43,9 @@ public class Member {
     @LastModifiedDate
     private LocalDateTime updatedAt;
 
+    @Column(unique = true)
+    private String oAuthId;
+
     @Builder.Default
     @OneToMany(mappedBy = "author")
     private List<Post> posts = new ArrayList<>();
