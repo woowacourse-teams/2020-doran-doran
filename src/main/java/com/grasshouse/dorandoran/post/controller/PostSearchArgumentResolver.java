@@ -1,9 +1,9 @@
 package com.grasshouse.dorandoran.post.controller;
 
-import static com.grasshouse.dorandoran.common.exception.NotValidDateException.NOT_VALID_DATE_AREA_MESSAGE;
-import static com.grasshouse.dorandoran.common.exception.NotValidDateException.NOT_VALID_DATE_FORMAT_MESSAGE;
+import static com.grasshouse.dorandoran.common.exception.DateNotValidException.NOT_VALID_DATE_AREA_MESSAGE;
+import static com.grasshouse.dorandoran.common.exception.DateNotValidException.NOT_VALID_DATE_FORMAT_MESSAGE;
 
-import com.grasshouse.dorandoran.common.exception.NotValidDateException;
+import com.grasshouse.dorandoran.common.exception.DateNotValidException;
 import com.grasshouse.dorandoran.post.service.dto.PostSearchRequest;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -38,14 +38,14 @@ public class PostSearchArgumentResolver implements HandlerMethodArgumentResolver
         }
 
         if (!startDate.matches(DATE_FORMAT) || !endDate.matches(DATE_FORMAT)) {
-            throw new NotValidDateException(NOT_VALID_DATE_FORMAT_MESSAGE);
+            throw new DateNotValidException(NOT_VALID_DATE_FORMAT_MESSAGE);
         }
 
         LocalDateTime parsedStartDate = LocalDateTime.parse(startDate, DATE_TIME_FORMATTER);
         LocalDateTime parsedEndDate = LocalDateTime.parse(endDate, DATE_TIME_FORMATTER);
 
         if (parsedStartDate.isAfter(parsedEndDate)) {
-            throw new NotValidDateException(NOT_VALID_DATE_AREA_MESSAGE);
+            throw new DateNotValidException(NOT_VALID_DATE_AREA_MESSAGE);
         }
 
         return new PostSearchRequest(keyword, parsedStartDate, parsedEndDate);
