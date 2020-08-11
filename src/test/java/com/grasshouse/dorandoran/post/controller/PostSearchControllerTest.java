@@ -2,7 +2,6 @@ package com.grasshouse.dorandoran.post.controller;
 
 import static com.grasshouse.dorandoran.fixture.PostFixture.PERSIST_POST;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -18,7 +17,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MvcResult;
 
 class PostSearchControllerTest extends CommonControllerTest {
 
@@ -29,7 +27,7 @@ class PostSearchControllerTest extends CommonControllerTest {
     @Test
     void getSearchResultsPosts() throws Exception {
         String url = "/posts/search";
-        when(postSearchService.showSearchResults(anyString(), any(), any())).thenReturn(postResponses());
+        when(postSearchService.showSearchResults(any())).thenReturn(postResponses());
 
         this.mockMvc.perform(get(url)
             .queryParam("keyword", "내용")
@@ -40,14 +38,14 @@ class PostSearchControllerTest extends CommonControllerTest {
             .andExpect(status().isOk())
             .andDo(print());
 
-        verify(postSearchService).showSearchResults(anyString(), any(), any());
+        verify(postSearchService).showSearchResults(any());
     }
 
     @DisplayName("날짜 필터링이 없는 경우")
     @Test
     void getSearchResultsPosts2() throws Exception {
         String url = "/posts/search";
-        when(postSearchService.showSearchResults(anyString(), any(), any())).thenReturn(postResponses());
+        when(postSearchService.showSearchResults(any())).thenReturn(postResponses());
 
         this.mockMvc.perform(get(url)
             .queryParam("keyword", "내용")
@@ -56,14 +54,14 @@ class PostSearchControllerTest extends CommonControllerTest {
             .andExpect(status().isOk())
             .andDo(print()).andReturn();
 
-        verify(postSearchService).showSearchResults(anyString(), any(), any());
+        verify(postSearchService).showSearchResults(any());
     }
 
     @DisplayName("[예외] 시작 날짜가 마감 날짜보다 뒤에 있는 경우")
     @Test
     void getSearchResultsPosts3() throws Exception {
         String url = "/posts/search";
-        when(postSearchService.showSearchResults(anyString(), any(), any())).thenReturn(postResponses());
+        when(postSearchService.showSearchResults(any())).thenReturn(postResponses());
 
         this.mockMvc.perform(get(url)
             .queryParam("keyword", "내용")
@@ -79,7 +77,7 @@ class PostSearchControllerTest extends CommonControllerTest {
     @Test
     void getSearchResultsPosts4() throws Exception {
         String url = "/posts/search";
-        when(postSearchService.showSearchResults(anyString(), any(), any())).thenReturn(postResponses());
+        when(postSearchService.showSearchResults(any())).thenReturn(postResponses());
 
         this.mockMvc.perform(get(url)
             .queryParam("keyword", "내용")
