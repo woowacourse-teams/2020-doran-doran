@@ -129,6 +129,10 @@ const KakaoMap = {
         };
       });
     };
+
+    Vue.prototype.$addEventToMap = (eventType, func) => {
+      this.map.addListener(eventType, func);
+    };
   },
 };
 
