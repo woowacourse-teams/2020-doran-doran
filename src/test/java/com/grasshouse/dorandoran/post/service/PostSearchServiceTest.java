@@ -2,6 +2,8 @@ package com.grasshouse.dorandoran.post.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,10 +23,10 @@ class PostSearchServiceTest {
 
     static Stream<Arguments> generateDays() {
         return Stream.of(
-            Arguments.of("2020-05-31 00:00:00", "2020-06-30 23:59:59", 4),
-            Arguments.of("2020-06-02 00:00:00", "2020-06-30 23:59:59", 3),
-            Arguments.of("2020-06-04 00:00:00", "2020-06-30 23:59:59", 2),
-            Arguments.of("2020-06-11 00:00:00", "2020-06-30 23:59:59", 1)
+            Arguments.of(toDate("2020-05-31 00:00:00"), toDate("2020-06-30 23:59:59"), 4),
+            Arguments.of(toDate("2020-06-02 00:00:00"), toDate("2020-06-30 23:59:59"), 3),
+            Arguments.of(toDate("2020-06-04 00:00:00"), toDate("2020-06-30 23:59:59"), 2),
+            Arguments.of(toDate("2020-06-11 00:00:00"), toDate("2020-06-30 23:59:59"), 1)
         );
     }
 
@@ -41,8 +43,12 @@ class PostSearchServiceTest {
     @DisplayName("특정 시간 사이의 글들을 반환한다.")
     @ParameterizedTest
     @MethodSource("generateDays")
-    void showSearchResultsByDate(String startDate, String endDate, int searchResult) {
+    void showSearchResultsByDate(LocalDateTime startDate, LocalDateTime endDate, int searchResult) {
         assertThat(postSearchService.showSearchResults(null, startDate, endDate))
             .hasSize(searchResult);
+    }
+
+    private static LocalDateTime toDate(String value) {
+        return LocalDateTime.parse(value, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
 }

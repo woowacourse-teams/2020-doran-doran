@@ -1,6 +1,7 @@
 package com.grasshouse.dorandoran.post.controller;
 
 import static com.grasshouse.dorandoran.fixture.PostFixture.PERSIST_POST;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -17,25 +18,77 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MvcResult;
 
 class PostSearchControllerTest extends CommonControllerTest {
 
     @MockBean
     private PostSearchService postSearchService;
 
-    @DisplayName("키워드로 검색된 글을 반환한다.")
+    @DisplayName("키워드와 날짜로 검색된 글을 반환한다.")
     @Test
     void getSearchResultsPosts() throws Exception {
-        String url = "/posts/search?keyword=내용&startDate='2020-05-05 00:00:00'&endDate='2020-08-08 23:59:59";
-
-        when(postSearchService.showSearchResults(anyString(), anyString(), anyString())).thenReturn(postResponses());
+        String url = "/posts/search";
+        when(postSearchService.showSearchResults(anyString(), any(), any())).thenReturn(postResponses());
 
         this.mockMvc.perform(get(url)
+            .queryParam("keyword", "내용")
+            .queryParam("startDate", "2020-05-05 00:00:00")
+            .queryParam("endDate", "2020-08-08 23:59:59")
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
             .accept(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(status().isOk())
             .andDo(print());
 
-        verify(postSearchService).showSearchResults(anyString(), anyString(), anyString());
+        verify(postSearchService).showSearchResults(anyString(), any(), any());
+    }
+
+    @DisplayName("날짜 필터링이 없는 경우")
+    @Test
+    void getSearchResultsPosts2() throws Exception {
+        String url = "/posts/search";
+        when(postSearchService.showSearchResults(anyString(), any(), any())).thenReturn(postResponses());
+
+        this.mockMvc.perform(get(url)
+            .queryParam("keyword", "내용")
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
+            .accept(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(status().isOk())
+            .andDo(print()).andReturn();
+
+        verify(postSearchService).showSearchResults(anyString(), any(), any());
+    }
+
+    @DisplayName("[예외] 시작 날짜가 마감 날짜보다 뒤에 있는 경우")
+    @Test
+    void getSearchResultsPosts3() throws Exception {
+        String url = "/posts/search";
+        when(postSearchService.showSearchResults(anyString(), any(), any())).thenReturn(postResponses());
+
+        this.mockMvc.perform(get(url)
+            .queryParam("keyword", "내용")
+            .queryParam("startDate", "2021-05-05 00:00:00")
+            .queryParam("endDate", "2020-08-08 23:59:59")
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
+            .accept(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(status().isBadRequest())
+            .andDo(print());
+    }
+
+    @DisplayName("[예외] 날짜가 올바른 형식이 아닌 경우")
+    @Test
+    void getSearchResultsPosts4() throws Exception {
+        String url = "/posts/search";
+        when(postSearchService.showSearchResults(anyString(), any(), any())).thenReturn(postResponses());
+
+        this.mockMvc.perform(get(url)
+            .queryParam("keyword", "내용")
+            .queryParam("startDate", "2021-05-05 00:00:00")
+            .queryParam("endDate", "마감날짜")
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
+            .accept(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(status().isBadRequest())
+            .andDo(print());
     }
 
     private List<PostResponse> postResponses() {

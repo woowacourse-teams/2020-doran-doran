@@ -2,12 +2,12 @@ package com.grasshouse.dorandoran.post.controller;
 
 import com.grasshouse.dorandoran.post.service.PostSearchService;
 import com.grasshouse.dorandoran.post.service.dto.PostResponse;
+import com.grasshouse.dorandoran.post.service.dto.PostSearchRequest;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin(origins = {"https://woowacourse.com"})
@@ -22,8 +22,8 @@ public class PostSearchController {
     }
 
     @GetMapping
-    public ResponseEntity<List<PostResponse>> showSearchResults(@RequestParam String keyword, @RequestParam String startDate, @RequestParam String endDate) {
-        List<PostResponse> responses = postSearchService.showSearchResults(keyword, startDate, endDate);
+    public ResponseEntity<List<PostResponse>> showSearchResults(@PostSearch PostSearchRequest request) {
+        List<PostResponse> responses = postSearchService.showSearchResults(request.getKeyword(), request.getStartDate(), request.getEndDate());
         return ResponseEntity.ok(responses);
     }
 }

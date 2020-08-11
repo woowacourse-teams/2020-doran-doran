@@ -22,19 +22,8 @@ public class PostSearchService {
     }
 
     @Transactional
-    public List<PostResponse> showSearchResults(String keyword, String startDate, String endDate) {
-        LocalDateTime parsedStartDate = null;
-        LocalDateTime parsedEndDate = null;
-
-        if (!StringUtils.isEmpty(startDate) && !StringUtils.isEmpty(endDate)) {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
-            parsedStartDate = LocalDateTime.parse(startDate, formatter);
-            parsedEndDate = LocalDateTime.parse(endDate, formatter);
-        }
-
-        List<Post> searchResults = postRepositorySupport
-            .findPostContainsKeywordBetweenDate(keyword, parsedStartDate, parsedEndDate);
+    public List<PostResponse> showSearchResults(String keyword, LocalDateTime startDate, LocalDateTime endDate) {
+        List<Post> searchResults = postRepositorySupport.findPostContainsKeywordBetweenDate(keyword, startDate, endDate);
 
         return searchResults.stream()
             .map(PostResponse::from)
