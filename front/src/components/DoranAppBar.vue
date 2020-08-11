@@ -8,6 +8,9 @@
       {{ centerAddress }}
     </v-toolbar-title>
     <VSpacer />
+    <router-link to="/search">
+      <v-icon>mdi-magnify</v-icon>
+    </router-link>
   </v-app-bar>
 </template>
 

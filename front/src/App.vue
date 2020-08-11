@@ -18,6 +18,7 @@ export default {
 
 <style>
 @import "./assets/styles/post-overlay.css";
+@import "./assets/styles/index.css";
 
 html,
 body {
