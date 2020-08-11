@@ -38,9 +38,6 @@ class PostControllerTest extends CommonControllerTest {
     @MockBean
     private PostService postService;
 
-    @MockBean
-    private PostLikeService postLikeService;
-
     @DisplayName("글을 작성한다.")
     @Test
     void createPost() throws Exception {
@@ -134,29 +131,6 @@ class PostControllerTest extends CommonControllerTest {
             .content(request))
             .andExpect(result -> assertTrue(
                 result.getResolvedException() instanceof MethodArgumentNotValidException))
-            .andDo(print());
-    }
-
-    @DisplayName("게시물에 좋아요를 추가한다.")
-    @Test
-    void createPostLike() throws Exception {
-        when(postLikeService.createPostLike(any(), any())).thenReturn(PERSIST_POST.getId());
-
-        this.mockMvc.perform(post("/posts/likes")
-            .queryParam("postId", "10")
-            .queryParam("memberId", "5"))
-            .andExpect(status().isCreated())
-            .andDo(print());
-
-        verify(postLikeService).createPostLike(any(), any());
-    }
-
-    @DisplayName("게시물의 좋아요를 취소(삭제)한다.")
-    @Test
-    void deletePostLike() throws Exception {
-        doNothing().when(postLikeService).deletePostLike(PERSIST_POST_LIKE.getId());
-        this.mockMvc.perform(delete("/posts/likes/" + PERSIST_POST_LIKE.getId()))
-            .andExpect(status().isNoContent())
             .andDo(print());
     }
 

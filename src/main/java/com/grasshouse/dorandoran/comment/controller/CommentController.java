@@ -20,12 +20,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class CommentController {
 
     private CommentService commentService;
-    private CommentLikeService commentLikeService;
 
     //TODO: final 키워드 + RequiredArgsConstructor로 변경
-    public CommentController(CommentService commentService, CommentLikeService commentLikeService) {
+    public CommentController(CommentService commentService) {
         this.commentService = commentService;
-        this.commentLikeService = commentLikeService;
     }
 
     @PostMapping
@@ -42,18 +40,4 @@ public class CommentController {
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping("/likes")
-    public ResponseEntity<Void> createCommentLike(@RequestParam Long commentId,
-        @RequestParam Long memberId) {
-        Long commentLikeId = commentLikeService.createCommentLike(commentId, memberId);
-        return ResponseEntity
-            .created(URI.create("/comments/likes/" + commentLikeId))
-            .build();
-    }
-
-    @DeleteMapping("/likes/{commentLikeId}")
-    public ResponseEntity<Void> deleteCommentLike(@PathVariable Long commentLikeId) {
-        commentLikeService.deleteCommentLike(commentLikeId);
-        return ResponseEntity.noContent().build();
-    }
 }

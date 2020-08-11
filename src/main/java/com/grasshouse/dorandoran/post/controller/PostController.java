@@ -24,11 +24,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class PostController {
 
     private PostService postService;
-    private PostLikeService postLikeService;
 
-    public PostController(PostService postService, PostLikeService postLikeService) {
+    public PostController(PostService postService) {
         this.postService = postService;
-        this.postLikeService = postLikeService;
     }
 
     @PostMapping
@@ -52,19 +50,6 @@ public class PostController {
     @DeleteMapping("/{postId}")
     public ResponseEntity<Void> deletePost(@PathVariable Long postId) {
         postService.deletePost(postId);
-        return ResponseEntity.noContent().build();
-    }
-
-    @PostMapping("/likes")
-    public ResponseEntity<Void> createPostLike(@RequestParam Long postId,
-        @RequestParam Long memberId) {
-        Long postLikeId = postLikeService.createPostLike(postId, memberId);
-        return ResponseEntity.created(URI.create("/posts/likes/" + postLikeId)).build();
-    }
-
-    @DeleteMapping("/likes/{postLikeId}")
-    public ResponseEntity<Void> deletePostLike(@PathVariable Long postLikeId) {
-        postLikeService.deletePostLike(postLikeId);
         return ResponseEntity.noContent().build();
     }
 }

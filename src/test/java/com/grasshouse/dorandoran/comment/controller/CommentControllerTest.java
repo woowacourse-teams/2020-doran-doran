@@ -29,9 +29,6 @@ class CommentControllerTest extends CommonControllerTest {
     @MockBean
     private CommentService commentService;
 
-    @MockBean
-    private CommentLikeService commentLikeService;
-
     @DisplayName("댓글을 작성한다.")
     @Test
     void createComment() throws Exception {
@@ -87,32 +84,4 @@ class CommentControllerTest extends CommonControllerTest {
             .andDo(print());
     }
 
-    @DisplayName("댓글에 좋아요를 추가한다.")
-    @Test
-    void likesComment() throws Exception {
-        when(commentLikeService.createCommentLike(any(), any()))
-            .thenReturn(PERSIST_COMMENT_LIKE.getId());
-
-        this.mockMvc.perform(post("/comments/likes")
-            .queryParam("commentId", "10")
-            .queryParam("memberId", "5"))
-            .andExpect(status().isCreated())
-            .andDo(print());
-
-        verify(commentLikeService).createCommentLike(any(), any());
-    }
-
-    @DisplayName("댓글 좋아요를 취소(삭제)한다.")
-    @Test
-    void cancelCommentLike() throws Exception {
-        doNothing().when(commentLikeService)
-            .deleteCommentLike(PERSIST_COMMENT_LIKE.getId());
-
-        this.mockMvc
-            .perform(delete("/comments/likes/" + PERSIST_COMMENT_LIKE.getId()))
-            .andExpect(status().isNoContent())
-            .andDo(print());
-
-        verify(commentLikeService).deleteCommentLike(any());
-    }
 }
