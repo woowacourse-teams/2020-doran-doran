@@ -18,7 +18,6 @@
 
 <script>
 import router from "@/router";
-import { CHANGE_DATE_FROM_NOW } from "@/utils/moment";
 
 export default {
   name: "PostItem",
@@ -34,7 +33,7 @@ export default {
     },
   },
   async mounted() {
-    this.postDate = CHANGE_DATE_FROM_NOW(this.post.createdAt);
+    this.postDate = this.$moment(this.post.createdAt).fromNow();
   },
   methods: {
     routePage() {

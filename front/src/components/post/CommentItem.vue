@@ -22,8 +22,6 @@
 </template>
 
 <script>
-import { CHANGE_DATE_FROM_NOW } from "@/utils/moment";
-
 export default {
   name: "CommentItem",
   data() {
@@ -38,8 +36,7 @@ export default {
     },
   },
   async mounted() {
-    console.log(this.comment);
-    this.commentDate = CHANGE_DATE_FROM_NOW(this.comment.createdAt);
+    this.commentDate = this.$moment(this.comment.createdAt).fromNow();
   },
 };
 </script>

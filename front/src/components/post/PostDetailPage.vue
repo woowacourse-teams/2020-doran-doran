@@ -31,7 +31,6 @@
 <script>
 import CommentInput from "@/components/post/CommentInput";
 import CommentList from "@/components/post/CommentList";
-import { CHANGE_DATE_FROM_NOW } from "@/utils/moment";
 
 export default {
   name: "PostDetailPage",
@@ -69,11 +68,7 @@ export default {
       "post/loadPost",
       this.$route.params.id,
     );
-  },
-  watch: {
-    post() {
-      this.postDate = CHANGE_DATE_FROM_NOW(this.post.createdAt);
-    },
+    this.postDate = await this.$moment(this.post.createdAt).fromNow();
   },
 };
 </script>
