@@ -1,8 +1,8 @@
 <template>
-  <div class="v-application v-application--is-ltr theme--light app-container">
+  <v-app class="app-container">
     <DoranAppBar />
     <RouterView />
-  </div>
+  </v-app>
 </template>
 
 <script>
@@ -30,5 +30,9 @@ body {
   width: 100%;
   height: 100%;
   flex-direction: column;
+}
+
+.app-container > div {
+  height: 100%;
 }
 </style>
