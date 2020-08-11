@@ -5,7 +5,6 @@ import static com.grasshouse.dorandoran.fixture.LocationFixture.GANGNAM_STATION;
 import static com.grasshouse.dorandoran.fixture.LocationFixture.JAMSIL_STATION;
 import static com.grasshouse.dorandoran.fixture.MemberFixture.PERSIST_MEMBER;
 import static com.grasshouse.dorandoran.fixture.PostFixture.PERSIST_POST;
-import static com.grasshouse.dorandoran.fixture.PostLikeFixture.PERSIST_POST_LIKE;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
@@ -20,7 +19,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.grasshouse.dorandoran.common.CommonControllerTest;
-import com.grasshouse.dorandoran.post.service.PostLikeService;
 import com.grasshouse.dorandoran.post.service.PostService;
 import com.grasshouse.dorandoran.post.service.dto.PostCreateRequest;
 import com.grasshouse.dorandoran.post.service.dto.PostCreateResponse;
@@ -74,6 +72,7 @@ class PostControllerTest extends CommonControllerTest {
             .andExpect(jsonPath("$.content").isNotEmpty())
             .andExpect(jsonPath("$.location").isNotEmpty())
             .andExpect(jsonPath("$.comments").isArray())
+            .andExpect(jsonPath("$.likes").isNotEmpty())
             .andDo(print());
 
         verify(postService).showPost(any());
