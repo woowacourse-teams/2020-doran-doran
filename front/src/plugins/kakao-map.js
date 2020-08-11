@@ -1,6 +1,6 @@
 import { KAKAO_MAP_APP_KEY } from "@/secure/appkey";
 import INITIAL_LOCATION from "@/config/config";
-import {ERROR_MESSAGE, EVENT_TYPE} from "@/utils/constants";
+import { EVENT_TYPE } from "@/utils/constants";
 import { POST_OVERLAY_TEMPLATES } from "@/utils/template";
 
 const KAKAO_MAP_URL = "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=";
