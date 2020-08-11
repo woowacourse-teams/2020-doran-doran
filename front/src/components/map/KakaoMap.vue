@@ -12,6 +12,8 @@
 </template>
 
 <script>
+import { EVENT_TYPE } from "@/utils/constants";
+
 export default {
   name: "KakaoMap",
   computed: {
@@ -41,7 +43,8 @@ export default {
       await this.changeAppBarAddressByCenterLocation();
       await this.$store.dispatch("post/loadPosts");
       await this.drawPosts();
-      await this.$watchMapCenterChange(
+      await this.$addEventToMap(
+        EVENT_TYPE.CENTER_CHANGE,
         this.changeAppBarAddressByCenterLocation,
       );
     },
