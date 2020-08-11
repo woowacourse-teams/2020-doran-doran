@@ -38,23 +38,18 @@ export default {
       const currentLocation = await this.$getCurrentLocation();
       this.$setLocation(currentLocation);
       this.$setCurrentLocationMarker(currentLocation);
-      await this.setInitialAppBarAddress();
+      await this.changeAppBarAddressByCenterLocation();
       await this.$store.dispatch("post/loadPosts");
       await this.drawPosts();
       await this.$watchMapCenterChange(
         this.changeAppBarAddressByCenterLocation,
       );
     },
-    async setInitialAppBarAddress() {
-      const centerLocation = this.$getCenterLocation();
-      await this.$getAddress(centerLocation).then((centerAddress) => {
-        this.$store.commit("appBar/CHANGE_ADDRESS", centerAddress);
-      });
-    },
     async changeAppBarAddressByCenterLocation() {
       const centerLocation = await this.$getCenterLocation();
       const centerAddress = await this.$getAddress(centerLocation);
-      this.$store.commit("appBar/CHANGE_ADDRESS", centerAddress);
+      const address = Object.values(centerAddress).join(" ");
+      this.$store.commit("appBar/CHANGE_ADDRESS", address);
     },
 
     drawPosts() {
