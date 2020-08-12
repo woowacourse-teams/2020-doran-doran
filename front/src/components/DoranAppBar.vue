@@ -11,6 +11,9 @@
     <router-link to="/search">
       <v-icon>mdi-magnify</v-icon>
     </router-link>
+    <router-link to="/timeline">
+      <v-icon>mdi-format-list-bulleted</v-icon>
+    </router-link>
   </v-app-bar>
 </template>
 
