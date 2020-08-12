@@ -4,7 +4,9 @@ import static com.grasshouse.dorandoran.fixture.AddressFixture.ADDRESS;
 import static com.grasshouse.dorandoran.fixture.AddressFixture.AUTHOR_ADDRESS;
 import static com.grasshouse.dorandoran.fixture.LocationFixture.JAMSIL_STATION;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import com.grasshouse.dorandoran.common.exception.LikeDuplicateException;
 import com.grasshouse.dorandoran.member.domain.Member;
 import com.grasshouse.dorandoran.member.repository.MemberRepository;
 import com.grasshouse.dorandoran.post.domain.Post;
@@ -82,6 +84,23 @@ public class PostLikeServiceTest {
         Post persistPost = postRepositorySupport.findPostWithLikes(post.getId());
 
         assertThat(persistPost.getLikes()).hasSize(1);
+    }
+
+    @DisplayName("[예외] 게시글에 이미 좋아요가 추가됐을 때(같은 member가 같은 post에) 또 추가한다.")
+    @Test
+    void duplicatePostLike() {
+        PostLikeCreateRequest firstRequest = PostLikeCreateRequest.builder()
+            .memberId(postLiker.getId())
+            .postId(post.getId())
+            .build();
+        postLikeService.createPostLike(firstRequest);
+
+        PostLikeCreateRequest duplicateRequest = PostLikeCreateRequest.builder()
+            .memberId(postLiker.getId())
+            .postId(post.getId())
+            .build();
+        assertThatThrownBy(() -> postLikeService.createPostLike(duplicateRequest))
+            .isInstanceOf(LikeDuplicateException.class);
     }
 
     @DisplayName("게시글의 좋아요를 취소(삭제)한다.")

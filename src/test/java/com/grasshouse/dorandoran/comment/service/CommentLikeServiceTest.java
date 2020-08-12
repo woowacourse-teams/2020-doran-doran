@@ -4,6 +4,7 @@ import static com.grasshouse.dorandoran.fixture.AddressFixture.ADDRESS;
 import static com.grasshouse.dorandoran.fixture.AddressFixture.AUTHOR_ADDRESS;
 import static com.grasshouse.dorandoran.fixture.LocationFixture.JAMSIL_STATION;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.grasshouse.dorandoran.comment.domain.Comment;
 import com.grasshouse.dorandoran.comment.domain.CommentLike;
@@ -11,6 +12,7 @@ import com.grasshouse.dorandoran.comment.repository.CommentLikeRepository;
 import com.grasshouse.dorandoran.comment.repository.CommentRepository;
 import com.grasshouse.dorandoran.comment.repository.CommentRepositorySupport;
 import com.grasshouse.dorandoran.comment.service.dto.CommentLikeCreateRequest;
+import com.grasshouse.dorandoran.common.exception.LikeDuplicateException;
 import com.grasshouse.dorandoran.member.domain.Member;
 import com.grasshouse.dorandoran.member.repository.MemberRepository;
 import com.grasshouse.dorandoran.post.domain.Post;
@@ -97,6 +99,23 @@ class CommentLikeServiceTest {
         Comment persistComment = commentRepositorySupport.findCommentWithLikes(comment.getId());
 
         assertThat(persistComment.getLikes()).hasSize(1);
+    }
+
+    @DisplayName("[예외] 댓글에 이미 좋아요가 추가됐을 때(같은 member가 같은 comment에) 또 추가한다.")
+    @Test
+    void duplicateCommentLike() {
+        CommentLikeCreateRequest firstRequest = CommentLikeCreateRequest.builder()
+            .memberId(commentLiker.getId())
+            .commentId(comment.getId())
+            .build();
+        commentLikeService.createCommentLike(firstRequest);
+
+        CommentLikeCreateRequest duplicateRequest = CommentLikeCreateRequest.builder()
+            .memberId(commentLiker.getId())
+            .commentId(comment.getId())
+            .build();
+        assertThatThrownBy(() -> commentLikeService.createCommentLike(duplicateRequest))
+            .isInstanceOf(LikeDuplicateException.class);
     }
 
     @DisplayName("댓글에 추가한 좋아요를 취소(삭제)한다.")
