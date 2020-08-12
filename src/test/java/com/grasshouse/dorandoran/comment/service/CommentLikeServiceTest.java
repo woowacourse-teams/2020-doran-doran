@@ -10,6 +10,7 @@ import com.grasshouse.dorandoran.comment.domain.CommentLike;
 import com.grasshouse.dorandoran.comment.repository.CommentLikeRepository;
 import com.grasshouse.dorandoran.comment.repository.CommentRepository;
 import com.grasshouse.dorandoran.comment.repository.CommentRepositorySupport;
+import com.grasshouse.dorandoran.comment.service.dto.CommentLikeCreateRequest;
 import com.grasshouse.dorandoran.member.domain.Member;
 import com.grasshouse.dorandoran.member.repository.MemberRepository;
 import com.grasshouse.dorandoran.post.domain.Post;
@@ -87,7 +88,12 @@ class CommentLikeServiceTest {
     @DisplayName("댓글에 좋아요를 추가한다.")
     @Test
     void createCommentLike() {
-        commentLikeService.createCommentLike(comment.getId(), commentLiker.getId());
+        CommentLikeCreateRequest request = CommentLikeCreateRequest.builder()
+            .memberId(commentLiker.getId())
+            .commentId(comment.getId())
+            .build();
+
+        commentLikeService.createCommentLike(request);
         Comment persistComment = commentRepositorySupport.findCommentWithLikes(comment.getId());
 
         assertThat(persistComment.getLikes()).hasSize(1);
@@ -111,7 +117,12 @@ class CommentLikeServiceTest {
     @DisplayName("댓글을 삭제할 때 좋아요도 같이 삭제된다.")
     @Test
     void deleteCommentWithCommentLike() {
-        commentLikeService.createCommentLike(comment.getId(), commentLiker.getId());
+        CommentLikeCreateRequest request = CommentLikeCreateRequest.builder()
+            .memberId(commentLiker.getId())
+            .commentId(comment.getId())
+            .build();
+
+        commentLikeService.createCommentLike(request);
         Comment persistComment = commentRepositorySupport.findCommentWithLikes(comment.getId());
         assertThat(persistComment.getLikes()).hasSize(1);
 

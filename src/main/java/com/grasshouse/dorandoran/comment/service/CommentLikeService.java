@@ -4,6 +4,7 @@ import com.grasshouse.dorandoran.comment.domain.Comment;
 import com.grasshouse.dorandoran.comment.domain.CommentLike;
 import com.grasshouse.dorandoran.comment.repository.CommentLikeRepository;
 import com.grasshouse.dorandoran.comment.repository.CommentRepository;
+import com.grasshouse.dorandoran.comment.service.dto.CommentLikeCreateRequest;
 import com.grasshouse.dorandoran.common.exception.CommentLikeNotFoundException;
 import com.grasshouse.dorandoran.common.exception.CommentNotFoundException;
 import com.grasshouse.dorandoran.common.exception.LikeAlreadyExistException;
@@ -19,13 +20,13 @@ public class CommentLikeService {
     private final CommentRepository commentRepository;
 
     @Transactional
-    public Long createCommentLike(Long commentId, Long memberId) {
+    public Long createCommentLike(CommentLikeCreateRequest request) {
         Comment comment = commentRepository
-            .findById(commentId)
+            .findById(request.getCommentId())
             .orElseThrow(CommentNotFoundException::new);
-        validateCommentLikeDuplication(memberId, comment);
+        validateCommentLikeDuplication(request.getMemberId(), comment);
         CommentLike commentLike = CommentLike.builder()
-            .memberId(memberId)
+            .memberId(request.getMemberId())
             .comment(comment)
             .build();
         commentLikeRepository.save(commentLike);

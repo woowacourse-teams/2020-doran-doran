@@ -72,7 +72,6 @@ class PostControllerTest extends CommonControllerTest {
             .andExpect(jsonPath("$.content").isNotEmpty())
             .andExpect(jsonPath("$.location").isNotEmpty())
             .andExpect(jsonPath("$.comments").isArray())
-            .andExpect(jsonPath("$.likes").isNotEmpty())
             .andDo(print());
 
         verify(postService).showPost(any());

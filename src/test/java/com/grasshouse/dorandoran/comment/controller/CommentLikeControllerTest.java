@@ -11,10 +11,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.grasshouse.dorandoran.comment.service.CommentLikeService;
+import com.grasshouse.dorandoran.comment.service.dto.CommentLikeCreateRequest;
 import com.grasshouse.dorandoran.common.CommonControllerTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 
 public class CommentLikeControllerTest extends CommonControllerTest {
 
@@ -24,16 +26,21 @@ public class CommentLikeControllerTest extends CommonControllerTest {
     @DisplayName("댓글에 좋아요를 추가한다.")
     @Test
     void likesComment() throws Exception {
-        when(commentLikeService.createCommentLike(any(), any()))
-            .thenReturn(PERSIST_COMMENT_LIKE.getId());
+        CommentLikeCreateRequest commentLikeCreateRequest = CommentLikeCreateRequest.builder()
+            .memberId(5L)
+            .commentId(10L)
+            .build();
+
+        String request = objectMapper.writeValueAsString(commentLikeCreateRequest);
+        when(commentLikeService.createCommentLike(any())).thenReturn(1L);
 
         this.mockMvc.perform(post("/comments/likes")
-            .queryParam("commentId", "10")
-            .queryParam("memberId", "5"))
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
+            .content(request))
             .andExpect(status().isCreated())
             .andDo(print());
 
-        verify(commentLikeService).createCommentLike(any(), any());
+        verify(commentLikeService).createCommentLike(any());
     }
 
     @DisplayName("댓글 좋아요를 취소(삭제)한다.")
