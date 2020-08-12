@@ -6,6 +6,7 @@ import com.grasshouse.dorandoran.post.domain.Post;
 import com.grasshouse.dorandoran.post.domain.PostLike;
 import com.grasshouse.dorandoran.post.repository.PostLikeRepository;
 import com.grasshouse.dorandoran.post.repository.PostRepository;
+import com.grasshouse.dorandoran.post.service.dto.PostLikeCreateRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,13 +19,13 @@ public class PostLikeService {
     private final PostRepository postRepository;
 
     @Transactional
-    public Long createPostLike(Long postId, Long memberId) {
+    public Long createPostLike(PostLikeCreateRequest request) {
         Post post = postRepository
-            .findById(postId)
+            .findById(request.getPostId())
             .orElseThrow(PostLikeNotFoundException::new);
-        validatePostLikeDuplication(memberId, post);
+        validatePostLikeDuplication(request.getMemberId(), post);
         PostLike postLike = PostLike.builder()
-            .memberId(memberId)
+            .memberId(request.getMemberId())
             .post(post)
             .build();
         postLikeRepository.save(postLike);

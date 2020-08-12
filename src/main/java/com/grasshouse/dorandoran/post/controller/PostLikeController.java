@@ -1,14 +1,16 @@
 package com.grasshouse.dorandoran.post.controller;
 
 import com.grasshouse.dorandoran.post.service.PostLikeService;
+import com.grasshouse.dorandoran.post.service.dto.PostLikeCreateRequest;
 import java.net.URI;
+import javax.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin(origins = {"https://woowacourse.com"})
@@ -23,9 +25,8 @@ public class PostLikeController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> createPostLike(@RequestParam Long postId,
-        @RequestParam Long memberId) {
-        Long postLikeId = postLikeService.createPostLike(postId, memberId);
+    public ResponseEntity<Void> createPostLike(@RequestBody @Valid PostLikeCreateRequest request) {
+        Long postLikeId = postLikeService.createPostLike(request);
         return ResponseEntity.created(URI.create("/posts/likes/" + postLikeId)).build();
     }
 

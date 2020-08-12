@@ -12,6 +12,7 @@ import com.grasshouse.dorandoran.post.domain.PostLike;
 import com.grasshouse.dorandoran.post.repository.PostLikeRepository;
 import com.grasshouse.dorandoran.post.repository.PostRepository;
 import com.grasshouse.dorandoran.post.repository.PostRepositorySupport;
+import com.grasshouse.dorandoran.post.service.dto.PostLikeCreateRequest;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -72,7 +73,12 @@ public class PostLikeServiceTest {
     @DisplayName("게시글에 좋아요를 추가한다.")
     @Test
     void createPostLike() {
-        postLikeService.createPostLike(post.getId(), postLiker.getId());
+        PostLikeCreateRequest request = PostLikeCreateRequest.builder()
+            .memberId(postLiker.getId())
+            .postId(post.getId())
+            .build();
+
+        postLikeService.createPostLike(request);
         Post persistPost = postRepositorySupport.findPostWithLikes(post.getId());
 
         assertThat(persistPost.getLikes()).hasSize(1);
@@ -96,7 +102,12 @@ public class PostLikeServiceTest {
     @DisplayName("게시글을 삭제할 때 좋아요도 같이 삭제된다.")
     @Test
     void deleteCommentWithCommentLike() {
-        postLikeService.createPostLike(post.getId(), postLiker.getId());
+        PostLikeCreateRequest request = PostLikeCreateRequest.builder()
+            .memberId(postLiker.getId())
+            .postId(post.getId())
+            .build();
+
+        postLikeService.createPostLike(request);
         Post persistPost = postRepositorySupport.findPostWithLikes(post.getId());
         assertThat(persistPost.getLikes()).hasSize(1);
 

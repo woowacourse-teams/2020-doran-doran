@@ -30,7 +30,8 @@ public class PostRepositorySupport extends QuerydslRepositorySupport {
             .fetchFirst();
     }
 
-    public List<Post> findPostContainsKeywordBetweenDate(String keyword, LocalDateTime startDate, LocalDateTime endDate) {
+    public List<Post> findPostContainsKeywordBetweenDate(String keyword, LocalDateTime startDate,
+        LocalDateTime endDate) {
         return jpaQueryFactory
             .selectFrom(post)
             .where(containsKeyword(keyword), betweenDate(startDate, endDate))

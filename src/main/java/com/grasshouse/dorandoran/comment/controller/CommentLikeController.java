@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin(origins = {"https://woowacourse.com"})
@@ -26,7 +25,8 @@ public class CommentLikeController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> createCommentLike(@RequestBody @Valid CommentLikeCreateRequest request) {
+    public ResponseEntity<Void> createCommentLike(
+        @RequestBody @Valid CommentLikeCreateRequest request) {
         Long commentLikeId = commentLikeService.createCommentLike(request);
         return ResponseEntity
             .created(URI.create("/comments/likes/" + commentLikeId))

@@ -2,7 +2,6 @@ package com.grasshouse.dorandoran.comment.repository;
 
 import static com.grasshouse.dorandoran.comment.domain.QComment.comment;
 
-
 import com.grasshouse.dorandoran.comment.domain.Comment;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;

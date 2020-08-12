@@ -4,11 +4,8 @@ import static com.grasshouse.dorandoran.fixture.AddressFixture.ADDRESS;
 import static com.grasshouse.dorandoran.fixture.AddressFixture.AUTHOR_ADDRESS;
 import static com.grasshouse.dorandoran.fixture.LocationFixture.JAMSIL_STATION;
 import static com.grasshouse.dorandoran.fixture.MemberFixture.PERSIST_MEMBER;
-import static com.grasshouse.dorandoran.fixture.PostLikeFixture.PERSIST_POST_LIKE;
 
 import com.grasshouse.dorandoran.post.domain.Post;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class PostFixture {
 

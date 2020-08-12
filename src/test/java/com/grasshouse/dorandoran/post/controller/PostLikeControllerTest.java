@@ -1,6 +1,5 @@
 package com.grasshouse.dorandoran.post.controller;
 
-import static com.grasshouse.dorandoran.fixture.PostFixture.PERSIST_POST;
 import static com.grasshouse.dorandoran.fixture.PostLikeFixture.PERSIST_POST_LIKE;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
@@ -13,9 +12,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.grasshouse.dorandoran.common.CommonControllerTest;
 import com.grasshouse.dorandoran.post.service.PostLikeService;
+import com.grasshouse.dorandoran.post.service.dto.PostLikeCreateRequest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 
 public class PostLikeControllerTest extends CommonControllerTest {
 
@@ -25,15 +26,21 @@ public class PostLikeControllerTest extends CommonControllerTest {
     @DisplayName("게시물에 좋아요를 추가한다.")
     @Test
     void createPostLike() throws Exception {
-        when(postLikeService.createPostLike(any(), any())).thenReturn(PERSIST_POST.getId());
+        PostLikeCreateRequest postLikeCreateRequest = PostLikeCreateRequest.builder()
+            .postId(10L)
+            .memberId(5L)
+            .build();
+
+        String request = objectMapper.writeValueAsString(postLikeCreateRequest);
+        when(postLikeService.createPostLike(any())).thenReturn(10L);
 
         this.mockMvc.perform(post("/posts/likes")
-            .queryParam("postId", "10")
-            .queryParam("memberId", "5"))
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
+            .content(request))
             .andExpect(status().isCreated())
             .andDo(print());
 
-        verify(postLikeService).createPostLike(any(), any());
+        verify(postLikeService).createPostLike(any());
     }
 
     @DisplayName("게시물의 좋아요를 취소(삭제)한다.")
