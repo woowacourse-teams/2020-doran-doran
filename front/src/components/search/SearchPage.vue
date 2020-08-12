@@ -17,9 +17,9 @@
       <v-sheet elevation="2" class="rounded-lg pa-3">
         <v-radio-group dense v-model="radios" :mandatory="false">
           <VRadio label="전체" value="date-all" :color="buttonColor" />
-          <VRadio label="한 달 이내" value="date-month" :color="buttonColor" />
-          <VRadio label="일주일 이내" value="date-week" :color="buttonColor" />
           <VRadio label="24시간 이내" value="date-day" :color="buttonColor" />
+          <VRadio label="일주일 이내" value="date-week" :color="buttonColor" />
+          <VRadio label="한 달 이내" value="date-month" :color="buttonColor" />
           <VRadio label="직접 입력" value="date-user" :color="buttonColor" />
           <template v-if="radios === 'date-user'">
             <v-menu
@@ -32,7 +32,7 @@
             >
               <template v-slot:activator="{ on, attrs }">
                 <VTextField
-                  v-model="startDate"
+                  v-model="userStartDate"
                   prepend-icon="mdi-calendar"
                   label="시작 날짜"
                   readonly
@@ -41,7 +41,7 @@
                 />
               </template>
               <VDatePicker
-                v-model="startDate"
+                v-model="userStartDate"
                 no-title
                 scrollable
                 @input="startDateMenu = false"
@@ -57,7 +57,7 @@
             >
               <template v-slot:activator="{ on, attrs }">
                 <VTextField
-                  v-model="endDate"
+                  v-model="userEndDate"
                   prepend-icon="mdi-calendar"
                   label="종료 날짜"
                   readonly
@@ -66,7 +66,7 @@
                 />
               </template>
               <VDatePicker
-                v-model="endDate"
+                v-model="userEndDate"
                 @input="endDateMenu = false"
                 no-title
                 scrollable
@@ -92,6 +92,35 @@
 <script>
 import { DORAN_DORAN_COLORS } from "@/utils/constants";
 
+const DATE_FILTER_TYPE = () => {
+  const now = new Date();
+  return {
+    ALL: {
+      name: "date-all",
+      startDate: "",
+    },
+    DAY: {
+      name: "date-day",
+      startDate: new Date().setDate(now.getDate() - 1),
+    },
+    WEEK: {
+      name: "date-week",
+      startDate: new Date().setDate(now.getDate() - 7),
+    },
+    MONTH: {
+      name: "date-month",
+      startDate: new Date().setMonth(now.getMonth() - 1),
+    },
+  };
+};
+
+const convertToDate = (date) => {
+  if (!date) {
+    return "";
+  }
+  return new Date(date).toISOString().substr(0, 19).replace("T", " ");
+};
+
 export default {
   name: "SearchPage",
   data() {
@@ -99,21 +128,33 @@ export default {
       keyword: "",
       radios: "date-all",
       buttonColor: DORAN_DORAN_COLORS.POINT_COLOR,
-      startDate: new Date().toISOString().substr(0, 10),
-      endDate: new Date().toISOString().substr(0, 10),
+      userStartDate: "",
+      userEndDate: "",
       startDateMenu: false,
       endDateMenu: false,
     };
   },
   methods: {
     async search() {
-      const data = {
-        keyword: this.keyword,
-        startDate: "",
-        endDate: "",
-      };
-      await this.$store.dispatch("post/searchPost", data);
-      await this.$router.push("/searchResult");
+      let data;
+      const dateType = Object.values(DATE_FILTER_TYPE(new Date())).find(
+        (dateType) => dateType.name === this.radios,
+      );
+      if (!dateType) {
+        data = {
+          keyword: this.keyword,
+          startDate: this.userStartDate + " 00:00:00",
+          endDate: this.userEndDate + " 23:59:59",
+        };
+      } else {
+        data = {
+          keyword: this.keyword,
+          startDate: convertToDate(dateType.startDate),
+          endDate: new Date().toISOString().substr(0, 19).replace("T", " "),
+        };
+      }
+      const params = new URLSearchParams(data).toString();
+      await this.$router.push("/searchResult?" + params);
     },
   },
 };
@@ -124,11 +165,11 @@ export default {
   height: 60px;
 }
 .input-field {
-  width: 94%;
+  width: 84%;
   margin: auto;
 }
 .time-filter-wrapper {
-  width: 94%;
+  width: 84%;
   margin: 20px auto;
 }
 </style>

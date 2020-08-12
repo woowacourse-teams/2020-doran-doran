@@ -9,6 +9,7 @@
 <script>
 import PostCreateButton from "@/components/map/PostCreateButton";
 import PostItem from "@/components/timeline/PostItem";
+
 export default {
   name: "SearchResultPage",
   components: {
@@ -20,7 +21,13 @@ export default {
       posts: [],
     };
   },
-  created() {
+  async created() {
+    const data = {
+      keyword: this.$route.query.keyword,
+      startDate: this.$route.query.startDate,
+      endDate: this.$route.query.endDate,
+    };
+    await this.$store.dispatch("post/searchPost", data);
     this.posts = this.$store.getters["post/getSearchedPosts"].reverse();
   },
 };
