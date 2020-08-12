@@ -25,10 +25,12 @@ public class CommentLikeService {
             .findById(request.getCommentId())
             .orElseThrow(CommentNotFoundException::new);
         validateCommentLikeDuplication(request.getMemberId(), comment);
+
         CommentLike commentLike = CommentLike.builder()
             .memberId(request.getMemberId())
             .comment(comment)
             .build();
+
         commentLikeRepository.save(commentLike);
         return commentLike.getId();
     }

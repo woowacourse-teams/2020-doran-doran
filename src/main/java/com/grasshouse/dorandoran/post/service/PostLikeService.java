@@ -25,10 +25,12 @@ public class PostLikeService {
             .findById(request.getPostId())
             .orElseThrow(PostNotFoundException::new);
         validatePostLikeDuplication(request.getMemberId(), post);
+
         PostLike postLike = PostLike.builder()
             .memberId(request.getMemberId())
             .post(post)
             .build();
+
         postLikeRepository.save(postLike);
         return postLike.getId();
     }
