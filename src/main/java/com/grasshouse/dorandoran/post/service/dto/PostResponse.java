@@ -47,7 +47,7 @@ public class PostResponse {
     private final List<CommentResponse> comments = new ArrayList<>();
 
     @NotNull
-    private int likes;
+    private List<PostLikeResponse> likes;
 
     public static PostResponse from(Post post) {
         return PostResponse.builder()
@@ -59,7 +59,11 @@ public class PostResponse {
             .address(post.getAddress())
             .createdAt(post.getCreatedAt())
             .comments(CommentResponse.listFrom(post.getComments()))
-            .likes(post.getLikes().size())
+            .likes(post.getLikes()
+                .stream()
+                .map(PostLikeResponse::from)
+                .collect(Collectors.toList())
+            )
             .build();
     }
 

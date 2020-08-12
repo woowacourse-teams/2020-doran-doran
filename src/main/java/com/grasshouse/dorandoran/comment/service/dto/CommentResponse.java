@@ -37,6 +37,7 @@ public class CommentResponse {
     private LocalDateTime createdAt;
 
     //TODO : comment_like 정보 추후에 추가하기
+    private List<CommentLikeResponse> likes;
 
     public static CommentResponse from(Comment comment) {
         return CommentResponse.builder()
@@ -46,6 +47,11 @@ public class CommentResponse {
             .content(comment.getContent())
             .distance(comment.getDistance())
             .createdAt(comment.getCreatedAt())
+            .likes(comment.getLikes()
+                .stream()
+                .map(CommentLikeResponse::from)
+                .collect(Collectors.toList())
+            )
             .build();
     }
 
