@@ -23,7 +23,7 @@ public class CommentLikeService {
         Comment comment = commentRepository
             .findById(commentId)
             .orElseThrow(CommentNotFoundException::new);
-        validateCommentLikeValidation(memberId, comment);
+        validateCommentLikeDuplication(memberId, comment);
         CommentLike commentLike = CommentLike.builder()
             .memberId(memberId)
             .comment(comment)
@@ -32,7 +32,7 @@ public class CommentLikeService {
         return commentLike.getId();
     }
 
-    private void validateCommentLikeValidation(Long memberId, Comment comment) {
+    private void validateCommentLikeDuplication(Long memberId, Comment comment) {
         if (!commentLikeRepository.findByMemberIdAndComment(memberId, comment).isEmpty()) {
             throw new LikeAlreadyExistException();
         }

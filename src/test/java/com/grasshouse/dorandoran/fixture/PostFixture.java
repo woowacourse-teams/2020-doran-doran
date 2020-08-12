@@ -19,6 +19,5 @@ public class PostFixture {
         .content("내용")
         .location(JAMSIL_STATION)
         .address(ADDRESS)
-        .likes(Stream.of(PERSIST_POST_LIKE).collect(Collectors.toSet()))
         .build();
 }

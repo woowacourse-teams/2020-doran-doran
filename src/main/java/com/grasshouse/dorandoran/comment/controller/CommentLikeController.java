@@ -18,8 +18,7 @@ public class CommentLikeController {
 
     private CommentLikeService commentLikeService;
 
-    public CommentLikeController(
-        CommentLikeService commentLikeService) {
+    public CommentLikeController(CommentLikeService commentLikeService) {
         this.commentLikeService = commentLikeService;
     }
 

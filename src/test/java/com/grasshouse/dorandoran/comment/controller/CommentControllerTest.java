@@ -1,7 +1,6 @@
 package com.grasshouse.dorandoran.comment.controller;
 
 import static com.grasshouse.dorandoran.fixture.CommentFixture.PERSIST_COMMENT;
-import static com.grasshouse.dorandoran.fixture.CommentLikeFixture.PERSIST_COMMENT_LIKE;
 import static com.grasshouse.dorandoran.fixture.LocationFixture.GANGNAM_STATION;
 import static com.grasshouse.dorandoran.fixture.MemberFixture.PERSIST_MEMBER;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -14,7 +13,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.grasshouse.dorandoran.comment.service.CommentLikeService;
 import com.grasshouse.dorandoran.comment.service.CommentService;
 import com.grasshouse.dorandoran.comment.service.dto.CommentCreateRequest;
 import com.grasshouse.dorandoran.common.CommonControllerTest;
