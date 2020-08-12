@@ -91,35 +91,7 @@
 
 <script>
 import { DORAN_DORAN_COLORS } from "@/utils/constants";
-
-const DATE_FILTER_TYPE = () => {
-  const now = new Date();
-  return {
-    ALL: {
-      name: "date-all",
-      startDate: "",
-    },
-    DAY: {
-      name: "date-day",
-      startDate: new Date().setDate(now.getDate() - 1),
-    },
-    WEEK: {
-      name: "date-week",
-      startDate: new Date().setDate(now.getDate() - 7),
-    },
-    MONTH: {
-      name: "date-month",
-      startDate: new Date().setMonth(now.getMonth() - 1),
-    },
-  };
-};
-
-const convertToDate = (date) => {
-  if (!date) {
-    return "";
-  }
-  return new Date(date).toISOString().substr(0, 19).replace("T", " ");
-};
+import { DATE_FILTER_TYPE } from "@/utils/time-filter-type";
 
 export default {
   name: "SearchPage",
@@ -136,22 +108,18 @@ export default {
   },
   methods: {
     async search() {
-      let data;
-      const dateType = Object.values(DATE_FILTER_TYPE(new Date())).find(
+      const data = {
+        keyword: this.keyword,
+      };
+      const dateType = Object.values(DATE_FILTER_TYPE()).find(
         (dateType) => dateType.name === this.radios,
       );
       if (!dateType) {
-        data = {
-          keyword: this.keyword,
-          startDate: this.userStartDate + " 00:00:00",
-          endDate: this.userEndDate + " 23:59:59",
-        };
+        data.startDate = this.userStartDate + " 00:00:00";
+        data.endDate = this.userEndDate + " 23:59:59";
       } else {
-        data = {
-          keyword: this.keyword,
-          startDate: convertToDate(dateType.startDate),
-          endDate: new Date().toISOString().substr(0, 19).replace("T", " "),
-        };
+        data.startDate = dateType.startDate;
+        data.endDate = this.$moment().format("YYYY-MM-DD HH:mm:ss");
       }
       const params = new URLSearchParams(data).toString();
       await this.$router.push("/searchResult?" + params);
