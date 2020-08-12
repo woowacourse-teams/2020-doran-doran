@@ -50,4 +50,12 @@ public class PostRepositorySupport extends QuerydslRepositorySupport {
         }
         return post.createdAt.between(startDate, endDate);
     }
+
+    public Post findPostWithLikes(Long postId) {
+        return jpaQueryFactory.selectFrom(post)
+            .innerJoin(post.likes)
+            .fetchJoin()
+            .where(post.id.eq(postId))
+            .fetchFirst();
+    }
 }

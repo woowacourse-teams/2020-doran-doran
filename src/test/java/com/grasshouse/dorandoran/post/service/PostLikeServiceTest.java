@@ -11,6 +11,7 @@ import com.grasshouse.dorandoran.post.domain.Post;
 import com.grasshouse.dorandoran.post.domain.PostLike;
 import com.grasshouse.dorandoran.post.repository.PostLikeRepository;
 import com.grasshouse.dorandoran.post.repository.PostRepository;
+import com.grasshouse.dorandoran.post.repository.PostRepositorySupport;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -25,7 +26,13 @@ public class PostLikeServiceTest {
     private PostLikeService postLikeService;
 
     @Autowired
+    private PostService postService;
+
+    @Autowired
     private MemberRepository memberRepository;
+
+    @Autowired
+    private PostRepositorySupport postRepositorySupport;
 
     @Autowired
     private PostRepository postRepository;
@@ -65,8 +72,10 @@ public class PostLikeServiceTest {
     @DisplayName("게시글에 좋아요를 추가한다.")
     @Test
     void createPostLike() {
-        Long postLikeId = postLikeService.createPostLike(post.getId(), postLiker.getId());
-        assertThat(postLikeId).isNotNull();
+        postLikeService.createPostLike(post.getId(), postLiker.getId());
+        Post persistPost = postRepositorySupport.findPostWithLikes(post.getId());
+
+        assertThat(persistPost.getLikes()).hasSize(1);
     }
 
     @DisplayName("게시글의 좋아요를 취소(삭제)한다.")
@@ -81,6 +90,18 @@ public class PostLikeServiceTest {
         assertThat(postLikeRepository.findAll()).hasSize(1);
 
         postLikeService.deletePostLike(persistPostLike.getId());
+        assertThat(postLikeRepository.findAll()).hasSize(0);
+    }
+
+    @DisplayName("게시글을 삭제할 때 좋아요도 같이 삭제된다.")
+    @Test
+    void deleteCommentWithCommentLike() {
+        postLikeService.createPostLike(post.getId(), postLiker.getId());
+        Post persistPost = postRepositorySupport.findPostWithLikes(post.getId());
+        assertThat(persistPost.getLikes()).hasSize(1);
+
+        postService.deletePost(persistPost.getId());
+        assertThat(postRepository.findAll()).hasSize(0);
         assertThat(postLikeRepository.findAll()).hasSize(0);
     }
 

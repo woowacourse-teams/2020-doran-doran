@@ -9,6 +9,7 @@ import com.grasshouse.dorandoran.comment.domain.Comment;
 import com.grasshouse.dorandoran.comment.domain.CommentLike;
 import com.grasshouse.dorandoran.comment.repository.CommentLikeRepository;
 import com.grasshouse.dorandoran.comment.repository.CommentRepository;
+import com.grasshouse.dorandoran.comment.repository.CommentRepositorySupport;
 import com.grasshouse.dorandoran.member.domain.Member;
 import com.grasshouse.dorandoran.member.repository.MemberRepository;
 import com.grasshouse.dorandoran.post.domain.Post;
@@ -27,10 +28,16 @@ class CommentLikeServiceTest {
     private CommentLikeService commentLikeService;
 
     @Autowired
+    private CommentService commentService;
+
+    @Autowired
     private CommentRepository commentRepository;
 
     @Autowired
     private CommentLikeRepository commentLikeRepository;
+
+    @Autowired
+    private CommentRepositorySupport commentRepositorySupport;
 
     @Autowired
     private MemberRepository memberRepository;
@@ -80,9 +87,10 @@ class CommentLikeServiceTest {
     @DisplayName("댓글에 좋아요를 추가한다.")
     @Test
     void createCommentLike() {
-        Long commentLikeId = commentLikeService
-            .createCommentLike(comment.getId(), commentLiker.getId());
-        assertThat(commentLikeId).isNotNull();
+        commentLikeService.createCommentLike(comment.getId(), commentLiker.getId());
+        Comment persistComment = commentRepositorySupport.findCommentWithLikes(comment.getId());
+
+        assertThat(persistComment.getLikes()).hasSize(1);
     }
 
     @DisplayName("댓글에 추가한 좋아요를 취소(삭제)한다.")
@@ -97,6 +105,18 @@ class CommentLikeServiceTest {
         assertThat(commentLikeRepository.findAll()).hasSize(1);
 
         commentLikeService.deleteCommentLike(persistCommentLike.getId());
+        assertThat(commentLikeRepository.findAll()).hasSize(0);
+    }
+
+    @DisplayName("댓글을 삭제할 때 좋아요도 같이 삭제된다.")
+    @Test
+    void deleteCommentWithCommentLike() {
+        commentLikeService.createCommentLike(comment.getId(), commentLiker.getId());
+        Comment persistComment = commentRepositorySupport.findCommentWithLikes(comment.getId());
+        assertThat(persistComment.getLikes()).hasSize(1);
+
+        commentService.deleteComment(persistComment.getId());
+        assertThat(commentRepository.findAll()).hasSize(0);
         assertThat(commentLikeRepository.findAll()).hasSize(0);
     }
 

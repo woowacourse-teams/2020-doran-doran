@@ -56,9 +56,8 @@ public class Comment {
     @CreatedDate
     private LocalDateTime createdAt;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "COMMENT_LIKE_ID")
     @Builder.Default
+    @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<CommentLike> likes = new HashSet<>();
 
     @Builder

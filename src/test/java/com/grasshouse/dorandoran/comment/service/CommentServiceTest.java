@@ -75,7 +75,7 @@ class CommentServiceTest {
             .build();
 
         commentService.createComment(request);
-        Post persistPost = postRepositorySupport.findPostWithComment(this.post.getId());
+        Post persistPost = postRepositorySupport.findPostWithComment(post.getId());
 
         assertThat(persistPost.getComments()).hasSize(1);
     }
