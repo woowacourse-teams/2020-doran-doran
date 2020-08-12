@@ -60,7 +60,6 @@ export default {
         createdAt: "",
         comments: [],
       },
-      postDate: "",
     };
   },
   async created() {
@@ -68,8 +67,13 @@ export default {
       "post/loadPost",
       this.$route.params.id,
     );
-    this.postDate = await this.$moment(this.post.createdAt).fromNow();
   },
+  computed: {
+    postDate() {
+      return this.$moment(this.post.createdAt).fromNow();
+    }
+  }
+
 };
 </script>
 

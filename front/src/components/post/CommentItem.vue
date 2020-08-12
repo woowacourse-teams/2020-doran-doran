@@ -24,19 +24,16 @@
 <script>
 export default {
   name: "CommentItem",
-  data() {
-    return {
-      commentDate: "",
-    };
-  },
   props: {
     comment: {
       type: Object,
       required: true,
     },
   },
-  async mounted() {
-    this.commentDate = this.$moment(this.comment.createdAt).fromNow();
+  computed: {
+    commentDate() {
+      return this.$moment(this.comment.createdAt).fromNow();
+    },
   },
 };
 </script>

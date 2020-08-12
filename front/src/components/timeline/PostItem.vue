@@ -21,19 +21,16 @@ import router from "@/router";
 
 export default {
   name: "PostItem",
-  data() {
-    return {
-      postDate: "",
-    };
-  },
   props: {
     post: {
       type: Object,
       required: true,
     },
   },
-  async mounted() {
-    this.postDate = this.$moment(this.post.createdAt).fromNow();
+  computed: {
+    postDate() {
+      return this.$moment(this.post.createdAt).fromNow();
+    },
   },
   methods: {
     routePage() {
