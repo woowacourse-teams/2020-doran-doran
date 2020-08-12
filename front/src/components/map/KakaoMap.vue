@@ -58,7 +58,6 @@ export default {
       await this.changeAppBarAddressByCenterLocation();
       this.$resetPostOverlay();
       await this.$store.dispatch("post/loadPosts");
-      await this.drawPosts();
       await this.$addEventToMap(
         EVENT_TYPE.CENTER_CHANGE,
         this.changeAppBarAddressByCenterLocation,
@@ -70,12 +69,6 @@ export default {
       const centerAddress = await this.$getAddress(centerLocation);
       const address = Object.values(centerAddress).join(" ");
       this.$store.commit("appBar/CHANGE_ADDRESS", address);
-    },
-
-    drawPosts() {
-      this.$store.getters["post/getPosts"].forEach((post) => {
-        this.$setPostOverlay(post);
-      });
     },
   },
 };
