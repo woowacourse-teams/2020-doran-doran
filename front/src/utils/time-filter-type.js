@@ -1,4 +1,4 @@
-import moment from "moment"
+import moment from "moment";
 
 export const DATE_FILTER_TYPE = () => {
   return {
