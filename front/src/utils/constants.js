@@ -7,7 +7,6 @@ const API_BASE_URL = {
 };
 
 const EVENT_TYPE = {
-  CLICK: "click",
   CENTER_CHANGE: "center_changed",
 };
 
