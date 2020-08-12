@@ -1,10 +1,10 @@
 package com.grasshouse.dorandoran.common.exception;
 
-public class LikeAlreadyExistException extends ExpectedException {
+public class LikeDuplicateException extends ExpectedException {
 
     private static final String MESSAGE = "존재하는 좋아요입니다.";
 
-    public LikeAlreadyExistException() {
+    public LikeDuplicateException() {
         super(MESSAGE);
     }
 }
