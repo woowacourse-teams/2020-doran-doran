@@ -8,5 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface PostLikeRepository extends JpaRepository<PostLike, Long> {
 
-    List<PostLike> findByMemberIdAndPost(@NotNull Long memberId, @NotNull Post post);
+    boolean existsByMemberIdAndPost(Long memberId, Post post);
 }

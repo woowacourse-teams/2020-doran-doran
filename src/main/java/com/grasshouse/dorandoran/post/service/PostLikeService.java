@@ -36,7 +36,7 @@ public class PostLikeService {
     }
 
     private void validatePostLikeDuplication(Long memberId, Post post) {
-        if (!postLikeRepository.findByMemberIdAndPost(memberId, post).isEmpty()) {
+        if (postLikeRepository.existsByMemberIdAndPost(memberId, post)) {
             throw new LikeDuplicateException();
         }
     }
