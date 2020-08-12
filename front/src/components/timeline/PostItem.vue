@@ -3,7 +3,7 @@
     <div class="my-2">
       <v-icon large class="mr-3">mdi-account-circle</v-icon>
       <span class="font-weight-bold">{{ post.memberResponse.nickname }}</span>
-      <div class="float-right mt-1">1분 전</div>
+      <div class="float-right mt-1">{{ postDate }}</div>
     </div>
     <div class="text-break">{{ post.content }}</div>
     <div class="text-right">
@@ -25,6 +25,11 @@ export default {
     post: {
       type: Object,
       required: true,
+    },
+  },
+  computed: {
+    postDate() {
+      return this.$moment(this.post.createdAt).fromNow();
     },
   },
   methods: {

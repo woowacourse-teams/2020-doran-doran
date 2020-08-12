@@ -3,7 +3,7 @@
     <div class="mb-3">
       <v-icon x-large class="mr-3">mdi-account-circle</v-icon>
       <span class="font-weight-bold">{{ post.memberResponse.nickname }}</span>
-      <div class="float-right mt-2">1분 전</div>
+      <div class="float-right mt-2">{{ postDate }}</div>
     </div>
     <div class="text--disabled post-address">
       {{ post.authorAddress.depth1 }}
@@ -68,6 +68,12 @@ export default {
       this.$route.params.id,
     );
   },
+  computed: {
+    postDate() {
+      return this.$moment(this.post.createdAt).fromNow();
+    }
+  }
+
 };
 </script>
 
@@ -75,6 +81,7 @@ export default {
 .post-address {
   font-size: 0.9rem;
 }
+
 .bottom-spacer {
   height: 60px;
 }

@@ -11,7 +11,7 @@
       </div>
       <div>{{ comment.content }}</div>
       <div>
-        <span class="text--disabled comment-created">1분 전</span>
+        <span class="text--disabled comment-created">{{ commentDate }}</span>
         <span class="float-right">
           <v-icon small>mdi-heart-outline</v-icon>
           <span class="mx-1">0</span>
@@ -28,6 +28,11 @@ export default {
     comment: {
       type: Object,
       required: true,
+    },
+  },
+  computed: {
+    commentDate() {
+      return this.$moment(this.comment.createdAt).fromNow();
     },
   },
 };

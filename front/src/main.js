@@ -8,6 +8,13 @@ import KakaoMap from "@/plugins/kakao-map";
 Vue.config.productionTip = false;
 Vue.use(KakaoMap);
 
+const moment = require("moment");
+require("moment/locale/ko");
+
+Vue.use(require("vue-moment"), {
+  moment,
+});
+
 new Vue({
   router,
   store,

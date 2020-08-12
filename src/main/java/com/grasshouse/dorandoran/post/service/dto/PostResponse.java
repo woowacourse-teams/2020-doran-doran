@@ -5,6 +5,7 @@ import com.grasshouse.dorandoran.member.service.dto.MemberResponse;
 import com.grasshouse.dorandoran.post.domain.Address;
 import com.grasshouse.dorandoran.post.domain.Location;
 import com.grasshouse.dorandoran.post.domain.Post;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -39,6 +40,9 @@ public class PostResponse {
     @NotNull
     private Address address;
 
+    @NotNull
+    private LocalDateTime createdAt;
+
     @Builder.Default
     private final List<CommentResponse> comments = new ArrayList<>();
     //TODO : post_like 정보 추후에 추가하기
@@ -51,6 +55,7 @@ public class PostResponse {
             .content(post.getContent())
             .location(post.getLocation())
             .address(post.getAddress())
+            .createdAt(post.getCreatedAt())
             .comments(CommentResponse.listFrom(post.getComments()))
             .build();
     }
