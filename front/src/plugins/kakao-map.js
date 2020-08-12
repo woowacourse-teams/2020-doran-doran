@@ -3,7 +3,7 @@ import INITIAL_LOCATION from "@/config/config";
 import { POST_OVERLAY_TEMPLATES } from "@/utils/template";
 
 const KAKAO_MAP_URL = "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=";
-const LIBRARY = "&libraries=services";
+const LIBRARY = "&libraries=services,clusterer";
 
 const KakaoMap = {
   install(Vue) {
@@ -99,6 +99,15 @@ const KakaoMap = {
       customOverlay.setMap(this.map);
       postOverlays.push(customOverlay);
     };
+
+    Vue.prototype.$createMarkerClusterer = () => {
+      const clusterer = new kakao.maps.MarkerClusterer({
+        map: this.map,
+        averageCenter: true,
+        minLevel: 5
+      });
+      clusterer.addMarkers(postOverlays);
+    }
 
     Vue.prototype.$closePostOverlays = () => {
       postOverlays.forEach((overlay) => {

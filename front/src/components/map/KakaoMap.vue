@@ -47,6 +47,7 @@ export default {
         EVENT_TYPE.CENTER_CHANGE,
         this.changeAppBarAddressByCenterLocation,
       );
+      this.$createMarkerClusterer();
     },
     async changeAppBarAddressByCenterLocation() {
       const centerLocation = await this.$getCenterLocation();
