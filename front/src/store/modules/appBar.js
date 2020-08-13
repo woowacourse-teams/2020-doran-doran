@@ -52,10 +52,10 @@ export default {
       state.timelineButton = false;
       state.mapButton = false;
     },
-    SEARCH_RESULT_PAGE(state, title) {
+    SEARCH_RESULT_PAGE(state) {
       state.backButton = true;
       state.myPageButton = false;
-      state.title = title;
+      state.title = "검색 결과";
       state.searchButton = false;
       state.timelineButton = false;
       state.mapButton = false;
