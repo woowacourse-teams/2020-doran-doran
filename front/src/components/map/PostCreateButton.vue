@@ -51,6 +51,7 @@ export default {
     changeMode() {
       if (this.isDefaultMode) {
         this.$store.commit("modal/CHANGE_STATE", MAP_MODE.MARKER);
+        this.$store.commit("appBar/MAP_PAGE_NON_DEFAULT_MODE");
         this.buttonType = BUTTON_TYPE.MARKER;
       } else if (this.isMarkerMode) {
         this.$store.commit("modal/CHANGE_STATE", MAP_MODE.POST);

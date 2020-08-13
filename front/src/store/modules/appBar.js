@@ -3,27 +3,25 @@ export default {
   state: {
     backButton: false,
     myPageButton: false,
-
-    centerAddress: "",
-
+    title: "",
     timelineButton: false,
     mapButton: false,
   },
   mutations: {
     CHANGE_ADDRESS(state, newAddress) {
-      state.centerAddress = newAddress;
+      state.title = newAddress;
     },
     MAP_PAGE_DEFAULT_MODE(state) {
       state.backButton = false;
       state.myPageButton = true;
-      state.centerAddress = "";
+      state.title = "";
       state.timelineButton = true;
       state.mapButton = false;
     },
-    MAP_PAGE_NON_DEFUALT_MODE(state) {
+    MAP_PAGE_NON_DEFAULT_MODE(state) {
       state.backButton = false;
       state.myPageButton = false;
-      state.centerAddress = "";
+      state.title = "";
       state.timelineButton = false;
       state.mapButton = false;
     },
@@ -35,8 +33,8 @@ export default {
     myPageButton: (state) => {
       return state.myPageButton;
     },
-    centerAddress: (state) => {
-      return state.centerAddress;
+    title: (state) => {
+      return state.title;
     },
     timelineButton: (state) => {
       return state.timelineButton;
