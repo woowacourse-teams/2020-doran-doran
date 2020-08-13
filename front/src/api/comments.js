@@ -8,7 +8,7 @@ const client = axios.create({
 const api = (() => {
   const createComment = (newComment) => client.post("", newComment);
   const createCommentLike = (newCommentLike) =>
-    client.post(`/likes`, newCommentLike);
+    client.post(`/likes`, newCommentLike).then(res => res.headers.location);
   const deleteCommentLike = (commentLikeId) =>
     client.delete(`/likes/${commentLikeId}`);
   return {

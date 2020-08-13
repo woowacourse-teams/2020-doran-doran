@@ -13,8 +13,14 @@
       <div>
         <span class="text--disabled comment-created">{{ commentDate }}</span>
         <span class="float-right">
-          <v-icon small>mdi-heart-outline</v-icon>
-          <span class="mx-1">0</span>
+          <v-btn
+            icon
+            @click="addClickEventToLikeButton"
+            :color="likeButtonType.color"
+          >
+            <v-icon small>{{ likeButtonType.icon }}</v-icon>
+          </v-btn>
+          <span class="mx-1">{{ comment.likes.length }}</span>
         </span>
       </div>
     </div>
@@ -22,6 +28,8 @@
 </template>
 
 <script>
+import { LIKE_BUTTON_TYPE } from "@/utils/constants";
+
 export default {
   name: "CommentItem",
   props: {
@@ -30,9 +38,65 @@ export default {
       required: true,
     },
   },
+  data() {
+    return {
+      likeButtonType: LIKE_BUTTON_TYPE.DEFAULT,
+      liked: false,
+    };
+  },
   computed: {
     commentDate() {
       return this.$moment(this.comment.createdAt).fromNow();
+    },
+  },
+  async created() {
+    this.liked = this.isLiked();
+  },
+  methods: {
+    async addClickEventToLikeButton() {
+      this.toggleLike();
+      if (this.isLiked()) {
+        await this.deleteCommentLike();
+      } else {
+        await this.createCommentLike();
+      }
+    },
+    toggleLike() {
+      this.liked = !this.liked;
+    },
+    isLiked() {
+      return this.comment.likes.some(
+        (like) =>
+          like.memberId === this.$store.getters["member/getMembers"] &&
+          like.commentId === this.comment.id,
+      );
+    },
+    async deleteCommentLike() {
+      const thisCommentLike = this.comment.likes.find(
+        (like) =>
+          like.memberId === this.$store.getters["member/getMembers"] &&
+          like.commentId === this.comment.id,
+      );
+      await this.$store.dispatch(
+        "comment/deleteCommentLike",
+        thisCommentLike.id,
+      );
+      this.$emit("load-post");
+    },
+    async createCommentLike() {
+      const newCommentLike = {
+        memberId: this.comment.author.id,
+        commentId: this.comment.id,
+      };
+      await this.$store.dispatch("comment/createCommentLike", newCommentLike);
+      this.$emit("load-post");
+    },
+  },
+  watch: {
+    liked(val) {
+      this.likeButtonType = val
+        ? LIKE_BUTTON_TYPE.LIKED
+        : LIKE_BUTTON_TYPE.DEFAULT;
     },
   },
 };

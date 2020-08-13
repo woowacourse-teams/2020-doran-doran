@@ -28,7 +28,7 @@
         {{ post.authorAddress.depth3 }}에서
       </div>
     </div>
-    <CommentList :comments="post.comments" />
+    <CommentList :comments="post.comments" @load-post="loadPost"/>
     <div class="bottom-spacer" />
     <CommentInput :post-id="post.id" />
   </div>
@@ -37,18 +37,7 @@
 <script>
 import CommentInput from "@/components/post/CommentInput";
 import CommentList from "@/components/post/CommentList";
-import { DORAN_DORAN_COLORS } from "@/utils/constants";
-
-const LIKE_BUTTON_TYPE = {
-  DEFAULT: {
-    color: "",
-    icon: "mdi-heart-outline",
-  },
-  LIKED: {
-    color: DORAN_DORAN_COLORS.LIKE_COLOR,
-    icon: "mdi-heart",
-  },
-};
+import { LIKE_BUTTON_TYPE } from "@/utils/constants";
 
 export default {
   name: "PostDetailPage",
