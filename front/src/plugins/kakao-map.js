@@ -102,12 +102,12 @@ const KakaoMap = {
       postOverlays.length = 0;
     };
 
-    Vue.prototype.$setPostOverlay = (container, location) => {
+    Vue.prototype.$setPostOverlay = (overlayTemplate, location) => {
       const kakaoLocation = createKakaoLocation(location);
 
       const customOverlay = new kakao.maps.CustomOverlay({
         position: kakaoLocation,
-        content: container,
+        content: overlayTemplate,
       });
       customOverlay.setMap(this.map);
       this.clusterer.addMarker(customOverlay);
