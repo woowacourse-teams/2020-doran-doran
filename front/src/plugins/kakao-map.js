@@ -3,7 +3,7 @@ import INITIAL_LOCATION from "@/config/config";
 import { POST_OVERLAY_TEMPLATES } from "@/utils/template";
 
 const KAKAO_MAP_URL = "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=";
-const LIBRARY = "&libraries=services";
+const LIBRARY = "&libraries=services,clusterer";
 
 const KakaoMap = {
   install(Vue) {
@@ -29,7 +29,17 @@ const KakaoMap = {
         level: 2,
       };
       this.map = new kakao.maps.Map(mapContainer, options);
+      this.clusterer = createClusterer();
     };
+
+    const createClusterer = () => {
+      return new kakao.maps.MarkerClusterer({
+        map: this.map,
+        averageCenter: true,
+        minLevel: 3,
+        calculator: [3, 7, 11, 15],
+      });
+    }
 
     Vue.prototype.$getCurrentLocation = async () => {
       const getLocation = () =>
@@ -97,6 +107,8 @@ const KakaoMap = {
         content: POST_OVERLAY_TEMPLATES(post),
       });
       customOverlay.setMap(this.map);
+      this.clusterer.addMarker(customOverlay);
+
       postOverlays.push(customOverlay);
     };
 
