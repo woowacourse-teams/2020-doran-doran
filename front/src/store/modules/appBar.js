@@ -4,6 +4,7 @@ export default {
     backButton: false,
     myPageButton: false,
     title: "",
+    searchButton: false,
     timelineButton: false,
     mapButton: false,
   },
@@ -15,6 +16,7 @@ export default {
       state.backButton = false;
       state.myPageButton = true;
       state.title = "";
+      state.searchButton = true;
       state.timelineButton = true;
       state.mapButton = false;
     },
@@ -22,6 +24,47 @@ export default {
       state.backButton = false;
       state.myPageButton = false;
       state.title = "";
+      state.searchButton = false;
+      state.timelineButton = false;
+      state.mapButton = false;
+    },
+    TIMELINE_PAGE(state) {
+      state.backButton = false;
+      state.myPageButton = true;
+      state.title = "타임라인";
+      state.searchButton = true;
+      state.timelineButton = false;
+      state.mapButton = true;
+    },
+    POST_DETAIL_PAGE(state) {
+      state.backButton = true;
+      state.myPageButton = false;
+      state.title = "게시글";
+      state.searchButton = false;
+      state.timelineButton = false;
+      state.mapButton = false;
+    },
+    SEARCH_PAGE(state) {
+      state.backButton = true;
+      state.myPageButton = false;
+      state.title = "검색";
+      state.searchButton = false;
+      state.timelineButton = false;
+      state.mapButton = false;
+    },
+    SEARCH_RESULT_PAGE(state, title) {
+      state.backButton = true;
+      state.myPageButton = false;
+      state.title = title;
+      state.searchButton = false;
+      state.timelineButton = false;
+      state.mapButton = false;
+    },
+    MY_PAGE(state) {
+      state.backButton = true;
+      state.myPageButton = false;
+      state.title = "마이페이지";
+      state.searchButton = false;
       state.timelineButton = false;
       state.mapButton = false;
     },
@@ -32,6 +75,9 @@ export default {
     },
     myPageButton: (state) => {
       return state.myPageButton;
+    },
+    searchButton: (state) => {
+      return state.searchButton;
     },
     title: (state) => {
       return state.title;

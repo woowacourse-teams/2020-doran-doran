@@ -19,6 +19,7 @@ export default {
     };
   },
   async created() {
+    this.$store.commit("appBar/TIMELINE_PAGE");
     await this.$store.dispatch("post/loadPosts");
     this.posts = this.$store.getters["post/getPosts"].reverse();
   },
