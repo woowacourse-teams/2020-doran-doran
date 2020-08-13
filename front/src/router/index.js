@@ -4,7 +4,7 @@ import MapPage from "@/components/map/MapPage";
 import PostDetailPage from "@/components/post/PostDetailPage";
 import TimelinePage from "@/components/timeline/TimelinePage";
 import SearchPage from "@/components/search/SearchPage";
-import SearchResultPage from "@/components/timeline/SearchResultPage";
+import SearchResultPage from "@/components/search/SearchResultPage";
 
 Vue.use(VueRouter);
 
