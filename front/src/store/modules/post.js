@@ -7,9 +7,6 @@ export default {
     searchedPosts: [],
   },
   mutations: {
-    ADD_POST(state, post) {
-      state.posts.push(post);
-    },
     SET_POSTS(state, posts) {
       state.posts = posts;
     },
@@ -22,9 +19,9 @@ export default {
     },
   },
   actions: {
-    async createPost({ commit }, newPost) {
+    async createPost({ dispatch }, newPost) {
       await api.createPost(newPost);
-      commit("ADD_POST", newPost);
+      dispatch("loadPosts");
     },
     async loadPost(context, postId) {
       return await api.loadPost(postId);
