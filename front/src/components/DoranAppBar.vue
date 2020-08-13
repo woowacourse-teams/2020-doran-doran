@@ -31,13 +31,11 @@
 </template>
 
 <script>
-import router from "@/router";
-
 export default {
   name: "DoranAppBar",
   methods: {
     goToPreviousPage() {
-      router.go(-1);
+      this.$router.go(-1);
     },
     goToMyPage() {
       router.push("/mypage");

@@ -19,7 +19,6 @@
 </template>
 
 <script>
-import router from "@/router";
 import { LIKE_BUTTON_TYPE } from "@/utils/constants";
 
 export default {
@@ -43,7 +42,7 @@ export default {
   },
   methods: {
     routePage() {
-      router.push("posts/" + this.post.id);
+      this.$router.push("posts/" + this.post.id);
     },
     hasLike(like) {
       return (

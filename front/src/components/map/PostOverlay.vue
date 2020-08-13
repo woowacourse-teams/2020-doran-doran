@@ -7,8 +7,6 @@
 </template>
 
 <script>
-import router from "@/router";
-
 const CONTENT_LENGTH = 15;
 
 export default {
@@ -32,7 +30,7 @@ export default {
   },
   methods: {
     routePage() {
-      router.push("posts/" + this.post.id);
+      this.$router.push("posts/" + this.post.id);
     },
   },
 };
