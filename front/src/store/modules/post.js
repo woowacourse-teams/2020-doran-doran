@@ -38,6 +38,12 @@ export default {
       const searchResult = await api.searchPosts(data);
       commit("SET_SEARCHED_POSTS", searchResult);
     },
+    async createPostLike(context, newPostLike) {
+      await api.createPostLike(newPostLike);
+    },
+    async deletePostLike(context, postLikeId) {
+      await api.deletePostLike(postLikeId);
+    },
   },
   getters: {
     getPosts: (state) => {
