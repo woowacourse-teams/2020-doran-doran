@@ -56,7 +56,7 @@ export default {
       this.$setLocation(currentLocation);
       this.$setCurrentLocationMarker(currentLocation);
       await this.changeAppBarAddressByCenterLocation();
-      this.$resetPostOverlay();
+      this.$clearPostOverlay();
       await this.$store.dispatch("post/loadPosts");
       await this.$addEventToMap(
         EVENT_TYPE.CENTER_CHANGE,

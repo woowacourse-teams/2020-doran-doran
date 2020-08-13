@@ -38,7 +38,7 @@ const KakaoMap = {
         minLevel: 3,
         calculator: [3, 7, 11, 15],
       });
-    }
+    };
 
     Vue.prototype.$getCurrentLocation = async () => {
       const getLocation = () =>
@@ -98,7 +98,7 @@ const KakaoMap = {
       marker.setMap(this.map);
     };
 
-    Vue.prototype.$resetPostOverlay = () => {
+    Vue.prototype.$clearPostOverlay = () => {
       postOverlays.length = 0;
     };
 
