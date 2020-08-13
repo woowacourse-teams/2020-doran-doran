@@ -29,10 +29,25 @@ export default {
     goToPreviousPage() {
       router.go(-1);
     },
+    goToMyPage() {
+      router.push("/mypage");
+    },
   },
   computed: {
+    backButton(){
+      return this.$store.getters["appBar/backButton"];
+    },
+    myPageButton(){
+      return this.$store.getters["appBar/myPageButton"];
+    },
     centerAddress() {
       return this.$store.getters["appBar/centerAddress"];
+    },
+    timelineButton() {
+      return this.$store.getters["appBar/timelineButton"];
+    },
+    mapButton() {
+      return this.$store.getters["appBar/mapButton"];
     },
   },
 };
