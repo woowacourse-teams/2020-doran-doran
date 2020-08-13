@@ -2,19 +2,16 @@
   <div>
     <PostItem v-for="post in posts" :key="post.id" :post="post" />
     <div class="bottom-spacer" />
-    <PostCreateButton />
   </div>
 </template>
 
 <script>
-import PostCreateButton from "@/components/map/PostCreateButton";
 import PostItem from "@/components/timeline/PostItem";
 
 export default {
   name: "TimelinePage",
   components: {
     PostItem,
-    PostCreateButton,
   },
   data() {
     return {
