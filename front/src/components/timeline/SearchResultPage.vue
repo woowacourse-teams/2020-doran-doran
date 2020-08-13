@@ -27,7 +27,7 @@ export default {
       startDate: this.$route.query.startDate,
       endDate: this.$route.query.endDate,
     };
-    await this.$store.dispatch("post/searchPost", data);
+    await this.$store.dispatch("post/searchPosts", data);
     this.posts = this.$store.getters["post/getSearchedPosts"].reverse();
   },
 };

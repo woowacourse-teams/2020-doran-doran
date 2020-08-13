@@ -37,8 +37,8 @@ export default {
       await api.deletePost(postId);
       commit("REMOVE_POST", postId);
     },
-    async searchPost({ commit }, data) {
-      const searchResult = await api.searchPost(data);
+    async searchPosts({ commit }, data) {
+      const searchResult = await api.searchPosts(data);
       commit("SET_SEARCHED_POSTS", searchResult);
     },
   },
