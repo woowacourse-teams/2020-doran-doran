@@ -21,7 +21,7 @@ export default {
     PostCreateButton,
     PostCreateModal,
   },
-  mounted() {
+  created() {
     this.$store.commit("appBar/MAP_PAGE_DEFAULT_MODE");
   },
   data() {

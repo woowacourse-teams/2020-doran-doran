@@ -67,6 +67,8 @@ export default {
       "post/loadPost",
       this.$route.params.id,
     );
+    this.$store.commit("appBar/POST_DETAIL_PAGE");
+
   },
   computed: {
     postDate() {
