@@ -1,13 +1,22 @@
 <template>
   <v-app-bar flat max-height="56" color="white">
-    <v-btn icon fab text @click="goToPreviousPage" fixed left>
-      <v-icon>mdi-chevron-left</v-icon>
-    </v-btn>
-    <VSpacer />
-    <v-toolbar-title class="app-bar-title">
-      {{ centerAddress }}
-    </v-toolbar-title>
-    <VSpacer />
+    <v-container
+      fluid
+      class="d-flex flex-row align-center justify-space-between pa-0"
+    >
+      <v-icon @click="goToPreviousPage">mdi-chevron-left</v-icon>
+      <v-toolbar-title class="app-bar-title">
+        {{ centerAddress }}
+      </v-toolbar-title>
+      <div class="text-right">
+        <router-link to="/search" class="mr-2">
+          <v-icon>mdi-magnify</v-icon>
+        </router-link>
+        <router-link to="/timeline">
+          <v-icon>mdi-format-list-bulleted</v-icon>
+        </router-link>
+      </div>
+    </v-container>
   </v-app-bar>
 </template>
 
@@ -31,6 +40,9 @@ export default {
 
 <style scoped>
 .app-bar-title {
-  font-size: 1rem;
+  position: fixed;
+  left: 50%;
+  transform: translate(-50%);
+  font-size: 0.9rem;
 }
 </style>

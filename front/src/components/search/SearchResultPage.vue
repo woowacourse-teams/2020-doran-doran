@@ -9,7 +9,7 @@
 import PostItem from "@/components/timeline/PostItem";
 
 export default {
-  name: "TimelinePage",
+  name: "SearchResultPage",
   components: {
     PostItem,
   },
@@ -19,15 +19,15 @@ export default {
     };
   },
   async created() {
-    await this.$store.dispatch("post/loadPosts");
-    this.posts = this.$store.getters["post/getPosts"].reverse();
+    const data = {
+      keyword: this.$route.query.keyword,
+      startDate: this.$route.query.startDate,
+      endDate: this.$route.query.endDate,
+    };
+    await this.$store.dispatch("post/searchPosts", data);
+    this.posts = this.$store.getters["post/getSearchedPosts"].reverse();
   },
 };
 </script>
 
-<style scoped>
-.bottom-spacer {
-  width: 100%;
-  height: 70px;
-}
-</style>
+<style scoped></style>

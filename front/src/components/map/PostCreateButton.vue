@@ -10,7 +10,7 @@
       bottom
       :color="buttonType.color"
     >
-      <v-icon>{{buttonType.icon}}</v-icon>
+      <v-icon>{{ buttonType.icon }}</v-icon>
     </v-btn>
   </div>
 </template>

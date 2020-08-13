@@ -1,8 +1,10 @@
 <template>
-  <div class="v-application v-application--is-ltr theme--light app-container">
+  <v-app class="app-container">
     <DoranAppBar />
-    <RouterView />
-  </div>
+    <transition name="fade" mode="out-in">
+      <RouterView />
+    </transition>
+  </v-app>
 </template>
 
 <script>
@@ -18,6 +20,7 @@ export default {
 
 <style>
 @import "./assets/styles/post-overlay.css";
+@import "./assets/styles/index.css";
 
 html,
 body {
@@ -30,5 +33,21 @@ body {
   width: 100%;
   height: 100%;
   flex-direction: column;
+}
+
+.app-container > div {
+  height: 100%;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition-duration: 0.2s;
+  transition-property: opacity;
+  transition-timing-function: ease;
+}
+
+.fade-enter,
+.fade-leave-active {
+  opacity: 0;
 }
 </style>

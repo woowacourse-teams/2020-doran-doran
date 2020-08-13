@@ -4,6 +4,7 @@ export default {
   namespaced: true,
   state: {
     posts: [],
+    searchedPosts: [],
   },
   mutations: {
     ADD_POST(state, post) {
@@ -11,6 +12,9 @@ export default {
     },
     SET_POSTS(state, posts) {
       state.posts = posts;
+    },
+    SET_SEARCHED_POSTS(state, searchedPosts) {
+      state.searchedPosts = searchedPosts;
     },
     REMOVE_POST(state, postId) {
       const deleteIndex = state.posts.findIndex((post) => post.id === postId);
@@ -33,10 +37,17 @@ export default {
       await api.deletePost(postId);
       commit("REMOVE_POST", postId);
     },
+    async searchPosts({ commit }, data) {
+      const searchResult = await api.searchPosts(data);
+      commit("SET_SEARCHED_POSTS", searchResult);
+    },
   },
   getters: {
     getPosts: (state) => {
       return state.posts;
+    },
+    getSearchedPosts: (state) => {
+      return state.searchedPosts;
     },
   },
 };
