@@ -1,6 +1,9 @@
 package com.grasshouse.dorandoran.post.service.dto;
 
 import com.grasshouse.dorandoran.post.domain.PostLike;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,5 +31,11 @@ public class PostLikeResponse {
             .memberId(postLike.getMemberId())
             .postId(postLike.getPost().getId())
             .build();
+    }
+
+    public static List<PostLikeResponse> listFrom(Set<PostLike> postLikes) {
+        return postLikes.stream()
+            .map(PostLikeResponse::from)
+            .collect(Collectors.toList());
     }
 }

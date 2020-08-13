@@ -1,6 +1,9 @@
 package com.grasshouse.dorandoran.comment.service.dto;
 
 import com.grasshouse.dorandoran.comment.domain.CommentLike;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,5 +31,11 @@ public class CommentLikeResponse {
             .memberId(commentLike.getMemberId())
             .commentId(commentLike.getComment().getId())
             .build();
+    }
+
+    public static List<CommentLikeResponse> listFrom(Set<CommentLike> commentLikes) {
+        return commentLikes.stream()
+            .map(CommentLikeResponse::from)
+            .collect(Collectors.toList());
     }
 }

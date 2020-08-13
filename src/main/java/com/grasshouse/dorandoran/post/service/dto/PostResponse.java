@@ -59,11 +59,7 @@ public class PostResponse {
             .address(post.getAddress())
             .createdAt(post.getCreatedAt())
             .comments(CommentResponse.listFrom(post.getComments()))
-            .likes(post.getLikes()
-                .stream()
-                .map(PostLikeResponse::from)
-                .collect(Collectors.toList())
-            )
+            .likes(PostLikeResponse.listFrom(post.getLikes()))
             .build();
     }
 

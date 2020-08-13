@@ -46,11 +46,7 @@ public class CommentResponse {
             .content(comment.getContent())
             .distance(comment.getDistance())
             .createdAt(comment.getCreatedAt())
-            .likes(comment.getLikes()
-                .stream()
-                .map(CommentLikeResponse::from)
-                .collect(Collectors.toList())
-            )
+            .likes(CommentLikeResponse.listFrom(comment.getLikes()))
             .build();
     }
 

@@ -27,7 +27,7 @@ public class CommentLike {
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="comment_id")
+    @JoinColumn(name = "comment_id")
     private Comment comment;
 
     @Builder
