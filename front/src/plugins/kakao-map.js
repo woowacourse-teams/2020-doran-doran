@@ -29,10 +29,10 @@ const KakaoMap = {
         level: 2,
       };
       this.map = new kakao.maps.Map(mapContainer, options);
-      this.clusterer = createClusterer.call(this);
+      this.clusterer = createClusterer();
     };
 
-    function createClusterer() {
+    const createClusterer = () => {
       return new kakao.maps.MarkerClusterer({
         map: this.map,
         averageCenter: true,
