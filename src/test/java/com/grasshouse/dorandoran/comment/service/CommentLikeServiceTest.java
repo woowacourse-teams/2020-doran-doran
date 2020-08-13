@@ -12,7 +12,7 @@ import com.grasshouse.dorandoran.comment.repository.CommentLikeRepository;
 import com.grasshouse.dorandoran.comment.repository.CommentRepository;
 import com.grasshouse.dorandoran.comment.repository.CommentRepositorySupport;
 import com.grasshouse.dorandoran.comment.service.dto.CommentLikeCreateRequest;
-import com.grasshouse.dorandoran.common.exception.LikeDuplicateException;
+import com.grasshouse.dorandoran.common.exception.CommentLikeAlreadyExistsException;
 import com.grasshouse.dorandoran.member.domain.Member;
 import com.grasshouse.dorandoran.member.repository.MemberRepository;
 import com.grasshouse.dorandoran.post.domain.Post;
@@ -115,7 +115,7 @@ class CommentLikeServiceTest {
             .commentId(comment.getId())
             .build();
         assertThatThrownBy(() -> commentLikeService.createCommentLike(duplicateRequest))
-            .isInstanceOf(LikeDuplicateException.class);
+            .isInstanceOf(CommentLikeAlreadyExistsException.class);
     }
 
     @DisplayName("댓글에 추가한 좋아요를 취소(삭제)한다.")

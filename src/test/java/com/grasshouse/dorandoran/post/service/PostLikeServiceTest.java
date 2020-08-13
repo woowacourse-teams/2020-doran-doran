@@ -6,7 +6,7 @@ import static com.grasshouse.dorandoran.fixture.LocationFixture.JAMSIL_STATION;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import com.grasshouse.dorandoran.common.exception.LikeDuplicateException;
+import com.grasshouse.dorandoran.common.exception.PostLikeAlreadyExistsException;
 import com.grasshouse.dorandoran.member.domain.Member;
 import com.grasshouse.dorandoran.member.repository.MemberRepository;
 import com.grasshouse.dorandoran.post.domain.Post;
@@ -100,7 +100,7 @@ public class PostLikeServiceTest {
             .postId(post.getId())
             .build();
         assertThatThrownBy(() -> postLikeService.createPostLike(duplicateRequest))
-            .isInstanceOf(LikeDuplicateException.class);
+            .isInstanceOf(PostLikeAlreadyExistsException.class);
     }
 
     @DisplayName("게시글의 좋아요를 취소(삭제)한다.")

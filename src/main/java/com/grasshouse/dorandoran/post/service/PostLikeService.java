@@ -1,7 +1,7 @@
 package com.grasshouse.dorandoran.post.service;
 
-import com.grasshouse.dorandoran.common.exception.LikeDuplicateException;
-import com.grasshouse.dorandoran.common.exception.LikeNotFoundException;
+import com.grasshouse.dorandoran.common.exception.PostLikeAlreadyExistsException;
+import com.grasshouse.dorandoran.common.exception.PostLikeNotFoundException;
 import com.grasshouse.dorandoran.common.exception.PostNotFoundException;
 import com.grasshouse.dorandoran.post.domain.Post;
 import com.grasshouse.dorandoran.post.domain.PostLike;
@@ -37,14 +37,14 @@ public class PostLikeService {
 
     private void validatePostLikeDuplication(Long memberId, Post post) {
         if (postLikeRepository.existsByMemberIdAndPost(memberId, post)) {
-            throw new LikeDuplicateException();
+            throw new PostLikeAlreadyExistsException();
         }
     }
 
     @Transactional
     public void deletePostLike(Long postLikeId) {
         PostLike postLike = postLikeRepository.findById(postLikeId)
-            .orElseThrow(() -> new LikeNotFoundException("게시글"));
+            .orElseThrow(PostLikeNotFoundException::new);
         postLikeRepository.delete(postLike);
     }
 }
