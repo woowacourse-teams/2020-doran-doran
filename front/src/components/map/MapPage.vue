@@ -21,6 +21,9 @@ export default {
     PostCreateButton,
     PostCreateModal,
   },
+  mounted() {
+    this.$store.commit("appBar/MAP_PAGE_DEFAULT_MODE");
+  },
   data() {
     return {
       locationAlert: this.isMarkerMode,

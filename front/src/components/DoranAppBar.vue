@@ -40,8 +40,8 @@ export default {
     myPageButton(){
       return this.$store.getters["appBar/myPageButton"];
     },
-    centerAddress() {
-      return this.$store.getters["appBar/centerAddress"];
+    appBarTitle() {
+      return this.$store.getters["appBar/title"];
     },
     timelineButton() {
       return this.$store.getters["appBar/timelineButton"];
