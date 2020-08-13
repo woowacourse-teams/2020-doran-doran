@@ -29,7 +29,17 @@ const KakaoMap = {
         level: 2,
       };
       this.map = new kakao.maps.Map(mapContainer, options);
+      this.clusterer = createClusterer.call(this);
     };
+
+    function createClusterer() {
+      return new kakao.maps.MarkerClusterer({
+        map: this.map,
+        averageCenter: true,
+        minLevel: 3,
+        calculator: [3, 7, 11, 15],
+      });
+    }
 
     Vue.prototype.$getCurrentLocation = async () => {
       const getLocation = () =>
@@ -97,17 +107,10 @@ const KakaoMap = {
         content: POST_OVERLAY_TEMPLATES(post),
       });
       customOverlay.setMap(this.map);
+      this.clusterer.addMarker(customOverlay);
+
       postOverlays.push(customOverlay);
     };
-
-    Vue.prototype.$createMarkerClusterer = () => {
-      const clusterer = new kakao.maps.MarkerClusterer({
-        map: this.map,
-        averageCenter: true,
-        minLevel: 5
-      });
-      clusterer.addMarkers(postOverlays);
-    }
 
     Vue.prototype.$closePostOverlays = () => {
       postOverlays.forEach((overlay) => {
