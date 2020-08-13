@@ -19,7 +19,8 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 public class PostSearchArgumentResolver implements HandlerMethodArgumentResolver {
 
     private static final String DATE_FORMAT = "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}";
-    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter
+        .ofPattern("yyyy-MM-dd HH:mm:ss");
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {

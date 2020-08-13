@@ -33,8 +33,8 @@ public class Member {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false)
     @NotBlank(message = "닉네임은 비어 있을 수 없습니다.")
+    @Column(unique = true, nullable = false)
     private String nickname;
 
     @CreatedDate

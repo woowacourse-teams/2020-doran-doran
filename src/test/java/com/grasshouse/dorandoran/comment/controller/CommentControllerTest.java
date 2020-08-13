@@ -81,4 +81,5 @@ class CommentControllerTest extends CommonControllerTest {
                 result.getResolvedException() instanceof MethodArgumentNotValidException))
             .andDo(print());
     }
+
 }

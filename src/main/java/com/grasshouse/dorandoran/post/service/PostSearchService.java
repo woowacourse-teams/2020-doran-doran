@@ -22,7 +22,7 @@ public class PostSearchService {
     @Transactional
     public List<PostResponse> showSearchResults(PostSearchRequest request) {
         List<Post> searchResults = postRepositorySupport
-            .findPostContainsKeywordBetweenDate(request.getKeyword(), request.getStartDate(),
+            .findPostWithKeywordAndDate(request.getKeyword(), request.getStartDate(),
                 request.getEndDate());
 
         return searchResults.stream()
