@@ -17,7 +17,7 @@ public class CommentRepositorySupport extends QuerydslRepositorySupport {
         this.jpaQueryFactory = jpaQueryFactory;
     }
 
-    public Comment findCommentWithLikes(Long commentId) {
+    public Comment findCommentContainingLikes(Long commentId) {
         return jpaQueryFactory.selectFrom(comment)
             .innerJoin(comment.likes)
             .fetchJoin()

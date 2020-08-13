@@ -24,7 +24,6 @@ public class CommentLikeService {
         Comment comment = commentRepository
             .findById(request.getCommentId())
             .orElseThrow(CommentNotFoundException::new);
-
         validateCommentLikeDuplication(request.getMemberId(), comment);
 
         CommentLike commentLike = CommentLike.builder()

@@ -81,7 +81,7 @@ public class PostLikeServiceTest {
             .build();
 
         postLikeService.createPostLike(request);
-        Post persistPost = postRepositorySupport.findPostWithLikes(post.getId());
+        Post persistPost = postRepositorySupport.findPostContainingLikes(post.getId());
 
         assertThat(persistPost.getLikes()).hasSize(1);
     }
@@ -127,7 +127,7 @@ public class PostLikeServiceTest {
             .build();
 
         postLikeService.createPostLike(request);
-        Post persistPost = postRepositorySupport.findPostWithLikes(post.getId());
+        Post persistPost = postRepositorySupport.findPostContainingLikes(post.getId());
         assertThat(persistPost.getLikes()).hasSize(1);
 
         postService.deletePost(persistPost.getId());

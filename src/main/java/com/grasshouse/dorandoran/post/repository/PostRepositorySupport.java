@@ -22,7 +22,7 @@ public class PostRepositorySupport extends QuerydslRepositorySupport {
         this.jpaQueryFactory = jpaQueryFactory;
     }
 
-    public Post findPostWithComment(Long postId) {
+    public Post findPostContainingComments(Long postId) {
         return jpaQueryFactory.selectFrom(post)
             .innerJoin(post.comments)
             .fetchJoin()
@@ -30,7 +30,7 @@ public class PostRepositorySupport extends QuerydslRepositorySupport {
             .fetchFirst();
     }
 
-    public List<Post> findPostContainsKeywordBetweenDate(String keyword, LocalDateTime startDate,
+    public List<Post> findPostWithKeywordAndDate(String keyword, LocalDateTime startDate,
         LocalDateTime endDate) {
         return jpaQueryFactory
             .selectFrom(post)
@@ -52,7 +52,7 @@ public class PostRepositorySupport extends QuerydslRepositorySupport {
         return post.createdAt.between(startDate, endDate);
     }
 
-    public Post findPostWithLikes(Long postId) {
+    public Post findPostContainingLikes(Long postId) {
         return jpaQueryFactory.selectFrom(post)
             .innerJoin(post.likes)
             .fetchJoin()
