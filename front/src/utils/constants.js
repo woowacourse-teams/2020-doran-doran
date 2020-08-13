@@ -18,6 +18,7 @@ const MAP_MODE = {
 
 const DORAN_DORAN_COLORS = {
   POINT_COLOR: "amber accent-3",
+  LIKE_COLOR: "red accent-3"
 };
 
 export {

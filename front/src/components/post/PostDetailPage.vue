@@ -14,8 +14,14 @@
     <div>
       <v-icon small>mdi-comment-processing-outline</v-icon>
       <span class="mx-1">{{ post.comments.length }}</span>
-      <v-icon small>mdi-heart-outline</v-icon>
-      <span class="mx-1">0</span>
+      <v-btn
+        icon
+        @click="addClickEventToLikeButton"
+        :color="likeButtonType.color"
+      >
+        <v-icon small>{{ likeButtonType.icon }}</v-icon>
+      </v-btn>
+      <span class="mx-1">{{ post.likes.length }}</span>
       <div class="text--disabled float-right post-address">
         {{ post.authorAddress.depth1 }}
         {{ post.authorAddress.depth2 }}
@@ -31,6 +37,18 @@
 <script>
 import CommentInput from "@/components/post/CommentInput";
 import CommentList from "@/components/post/CommentList";
+import { DORAN_DORAN_COLORS } from "@/utils/constants";
+
+const LIKE_BUTTON_TYPE = {
+  DEFAULT: {
+    color: "",
+    icon: "mdi-heart-outline",
+  },
+  LIKED: {
+    color: DORAN_DORAN_COLORS.LIKE_COLOR,
+    icon: "mdi-heart",
+  },
+};
 
 export default {
   name: "PostDetailPage",
@@ -57,24 +75,77 @@ export default {
           depth2: "",
           depth3: "",
         },
+        likes: [],
         createdAt: "",
         comments: [],
       },
+      likeButtonType: LIKE_BUTTON_TYPE.DEFAULT,
+      liked: false,
     };
+  },
+  computed: {
+    postDate() {
+      return this.$moment(this.post.createdAt).fromNow();
+    },
   },
   async created() {
     this.post = await this.$store.dispatch(
       "post/loadPost",
       this.$route.params.id,
     );
+    this.liked = this.isLiked();
     this.$store.commit("appBar/POST_DETAIL_PAGE");
   },
-  computed: {
-    postDate() {
-      return this.$moment(this.post.createdAt).fromNow();
-    }
-  }
-
+  methods: {
+    async addClickEventToLikeButton() {
+      this.toggleLike();
+      if (this.isLiked()) {
+        await this.deletePostLike();
+      } else {
+        await this.createPostLike();
+      }
+    },
+    async loadPost() {
+      this.post = await this.$store.dispatch(
+        "post/loadPost",
+        this.$route.params.id,
+      );
+    },
+    toggleLike() {
+      this.liked = !this.liked;
+    },
+    isLiked() {
+      return this.post.likes.some(
+        (like) =>
+          like.memberId === this.$store.getters["member/getMembers"] &&
+          like.postId === this.post.id,
+      );
+    },
+    async deletePostLike() {
+      const thisPostLike = this.post.likes.find(
+        (like) =>
+          like.memberId === this.$store.getters["member/getMembers"] &&
+          like.postId === this.post.id,
+      );
+      await this.$store.dispatch("post/deletePostLike", thisPostLike.id);
+      await this.loadPost();
+    },
+    async createPostLike() {
+      const newPostLike = {
+        memberId: this.post.memberResponse.id,
+        postId: this.post.id,
+      };
+      await this.$store.dispatch("post/createPostLike", newPostLike);
+      await this.loadPost();
+    },
+  },
+  watch: {
+    liked(val) {
+      this.likeButtonType = val
+        ? LIKE_BUTTON_TYPE.LIKED
+        : LIKE_BUTTON_TYPE.DEFAULT;
+    },
+  },
 };
 </script>
 
