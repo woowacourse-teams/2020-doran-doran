@@ -45,11 +45,6 @@ export default {
       await this.initMainMap();
     }
   },
-  watch: {
-    isDefaultMode(val) {
-      val ? this.$showPostOverlays() : this.$closePostOverlays();
-    },
-  },
   methods: {
     async initMainMap() {
       const currentLocation = await this.$getCurrentLocation();
@@ -69,6 +64,11 @@ export default {
       const centerAddress = await this.$getAddress(centerLocation);
       const address = Object.values(centerAddress).join(" ");
       this.$store.commit("appBar/CHANGE_TITLE", address);
+    },
+  },
+  watch: {
+    isDefaultMode(val) {
+      val ? this.$showPostOverlays() : this.$closePostOverlays();
     },
   },
 };
