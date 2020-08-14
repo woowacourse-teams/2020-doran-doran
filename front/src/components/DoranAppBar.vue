@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar flat max-height="56" color="white">
+  <v-app-bar v-show="appBarVisible" flat max-height="56" color="white">
     <v-container
       fluid
       class="d-flex flex-row align-center justify-space-between pa-0"
@@ -42,6 +42,9 @@ export default {
     },
   },
   computed: {
+    appBarVisible() {
+      return this.$store.getters["appBar/appBarVisible"];
+    },
     backButton() {
       return this.$store.getters["appBar/backButton"];
     },
