@@ -68,13 +68,23 @@ export default {
         createdAt: "",
         comments: [],
       },
-      likeButtonType: LIKE_BUTTON_TYPE.DEFAULT,
-      liked: false,
     };
   },
   computed: {
     postDate() {
       return this.$moment(this.post.createdAt).fromNow();
+    },
+    liked() {
+      return this.post.likes.some(
+          (like) =>
+              like.memberId === this.$store.getters["member/getMembers"] &&
+              like.postId === this.post.id,
+      );
+    },
+    likeButtonType() {
+      return this.liked
+          ? LIKE_BUTTON_TYPE.LIKED
+          : LIKE_BUTTON_TYPE.DEFAULT;
     },
   },
   async created() {
@@ -82,13 +92,11 @@ export default {
       "post/loadPost",
       this.$route.params.id,
     );
-    this.liked = this.isLiked();
     this.$store.commit("appBar/POST_DETAIL_PAGE");
   },
   methods: {
     async addClickEventToLikeButton() {
-      this.toggleLike();
-      if (this.isLiked()) {
+      if (this.liked) {
         await this.deletePostLike();
       } else {
         await this.createPostLike();
@@ -98,16 +106,6 @@ export default {
       this.post = await this.$store.dispatch(
         "post/loadPost",
         this.$route.params.id,
-      );
-    },
-    toggleLike() {
-      this.liked = !this.liked;
-    },
-    isLiked() {
-      return this.post.likes.some(
-        (like) =>
-          like.memberId === this.$store.getters["member/getMembers"] &&
-          like.postId === this.post.id,
       );
     },
     async deletePostLike() {
@@ -126,13 +124,6 @@ export default {
       };
       await this.$store.dispatch("post/createPostLike", newPostLike);
       await this.loadPost();
-    },
-  },
-  watch: {
-    liked(val) {
-      this.likeButtonType = val
-        ? LIKE_BUTTON_TYPE.LIKED
-        : LIKE_BUTTON_TYPE.DEFAULT;
     },
   },
 };

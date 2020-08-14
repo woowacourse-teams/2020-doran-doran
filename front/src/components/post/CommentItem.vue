@@ -38,38 +38,30 @@ export default {
       required: true,
     },
   },
-  data() {
-    return {
-      likeButtonType: LIKE_BUTTON_TYPE.DEFAULT,
-      liked: false,
-    };
-  },
   computed: {
     commentDate() {
       return this.$moment(this.comment.createdAt).fromNow();
     },
-  },
-  async created() {
-    this.liked = this.isLiked();
+    liked() {
+      return this.comment.likes.some(
+          (like) =>
+              like.memberId === this.$store.getters["member/getMembers"] &&
+              like.commentId === this.comment.id,
+      );
+    },
+    likeButtonType() {
+      return this.liked
+          ? LIKE_BUTTON_TYPE.LIKED
+          : LIKE_BUTTON_TYPE.DEFAULT;
+    }
   },
   methods: {
     async addClickEventToLikeButton() {
-      this.toggleLike();
-      if (this.isLiked()) {
+      if (this.liked) {
         await this.deleteCommentLike();
       } else {
         await this.createCommentLike();
       }
-    },
-    toggleLike() {
-      this.liked = !this.liked;
-    },
-    isLiked() {
-      return this.comment.likes.some(
-        (like) =>
-          like.memberId === this.$store.getters["member/getMembers"] &&
-          like.commentId === this.comment.id,
-      );
     },
     async deleteCommentLike() {
       const thisCommentLike = this.comment.likes.find(
@@ -90,13 +82,6 @@ export default {
       };
       await this.$store.dispatch("comment/createCommentLike", newCommentLike);
       this.$emit("load-post");
-    },
-  },
-  watch: {
-    liked(val) {
-      this.likeButtonType = val
-        ? LIKE_BUTTON_TYPE.LIKED
-        : LIKE_BUTTON_TYPE.DEFAULT;
     },
   },
 };
