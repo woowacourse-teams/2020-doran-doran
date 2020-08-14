@@ -1,10 +1,10 @@
 <template>
-  <v-container fill-height fluid ref="map">
+  <v-container ref="map" fill-height fluid>
     <v-icon
-      class="center-marker"
-      color="red"
-      size="40"
       v-if="this.isMarkerMode"
+      size="40"
+      color="red"
+      class="center-marker"
     >
       mdi-map-marker
     </v-icon>

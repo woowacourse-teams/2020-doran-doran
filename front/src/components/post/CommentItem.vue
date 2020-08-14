@@ -1,6 +1,6 @@
 <template>
   <div>
-    <VDivider class="comment-divider my-2" />
+    <VDivider class="my-2" />
     <div class="mx-2">
       <div class="mb-1">
         <v-icon class="mr-2">mdi-account-circle</v-icon>

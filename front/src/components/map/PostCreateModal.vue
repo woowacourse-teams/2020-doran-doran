@@ -5,9 +5,8 @@
     </v-snackbar>
     <div class="pa-3 modal-container">
       <VTextarea
-        v-model="content"
         type="text"
-        name="content"
+        v-model="content"
         placeholder="글 내용을 입력해주세요."
         maxlength="200"
         :counter="200"
@@ -17,16 +16,16 @@
 
       <div class="float-right">
         <v-btn
-          @click.prevent="closeModal"
-          class="my-6 mx-1 rounded-pill"
           color="grey lighten-4"
+          class="my-6 mx-1 rounded-pill"
+          @click.prevent="closeModal"
         >
           취소
         </v-btn>
         <v-btn
-          @click.prevent="createPost"
-          class="my-6 mx-1 rounded-pill"
           :color="buttonColor"
+          class="my-6 mx-1 rounded-pill"
+          @click.prevent="createPost"
         >
           등록
         </v-btn>
@@ -89,9 +88,9 @@ export default {
 <style scoped>
 .modal-mask {
   position: fixed;
-  z-index: 9998;
   top: 0;
   left: 0;
+  z-index: 9998;
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
@@ -103,7 +102,7 @@ export default {
   left: 50%;
   transform: translate(-50%, -50%);
   width: 90%;
-  background-color: #fff;
   border-radius: 10px;
+  background-color: #fff;
 }
 </style>

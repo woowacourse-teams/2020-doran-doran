@@ -1,15 +1,15 @@
 <template>
   <div class="pt-3 comment-input">
-    <v-text-field
+    <VTextField
       v-model="content"
       placeholder="댓글을 입력해주세요."
-      maxlength="120"
       append-icon="mdi-pencil"
-      @click:append="createComment"
-      color="black"
-      rounded
+      maxlength="120"
       dense
+      rounded
       filled
+      color="black"
+      @click:append="createComment"
     />
   </div>
 </template>
@@ -48,10 +48,10 @@ export default {
 <style scoped>
 .comment-input {
   position: fixed;
-  width: 90vw;
   bottom: -1%;
   left: 50%;
   transform: translate(-50%);
+  width: 90vw;
   background-color: white;
 }
 </style>

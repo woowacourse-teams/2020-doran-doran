@@ -18,7 +18,7 @@
         {{ likeButtonType.icon }}
       </v-icon>
       <span class="mx-1">{{ post.likes.length }}</span>
-      <div class="text--disabled float-right post-address">
+      <div class="float-right text--disabled post-address">
         {{ post.authorAddress.depth1 }}
         {{ post.authorAddress.depth2 }}
         {{ post.authorAddress.depth3 }}에서
