@@ -28,7 +28,7 @@
         {{ post.authorAddress.depth3 }}에서
       </div>
     </div>
-    <CommentList :comments="post.comments" @load-post="loadPost"/>
+    <CommentList :comments="post.comments" @load-post="loadPost" />
     <div class="bottom-spacer" />
     <CommentInput :post-id="post.id" />
   </div>
@@ -76,15 +76,13 @@ export default {
     },
     liked() {
       return this.post.likes.some(
-          (like) =>
-              like.memberId === this.$store.getters["member/getMembers"] &&
-              like.postId === this.post.id,
+        (like) =>
+          like.memberId === this.$store.getters["member/getMembers"] &&
+          like.postId === this.post.id,
       );
     },
     likeButtonType() {
-      return this.liked
-          ? LIKE_BUTTON_TYPE.LIKED
-          : LIKE_BUTTON_TYPE.DEFAULT;
+      return this.liked ? LIKE_BUTTON_TYPE.LIKED : LIKE_BUTTON_TYPE.DEFAULT;
     },
   },
   async created() {
@@ -96,11 +94,7 @@ export default {
   },
   methods: {
     async addClickEventToLikeButton() {
-      if (this.liked) {
-        await this.deletePostLike();
-      } else {
-        await this.createPostLike();
-      }
+      this.liked ? await this.deletePostLike() : await this.createPostLike();
     },
     async loadPost() {
       this.post = await this.$store.dispatch(
