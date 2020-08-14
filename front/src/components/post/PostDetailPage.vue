@@ -78,7 +78,9 @@ export default {
       );
     },
     likeButtonType() {
-      return this.liked ? LIKE_BUTTON_TYPE.LIKED : LIKE_BUTTON_TYPE.DEFAULT;
+      return this.liked
+        ? this.$store.getters["like/liked"]
+        : this.$store.getters["like/notLiked"];
     },
   },
   async created() {
