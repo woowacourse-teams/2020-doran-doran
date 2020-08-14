@@ -1,6 +1,7 @@
 export default {
   namespaced: true,
   state: {
+    appBarVisible: true,
     backButton: false,
     myPageButton: false,
     title: "",
@@ -13,6 +14,7 @@ export default {
       state.title = newTitle;
     },
     MAP_PAGE_DEFAULT_MODE(state) {
+      state.appBarVisible = true;
       state.backButton = false;
       state.myPageButton = true;
       state.title = "";
@@ -21,14 +23,10 @@ export default {
       state.mapButton = false;
     },
     MAP_PAGE_NON_DEFAULT_MODE(state) {
-      state.backButton = false;
-      state.myPageButton = false;
-      state.title = "";
-      state.searchButton = false;
-      state.timelineButton = false;
-      state.mapButton = false;
+      state.appBarVisible = false;
     },
     TIMELINE_PAGE(state) {
+      state.appBarVisible = true;
       state.backButton = false;
       state.myPageButton = true;
       state.title = "타임라인";
@@ -37,6 +35,7 @@ export default {
       state.mapButton = true;
     },
     POST_DETAIL_PAGE(state) {
+      state.appBarVisible = true;
       state.backButton = true;
       state.myPageButton = false;
       state.title = "게시글";
@@ -45,6 +44,7 @@ export default {
       state.mapButton = false;
     },
     SEARCH_PAGE(state) {
+      state.appBarVisible = true;
       state.backButton = true;
       state.myPageButton = false;
       state.title = "검색";
@@ -53,6 +53,7 @@ export default {
       state.mapButton = false;
     },
     SEARCH_RESULT_PAGE(state) {
+      state.appBarVisible = true;
       state.backButton = true;
       state.myPageButton = false;
       state.title = "검색 결과";
@@ -61,6 +62,7 @@ export default {
       state.mapButton = false;
     },
     MY_PAGE(state) {
+      state.appBarVisible = true;
       state.backButton = true;
       state.myPageButton = false;
       state.title = "마이페이지";
@@ -70,6 +72,9 @@ export default {
     },
   },
   getters: {
+    appBarVisible: (state) => {
+      return state.appBarVisible;
+    },
     backButton: (state) => {
       return state.backButton;
     },
