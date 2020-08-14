@@ -16,7 +16,7 @@
       <span class="mx-1">{{ post.comments.length }}</span>
       <v-btn
         icon
-        @click="addClickEventToLikeButton"
+        @click="toggleLike"
         :color="likeButtonType.color"
       >
         <v-icon small>{{ likeButtonType.icon }}</v-icon>
@@ -93,7 +93,7 @@ export default {
     this.$store.commit("appBar/POST_DETAIL_PAGE");
   },
   methods: {
-    async addClickEventToLikeButton() {
+    async toggleLike() {
       this.liked ? await this.deletePostLike() : await this.createPostLike();
     },
     async loadPost() {
@@ -103,20 +103,20 @@ export default {
       );
     },
     async deletePostLike() {
-      const thisPostLike = this.post.likes.find(
+      const data = this.post.likes.find(
         (like) =>
           like.memberId === this.$store.getters["member/getMembers"] &&
           like.postId === this.post.id,
       );
-      await this.$store.dispatch("post/deletePostLike", thisPostLike.id);
+      await this.$store.dispatch("post/deletePostLike", data.id);
       await this.loadPost();
     },
     async createPostLike() {
-      const newPostLike = {
+      const data = {
         memberId: this.post.memberResponse.id,
         postId: this.post.id,
       };
-      await this.$store.dispatch("post/createPostLike", newPostLike);
+      await this.$store.dispatch("post/createPostLike", data);
       await this.loadPost();
     },
   },

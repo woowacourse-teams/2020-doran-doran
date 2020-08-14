@@ -15,7 +15,7 @@
         <span class="float-right">
           <v-btn
             icon
-            @click="addClickEventToLikeButton"
+            @click="toggleLike"
             :color="likeButtonType.color"
           >
             <v-icon small>{{ likeButtonType.icon }}</v-icon>
@@ -54,29 +54,29 @@ export default {
     },
   },
   methods: {
-    async addClickEventToLikeButton() {
+    async toggleLike() {
       this.liked
         ? await this.deleteCommentLike()
         : await this.createCommentLike();
     },
     async deleteCommentLike() {
-      const thisCommentLike = this.comment.likes.find(
+      const data = this.comment.likes.find(
         (like) =>
           like.memberId === this.$store.getters["member/getMembers"] &&
           like.commentId === this.comment.id,
       );
       await this.$store.dispatch(
         "comment/deleteCommentLike",
-        thisCommentLike.id,
+        data.id,
       );
       this.$emit("load-post");
     },
     async createCommentLike() {
-      const newCommentLike = {
+      const data = {
         memberId: this.comment.author.id,
         commentId: this.comment.id,
       };
-      await this.$store.dispatch("comment/createCommentLike", newCommentLike);
+      await this.$store.dispatch("comment/createCommentLike", data);
       this.$emit("load-post");
     },
   },
