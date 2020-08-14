@@ -13,13 +13,9 @@
       <div>
         <span class="text--disabled comment-created">{{ commentDate }}</span>
         <span class="float-right">
-          <v-btn
-            icon
-            @click="toggleLike"
-            :color="likeButtonType.color"
-          >
-            <v-icon small>{{ likeButtonType.icon }}</v-icon>
-          </v-btn>
+          <v-icon small @click="toggleLike" :color="likeButtonType.color">
+            {{ likeButtonType.icon }}
+          </v-icon>
           <span class="mx-1">{{ comment.likes.length }}</span>
         </span>
       </div>
@@ -65,10 +61,7 @@ export default {
           like.memberId === this.$store.getters["member/getMembers"] &&
           like.commentId === this.comment.id,
       );
-      await this.$store.dispatch(
-        "comment/deleteCommentLike",
-        data.id,
-      );
+      await this.$store.dispatch("comment/deleteCommentLike", data.id);
       this.$emit("load-post");
     },
     async createCommentLike() {

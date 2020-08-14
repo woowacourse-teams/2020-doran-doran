@@ -14,13 +14,9 @@
     <div>
       <v-icon small>mdi-comment-processing-outline</v-icon>
       <span class="mx-1">{{ post.comments.length }}</span>
-      <v-btn
-        icon
-        @click="toggleLike"
-        :color="likeButtonType.color"
-      >
-        <v-icon small>{{ likeButtonType.icon }}</v-icon>
-      </v-btn>
+      <v-icon small @click="toggleLike" :color="likeButtonType.color">
+        {{ likeButtonType.icon }}
+      </v-icon>
       <span class="mx-1">{{ post.likes.length }}</span>
       <div class="text--disabled float-right post-address">
         {{ post.authorAddress.depth1 }}
