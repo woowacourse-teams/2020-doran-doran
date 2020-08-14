@@ -4,21 +4,23 @@
       fluid
       class="d-flex flex-row align-center justify-space-between pa-0"
     >
-      <v-icon v-if="backButton" @click="goToPreviousPage">mdi-chevron-left</v-icon>
-      <v-icon v-if="myPageButton" @click="goToMyPage">mdi-account</v-icon>
+      <v-icon v-show="backButton" @click="goToPreviousPage"
+        >mdi-chevron-left</v-icon
+      >
+      <v-icon v-show="myPageButton" @click="goToMyPage">mdi-account</v-icon>
 
       <v-toolbar-title class="app-bar-title">
         {{ appBarTitle }}
       </v-toolbar-title>
 
-      <div class="text-right">
-        <router-link v-if="searchButton" to="/search" class="ml-2">
+      <div class="text-right app-bar-right">
+        <router-link v-show="searchButton" to="/search">
           <v-icon>mdi-magnify</v-icon>
         </router-link>
-        <router-link v-if="timelineButton" to="/timeline" class="ml-2">
+        <router-link v-show="timelineButton" to="/timeline">
           <v-icon>mdi-format-list-bulleted</v-icon>
         </router-link>
-        <router-link v-if="mapButton" to="/" class="ml-2">
+        <router-link v-show="mapButton" to="/">
           <v-icon>mdi-map</v-icon>
         </router-link>
       </div>
@@ -40,10 +42,10 @@ export default {
     },
   },
   computed: {
-    backButton(){
+    backButton() {
       return this.$store.getters["appBar/backButton"];
     },
-    myPageButton(){
+    myPageButton() {
       return this.$store.getters["appBar/myPageButton"];
     },
     appBarTitle() {
@@ -68,5 +70,8 @@ export default {
   left: 50%;
   transform: translate(-50%);
   font-size: 0.9rem;
+}
+.app-bar-right > * {
+  margin-left: 8px;
 }
 </style>

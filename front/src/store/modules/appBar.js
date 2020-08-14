@@ -9,8 +9,8 @@ export default {
     mapButton: false,
   },
   mutations: {
-    CHANGE_ADDRESS(state, newAddress) {
-      state.title = newAddress;
+    CHANGE_TITLE(state, newTitle) {
+      state.title = newTitle;
     },
     MAP_PAGE_DEFAULT_MODE(state) {
       state.backButton = false;
