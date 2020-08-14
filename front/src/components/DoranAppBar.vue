@@ -4,10 +4,12 @@
       fluid
       class="d-flex flex-row align-center justify-space-between pa-0"
     >
-      <v-icon v-show="backButton" @click="goToPreviousPage"
-        >mdi-chevron-left</v-icon
-      >
-      <v-icon v-show="myPageButton" @click="goToMyPage">mdi-account</v-icon>
+      <v-icon v-show="backButton" @click="goToPreviousPage">
+        mdi-chevron-left
+      </v-icon>
+      <v-icon v-show="myPageButton" @click="goToMyPage">
+        mdi-account
+      </v-icon>
 
       <v-toolbar-title class="app-bar-title">
         {{ appBarTitle }}
@@ -73,6 +75,7 @@ export default {
   left: 50%;
   transform: translate(-50%);
   font-size: 0.9rem;
+  padding: 8px;
 }
 .app-bar-right > * {
   margin-left: 8px;
