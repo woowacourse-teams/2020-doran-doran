@@ -10,8 +10,6 @@ const KakaoMap = {
     script.src = KAKAO_MAP_URL + KAKAO_MAP_APP_KEY + LIBRARY;
     document.head.appendChild(script);
 
-    const postOverlays = [];
-
     /* global kakao */
     const loadApi = new Promise((resolve) => {
       script.onload = () => kakao.maps.load(resolve);
@@ -29,6 +27,7 @@ const KakaoMap = {
       };
       this.map = new kakao.maps.Map(mapContainer, options);
       this.clusterer = createClusterer();
+      this.postOverlays = [];
     };
 
     const createClusterer = () => {
@@ -102,10 +101,6 @@ const KakaoMap = {
       marker.setMap(this.map);
     };
 
-    Vue.prototype.$clearPostOverlay = () => {
-      postOverlays.length = 0;
-    };
-
     Vue.prototype.$setPostOverlay = (overlayTemplate, location) => {
       const kakaoLocation = createKakaoLocation(location);
 
@@ -116,17 +111,17 @@ const KakaoMap = {
       customOverlay.setMap(this.map);
       this.clusterer.addMarker(customOverlay);
 
-      postOverlays.push(customOverlay);
+      this.postOverlays.push(customOverlay);
     };
 
     Vue.prototype.$closePostOverlays = () => {
-      postOverlays.forEach((overlay) => {
+      this.postOverlays.forEach((overlay) => {
         overlay.setMap(null);
       });
     };
 
     Vue.prototype.$showPostOverlays = () => {
-      postOverlays.forEach((overlay) => {
+      this.postOverlays.forEach((overlay) => {
         overlay.setMap(this.map);
       });
     };

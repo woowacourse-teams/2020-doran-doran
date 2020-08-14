@@ -41,25 +41,22 @@ export default {
   },
   async mounted() {
     await this.$drawMap(this.$refs.map);
-    if (this.isDefaultMode) {
-      await this.initMainMap();
-    }
+    await this.setCenterLocation();
+    await this.changeAppBarByCenterAddress();
+    await this.$store.dispatch("post/loadPosts");
+    await this.$addEventToMap(
+      EVENT_TYPE.CENTER_CHANGE,
+      this.changeAppBarByCenterAddress,
+    );
+    this.isMapRendered = true;
   },
   methods: {
-    async initMainMap() {
+    async setCenterLocation() {
       const currentLocation = await this.$getCurrentLocation();
       this.$setLocation(currentLocation);
       this.$setCurrentLocationMarker(currentLocation);
-      await this.changeAppBarAddressByCenterLocation();
-      this.$clearPostOverlay();
-      await this.$store.dispatch("post/loadPosts");
-      await this.$addEventToMap(
-        EVENT_TYPE.CENTER_CHANGE,
-        this.changeAppBarAddressByCenterLocation,
-      );
-      this.isMapRendered = true;
     },
-    async changeAppBarAddressByCenterLocation() {
+    async changeAppBarByCenterAddress() {
       const centerLocation = await this.$getCenterLocation();
       const centerAddress = await this.$getAddress(centerLocation);
       const address = Object.values(centerAddress).join(" ");
