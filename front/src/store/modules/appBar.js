@@ -10,6 +10,9 @@ export default {
     mapButton: false,
   },
   mutations: {
+    TOGGLE_APP_BAR(state) {
+      state.appBarVisible = !state.appBarVisible;
+    },
     CHANGE_TITLE(state, newTitle) {
       state.title = newTitle;
     },
@@ -17,13 +20,9 @@ export default {
       state.appBarVisible = true;
       state.backButton = false;
       state.myPageButton = true;
-      state.title = "";
       state.searchButton = true;
       state.timelineButton = true;
       state.mapButton = false;
-    },
-    MAP_PAGE_NON_DEFAULT_MODE(state) {
-      state.appBarVisible = false;
     },
     TIMELINE_PAGE(state) {
       state.appBarVisible = true;
