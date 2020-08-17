@@ -6,9 +6,9 @@
       <div class="float-right mt-2">{{ postDate }}</div>
     </div>
     <div class="text--disabled post-address">
-      {{ post.authorAddress.depth1 }}
-      {{ post.authorAddress.depth2 }}
-      {{ post.authorAddress.depth3 }}에 외침
+      {{ post.address.depth1 }}
+      {{ post.address.depth2 }}
+      {{ post.address.depth3 }}에 외침
     </div>
     <div class="my-5 text-break">{{ post.content }}</div>
     <div>
@@ -17,9 +17,9 @@
       <v-icon small>mdi-heart-outline</v-icon>
       <span class="mx-1">0</span>
       <div class="text--disabled float-right post-address">
-        {{ post.address.depth1 }}
-        {{ post.address.depth2 }}
-        {{ post.address.depth3 }}에서
+        {{ post.authorAddress.depth1 }}
+        {{ post.authorAddress.depth2 }}
+        {{ post.authorAddress.depth3 }}에서
       </div>
     </div>
     <CommentList :comments="post.comments" />
