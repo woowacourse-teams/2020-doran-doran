@@ -33,7 +33,6 @@
 <script>
 import CommentInput from "@/components/post/CommentInput";
 import CommentList from "@/components/post/CommentList";
-import { LIKE_BUTTON_TYPE } from "@/utils/constants";
 
 export default {
   name: "PostDetailPage",
@@ -71,11 +70,7 @@ export default {
       return this.$moment(this.post.createdAt).fromNow();
     },
     liked() {
-      return this.post.likes.some(
-        (like) =>
-          like.memberId === this.$store.getters["member/getMembers"] &&
-          like.postId === this.post.id,
-      );
+      return this.post.likes.some(this.hasLike);
     },
     likeButtonType() {
       return this.liked
@@ -91,6 +86,12 @@ export default {
     this.$store.commit("appBar/POST_DETAIL_PAGE");
   },
   methods: {
+    hasLike(like) {
+      return (
+        like.memberId === this.$store.getters["member/getMembers"] &&
+        like.postId === this.post.id
+      );
+    },
     async toggleLike() {
       this.liked ? await this.deletePostLike() : await this.createPostLike();
     },
@@ -101,11 +102,7 @@ export default {
       );
     },
     async deletePostLike() {
-      const data = this.post.likes.find(
-        (like) =>
-          like.memberId === this.$store.getters["member/getMembers"] &&
-          like.postId === this.post.id,
-      );
+      const data = this.post.likes.find(this.hasLike);
       await this.$store.dispatch("post/deletePostLike", data.id);
       await this.loadPost();
     },

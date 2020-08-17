@@ -37,11 +37,7 @@ export default {
       return this.$moment(this.comment.createdAt).fromNow();
     },
     liked() {
-      return this.comment.likes.some(
-        (like) =>
-          like.memberId === this.$store.getters["member/getMembers"] &&
-          like.commentId === this.comment.id,
-      );
+      return this.comment.likes.some(this.hasLike);
     },
     likeButtonType() {
       return this.liked
@@ -50,17 +46,19 @@ export default {
     },
   },
   methods: {
+    hasLike(like) {
+      return (
+        like.memberId === this.$store.getters["member/getMembers"] &&
+        like.postId === this.post.id
+      );
+    },
     async toggleLike() {
       this.liked
         ? await this.deleteCommentLike()
         : await this.createCommentLike();
     },
     async deleteCommentLike() {
-      const data = this.comment.likes.find(
-        (like) =>
-          like.memberId === this.$store.getters["member/getMembers"] &&
-          like.commentId === this.comment.id,
-      );
+      const data = this.comment.likes.find(this.hasLike);
       await this.$store.dispatch("comment/deleteCommentLike", data.id);
       this.$emit("load-post");
     },
