@@ -55,6 +55,9 @@ export default {
       endDateMenu: false,
     };
   },
+  created() {
+    this.$store.commit("appBar/SEARCH_PAGE")
+  },
   methods: {
     inputStartDate(date) {
       this.userStartDate = date;

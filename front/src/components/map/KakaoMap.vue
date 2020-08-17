@@ -68,7 +68,7 @@ export default {
       const centerLocation = await this.$getCenterLocation();
       const centerAddress = await this.$getAddress(centerLocation);
       const address = Object.values(centerAddress).join(" ");
-      this.$store.commit("appBar/CHANGE_ADDRESS", address);
+      this.$store.commit("appBar/CHANGE_TITLE", address);
     },
   },
 };

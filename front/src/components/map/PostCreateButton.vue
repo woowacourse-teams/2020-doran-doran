@@ -51,9 +51,11 @@ export default {
     changeMode() {
       if (this.isDefaultMode) {
         this.$store.commit("modal/CHANGE_STATE", MAP_MODE.MARKER);
+        this.$store.commit("appBar/TOGGLE_APP_BAR");
         this.buttonType = BUTTON_TYPE.MARKER;
       } else if (this.isMarkerMode) {
         this.$store.commit("modal/CHANGE_STATE", MAP_MODE.POST);
+        this.$store.commit("appBar/TOGGLE_APP_BAR");
         this.buttonType = BUTTON_TYPE.DEFAULT;
       }
     },
