@@ -3,6 +3,7 @@ package com.grasshouse.dorandoran.config.security;
 import static com.grasshouse.dorandoran.config.jwt.AuthorizationExtractor.AUTHORIZATION;
 
 import com.grasshouse.dorandoran.config.jwt.JwtTokenProvider;
+import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -19,11 +20,11 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-        Authentication authentication) {
+        Authentication authentication) throws IOException {
         OAuth2User oauth2User = (OAuth2User) authentication.getPrincipal();
         String id = String.valueOf(oauth2User.getAttributes().get("id"));
         String token = provider.createToken(id);
 
-        response.addHeader(AUTHORIZATION, "Bearer " + token);
+        response.sendRedirect("http://localhost:8081?token=" + token);
     }
 }

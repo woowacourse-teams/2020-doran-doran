@@ -1,6 +1,7 @@
 package com.grasshouse.dorandoran.config.jwt;
 
 import java.util.Enumeration;
+import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Component;
@@ -25,6 +26,7 @@ public class AuthorizationExtractor {
             }
         }
 
-        return Strings.EMPTY;
+        return Optional.ofNullable(request.getParameter("token"))
+            .orElse(Strings.EMPTY);
     }
 }

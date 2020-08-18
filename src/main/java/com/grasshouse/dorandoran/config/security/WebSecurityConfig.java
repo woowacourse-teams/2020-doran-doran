@@ -29,7 +29,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.
             authorizeRequests()
-            .antMatchers("/login").authenticated()
+            .antMatchers("/my").authenticated()
             .and()
             .oauth2Login()
             .successHandler(successHandler);
