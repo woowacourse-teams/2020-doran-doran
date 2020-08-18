@@ -4,7 +4,7 @@
       {{ snackbarMessage }}
     </v-snackbar>
     <KakaoMap />
-    <PostCreateButton @marker-mode="showSnackbar"/>
+    <PostCreateButton @marker-mode="showSnackbar" />
     <PostCreateModal v-if="this.isPostMode" @create-post="showSnackbar" />
   </v-container>
 </template>

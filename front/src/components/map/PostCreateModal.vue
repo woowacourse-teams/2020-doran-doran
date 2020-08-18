@@ -39,7 +39,7 @@ import { MAP_MODE } from "@/utils/constants";
 import { DORAN_DORAN_COLORS } from "@/utils/constants";
 import { ERROR_MESSAGE } from "@/utils/constants";
 
-const CREATE_POST_SUCCESS_MESSAGE = "🎉 글이 등록되었습니다."
+const CREATE_POST_SUCCESS_MESSAGE = "🎉 글이 등록되었습니다.";
 
 export default {
   name: "PostCreateModal",
