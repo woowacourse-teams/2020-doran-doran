@@ -41,21 +41,20 @@ const KakaoMap = (() => {
     clusterer = _createClusterer();
   };
 
+  const _getGeolocation = () => {
+    return new Promise((resolve, reject) =>
+      navigator.geolocation.getCurrentPosition(resolve, reject, {
+        timeout: 1000,
+      }),
+    ).catch(console.log);
+  };
+
   const getCurrentLocation = async () => {
-    const getLocation = () =>
-      new Promise((resolve, reject) =>
-        navigator.geolocation.getCurrentPosition(resolve, reject, {
-          timeout: 1000,
-        }),
-      );
-    return await getLocation()
-      .then((location) => {
-        return {
-          latitude: location.coords.latitude,
-          longitude: location.coords.longitude,
-        };
-      })
-      .catch((e) => console.log(e));
+    const currentLocation = await _getGeolocation();
+    return {
+      latitude: currentLocation.coords.latitude,
+      longitude: currentLocation.coords.longitude,
+    };
   };
 
   const getCenterLocation = () => {
@@ -99,6 +98,13 @@ const KakaoMap = (() => {
     marker.setMap(map);
   };
 
+  const _createOverlay = (content, position) => {
+    return new kakao.maps.CustomOverlay({
+      content: content,
+      position: position,
+    });
+  };
+
   const getBounds = () => {
     if (!map) {
       return;
@@ -108,14 +114,10 @@ const KakaoMap = (() => {
 
   const setPostOverlay = (overlayTemplate, location) => {
     const kakaoLocation = _createKakaoLocation(location);
+    const customOverlay = _createOverlay(overlayTemplate, kakaoLocation);
 
-    const customOverlay = new kakao.maps.CustomOverlay({
-      position: kakaoLocation,
-      content: overlayTemplate,
-    });
     customOverlay.setMap(map);
     clusterer.addMarker(customOverlay);
-
     postOverlays.push(customOverlay);
   };
 
@@ -131,18 +133,20 @@ const KakaoMap = (() => {
     });
   };
 
-  const getAddress = async (location) => {
+  const _getAdministrativeAddress = (location) => {
     const geocoder = new kakao.maps.services.Geocoder();
-
-    return await new Promise((resolve) =>
+    return new Promise((resolve) =>
       geocoder.coord2RegionCode(location.longitude, location.latitude, resolve),
-    ).then((result) => {
-      return {
-        depth1: result[1].region_1depth_name,
-        depth2: result[1].region_2depth_name,
-        depth3: result[1].region_3depth_name,
-      };
-    });
+    );
+  };
+
+  const getAddress = async (location) => {
+    const address = await _getAdministrativeAddress(location);
+    return {
+      depth1: address[1].region_1depth_name,
+      depth2: address[1].region_2depth_name,
+      depth3: address[1].region_3depth_name,
+    };
   };
 
   const addEventToMap = (eventType, func) => {
