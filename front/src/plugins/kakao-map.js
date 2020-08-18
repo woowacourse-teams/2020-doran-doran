@@ -38,6 +38,7 @@ const KakaoMap = (() => {
 
   const drawMap = async (mapContainer) => {
     await loadApi;
+
     const options = {
       center: _createKakaoLocation(INITIAL_LOCATION),
       level: 2,
@@ -63,6 +64,10 @@ const KakaoMap = (() => {
   };
 
   const getCenterLocation = () => {
+    if (!map) {
+      return;
+    }
+
     const center = map.getCenter();
     return {
       longitude: center.getLng(),
@@ -74,6 +79,7 @@ const KakaoMap = (() => {
     if (!map || !location) {
       return;
     }
+
     const targetLocation = _createKakaoLocation(location);
     map.setCenter(targetLocation);
   };
@@ -93,6 +99,7 @@ const KakaoMap = (() => {
     if (!map || !currentLocation) {
       return;
     }
+
     const currentLocationImage =
       "https://sheengroup.com.au/assets/Uploads/misc/current-location.png";
     const markerSize = new kakao.maps.Size(36, 36);
@@ -118,6 +125,10 @@ const KakaoMap = (() => {
   };
 
   const setPostOverlay = (overlayTemplate, location) => {
+    if (!map) {
+      return;
+    }
+
     const kakaoLocation = _createKakaoLocation(location);
     const customOverlay = _createOverlay(overlayTemplate, kakaoLocation);
 
@@ -127,12 +138,20 @@ const KakaoMap = (() => {
   };
 
   const closePostOverlays = () => {
+    if (postOverlays.length === 0) {
+      return;
+    }
+
     postOverlays.forEach((overlay) => {
       overlay.setMap(null);
     });
   };
 
   const showPostOverlays = () => {
+    if (postOverlays.length === 0) {
+      return;
+    }
+
     postOverlays.forEach((overlay) => {
       overlay.setMap(map);
     });
@@ -146,6 +165,10 @@ const KakaoMap = (() => {
   };
 
   const getAddress = async (location) => {
+    if (!map || !location) {
+      return;
+    }
+
     const address = await _getAdministrativeAddress(location);
     return {
       depth1: address[1].region_1depth_name,
@@ -155,6 +178,10 @@ const KakaoMap = (() => {
   };
 
   const addEventToMap = (eventType, func) => {
+    if (!map) {
+      return;
+    }
+
     map.addListener(eventType, func);
   };
 
