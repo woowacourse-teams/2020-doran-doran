@@ -22,7 +22,7 @@
         <v-icon v-show="timelineButton" @click="goToTimelinePage">
           mdi-format-list-bulleted
         </v-icon>
-        <router-link v-show="mapButton" to="/">
+        <router-link v-show="mapButton" to="/map">
           <v-icon>mdi-map</v-icon>
         </router-link>
       </div>

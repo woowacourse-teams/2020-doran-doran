@@ -13,6 +13,9 @@ export default {
     TOGGLE_APP_BAR(state) {
       state.appBarVisible = !state.appBarVisible;
     },
+    APP_BAR_INVISIBLE(state) {
+      state.appBarVisible = false;
+    },
     CHANGE_TITLE(state, newTitle) {
       state.title = newTitle;
     },
