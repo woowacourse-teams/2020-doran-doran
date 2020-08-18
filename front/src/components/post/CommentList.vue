@@ -4,7 +4,6 @@
       v-for="comment in comments"
       :key="comment.id"
       :comment="comment"
-      @load-post="loadPost"
     />
   </div>
 </template>
@@ -21,11 +20,6 @@ export default {
       type: Array,
       required: true,
     },
-  },
-  methods: {
-    loadPost() {
-      this.$emit("load-post");
-    }
   },
 };
 </script>

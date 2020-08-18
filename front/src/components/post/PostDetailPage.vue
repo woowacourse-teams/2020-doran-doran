@@ -45,8 +45,7 @@ export default {
       get() {
         return this.$store.getters["post/getPost"];
       },
-      set() {
-      },
+      set() {},
     },
     postDate() {
       return this.$moment(this.post.createdAt).fromNow();
