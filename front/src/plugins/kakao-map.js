@@ -1,8 +1,13 @@
 import { KAKAO_MAP_APP_KEY } from "@/secure/appkey";
-import INITIAL_LOCATION from "@/config/config";
 
 const KAKAO_MAP_URL = "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=";
 const LIBRARY = "&libraries=services,clusterer";
+
+// Location of Luther Hall, Jamsil, Korea
+const INITIAL_LOCATION = {
+  latitude: 37.515416,
+  longitude: 127.103,
+};
 
 const KakaoMap = (() => {
   let map = null;
@@ -34,7 +39,7 @@ const KakaoMap = (() => {
   const drawMap = async (mapContainer) => {
     await loadApi;
     const options = {
-      center: _createKakaoLocation(INITIAL_LOCATION.JAMSIL_LUTHER),
+      center: _createKakaoLocation(INITIAL_LOCATION),
       level: 2,
     };
     map = new kakao.maps.Map(mapContainer, options);
