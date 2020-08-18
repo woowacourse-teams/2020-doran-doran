@@ -8,6 +8,8 @@ const INITIAL_LOCATION = {
   latitude: 37.515416,
   longitude: 127.103,
 };
+const CURRENT_MARKER_IMAGE =
+  "https://sheengroup.com.au/assets/Uploads/misc/current-location.png";
 
 const KakaoMap = (() => {
   let map = null;
@@ -100,8 +102,7 @@ const KakaoMap = (() => {
       return;
     }
 
-    const currentLocationImage =
-      "https://sheengroup.com.au/assets/Uploads/misc/current-location.png";
+    const currentLocationImage = CURRENT_MARKER_IMAGE;
     const markerSize = new kakao.maps.Size(36, 36);
     const markerImage = _createMarkerImage(currentLocationImage, markerSize);
 
