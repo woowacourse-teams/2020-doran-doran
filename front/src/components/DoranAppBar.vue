@@ -38,7 +38,7 @@ export default {
       this.$router.go(-1);
     },
     goToMyPage() {
-      router.push("/mypage");
+      this.$router.push("/mypage");
     },
     async goToTimelinePage() {
       const boundsFromKakao = await this.$getBounds();
