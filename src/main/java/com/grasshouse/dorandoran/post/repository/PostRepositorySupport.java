@@ -30,12 +30,34 @@ public class PostRepositorySupport extends QuerydslRepositorySupport {
             .fetchFirst();
     }
 
+    public List<Post> findPostsInBounds(Double leftBound, Double rightBound, Double upperBound,
+        Double lowerBound) {
+        return jpaQueryFactory.selectFrom(post)
+            .where(betweenLatitude(lowerBound, upperBound),
+                betweenLongitude(leftBound, rightBound))
+            .fetch();
+    }
+
     public List<Post> findPostWithKeywordAndDate(String keyword, LocalDateTime startDate,
         LocalDateTime endDate) {
         return jpaQueryFactory
             .selectFrom(post)
             .where(containsKeyword(keyword), betweenDate(startDate, endDate))
             .fetch();
+    }
+
+    private BooleanExpression betweenLatitude(Double lowerBound, Double upperBound) {
+        if (Objects.isNull(lowerBound) || Objects.isNull(upperBound)) {
+            return null;
+        }
+        return post.location.latitude.between(lowerBound, upperBound);
+    }
+
+    private BooleanExpression betweenLongitude(Double leftBound, Double rightBound) {
+        if (Objects.isNull(leftBound) || Objects.isNull(rightBound)) {
+            return null;
+        }
+        return post.location.longitude.between(leftBound, rightBound);
     }
 
     private BooleanExpression containsKeyword(String keyword) {

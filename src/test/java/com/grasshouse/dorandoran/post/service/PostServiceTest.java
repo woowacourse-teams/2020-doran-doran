@@ -91,6 +91,16 @@ class PostServiceTest {
         assertThat(postResponses.get(0).getContent()).isEqualTo(persistPost.getContent());
     }
 
+    @DisplayName("위치 범위값 내의 글을 조회한다.")
+    @Test
+    void showPostsInBoundsTest() {
+        Post post = dummyPost();
+        Post persistPost = postRepository.save(post);
+        List<PostResponse> postResponses = postService.showPostsInBounds(127.1, 127.2, 37.6, 37.5);
+        assertThat(postResponses).hasSize(1);
+        assertThat(postResponses.get(0).getContent()).isEqualTo(persistPost.getContent());
+    }
+
     @DisplayName("글을 삭제한다.")
     @Test
     void deletePostTest() {
@@ -122,6 +132,15 @@ class PostServiceTest {
 
         postService.deletePost(persistPost.getId());
         assertThat(commentRepository.findAll()).hasSize(0);
+    }
+
+    @DisplayName("[예외] 위치 범위값 밖의 글을 조회한다.")
+    @Test
+    void showPostsOutOfBoundsTest() {
+        Post post = dummyPost();
+        Post persistPost = postRepository.save(post);
+        List<PostResponse> postResponses = postService.showPostsInBounds(127.2, 127.3, 37.6, 37.5);
+        assertThat(postResponses).hasSize(0);
     }
 
     @DisplayName("[예외] 글 내용이 200자를 넘는다.")

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -41,6 +42,15 @@ public class PostController {
     @GetMapping
     public ResponseEntity<List<PostResponse>> showPosts() {
         List<PostResponse> responses = postService.showPosts();
+        return ResponseEntity.ok(responses);
+    }
+
+    @GetMapping("/bounds")
+    public ResponseEntity<List<PostResponse>> showPostsInBounds(@RequestParam Double leftBound,
+        @RequestParam Double rightBound, @RequestParam Double upperBound,
+        @RequestParam Double lowerBound) {
+        List<PostResponse> responses = postService
+            .showPostsInBounds(leftBound, rightBound, upperBound, lowerBound);
         return ResponseEntity.ok(responses);
     }
 

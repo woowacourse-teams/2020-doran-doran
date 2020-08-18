@@ -9,6 +9,10 @@ const api = (() => {
   const createPost = (newPost) => client.post("", newPost);
   const loadPost = (postId) => client.get(`/${postId}`).then((res) => res.data);
   const loadPosts = () => client.get("").then((res) => res.data);
+  const loadPostsInBounds = (bounds) => {
+    const params = new URLSearchParams(bounds).toString();
+    return client.get(`/bounds?` + params).then((res) => res.data);
+  };
   const deletePost = (postId) => client.delete(`/${postId}`);
   const searchPosts = (data) => {
     const params = new URLSearchParams(data).toString();
@@ -20,6 +24,7 @@ const api = (() => {
     createPost,
     loadPost,
     loadPosts,
+    loadPostsInBounds,
     deletePost,
     searchPosts,
     createPostLike,

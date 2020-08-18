@@ -43,9 +43,15 @@ export default {
       router.push("/mypage");
     },
     async goToTimeLinePage() {
-      const bounds = await this.$getBounds();
-      this.$store.commit("mapBounds/CHANGE_BOUNDS", bounds);
-      await router.push("/timeline");
+      const boundsFromKakao = await this.$getBounds();
+      const bounds = {
+        upperBound: boundsFromKakao.ja,
+        lowerBound: boundsFromKakao.ka,
+        leftBound: boundsFromKakao.da,
+        rightBound: boundsFromKakao.ia,
+      };
+      const params = new URLSearchParams(bounds).toString();
+      await router.push("/timeline?" + params);
     },
   },
   computed: {

@@ -20,8 +20,14 @@ export default {
   },
   async created() {
     this.$store.commit("appBar/TIMELINE_PAGE");
-    await this.$store.dispatch("post/loadPosts");
-    this.posts = this.$store.getters["post/getPosts"].reverse();
+    const bounds = {
+      leftBound: this.$route.query.leftBound,
+      rightBound: this.$route.query.rightBound,
+      upperBound: this.$route.query.upperBound,
+      lowerBound: this.$route.query.lowerBound,
+    };
+    await this.$store.dispatch("post/loadPostsInBounds", bounds);
+    this.posts = await this.$store.getters["post/getPostsInBounds"].reverse();
   },
 };
 </script>

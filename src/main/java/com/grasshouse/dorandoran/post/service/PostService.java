@@ -6,6 +6,7 @@ import com.grasshouse.dorandoran.member.domain.Member;
 import com.grasshouse.dorandoran.member.repository.MemberRepository;
 import com.grasshouse.dorandoran.post.domain.Post;
 import com.grasshouse.dorandoran.post.repository.PostRepository;
+import com.grasshouse.dorandoran.post.repository.PostRepositorySupport;
 import com.grasshouse.dorandoran.post.service.dto.PostCreateRequest;
 import com.grasshouse.dorandoran.post.service.dto.PostCreateResponse;
 import com.grasshouse.dorandoran.post.service.dto.PostResponse;
@@ -17,10 +18,13 @@ import org.springframework.transaction.annotation.Transactional;
 public class PostService {
 
     private PostRepository postRepository;
+    private PostRepositorySupport postRepositorySupport;
     private MemberRepository memberRepository;
 
-    public PostService(PostRepository postRepository, MemberRepository memberRepository) {
+    public PostService(PostRepository postRepository, PostRepositorySupport postRepositorySupport,
+        MemberRepository memberRepository) {
         this.postRepository = postRepository;
+        this.postRepositorySupport = postRepositorySupport;
         this.memberRepository = memberRepository;
     }
 
@@ -42,6 +46,14 @@ public class PostService {
     @Transactional
     public List<PostResponse> showPosts() {
         List<Post> posts = postRepository.findAll();
+        return PostResponse.listFrom(posts);
+    }
+
+    @Transactional
+    public List<PostResponse> showPostsInBounds(Double leftBound, Double rightBound,
+        Double upperBound, Double lowerBound) {
+        List<Post> posts = postRepositorySupport
+            .findPostsInBounds(leftBound, rightBound, upperBound, lowerBound);
         return PostResponse.listFrom(posts);
     }
 
