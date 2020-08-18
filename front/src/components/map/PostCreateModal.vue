@@ -58,14 +58,15 @@ export default {
         this.snackbarWarning = true;
         return;
       }
+
       const postLocation = this.$kakaoMap.getCenterLocation();
       const authorLocation = await this.$kakaoMap.getCurrentLocation();
-
       if (!authorLocation) {
         this.snackbarMessage = ERROR_MESSAGE.UNIDENTIFIABLE_LOCATION;
         this.snackbarWarning = true;
         return;
       }
+
       const data = {
         memberId: 1,
         content: this.content,
