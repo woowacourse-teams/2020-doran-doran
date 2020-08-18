@@ -48,12 +48,13 @@ export default {
       content: "",
       buttonColor: DORAN_DORAN_COLORS.POINT_COLOR,
       snackbarWarning: false,
-      snackbarMessage: NO_CONTENT_MESSAGE,
+      snackbarMessage: "",
     };
   },
   methods: {
     async createPost() {
       if (this.content === "") {
+        this.snackbarMessage = NO_CONTENT_MESSAGE;
         this.snackbarWarning = true;
         return;
       }
@@ -63,7 +64,6 @@ export default {
       if (!authorLocation) {
         this.snackbarMessage = ERROR_MESSAGE.UNIDENTIFIABLE_LOCATION;
         this.snackbarWarning = true;
-        this.snackbarMessage = NO_CONTENT_MESSAGE;
         return;
       }
       const data = {
@@ -74,6 +74,7 @@ export default {
         authorAddress: await this.$kakaoMap.getAddress(authorLocation),
       };
       await this.$store.dispatch("post/createPost", data);
+      this.$emit("create-post");
       this.closeModal();
     },
     closeModal() {
