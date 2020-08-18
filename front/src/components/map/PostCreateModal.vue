@@ -39,6 +39,8 @@ import { MAP_MODE } from "@/utils/constants";
 import { DORAN_DORAN_COLORS } from "@/utils/constants";
 import { ERROR_MESSAGE } from "@/utils/constants";
 
+const CREATE_POST_SUCCESS_MESSAGE = "🎉 글이 등록되었습니다."
+
 export default {
   name: "PostCreateModal",
   data() {
@@ -73,7 +75,7 @@ export default {
         authorAddress: await this.$kakaoMap.getAddress(authorLocation),
       };
       await this.$store.dispatch("post/createPost", data);
-      this.$emit("create-post");
+      this.$emit("create-post", CREATE_POST_SUCCESS_MESSAGE);
       this.closeModal();
     },
     closeModal() {
