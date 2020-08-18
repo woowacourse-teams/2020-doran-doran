@@ -65,6 +65,10 @@ const KakaoMap = {
       };
     };
 
+    Vue.prototype.$getBounds = () => {
+      return this.map.getBounds();
+    };
+
     Vue.prototype.$setLocation = (location) => {
       if (!this.map || !location) {
         return;
