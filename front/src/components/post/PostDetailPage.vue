@@ -33,6 +33,7 @@
 <script>
 import CommentInput from "@/components/post/CommentInput";
 import CommentList from "@/components/post/CommentList";
+import { LIKE_BUTTON_TYPE } from "@/utils/constants";
 
 export default {
   name: "PostDetailPage",
@@ -54,9 +55,7 @@ export default {
       return this.post.likes.some(this.hasLike);
     },
     likeButtonType() {
-      return this.liked
-        ? this.$store.getters["like/liked"]
-        : this.$store.getters["like/notLiked"];
+      return this.liked ? LIKE_BUTTON_TYPE.LIKED : LIKE_BUTTON_TYPE.DEFAULT;
     },
   },
   async created() {

@@ -24,6 +24,8 @@
 </template>
 
 <script>
+import { LIKE_BUTTON_TYPE } from "@/utils/constants";
+
 export default {
   name: "CommentItem",
   props: {
@@ -40,9 +42,7 @@ export default {
       return this.comment.likes.some(this.hasLike);
     },
     likeButtonType() {
-      return this.liked
-        ? this.$store.getters["like/liked"]
-        : this.$store.getters["like/notLiked"];
+      return this.liked ? LIKE_BUTTON_TYPE.LIKED : LIKE_BUTTON_TYPE.DEFAULT;
     },
   },
   methods: {
