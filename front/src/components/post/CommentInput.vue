@@ -10,6 +10,7 @@
       filled
       color="black"
       @click:append="createComment"
+      @keydown.enter="createComment"
     />
   </div>
 </template>
@@ -36,10 +37,9 @@ export default {
         content: this.content,
         location: await this.$kakaoMap.getCurrentLocation(),
       };
-      this.$store
-        .dispatch("comment/createComment", data)
-        .then(() => alert("댓글이 등록되었습니다."))
-        .then(() => this.$router.go(0));
+      await this.$store.dispatch("comment/createComment", data);
+      await this.$store.dispatch("post/loadPost", this.postId);
+      this.content = "";
     },
   },
 };
