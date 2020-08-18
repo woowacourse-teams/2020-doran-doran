@@ -18,6 +18,18 @@ const MAP_MODE = {
 
 const DORAN_DORAN_COLORS = {
   POINT_COLOR: "amber accent-3",
+  LIKE_COLOR: "red accent-3",
+};
+
+const LIKE_BUTTON_TYPE = {
+  DEFAULT: {
+    color: "",
+    icon: "mdi-heart-outline",
+  },
+  LIKED: {
+    color: DORAN_DORAN_COLORS.LIKE_COLOR,
+    icon: "mdi-heart",
+  },
 };
 
 export {
@@ -26,4 +38,5 @@ export {
   EVENT_TYPE,
   MAP_MODE,
   DORAN_DORAN_COLORS,
+  LIKE_BUTTON_TYPE,
 };

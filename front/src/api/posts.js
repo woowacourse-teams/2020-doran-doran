@@ -14,12 +14,16 @@ const api = (() => {
     const params = new URLSearchParams(data).toString();
     return client.get(`/search?` + params).then((res) => res.data);
   };
+  const createPostLike = (newPostLike) => client.post(`/likes`, newPostLike);
+  const deletePostLike = (postLikeId) => client.delete(`/likes/${postLikeId}`);
   return {
     createPost,
     loadPost,
     loadPosts,
     deletePost,
     searchPosts,
+    createPostLike,
+    deletePostLike,
   };
 })();
 

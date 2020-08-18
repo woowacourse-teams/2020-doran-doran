@@ -13,8 +13,10 @@
       <div>
         <span class="text--disabled comment-created">{{ commentDate }}</span>
         <span class="float-right">
-          <v-icon small>mdi-heart-outline</v-icon>
-          <span class="mx-1">0</span>
+          <v-icon small @click="toggleLike" :color="likeButtonType.color">
+            {{ likeButtonType.icon }}
+          </v-icon>
+          <span class="mx-1">{{ comment.likes.length }}</span>
         </span>
       </div>
     </div>
@@ -22,6 +24,8 @@
 </template>
 
 <script>
+import { LIKE_BUTTON_TYPE } from "@/utils/constants";
+
 export default {
   name: "CommentItem",
   props: {
@@ -33,6 +37,38 @@ export default {
   computed: {
     commentDate() {
       return this.$moment(this.comment.createdAt).fromNow();
+    },
+    liked() {
+      return this.comment.likes.some(this.hasLike);
+    },
+    likeButtonType() {
+      return this.liked ? LIKE_BUTTON_TYPE.LIKED : LIKE_BUTTON_TYPE.DEFAULT;
+    },
+  },
+  methods: {
+    hasLike(like) {
+      return (
+        like.memberId === this.$store.getters["member/getMembers"] &&
+        like.commentId === this.comment.id
+      );
+    },
+    async toggleLike() {
+      this.liked
+        ? await this.deleteCommentLike()
+        : await this.createCommentLike();
+    },
+    async deleteCommentLike() {
+      const data = this.comment.likes.find(this.hasLike);
+      await this.$store.dispatch("comment/deleteCommentLike", data.id);
+      this.$store.dispatch("post/loadPost", this.comment.postId);
+    },
+    async createCommentLike() {
+      const data = {
+        memberId: this.comment.author.id,
+        commentId: this.comment.id,
+      };
+      await this.$store.dispatch("comment/createCommentLike", data);
+      this.$store.dispatch("post/loadPost", this.comment.postId);
     },
   },
 };

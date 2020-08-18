@@ -9,8 +9,10 @@
     <div class="text-right">
       <v-icon small>mdi-comment-processing-outline</v-icon>
       <span class="mx-1">{{ post.comments.length }}</span>
-      <v-icon small>mdi-heart-outline</v-icon>
-      <span class="mx-1">0</span>
+      <v-icon small :color="likeButtonType.color">
+        {{ likeButtonType.icon }}
+      </v-icon>
+      <span class="mx-1">{{ post.likes.length }}</span>
     </div>
     <VDivider class="my-2" />
   </div>
@@ -18,6 +20,7 @@
 
 <script>
 import router from "@/router";
+import { LIKE_BUTTON_TYPE } from "@/utils/constants";
 
 export default {
   name: "PostItem",
@@ -31,10 +34,22 @@ export default {
     postDate() {
       return this.$moment(this.post.createdAt).fromNow();
     },
+    liked() {
+      return this.post.likes.some(this.hasLike);
+    },
+    likeButtonType() {
+      return this.liked ? LIKE_BUTTON_TYPE.LIKED : LIKE_BUTTON_TYPE.DEFAULT;
+    },
   },
   methods: {
     routePage() {
       router.push("posts/" + this.post.id);
+    },
+    hasLike(like) {
+      return (
+        like.memberId === this.$store.getters["member/getMembers"] &&
+        like.postId === this.post.id
+      );
     },
   },
 };

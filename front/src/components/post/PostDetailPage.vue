@@ -14,15 +14,17 @@
     <div>
       <v-icon small>mdi-comment-processing-outline</v-icon>
       <span class="mx-1">{{ post.comments.length }}</span>
-      <v-icon small>mdi-heart-outline</v-icon>
-      <span class="mx-1">0</span>
+      <v-icon small @click="toggleLike" :color="likeButtonType.color">
+        {{ likeButtonType.icon }}
+      </v-icon>
+      <span class="mx-1">{{ post.likes.length }}</span>
       <div class="text--disabled float-right post-address">
         {{ post.authorAddress.depth1 }}
         {{ post.authorAddress.depth2 }}
         {{ post.authorAddress.depth3 }}에서
       </div>
     </div>
-    <CommentList :comments="post.comments" />
+    <CommentList :comments="post.comments" @load-post="loadPost" />
     <div class="bottom-spacer" />
     <CommentInput :post-id="post.id" />
   </div>
@@ -31,6 +33,7 @@
 <script>
 import CommentInput from "@/components/post/CommentInput";
 import CommentList from "@/components/post/CommentList";
+import { LIKE_BUTTON_TYPE } from "@/utils/constants";
 
 export default {
   name: "PostDetailPage",
@@ -38,29 +41,22 @@ export default {
     CommentList,
     CommentInput,
   },
-  data() {
-    return {
-      post: {
-        id: 0,
-        memberResponse: {
-          id: 0,
-          nickname: "",
-        },
-        content: "",
-        address: {
-          depth1: "",
-          depth2: "",
-          depth3: "",
-        },
-        authorAddress: {
-          depth1: "",
-          depth2: "",
-          depth3: "",
-        },
-        createdAt: "",
-        comments: [],
+  computed: {
+    post: {
+      get() {
+        return this.$store.getters["post/getPost"];
       },
-    };
+      set() {},
+    },
+    postDate() {
+      return this.$moment(this.post.createdAt).fromNow();
+    },
+    liked() {
+      return this.post.likes.some(this.hasLike);
+    },
+    likeButtonType() {
+      return this.liked ? LIKE_BUTTON_TYPE.LIKED : LIKE_BUTTON_TYPE.DEFAULT;
+    },
   },
   async created() {
     this.post = await this.$store.dispatch(
@@ -69,12 +65,36 @@ export default {
     );
     this.$store.commit("appBar/POST_DETAIL_PAGE");
   },
-  computed: {
-    postDate() {
-      return this.$moment(this.post.createdAt).fromNow();
-    }
-  }
-
+  methods: {
+    hasLike(like) {
+      return (
+        like.memberId === this.$store.getters["member/getMembers"] &&
+        like.postId === this.post.id
+      );
+    },
+    async toggleLike() {
+      this.liked ? await this.deletePostLike() : await this.createPostLike();
+    },
+    async loadPost() {
+      this.post = await this.$store.dispatch(
+        "post/loadPost",
+        this.$route.params.id,
+      );
+    },
+    async deletePostLike() {
+      const data = this.post.likes.find(this.hasLike);
+      await this.$store.dispatch("post/deletePostLike", data.id);
+      await this.loadPost();
+    },
+    async createPostLike() {
+      const data = {
+        memberId: this.post.memberResponse.id,
+        postId: this.post.id,
+      };
+      await this.$store.dispatch("post/createPostLike", data);
+      await this.loadPost();
+    },
+  },
 };
 </script>
 
