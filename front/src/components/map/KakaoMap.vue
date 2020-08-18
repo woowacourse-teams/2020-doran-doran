@@ -40,11 +40,11 @@ export default {
     },
   },
   async mounted() {
-    await this.$drawMap(this.$refs.map);
+    await this.$kakaoMap.drawMap(this.$refs.map);
     await this.setCenterLocation();
     await this.changeAppBarByCenterAddress();
     await this.$store.dispatch("post/loadPosts");
-    await this.$addEventToMap(
+    await this.$kakaoMap.addEventToMap(
       EVENT_TYPE.CENTER_CHANGE,
       this.changeAppBarByCenterAddress,
     );
@@ -52,20 +52,22 @@ export default {
   },
   methods: {
     async setCenterLocation() {
-      const currentLocation = await this.$getCurrentLocation();
-      this.$setLocation(currentLocation);
-      this.$setCurrentLocationMarker(currentLocation);
+      const currentLocation = await this.$kakaoMap.getCurrentLocation();
+      this.$kakaoMap.setLocation(currentLocation);
+      this.$kakaoMap.setCurrentLocationMarker(currentLocation);
     },
     async changeAppBarByCenterAddress() {
-      const centerLocation = await this.$getCenterLocation();
-      const centerAddress = await this.$getAddress(centerLocation);
+      const centerLocation = await this.$kakaoMap.getCenterLocation();
+      const centerAddress = await this.$kakaoMap.getAddress(centerLocation);
       const address = Object.values(centerAddress).join(" ");
       this.$store.commit("appBar/CHANGE_TITLE", address);
     },
   },
   watch: {
     isDefaultMode(val) {
-      val ? this.$showPostOverlays() : this.$closePostOverlays();
+      val
+        ? this.$kakaoMap.showPostOverlays()
+        : this.$kakaoMap.closePostOverlays();
     },
   },
 };

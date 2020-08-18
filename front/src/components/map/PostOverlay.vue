@@ -26,7 +26,7 @@ export default {
     },
   },
   mounted() {
-    this.$setPostOverlay(this.$refs.post, this.post.location);
+    this.$kakaoMap.setPostOverlay(this.$refs.post, this.post.location);
   },
   methods: {
     routePage() {

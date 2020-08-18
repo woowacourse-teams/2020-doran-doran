@@ -34,7 +34,7 @@ export default {
         memberId: 1,
         postId: this.postId,
         content: this.content,
-        location: await this.$getCurrentLocation(),
+        location: await this.$kakaoMap.getCurrentLocation(),
       };
       this.$store
         .dispatch("comment/createComment", data)

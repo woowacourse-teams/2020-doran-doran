@@ -57,8 +57,8 @@ export default {
         this.snackbarWarning = true;
         return;
       }
-      const postLocation = this.$getCenterLocation();
-      const authorLocation = await this.$getCurrentLocation();
+      const postLocation = this.$kakaoMap.getCenterLocation();
+      const authorLocation = await this.$kakaoMap.getCurrentLocation();
 
       if (!authorLocation) {
         this.snackbarMessage = ERROR_MESSAGE.UNIDENTIFIABLE_LOCATION;
@@ -70,8 +70,8 @@ export default {
         memberId: 1,
         content: this.content,
         location: postLocation,
-        address: await this.$getAddress(postLocation),
-        authorAddress: await this.$getAddress(authorLocation),
+        address: await this.$kakaoMap.getAddress(postLocation),
+        authorAddress: await this.$kakaoMap.getAddress(authorLocation),
       };
       await this.$store.dispatch("post/createPost", data);
       this.closeModal();
