@@ -33,25 +33,6 @@
 <script>
 export default {
   name: "DoranAppBar",
-  methods: {
-    goToPreviousPage() {
-      this.$router.go(-1);
-    },
-    goToMyPage() {
-      this.$router.push("/mypage");
-    },
-    goToTimelinePage() {
-      const boundsFromKakao = this.$kakaoMap.getBounds();
-      const bounds = {
-        upperBound: boundsFromKakao.ja,
-        lowerBound: boundsFromKakao.ka,
-        leftBound: boundsFromKakao.da,
-        rightBound: boundsFromKakao.ia,
-      };
-      const params = new URLSearchParams(bounds).toString();
-      this.$router.push("/timeline?" + params);
-    },
-  },
   computed: {
     appBarVisible() {
       return this.$store.getters["appBar/appBarVisible"];
@@ -73,6 +54,25 @@ export default {
     },
     mapButton() {
       return this.$store.getters["appBar/mapButton"];
+    },
+  },
+  methods: {
+    goToPreviousPage() {
+      this.$router.go(-1);
+    },
+    goToMyPage() {
+      this.$emit("show-modal", true);
+    },
+    goToTimelinePage() {
+      const boundsFromKakao = this.$kakaoMap.getBounds();
+      const bounds = {
+        upperBound: boundsFromKakao.ja,
+        lowerBound: boundsFromKakao.ka,
+        leftBound: boundsFromKakao.da,
+        rightBound: boundsFromKakao.ia,
+      };
+      const params = new URLSearchParams(bounds).toString();
+      this.$router.push("/timeline?" + params);
     },
   },
 };

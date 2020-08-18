@@ -3,20 +3,23 @@
     <v-snackbar top timeout="1500" class="snackbar" v-model="snackbarWarning">
       {{ snackbarMessage }}
     </v-snackbar>
-    <DoranAppBar />
+    <DoranAppBar @show-modal="changeVisibility"/>
     <transition name="fade" mode="out-in">
       <RouterView />
     </transition>
+    <MyPageModal v-if="showMyPageModal" @show-modal="changeVisibility"/>
   </v-app>
 </template>
 
 <script>
 import DoranAppBar from "@/components/DoranAppBar";
+import MyPageModal from "@/components/member/MyPageModal";
 
 export default {
   name: "App",
   components: {
     DoranAppBar,
+    MyPageModal,
   },
   computed: {
     snackbarMessage: {
@@ -36,6 +39,16 @@ export default {
       },
     },
   },
+  data() {
+    return {
+      showMyPageModal: false,
+    }
+  },
+  methods: {
+    changeVisibility(value) {
+      this.showMyPageModal = value;
+    }
+  }
 };
 </script>
 

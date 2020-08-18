@@ -1,6 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import LoginPage from "@/components/member/LoginPage";
+import LoginPage from "@/components/login/LoginPage";
 import MapPage from "@/components/map/MapPage";
 import PostDetailPage from "@/components/post/PostDetailPage";
 import TimelinePage from "@/components/timeline/TimelinePage";
