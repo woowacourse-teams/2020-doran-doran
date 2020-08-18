@@ -7,12 +7,12 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-public class WebMvcConfig implements WebMvcConfigurer {
+public class JwtConfig implements WebMvcConfigurer {
 
     private final BearerAuthInterceptor bearerAuthInterceptor;
     private final LoginMemberMethodArgumentResolver loginMemberArgumentResolver;
 
-    public WebMvcConfig(BearerAuthInterceptor bearerAuthInterceptor,
+    public JwtConfig(BearerAuthInterceptor bearerAuthInterceptor,
         LoginMemberMethodArgumentResolver loginMemberArgumentResolver) {
         this.bearerAuthInterceptor = bearerAuthInterceptor;
         this.loginMemberArgumentResolver = loginMemberArgumentResolver;
