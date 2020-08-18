@@ -39,8 +39,6 @@ import { MAP_MODE } from "@/utils/constants";
 import { DORAN_DORAN_COLORS } from "@/utils/constants";
 import { ERROR_MESSAGE } from "@/utils/constants";
 
-const NO_CONTENT_MESSAGE = "🤔 내용을 입력해주세요.";
-
 export default {
   name: "PostCreateModal",
   data() {
@@ -54,7 +52,7 @@ export default {
   methods: {
     async createPost() {
       if (this.content === "") {
-        this.snackbarMessage = NO_CONTENT_MESSAGE;
+        this.snackbarMessage = ERROR_MESSAGE.NO_CONTENT_MESSAGE;
         this.snackbarWarning = true;
         return;
       }

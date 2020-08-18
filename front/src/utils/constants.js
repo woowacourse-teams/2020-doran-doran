@@ -1,5 +1,6 @@
 const ERROR_MESSAGE = {
-  UNIDENTIFIABLE_LOCATION: "위치 정보를 확인할 수 없습니다.",
+  UNIDENTIFIABLE_LOCATION: "😢 위치 정보를 확인할 수 없습니다.",
+  NO_CONTENT_MESSAGE: "🤔 내용을 입력해주세요.",
 };
 
 const API_BASE_URL = {

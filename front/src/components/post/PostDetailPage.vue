@@ -1,5 +1,8 @@
 <template>
   <div class="pa-4">
+    <v-snackbar v-model="snackbarWarning" timeout="1500" top>
+      {{ snackbarMessage }}
+    </v-snackbar>
     <div class="mb-3">
       <v-icon x-large class="mr-3">mdi-account-circle</v-icon>
       <span class="font-weight-bold">{{ post.memberResponse.nickname }}</span>
@@ -26,7 +29,7 @@
     </div>
     <CommentList :comments="post.comments" @load-post="loadPost" />
     <div class="bottom-spacer" />
-    <CommentInput :post-id="post.id" />
+    <CommentInput :post-id="post.id" @input="showSnackbar" />
   </div>
 </template>
 
@@ -40,6 +43,12 @@ export default {
   components: {
     CommentList,
     CommentInput,
+  },
+  data() {
+    return {
+      snackbarWarning: false,
+      snackbarMessage: "",
+    };
   },
   computed: {
     post: {
@@ -66,6 +75,10 @@ export default {
     this.$store.commit("appBar/POST_DETAIL_PAGE");
   },
   methods: {
+    showSnackbar(message) {
+      this.snackbarMessage = message;
+      this.snackbarWarning = true;
+    },
     hasLike(like) {
       return (
         like.memberId === this.$store.getters["member/getMembers"] &&

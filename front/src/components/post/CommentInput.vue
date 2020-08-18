@@ -16,6 +16,10 @@
 </template>
 
 <script>
+import { ERROR_MESSAGE } from "@/utils/constants";
+
+const CREATE_COMMENT_SUCCESS_MESSAGE = "🎉 댓글이 등록되었습니다.";
+
 export default {
   name: "CommentInput",
   props: {
@@ -31,15 +35,27 @@ export default {
   },
   methods: {
     async createComment() {
+      if (this.content === "") {
+        this.$emit("input", ERROR_MESSAGE.NO_CONTENT_MESSAGE);
+        return;
+      }
+
+      const authorLocation = await this.$kakaoMap.getCurrentLocation();
+      if (!authorLocation) {
+        this.$emit("input", ERROR_MESSAGE.UNIDENTIFIABLE_LOCATION);
+        return;
+      }
+
       const data = {
         memberId: 1,
         postId: this.postId,
         content: this.content,
-        location: await this.$kakaoMap.getCurrentLocation(),
+        location: authorLocation,
       };
       await this.$store.dispatch("comment/createComment", data);
       await this.$store.dispatch("post/loadPost", this.postId);
       this.content = "";
+      this.$emit("input", CREATE_COMMENT_SUCCESS_MESSAGE);
     },
   },
 };
