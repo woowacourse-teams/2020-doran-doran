@@ -40,32 +40,14 @@ export default {
     CommentList,
     CommentInput,
   },
-  data() {
-    return {
-      post: {
-        id: 0,
-        memberResponse: {
-          id: 0,
-          nickname: "",
-        },
-        content: "",
-        address: {
-          depth1: "",
-          depth2: "",
-          depth3: "",
-        },
-        authorAddress: {
-          depth1: "",
-          depth2: "",
-          depth3: "",
-        },
-        likes: [],
-        createdAt: "",
-        comments: [],
-      },
-    };
-  },
   computed: {
+    post: {
+      get() {
+        return this.$store.getters["post/getPost"];
+      },
+      set() {
+      },
+    },
     postDate() {
       return this.$moment(this.post.createdAt).fromNow();
     },

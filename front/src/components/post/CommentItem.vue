@@ -49,7 +49,7 @@ export default {
     hasLike(like) {
       return (
         like.memberId === this.$store.getters["member/getMembers"] &&
-        like.postId === this.post.id
+        like.commentId === this.comment.id
       );
     },
     async toggleLike() {
@@ -60,7 +60,7 @@ export default {
     async deleteCommentLike() {
       const data = this.comment.likes.find(this.hasLike);
       await this.$store.dispatch("comment/deleteCommentLike", data.id);
-      this.$emit("load-post");
+      this.$store.dispatch("post/loadPost", this.comment.postId);
     },
     async createCommentLike() {
       const data = {
@@ -68,7 +68,7 @@ export default {
         commentId: this.comment.id,
       };
       await this.$store.dispatch("comment/createCommentLike", data);
-      this.$emit("load-post");
+      this.$store.dispatch("post/loadPost", this.comment.postId);
     },
   },
 };
