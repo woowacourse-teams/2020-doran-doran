@@ -19,9 +19,9 @@
         <router-link v-show="searchButton" to="/search">
           <v-icon>mdi-magnify</v-icon>
         </router-link>
-        <router-link v-show="timelineButton" to="/timeline">
-          <v-icon>mdi-format-list-bulleted</v-icon>
-        </router-link>
+        <v-icon v-show="timelineButton" @click="goToTimeLinePage">
+          mdi-format-list-bulleted
+        </v-icon>
         <router-link v-show="mapButton" to="/">
           <v-icon>mdi-map</v-icon>
         </router-link>
@@ -41,6 +41,11 @@ export default {
     },
     goToMyPage() {
       router.push("/mypage");
+    },
+    async goToTimeLinePage() {
+      const bounds = await this.$getBounds();
+      this.$store.commit("mapBounds/CHANGE_BOUNDS", bounds);
+      await router.push("/timeline");
     },
   },
   computed: {
