@@ -1,13 +1,17 @@
-<template>
-  <div>
+<template class="background">
+  <div class="background">
     <div class="app-title">도란도란</div>
-    <div d-block>
+
+    <div class="button-box ma-6">
       <router-link to="/map">
-        <v-btn outlined class="mx-3 my-1">로그인 없이 둘러보기</v-btn>
+        <v-btn outlined block>
+          <div>로그인 없이 둘러보기</div>
+        </v-btn>
       </router-link>
-    </div>
-    <div d-block>
-      <v-btn depressed color="amber accent-3" class="mx-3 my-1" @click="kakaoLogin">카카오톡으로 로그인하기</v-btn>
+      <v-btn depressed block color="#FEE500" @click="kakaoLogin">
+        <img src="@/assets/img/kakao-login.png" />
+        <div>카카오톡으로 로그인하기</div>
+      </v-btn>
     </div>
   </div>
 </template>
@@ -16,20 +20,49 @@
 export default {
   name: "LoginPage",
   created() {
-    this.$store.commit("appBar/APP_BAR_INVISIBLE")
+    this.$store.commit("appBar/APP_BAR_INVISIBLE");
   },
   methods: {
     kakaoLogin() {
-      console.log("카카오 로그인 구현이 아직 안 되었어요.")
+      console.log("카카오 로그인 구현이 아직 안 되었어요.");
     },
-  }
+  },
 };
 </script>
 
 <style scoped>
-  .app-title {
-    position: fixed;
-    left: 50%;
-    margin-bottom: 70%;
-  }
+.background {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    320deg,
+    rgba(234, 77, 44, 1) 0%,
+    rgba(255, 166, 46, 1) 100%
+  );
+  /*background: linear-gradient(*/
+  /*  320deg,*/
+  /*  rgba(252, 144, 0, 1) 15%,*/
+  /*  rgba(251, 203, 49, 1) 100%*/
+  /*);*/
+}
+.app-title {
+  margin: auto;
+  width: 50%;
+  text-align: center;
+  padding: 65% 0;
+  font-size: 1.5rem;
+  font-weight: bold;
+  font-family: "BM JUA_OTF", sans-serif;
+  color: white;
+}
+.button-box * {
+  letter-spacing: -0.7px;
+}
+.button-box > * {
+  margin-top: 10px;
+}
+img {
+  width: 15px;
+  margin-right: 10px;
+}
 </style>
