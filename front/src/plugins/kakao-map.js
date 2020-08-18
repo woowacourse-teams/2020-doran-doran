@@ -18,27 +18,27 @@ const KakaoMap = (() => {
     script.onload = () => kakao.maps.load(resolve);
   });
 
-  const createKakaoLocation = (location) => {
+  const _createKakaoLocation = (location) => {
     return new kakao.maps.LatLng(location.latitude, location.longitude);
   };
 
-  const drawMap = async (mapContainer) => {
-    await loadApi;
-    const options = {
-      center: createKakaoLocation(INITIAL_LOCATION.JAMSIL_LUTHER),
-      level: 2,
-    };
-    map = new kakao.maps.Map(mapContainer, options);
-    clusterer = createClusterer();
-  };
-
-  const createClusterer = () => {
+  const _createClusterer = () => {
     return new kakao.maps.MarkerClusterer({
       map: map,
       averageCenter: true,
       minLevel: 3,
       calculator: [3, 7, 11, 15],
     });
+  };
+
+  const drawMap = async (mapContainer) => {
+    await loadApi;
+    const options = {
+      center: _createKakaoLocation(INITIAL_LOCATION.JAMSIL_LUTHER),
+      level: 2,
+    };
+    map = new kakao.maps.Map(mapContainer, options);
+    clusterer = _createClusterer();
   };
 
   const getCurrentLocation = async () => {
@@ -70,15 +70,15 @@ const KakaoMap = (() => {
     if (!map || !location) {
       return;
     }
-    const targetLocation = createKakaoLocation(location);
+    const targetLocation = _createKakaoLocation(location);
     map.setCenter(targetLocation);
   };
 
-  const createMarkerImage = (src, size, options) => {
+  const _createMarkerImage = (src, size, options) => {
     return new kakao.maps.MarkerImage(src, size, options);
   };
 
-  const createMarker = (position, image) => {
+  const _createMarker = (position, image) => {
     return new kakao.maps.Marker({
       position: position,
       image: image,
@@ -92,10 +92,10 @@ const KakaoMap = (() => {
     const currentLocationImage =
       "https://sheengroup.com.au/assets/Uploads/misc/current-location.png";
     const markerSize = new kakao.maps.Size(36, 36);
-    const markerImage = createMarkerImage(currentLocationImage, markerSize);
+    const markerImage = _createMarkerImage(currentLocationImage, markerSize);
 
-    const currentKakaoLocation = createKakaoLocation(currentLocation);
-    const marker = createMarker(currentKakaoLocation, markerImage);
+    const currentKakaoLocation = _createKakaoLocation(currentLocation);
+    const marker = _createMarker(currentKakaoLocation, markerImage);
     marker.setMap(map);
   };
 
@@ -107,7 +107,7 @@ const KakaoMap = (() => {
   };
 
   const setPostOverlay = (overlayTemplate, location) => {
-    const kakaoLocation = createKakaoLocation(location);
+    const kakaoLocation = _createKakaoLocation(location);
 
     const customOverlay = new kakao.maps.CustomOverlay({
       position: kakaoLocation,
