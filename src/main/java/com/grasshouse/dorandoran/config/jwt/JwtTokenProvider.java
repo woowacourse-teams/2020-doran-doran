@@ -8,6 +8,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import java.util.Base64;
 import java.util.Date;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -16,9 +17,10 @@ public class JwtTokenProvider {
     private String secretKey;
     private long validityInMilliseconds;
 
-    public JwtTokenProvider() {
-        this.secretKey = Base64.getEncoder().encodeToString("secretKey".getBytes());
-        this.validityInMilliseconds = 31_536_000_000L;
+    public JwtTokenProvider(@Value("${jwt.secret-key}") String secretKey,
+        @Value("${jwt.token-validity}") long validityInMilliseconds) {
+        this.secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
+        this.validityInMilliseconds = validityInMilliseconds;
     }
 
     public String createToken(String subject) {
