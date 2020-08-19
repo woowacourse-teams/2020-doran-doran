@@ -39,11 +39,18 @@ export default {
       },
     },
   },
+  created(){
+    const token = location.href.split("token=")[1];
+    if (token) {
+      sessionStorage.setItem("accessToken", token);
+      location.href="/"
+    }
+  },
   data() {
     return {
       showMemberSidebar: false,
     };
-  }
+  },
 };
 </script>
 
