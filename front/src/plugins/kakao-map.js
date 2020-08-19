@@ -40,7 +40,6 @@ const KakaoMap = (() => {
 
   const drawMap = async (mapContainer) => {
     await loadApi;
-
     const options = {
       center: _createKakaoLocation(INITIAL_LOCATION),
       level: 2,
@@ -69,7 +68,6 @@ const KakaoMap = (() => {
     if (!map) {
       return;
     }
-
     const center = map.getCenter();
     return {
       longitude: center.getLng(),
@@ -81,7 +79,6 @@ const KakaoMap = (() => {
     if (!map || !location) {
       return;
     }
-
     const targetLocation = _createKakaoLocation(location);
     map.setCenter(targetLocation);
   };
@@ -101,7 +98,6 @@ const KakaoMap = (() => {
     if (!map || !currentLocation) {
       return;
     }
-
     const currentLocationImage = CURRENT_MARKER_IMAGE;
     const markerSize = new kakao.maps.Size(36, 36);
     const markerImage = _createMarkerImage(currentLocationImage, markerSize);
@@ -129,7 +125,6 @@ const KakaoMap = (() => {
     if (!map) {
       return;
     }
-
     const kakaoLocation = _createKakaoLocation(location);
     const customOverlay = _createOverlay(overlayTemplate, kakaoLocation);
 
@@ -142,7 +137,6 @@ const KakaoMap = (() => {
     if (postOverlays.length === 0) {
       return;
     }
-
     postOverlays.forEach((overlay) => {
       overlay.setMap(null);
     });
@@ -152,7 +146,6 @@ const KakaoMap = (() => {
     if (postOverlays.length === 0) {
       return;
     }
-
     postOverlays.forEach((overlay) => {
       overlay.setMap(map);
     });
