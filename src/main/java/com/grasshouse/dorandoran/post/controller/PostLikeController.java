@@ -1,5 +1,7 @@
 package com.grasshouse.dorandoran.post.controller;
 
+import com.grasshouse.dorandoran.config.jwt.LoginMember;
+import com.grasshouse.dorandoran.member.domain.Member;
 import com.grasshouse.dorandoran.post.service.PostLikeService;
 import com.grasshouse.dorandoran.post.service.dto.PostLikeCreateRequest;
 import java.net.URI;
@@ -23,8 +25,8 @@ public class PostLikeController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> createPostLike(@RequestBody @Valid PostLikeCreateRequest request) {
-        Long postLikeId = postLikeService.createPostLike(request);
+    public ResponseEntity<Void> createPostLike(@LoginMember Member member, @RequestBody @Valid PostLikeCreateRequest request) {
+        Long postLikeId = postLikeService.createPostLike(request, member);
         return ResponseEntity.created(URI.create("/posts/likes/" + postLikeId)).build();
     }
 

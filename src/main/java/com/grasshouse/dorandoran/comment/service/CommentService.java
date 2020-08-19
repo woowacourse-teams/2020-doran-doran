@@ -46,7 +46,7 @@ public class CommentService {
         Comment comment = commentRepository.findById(commentId)
             .orElseThrow(CommentNotFoundException::new);
 
-        if (!comment.getAuthor().equals(member)) {
+        if (!comment.isSameAuthor(member)) {
             throw new CommentOwnerMissMatchException();
         }
 

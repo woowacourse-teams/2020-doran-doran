@@ -74,7 +74,7 @@ class CommentServiceTest {
             .location(GANGNAM_STATION)
             .build();
 
-        commentService.createComment(request);
+        commentService.createComment(request, member);
         Post persistPost = postRepositorySupport.findPostContainingComments(post.getId());
 
         assertThat(persistPost.getComments()).hasSize(1);
@@ -93,7 +93,7 @@ class CommentServiceTest {
         Comment persistComment = commentRepository.save(comment);
         assertThat(commentRepository.findAll()).hasSize(1);
 
-        commentService.deleteComment(persistComment.getId());
+        commentService.deleteComment(persistComment.getId(), member);
         assertThat(commentRepository.findAll()).hasSize(0);
     }
 
@@ -109,7 +109,7 @@ class CommentServiceTest {
             .location(GANGNAM_STATION)
             .build();
 
-        assertThatThrownBy(() -> commentService.createComment(comment))
+        assertThatThrownBy(() -> commentService.createComment(comment, member))
             .isInstanceOf(ConstraintViolationException.class)
             .hasMessageContaining("120자");
     }
@@ -124,7 +124,7 @@ class CommentServiceTest {
             .location(JAMSIL_STATION)
             .build();
 
-        Long commentId = commentService.createComment(commentCreateRequest);
+        Long commentId = commentService.createComment(commentCreateRequest, member);
         Comment createdComment = commentRepository.findById(commentId)
             .orElseThrow(CommentNotFoundException::new);
         assertThat(createdComment.getCreatedAt()).isNotNull();

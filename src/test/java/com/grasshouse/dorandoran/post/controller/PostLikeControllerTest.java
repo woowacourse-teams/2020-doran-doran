@@ -32,7 +32,7 @@ public class PostLikeControllerTest extends CommonControllerTest {
             .build();
 
         String request = objectMapper.writeValueAsString(postLikeCreateRequest);
-        when(postLikeService.createPostLike(any())).thenReturn(10L);
+        when(postLikeService.createPostLike(any(), any())).thenReturn(10L);
 
         this.mockMvc.perform(post("/posts/likes")
             .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -40,7 +40,7 @@ public class PostLikeControllerTest extends CommonControllerTest {
             .andExpect(status().isCreated())
             .andDo(print());
 
-        verify(postLikeService).createPostLike(any());
+        verify(postLikeService).createPostLike(any(), any());
     }
 
     @DisplayName("게시물의 좋아요를 취소(삭제)한다.")

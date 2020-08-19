@@ -51,7 +51,7 @@ class PostControllerTest extends CommonControllerTest {
         PostCreateResponse postCreateResponse = new PostCreateResponse(1L);
 
         String request = objectMapper.writeValueAsString(postCreateRequest);
-        when(postService.createPost(any())).thenReturn(postCreateResponse);
+        when(postService.createPost(any(), any())).thenReturn(postCreateResponse);
 
         this.mockMvc.perform(post("/posts")
             .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -59,7 +59,7 @@ class PostControllerTest extends CommonControllerTest {
             .andExpect(status().isCreated())
             .andDo(print());
 
-        verify(postService).createPost(any());
+        verify(postService).createPost(any(), any());
     }
 
     @DisplayName("글 하나를 조회한다.")
@@ -121,13 +121,13 @@ class PostControllerTest extends CommonControllerTest {
     @DisplayName("글을 삭제한다.")
     @Test
     void deletePost() throws Exception {
-        doNothing().when(postService).deletePost(anyLong());
+        doNothing().when(postService).deletePost(anyLong(), any());
 
         this.mockMvc.perform(delete("/posts/" + PERSIST_POST.getId()))
             .andExpect(status().isNoContent())
             .andDo(print());
 
-        verify(postService).deletePost(anyLong());
+        verify(postService).deletePost(anyLong(), any());
     }
 
     @DisplayName("[예외] PostCreateRequest DTO의 내용이 200자를 넘는다.")
@@ -147,7 +147,7 @@ class PostControllerTest extends CommonControllerTest {
         PostCreateResponse postCreateResponse = new PostCreateResponse(1L);
 
         String request = objectMapper.writeValueAsString(postCreateRequest);
-        when(postService.createPost(any())).thenReturn(postCreateResponse);
+        when(postService.createPost(any(), any())).thenReturn(postCreateResponse);
 
         this.mockMvc.perform(post("/posts")
             .contentType(MediaType.APPLICATION_JSON_VALUE)

@@ -56,7 +56,7 @@ public class PostService {
     @Transactional
     public void deletePost(Long id, Member member) {
         Post post = findPostById(id);
-        if (!post.getAuthor().equals(member)) {
+        if (!post.isSameAuthor(member)) {
             throw new PostOwnerMissMatchException();
         }
         postRepository.delete(post);

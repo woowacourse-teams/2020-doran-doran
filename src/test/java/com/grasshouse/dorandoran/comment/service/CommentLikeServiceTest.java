@@ -147,7 +147,7 @@ class CommentLikeServiceTest {
             .findCommentContainingLikes(comment.getId());
         assertThat(persistComment.getLikes()).hasSize(1);
 
-        commentService.deleteComment(persistComment.getId());
+        commentService.deleteComment(persistComment.getId(), author);
         assertThat(commentRepository.findAll()).hasSize(0);
         assertThat(commentLikeRepository.findAll()).hasSize(0);
     }

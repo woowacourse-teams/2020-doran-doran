@@ -38,7 +38,7 @@ class CommentControllerTest extends CommonControllerTest {
             .build();
 
         String request = objectMapper.writeValueAsString(commentCreateRequest);
-        when(commentService.createComment(any())).thenReturn(1L);
+        when(commentService.createComment(any(), any())).thenReturn(1L);
 
         this.mockMvc.perform(post("/comments")
             .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -46,14 +46,14 @@ class CommentControllerTest extends CommonControllerTest {
             .andExpect(status().isCreated())
             .andDo(print());
 
-        verify(commentService).createComment(any());
+        verify(commentService).createComment(any(), any());
     }
 
     @DisplayName("댓글을 삭제한다.")
     @Test
     void deleteComment() throws Exception {
         doNothing().when(commentService)
-            .deleteComment(PERSIST_COMMENT.getId());
+            .deleteComment(PERSIST_COMMENT.getId(), PERSIST_MEMBER);
         this.mockMvc.perform(
             delete("/comments/" + PERSIST_COMMENT.getId()))
             .andExpect(status().isNoContent())

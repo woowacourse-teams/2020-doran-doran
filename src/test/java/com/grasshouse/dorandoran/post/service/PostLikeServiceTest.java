@@ -80,7 +80,7 @@ public class PostLikeServiceTest {
             .postId(post.getId())
             .build();
 
-        postLikeService.createPostLike(request);
+        postLikeService.createPostLike(request, author);
         Post persistPost = postRepositorySupport.findPostContainingLikes(post.getId());
 
         assertThat(persistPost.getLikes()).hasSize(1);
@@ -93,13 +93,13 @@ public class PostLikeServiceTest {
             .memberId(postLiker.getId())
             .postId(post.getId())
             .build();
-        postLikeService.createPostLike(firstRequest);
+        postLikeService.createPostLike(firstRequest, author);
 
         PostLikeCreateRequest duplicateRequest = PostLikeCreateRequest.builder()
             .memberId(postLiker.getId())
             .postId(post.getId())
             .build();
-        assertThatThrownBy(() -> postLikeService.createPostLike(duplicateRequest))
+        assertThatThrownBy(() -> postLikeService.createPostLike(duplicateRequest, author))
             .isInstanceOf(PostLikeAlreadyExistsException.class);
     }
 
@@ -126,11 +126,11 @@ public class PostLikeServiceTest {
             .postId(post.getId())
             .build();
 
-        postLikeService.createPostLike(request);
+        postLikeService.createPostLike(request, author);
         Post persistPost = postRepositorySupport.findPostContainingLikes(post.getId());
         assertThat(persistPost.getLikes()).hasSize(1);
 
-        postService.deletePost(persistPost.getId());
+        postService.deletePost(persistPost.getId(), author);
         assertThat(postRepository.findAll()).hasSize(0);
         assertThat(postLikeRepository.findAll()).hasSize(0);
     }

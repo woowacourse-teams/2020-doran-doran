@@ -74,4 +74,8 @@ public class Comment {
             this.post.getComments().add(this);
         }
     }
+
+    public boolean isSameAuthor(Member member) {
+        return this.author.getId().equals(member.getId());
+    }
 }
