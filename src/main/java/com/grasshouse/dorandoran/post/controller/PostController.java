@@ -1,6 +1,7 @@
 package com.grasshouse.dorandoran.post.controller;
 
 import com.grasshouse.dorandoran.post.service.PostService;
+import com.grasshouse.dorandoran.post.service.dto.PostBoundsRequest;
 import com.grasshouse.dorandoran.post.service.dto.PostCreateRequest;
 import com.grasshouse.dorandoran.post.service.dto.PostCreateResponse;
 import com.grasshouse.dorandoran.post.service.dto.PostResponse;
@@ -10,6 +11,7 @@ import javax.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -41,6 +43,13 @@ public class PostController {
     @GetMapping
     public ResponseEntity<List<PostResponse>> showPosts() {
         List<PostResponse> responses = postService.showPosts();
+        return ResponseEntity.ok(responses);
+    }
+
+    @GetMapping("/bounds")
+    public ResponseEntity<List<PostResponse>> showPostsInBounds(
+        @ModelAttribute PostBoundsRequest request) {
+        List<PostResponse> responses = postService.showPostsInBounds(request);
         return ResponseEntity.ok(responses);
     }
 

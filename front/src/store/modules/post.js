@@ -26,6 +26,7 @@ export default {
     },
     posts: [],
     searchedPosts: [],
+    timelinePosts: [],
   },
   mutations: {
     SET_POST(state, post) {
@@ -36,6 +37,9 @@ export default {
     },
     SET_SEARCHED_POSTS(state, searchedPosts) {
       state.searchedPosts = searchedPosts;
+    },
+    SET_TIMELINE_POSTS(state, timelinePosts) {
+      state.timelinePosts = timelinePosts;
     },
     REMOVE_POST(state, postId) {
       const deleteIndex = state.posts.findIndex((post) => post.id === postId);
@@ -54,6 +58,10 @@ export default {
     async loadPosts({ commit }) {
       const data = await api.loadPosts();
       commit("SET_POSTS", data);
+    },
+    async loadPostsInBounds({ commit }, bounds) {
+      const postsInBounds = await api.loadPostsInBounds(bounds);
+      commit("SET_TIMELINE_POSTS", postsInBounds);
     },
     async deletePost({ commit }, postId) {
       await api.deletePost(postId);
@@ -79,6 +87,9 @@ export default {
     },
     getSearchedPosts: (state) => {
       return state.searchedPosts;
+    },
+    getPostsInBounds: (state) => {
+      return state.timelinePosts;
     },
   },
 };
