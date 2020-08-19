@@ -53,7 +53,7 @@ export default {
   methods: {
     async setCenterLocation() {
       const currentLocation = await this.$kakaoMap.getCurrentLocation();
-      this.$kakaoMap.setLocation(currentLocation);
+      this.$kakaoMap.setCenterLocation(currentLocation);
       this.$kakaoMap.setCurrentLocationMarker(currentLocation);
     },
     async changeAppBarByCenterAddress() {

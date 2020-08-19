@@ -75,7 +75,7 @@ const KakaoMap = (() => {
     };
   };
 
-  const setLocation = (location) => {
+  const setCenterLocation = (location) => {
     if (!map || !location) {
       return;
     }
@@ -183,7 +183,7 @@ const KakaoMap = (() => {
     drawMap,
     getCurrentLocation,
     getCenterLocation,
-    setLocation,
+    setCenterLocation,
     setCurrentLocationMarker,
     getBounds,
     setPostOverlay,
