@@ -19,7 +19,7 @@
         <router-link v-show="searchButton" to="/search">
           <v-icon>mdi-magnify</v-icon>
         </router-link>
-        <v-icon v-show="timelineButton" @click="goToTimeLinePage">
+        <v-icon v-show="timelineButton" @click="goToTimelinePage">
           mdi-format-list-bulleted
         </v-icon>
         <router-link v-show="mapButton" to="/">
@@ -42,7 +42,7 @@ export default {
     goToMyPage() {
       router.push("/mypage");
     },
-    async goToTimeLinePage() {
+    async goToTimelinePage() {
       const boundsFromKakao = await this.$getBounds();
       const bounds = {
         upperBound: boundsFromKakao.ja,
