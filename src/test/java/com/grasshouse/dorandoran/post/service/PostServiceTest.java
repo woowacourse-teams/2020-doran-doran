@@ -14,6 +14,7 @@ import com.grasshouse.dorandoran.member.domain.Member;
 import com.grasshouse.dorandoran.member.repository.MemberRepository;
 import com.grasshouse.dorandoran.post.domain.Post;
 import com.grasshouse.dorandoran.post.repository.PostRepository;
+import com.grasshouse.dorandoran.post.service.dto.PostBoundsRequest;
 import com.grasshouse.dorandoran.post.service.dto.PostCreateRequest;
 import com.grasshouse.dorandoran.post.service.dto.PostCreateResponse;
 import com.grasshouse.dorandoran.post.service.dto.PostResponse;
@@ -98,7 +99,8 @@ class PostServiceTest {
         Post gangnamPost = dummyPost2();
         Post persistJamsilPost = postRepository.save(jamsilPost);
         Post persistGangnamPost = postRepository.save(gangnamPost);
-        List<PostResponse> postResponses = postService.showPostsInBounds(127.1, 127.2, 37.6, 37.5);
+        PostBoundsRequest request = new PostBoundsRequest(37.6, 37.5, 127.1, 127.2);
+        List<PostResponse> postResponses = postService.showPostsInBounds(request);
         assertThat(postResponses).hasSize(1);
         assertThat(postResponses.get(0).getContent()).isEqualTo(persistJamsilPost.getContent());
     }
