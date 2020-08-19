@@ -1,6 +1,5 @@
 package com.grasshouse.dorandoran.post.service.dto;
 
-import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,11 +7,10 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class PostSearchRequest {
+public class PostBoundsRequest {
 
-    private String keyword;
-
-    private LocalDateTime startDate;
-
-    private LocalDateTime endDate;
+    Double upperBound;
+    Double lowerBound;
+    Double leftBound;
+    Double rightBound;
 }
