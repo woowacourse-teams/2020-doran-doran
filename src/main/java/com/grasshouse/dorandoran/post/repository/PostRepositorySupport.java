@@ -30,11 +30,10 @@ public class PostRepositorySupport extends QuerydslRepositorySupport {
             .fetchFirst();
     }
 
-    public List<Post> findPostsInBounds(Double leftBound, Double rightBound, Double upperBound,
-        Double lowerBound) {
+    public List<Post> findPostsInBounds(Double leftBound, Double rightBound, Double lowerBound,
+        Double upperBound) {
         return jpaQueryFactory.selectFrom(post)
-            .where(betweenLatitude(lowerBound, upperBound),
-                betweenLongitude(leftBound, rightBound))
+            .where(betweenLatitude(lowerBound, upperBound), betweenLongitude(leftBound, rightBound))
             .fetch();
     }
 

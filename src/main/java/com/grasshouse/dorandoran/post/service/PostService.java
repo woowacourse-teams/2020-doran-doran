@@ -7,6 +7,7 @@ import com.grasshouse.dorandoran.member.repository.MemberRepository;
 import com.grasshouse.dorandoran.post.domain.Post;
 import com.grasshouse.dorandoran.post.repository.PostRepository;
 import com.grasshouse.dorandoran.post.repository.PostRepositorySupport;
+import com.grasshouse.dorandoran.post.service.dto.PostBoundsRequest;
 import com.grasshouse.dorandoran.post.service.dto.PostCreateRequest;
 import com.grasshouse.dorandoran.post.service.dto.PostCreateResponse;
 import com.grasshouse.dorandoran.post.service.dto.PostResponse;
@@ -50,10 +51,10 @@ public class PostService {
     }
 
     @Transactional
-    public List<PostResponse> showPostsInBounds(Double leftBound, Double rightBound,
-        Double upperBound, Double lowerBound) {
+    public List<PostResponse> showPostsInBounds(PostBoundsRequest request) {
         List<Post> posts = postRepositorySupport
-            .findPostsInBounds(leftBound, rightBound, upperBound, lowerBound);
+            .findPostsInBounds(request.getLeftBound(), request.getRightBound(),
+                request.getLowerBound(), request.getUpperBound());
         return PostResponse.listFrom(posts);
     }
 
