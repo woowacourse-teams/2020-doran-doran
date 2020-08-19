@@ -94,11 +94,13 @@ class PostServiceTest {
     @DisplayName("위치 범위값 내의 글을 조회한다.")
     @Test
     void showPostsInBoundsTest() {
-        Post post = dummyPost();
-        Post persistPost = postRepository.save(post);
+        Post jamsilPost = dummyPost();
+        Post gangnamPost = dummyPost2();
+        Post persistJamsilPost = postRepository.save(jamsilPost);
+        Post persistGangnamPost = postRepository.save(gangnamPost);
         List<PostResponse> postResponses = postService.showPostsInBounds(127.1, 127.2, 37.6, 37.5);
         assertThat(postResponses).hasSize(1);
-        assertThat(postResponses.get(0).getContent()).isEqualTo(persistPost.getContent());
+        assertThat(postResponses.get(0).getContent()).isEqualTo(persistJamsilPost.getContent());
     }
 
     @DisplayName("글을 삭제한다.")
@@ -132,15 +134,6 @@ class PostServiceTest {
 
         postService.deletePost(persistPost.getId());
         assertThat(commentRepository.findAll()).hasSize(0);
-    }
-
-    @DisplayName("[예외] 위치 범위값 밖의 글을 조회한다.")
-    @Test
-    void showPostsOutOfBoundsTest() {
-        Post post = dummyPost();
-        Post persistPost = postRepository.save(post);
-        List<PostResponse> postResponses = postService.showPostsInBounds(127.2, 127.3, 37.6, 37.5);
-        assertThat(postResponses).hasSize(0);
     }
 
     @DisplayName("[예외] 글 내용이 200자를 넘는다.")
@@ -185,6 +178,16 @@ class PostServiceTest {
             .address(ADDRESS)
             .authorAddress(AUTHOR_ADDRESS)
             .location(JAMSIL_STATION)
+            .build();
+    }
+
+    private Post dummyPost2() {
+        return Post.builder()
+            .author(member)
+            .content("내용2")
+            .address(ADDRESS)
+            .authorAddress(AUTHOR_ADDRESS)
+            .location(GANGNAM_STATION)
             .build();
     }
 
