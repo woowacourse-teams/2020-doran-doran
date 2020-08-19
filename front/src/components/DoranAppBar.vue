@@ -61,7 +61,7 @@ export default {
       this.$router.go(-1);
     },
     goToMyPage() {
-      this.$emit("show-modal", true);
+      this.$store.commit("myPageSideBar/ACTIVATE_SIDE_BAR");
     },
     goToTimelinePage() {
       const boundsFromKakao = this.$kakaoMap.getBounds();

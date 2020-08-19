@@ -1,6 +1,6 @@
 <template>
   <v-navigation-drawer
-    class="fill-height foo"
+    class="fill-height"
     v-model="drawer"
     absolute
     temporary
@@ -11,7 +11,7 @@
 
     <v-list-item class="ma-5">
       <v-list-item-avatar>
-          <img src="member.picture" />
+        <img src="member.picture" />
       </v-list-item-avatar>
       <v-list-item-content>
         <v-list-item-title>
@@ -69,11 +69,12 @@ export default {
       ],
     };
   },
-  props: {
+  computed: {
     drawer: {
-      type: Boolean,
-      required: false,
-      default: false,
+      get() {
+        return this.$store.getters["myPageSideBar/mode"];
+      },
+      set() {},
     },
   },
   methods: {
@@ -82,24 +83,16 @@ export default {
     termsOfUse() {},
     deleteMember() {},
     closeModal() {
-      this.$emit("show-modal", false);
+      this.$store.commit("myPageSideBar/DEACTIVATE_SIDE_BAR");
     },
   },
   watch: {
-    drawer(newVal) {
-      this.drawer = newVal;
-    },
     group() {
-      this.$emit("show-modal", false);
+      this.$store.commit("myPageSideBar/DEACTIVATE_SIDE_BAR");
     },
   },
 };
 </script>
 
 <style scoped>
-.foo {
-  z-index: 9999;
-  position: fixed;
-  background-color: black;
-}
 </style>
