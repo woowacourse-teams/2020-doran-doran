@@ -1,7 +1,5 @@
 package com.grasshouse.dorandoran.config.security;
 
-import static com.grasshouse.dorandoran.config.jwt.AuthorizationExtractor.AUTHORIZATION;
-
 import com.grasshouse.dorandoran.config.jwt.JwtTokenProvider;
 import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;

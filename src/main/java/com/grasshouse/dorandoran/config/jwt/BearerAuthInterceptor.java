@@ -10,6 +10,8 @@ import org.springframework.web.servlet.ModelAndView;
 @Component
 public class BearerAuthInterceptor implements HandlerInterceptor {
 
+    private static final String ALLOW_HTTP_METHOD = "GET";
+    
     private AuthorizationExtractor authExtractor;
     private JwtTokenProvider jwtTokenProvider;
 
@@ -22,6 +24,10 @@ public class BearerAuthInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
         Object handler) {
+        if (request.getMethod().equals(ALLOW_HTTP_METHOD)) {
+            return true;
+        }
+
         String token = authExtractor.extract(request, "Bearer");
 
         if (!jwtTokenProvider.validateToken(token)) {

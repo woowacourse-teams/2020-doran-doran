@@ -96,7 +96,8 @@ class CommentLikeServiceTest {
             .build();
 
         commentLikeService.createCommentLike(request);
-        Comment persistComment = commentRepositorySupport.findCommentContainingLikes(comment.getId());
+        Comment persistComment = commentRepositorySupport
+            .findCommentContainingLikes(comment.getId());
 
         assertThat(persistComment.getLikes()).hasSize(1);
     }
@@ -142,7 +143,8 @@ class CommentLikeServiceTest {
             .build();
 
         commentLikeService.createCommentLike(request);
-        Comment persistComment = commentRepositorySupport.findCommentContainingLikes(comment.getId());
+        Comment persistComment = commentRepositorySupport
+            .findCommentContainingLikes(comment.getId());
         assertThat(persistComment.getLikes()).hasSize(1);
 
         commentService.deleteComment(persistComment.getId());

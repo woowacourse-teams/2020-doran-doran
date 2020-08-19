@@ -2,6 +2,8 @@ package com.grasshouse.dorandoran.comment.controller;
 
 import com.grasshouse.dorandoran.comment.service.CommentService;
 import com.grasshouse.dorandoran.comment.service.dto.CommentCreateRequest;
+import com.grasshouse.dorandoran.config.jwt.LoginMember;
+import com.grasshouse.dorandoran.member.domain.Member;
 import java.net.URI;
 import javax.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -24,16 +26,18 @@ public class CommentController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> createComment(@RequestBody @Valid CommentCreateRequest request) {
-        Long commentId = commentService.createComment(request);
+    public ResponseEntity<Void> createComment(@LoginMember Member member,
+        @RequestBody @Valid CommentCreateRequest request) {
+        Long commentId = commentService.createComment(request, member);
         return ResponseEntity
             .created(URI.create("/comments/" + commentId))
             .build();
     }
 
     @DeleteMapping("/{commentId}")
-    public ResponseEntity<Void> deleteComment(@PathVariable Long commentId) {
-        commentService.deleteComment(commentId);
+    public ResponseEntity<Void> deleteComment(@LoginMember Member member,
+        @PathVariable Long commentId) {
+        commentService.deleteComment(commentId, member);
         return ResponseEntity.noContent().build();
     }
 

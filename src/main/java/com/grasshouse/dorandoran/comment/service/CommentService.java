@@ -4,10 +4,9 @@ import com.grasshouse.dorandoran.comment.domain.Comment;
 import com.grasshouse.dorandoran.comment.repository.CommentRepository;
 import com.grasshouse.dorandoran.comment.service.dto.CommentCreateRequest;
 import com.grasshouse.dorandoran.common.exception.CommentNotFoundException;
-import com.grasshouse.dorandoran.common.exception.MemberNotFoundException;
+import com.grasshouse.dorandoran.common.exception.CommentOwnerMissMatchException;
 import com.grasshouse.dorandoran.common.exception.PostNotFoundException;
 import com.grasshouse.dorandoran.member.domain.Member;
-import com.grasshouse.dorandoran.member.repository.MemberRepository;
 import com.grasshouse.dorandoran.post.domain.Post;
 import com.grasshouse.dorandoran.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,19 +18,16 @@ import org.springframework.transaction.annotation.Transactional;
 public class CommentService {
 
     private final CommentRepository commentRepository;
-    private final MemberRepository memberRepository;
     private final PostRepository postRepository;
 
     @Transactional
-    public Long createComment(CommentCreateRequest request) {
-        Comment comment = convertToComment(request);
+    public Long createComment(CommentCreateRequest request, Member member) {
+        Comment comment = convertToComment(request, member);
         commentRepository.save(comment);
         return comment.getId();
     }
 
-    private Comment convertToComment(CommentCreateRequest request) {
-        Member member = memberRepository.findById(request.getMemberId())
-            .orElseThrow(MemberNotFoundException::new);
+    private Comment convertToComment(CommentCreateRequest request, Member member) {
         Post post = postRepository.findById(request.getPostId())
             .orElseThrow(PostNotFoundException::new);
         Double distance = post.getLocation()
@@ -46,9 +42,14 @@ public class CommentService {
     }
 
     @Transactional
-    public void deleteComment(Long commentId) {
+    public void deleteComment(Long commentId, Member member) {
         Comment comment = commentRepository.findById(commentId)
             .orElseThrow(CommentNotFoundException::new);
+
+        if (!comment.getAuthor().equals(member)) {
+            throw new CommentOwnerMissMatchException();
+        }
+
         Post post = comment.getPost();
         post.removeComment(comment);
     }
