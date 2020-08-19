@@ -98,7 +98,7 @@ class PostControllerTest extends CommonControllerTest {
     @DisplayName("위치 범위값 내의 글 목록을 조회한다.")
     @Test
     void showPostsInBoundsTest() throws Exception {
-        when(postService.showPostsInBounds(any(), any(), any(), any())).thenReturn(postResponses());
+        when(postService.showPostsInBounds(any())).thenReturn(postResponses());
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("upperBound", "37.6");
         params.add("lowerBound", "37.5");
@@ -115,7 +115,7 @@ class PostControllerTest extends CommonControllerTest {
             .andExpect(jsonPath("$[*].location").isNotEmpty())
             .andDo(print());
 
-        verify(postService).showPostsInBounds(127.2, 127.3, 37.6, 37.5);
+        verify(postService).showPostsInBounds(any());
     }
 
     @DisplayName("글을 삭제한다.")
