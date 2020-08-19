@@ -1,13 +1,17 @@
 <template>
   <v-app class="app-container">
+<<<<<<< HEAD
     <v-snackbar top timeout="1500" class="snackbar" v-model="snackbarWarning">
       {{ snackbarMessage }}
     </v-snackbar>
     <DoranAppBar @show-modal="changeVisibility"/>
+=======
+    <DoranAppBar @show-modal="changeVisibility" />
+>>>>>>> feature/104 feat: MyPageModal에 트랜지션 적용
     <transition name="fade" mode="out-in">
       <RouterView />
     </transition>
-    <MyPageModal v-if="showMyPageModal" @show-modal="changeVisibility"/>
+    <MyPageModal :drawer="showMyPageModal" @show-modal="changeVisibility" />
   </v-app>
 </template>
 
@@ -42,13 +46,13 @@ export default {
   data() {
     return {
       showMyPageModal: false,
-    }
+    };
   },
   methods: {
     changeVisibility(value) {
       this.showMyPageModal = value;
-    }
-  }
+    },
+  },
 };
 </script>
 

@@ -1,33 +1,55 @@
 <template>
-  <div class="modal-mask" @click.self="closeModal">
-    <div class="pa-3 modal-container">
-      <v-btn icon class="float-right ma-1">
-        <v-icon @click.self="closeModal">mdi-window-close</v-icon>
-      </v-btn>
+  <v-navigation-drawer
+    class="fill-height foo"
+    v-model="drawer"
+    absolute
+    temporary
+  >
+    <v-btn icon class="float-right ma-1">
+      <v-icon @click.self="closeModal">mdi-window-close</v-icon>
+    </v-btn>
 
-      <img class="profile-image" src="member.picture" />
-      <span class="font-weight-bold">닉네임요기요기{{ member.nickName }}</span>
-      <v-list flat>
-        <v-list-item-group>
-          <v-list-item v-for="(item, i) in myPageItems" :key="i">
-            <v-list-item-content>
-              <v-list-item-title @click="item.action">
-                {{ item.title }}
-              </v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list-item-group>
-      </v-list>
-    </div>
-  </div>
+    <v-list-item class="ma-5">
+      <v-list-item-avatar>
+          <img src="member.picture" />
+      </v-list-item-avatar>
+      <v-list-item-content>
+        <v-list-item-title>
+          닉네임요기요기{{ member.nickName }}
+        </v-list-item-title>
+      </v-list-item-content>
+    </v-list-item>
+
+    <VDivider />
+
+    <v-list>
+      <v-list-item-group
+        v-model="group"
+        active-class="amber--text text--accent-4"
+      >
+        <v-list-item v-for="item in items" :key="item.title" link>
+          <v-list-item-content>
+            <v-list-item-title @click="item.action">
+              {{ item.title }}
+            </v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list-item-group>
+    </v-list>
+  </v-navigation-drawer>
 </template>
 
 <script>
 export default {
-  name: "PostCreateModal",
+  name: "MyPageModal",
   data() {
     return {
-      myPageItems: [
+      group: null,
+      member: {
+        nickName: "",
+        picture: "",
+      },
+      items: [
         {
           title: "정보수정",
           action: this.updateMember,
@@ -45,11 +67,14 @@ export default {
           action: this.deleteMember,
         },
       ],
-      member: {
-        nickName: "",
-        picture: "",
-      },
     };
+  },
+  props: {
+    drawer: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
   methods: {
     updateMember() {},
@@ -60,29 +85,21 @@ export default {
       this.$emit("show-modal", false);
     },
   },
+  watch: {
+    drawer(newVal) {
+      this.drawer = newVal;
+    },
+    group() {
+      this.$emit("show-modal", false);
+    },
+  },
 };
 </script>
 
 <style scoped>
-.modal-mask {
+.foo {
+  z-index: 9999;
   position: fixed;
-  z-index: 9998;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-}
-.modal-container {
-  position: relative;
-  width: 80%;
-  height: 200%;
-  background-color: #fff;
-}
-.profile-image {
-  margin: 30px;
-  width: 60px;
-  height: 60px;
-  border-radius: 100%;
+  background-color: black;
 }
 </style>

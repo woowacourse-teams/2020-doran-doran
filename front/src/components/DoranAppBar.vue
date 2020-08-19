@@ -7,7 +7,7 @@
       <v-icon v-show="backButton" @click="goToPreviousPage">
         mdi-chevron-left
       </v-icon>
-      <v-icon v-show="myPageButton" @click="goToMyPage">
+      <v-icon v-show="myPageButton" @click.stop="goToMyPage">
         mdi-account
       </v-icon>
 

@@ -33,7 +33,7 @@ export default {
 <style scoped>
 .background {
   width: 100%;
-  height: 100%;
+  height: 100vh;
   background: linear-gradient(
     320deg,
     rgba(234, 77, 44, 1) 0%,
@@ -49,11 +49,14 @@ export default {
   margin: auto;
   width: 50%;
   text-align: center;
-  padding: 65% 0;
+  padding-top: 30%;
   font-size: 1.5rem;
   font-weight: bold;
   font-family: "BM JUA_OTF", sans-serif;
   color: white;
+}
+.button-box {
+  padding-top: 20%;
 }
 .button-box * {
   letter-spacing: -0.7px;
