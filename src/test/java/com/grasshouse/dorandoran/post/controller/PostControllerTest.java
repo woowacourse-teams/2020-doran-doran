@@ -29,6 +29,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 
 class PostControllerTest extends CommonControllerTest {
@@ -97,9 +99,15 @@ class PostControllerTest extends CommonControllerTest {
     @Test
     void showPostsInBoundsTest() throws Exception {
         when(postService.showPostsInBounds(any(), any(), any(), any())).thenReturn(postResponses());
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        params.add("upperBound", "37.6");
+        params.add("lowerBound", "37.5");
+        params.add("leftBound", "127.2");
+        params.add("rightBound", "127.3");
 
         this.mockMvc.perform(
-            get("/posts/bounds?upperBound=37.6&lowerBound=37.5&leftBound=127.2&rightBound=127.3")
+            get("/posts/bounds")
+                .params(params)
                 .accept(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$[*].id").isNotEmpty())
