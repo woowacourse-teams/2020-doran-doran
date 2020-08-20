@@ -39,7 +39,6 @@ public class PostLikeControllerTest extends CommonControllerTest {
     void createPostLikeWithLoginUser() throws Exception {
         PostLikeCreateRequest postLikeCreateRequest = PostLikeCreateRequest.builder()
             .postId(10L)
-            .memberId(5L)
             .build();
 
         String request = objectMapper.writeValueAsString(postLikeCreateRequest);
@@ -61,7 +60,6 @@ public class PostLikeControllerTest extends CommonControllerTest {
     void createPostLikeWithoutLogin() throws Exception {
         PostLikeCreateRequest postLikeCreateRequest = PostLikeCreateRequest.builder()
             .postId(10L)
-            .memberId(5L)
             .build();
 
         String request = objectMapper.writeValueAsString(postLikeCreateRequest);

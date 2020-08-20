@@ -37,7 +37,6 @@ public class CommentLikeControllerTest extends CommonControllerTest {
     @Test
     void createCommentLikeWithLoginUser() throws Exception {
         CommentLikeCreateRequest commentLikeCreateRequest = CommentLikeCreateRequest.builder()
-            .memberId(5L)
             .commentId(10L)
             .build();
 
@@ -59,7 +58,6 @@ public class CommentLikeControllerTest extends CommonControllerTest {
     @Test
     void createCommentLikeWithoutLogin() throws Exception {
         CommentLikeCreateRequest commentLikeCreateRequest = CommentLikeCreateRequest.builder()
-            .memberId(5L)
             .commentId(10L)
             .build();
 

@@ -76,7 +76,6 @@ public class PostLikeServiceTest {
     @Test
     void createPostLike() {
         PostLikeCreateRequest request = PostLikeCreateRequest.builder()
-            .memberId(postLiker.getId())
             .postId(post.getId())
             .build();
 
@@ -90,13 +89,11 @@ public class PostLikeServiceTest {
     @Test
     void duplicatePostLike() {
         PostLikeCreateRequest firstRequest = PostLikeCreateRequest.builder()
-            .memberId(postLiker.getId())
             .postId(post.getId())
             .build();
         postLikeService.createPostLike(firstRequest, author);
 
         PostLikeCreateRequest duplicateRequest = PostLikeCreateRequest.builder()
-            .memberId(postLiker.getId())
             .postId(post.getId())
             .build();
         assertThatThrownBy(() -> postLikeService.createPostLike(duplicateRequest, author))
@@ -122,7 +119,6 @@ public class PostLikeServiceTest {
     @Test
     void deleteCommentWithCommentLike() {
         PostLikeCreateRequest request = PostLikeCreateRequest.builder()
-            .memberId(postLiker.getId())
             .postId(post.getId())
             .build();
 

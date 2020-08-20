@@ -91,7 +91,6 @@ class CommentLikeServiceTest {
     @Test
     void createCommentLike() {
         CommentLikeCreateRequest request = CommentLikeCreateRequest.builder()
-            .memberId(commentLiker.getId())
             .commentId(comment.getId())
             .build();
 
@@ -106,13 +105,11 @@ class CommentLikeServiceTest {
     @Test
     void duplicateCommentLike() {
         CommentLikeCreateRequest firstRequest = CommentLikeCreateRequest.builder()
-            .memberId(commentLiker.getId())
             .commentId(comment.getId())
             .build();
         commentLikeService.createCommentLike(firstRequest, commentLiker);
 
         CommentLikeCreateRequest duplicateRequest = CommentLikeCreateRequest.builder()
-            .memberId(commentLiker.getId())
             .commentId(comment.getId())
             .build();
         assertThatThrownBy(
@@ -139,7 +136,6 @@ class CommentLikeServiceTest {
     @Test
     void deleteCommentWithCommentLike() {
         CommentLikeCreateRequest request = CommentLikeCreateRequest.builder()
-            .memberId(commentLiker.getId())
             .commentId(comment.getId())
             .build();
 
