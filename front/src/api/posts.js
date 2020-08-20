@@ -1,5 +1,6 @@
 import { API_BASE_URL } from "@/utils/constants";
 import axios from "axios";
+import moment from "moment";
 
 const client = axios.create({
   baseURL: API_BASE_URL.EC2 + "/posts",
@@ -15,6 +16,14 @@ const api = (() => {
   const createPost = (newPost) => client.post("", newPost, options);
   const loadPost = (postId) => client.get(`/${postId}`).then((res) => res.data);
   const loadPosts = () => client.get("").then((res) => res.data);
+  const loadPostsIn24Hours = () => {
+    const data = {
+      startDate: moment().subtract(1, "days").format("YYYY-MM-DD HH:mm:ss"),
+      endDate: moment().format("YYYY-MM-DD HH:mm:ss")
+    };
+    const params = new URLSearchParams(data).toString();
+    return client.get(`/filter?` + params).then((res) => res.data);
+  };
   const loadPostsInBounds = (bounds) => {
     const params = new URLSearchParams(bounds).toString();
     return client.get(`/bounds?` + params).then((res) => res.data);
@@ -32,6 +41,7 @@ const api = (() => {
     createPost,
     loadPost,
     loadPosts,
+    loadPostsIn24Hours,
     loadPostsInBounds,
     deletePost,
     searchPosts,
