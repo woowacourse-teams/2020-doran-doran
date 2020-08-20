@@ -30,10 +30,10 @@ export default {
   },
   computed: {
     isDefaultMode() {
-      return this.$store.getters["modal/isDefaultMode"];
+      return this.$store.getters["postModal/isDefaultMode"];
     },
     isMarkerMode() {
-      return this.$store.getters["modal/isMarkerMode"];
+      return this.$store.getters["postModal/isMarkerMode"];
     },
     posts() {
       return this.$store.getters["post/getPosts"];
