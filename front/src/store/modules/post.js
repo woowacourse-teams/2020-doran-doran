@@ -62,6 +62,10 @@ export default {
       const data = await api.loadPosts();
       commit("SET_POSTS", data);
     },
+    async loadPostsIn24Hours({ commit }) {
+      const data = await api.loadPostsIn24Hours();
+      commit("SET_POSTS", data);
+    },
     async loadPostsInBounds({ commit }, bounds) {
       const postsInBounds = await api.loadPostsInBounds(bounds);
       commit("SET_TIMELINE_POSTS", postsInBounds);

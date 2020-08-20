@@ -54,7 +54,7 @@ export default {
         ),
       );
     await this.changeAppBarByCenterAddress();
-    await this.$store.dispatch("post/loadPosts");
+    await this.$store.dispatch("post/loadPostsIn24Hours");
     await this.$kakaoMap.addEventToMap(
       EVENT_TYPE.CENTER_CHANGE,
       this.changeAppBarByCenterAddress,
