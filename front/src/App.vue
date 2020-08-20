@@ -7,19 +7,19 @@
     <transition name="fade" mode="out-in">
       <RouterView />
     </transition>
-    <MyPageModal :drawer="showMyPageModal" @show-modal="changeVisibility" />
+    <MyPageSideBar />
   </v-app>
 </template>
 
 <script>
 import DoranAppBar from "@/components/DoranAppBar";
-import MyPageModal from "@/components/member/MyPageModal";
+import MyPageSideBar from "@/components/member/MyPageSideBar";
 
 export default {
   name: "App",
   components: {
     DoranAppBar,
-    MyPageModal,
+    MyPageSideBar,
   },
   computed: {
     snackbarMessage: {

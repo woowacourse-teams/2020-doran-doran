@@ -4,6 +4,9 @@ export default {
     sideBarMode: false,
   },
   mutations: {
+    SET_SIDE_BAR(state, val) {
+      state.sideBarMode = val;
+    },
     ACTIVATE_SIDE_BAR(state) {
       state.sideBarMode = true;
     },

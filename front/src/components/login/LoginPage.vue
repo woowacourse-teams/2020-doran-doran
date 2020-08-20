@@ -4,7 +4,7 @@
 
     <div class="button-box ma-6">
       <router-link to="/map">
-        <v-btn outlined block>
+        <v-btn depressed block color="white">
           <div>로그인 없이 둘러보기</div>
         </v-btn>
       </router-link>
@@ -50,13 +50,13 @@ export default {
   width: 50%;
   text-align: center;
   padding-top: 30%;
-  font-size: 1.5rem;
+  font-size: 2rem;
   font-weight: bold;
   font-family: "BM JUA_OTF", sans-serif;
   color: white;
 }
 .button-box {
-  padding-top: 20%;
+  padding-top: 80%;
 }
 .button-box * {
   letter-spacing: -0.7px;

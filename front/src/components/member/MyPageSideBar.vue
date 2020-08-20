@@ -1,10 +1,5 @@
 <template>
-  <v-navigation-drawer
-    class="fill-height"
-    v-model="drawer"
-    absolute
-    temporary
-  >
+  <v-navigation-drawer v-model="drawer" absolute temporary>
     <v-btn icon class="float-right ma-1">
       <v-icon @click.self="closeModal">mdi-window-close</v-icon>
     </v-btn>
@@ -14,7 +9,7 @@
         <img src="member.picture" />
       </v-list-item-avatar>
       <v-list-item-content>
-        <v-list-item-title>
+        <v-list-item-title class="font-weight-bold">
           닉네임요기요기{{ member.nickName }}
         </v-list-item-title>
       </v-list-item-content>
@@ -23,10 +18,7 @@
     <VDivider />
 
     <v-list>
-      <v-list-item-group
-        v-model="group"
-        active-class="amber--text text--accent-4"
-      >
+      <v-list-item-group v-model="group">
         <v-list-item v-for="item in items" :key="item.title" link>
           <v-list-item-content>
             <v-list-item-title @click="item.action">
@@ -41,7 +33,7 @@
 
 <script>
 export default {
-  name: "MyPageModal",
+  name: "MyPageSideBar",
   data() {
     return {
       group: null,
@@ -74,7 +66,9 @@ export default {
       get() {
         return this.$store.getters["myPageSideBar/mode"];
       },
-      set() {},
+      set(val) {
+        this.$store.commit('myPageSideBar/SET_SIDE_BAR', val)
+      },
     },
   },
   methods: {
@@ -94,5 +88,4 @@ export default {
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
