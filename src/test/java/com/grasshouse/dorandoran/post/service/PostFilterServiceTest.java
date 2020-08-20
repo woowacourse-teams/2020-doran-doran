@@ -2,7 +2,7 @@ package com.grasshouse.dorandoran.post.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.grasshouse.dorandoran.post.service.dto.PostSearchRequest;
+import com.grasshouse.dorandoran.post.service.dto.PostFilterRequest;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.stream.Stream;
@@ -17,10 +17,10 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 
 @SpringBootTest
-class PostSearchServiceTest {
+class PostFilterServiceTest {
 
     @Autowired
-    private PostSearchService postSearchService;
+    private PostFilterService PostFilterService;
 
     static Stream<Arguments> generateDays() {
         return Stream.of(
@@ -36,9 +36,9 @@ class PostSearchServiceTest {
     @DisplayName("키워드로 검색된 글들을 반환한다.")
     @Test
     void showSearchResultsByKeyword() {
-        PostSearchRequest request = new PostSearchRequest("오늘", null, null);
+        PostFilterRequest request = new PostFilterRequest("오늘", null, null);
 
-        assertThat(postSearchService.showSearchResults(request)).hasSize(2);
+        assertThat(PostFilterService.showSearchResults(request)).hasSize(2);
     }
 
     @Sql(value = "/dateTimePost.sql", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -47,8 +47,8 @@ class PostSearchServiceTest {
     @ParameterizedTest
     @MethodSource("generateDays")
     void showSearchResultsByDate(LocalDateTime startDate, LocalDateTime endDate, int searchResult) {
-        PostSearchRequest request = new PostSearchRequest(null, startDate, endDate);
-        assertThat(postSearchService.showSearchResults(request))
+        PostFilterRequest request = new PostFilterRequest(null, startDate, endDate);
+        assertThat(PostFilterService.showSearchResults(request))
             .hasSize(searchResult);
     }
 

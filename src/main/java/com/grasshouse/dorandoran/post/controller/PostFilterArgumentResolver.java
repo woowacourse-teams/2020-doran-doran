@@ -4,7 +4,7 @@ import static com.grasshouse.dorandoran.common.exception.DateNotValidException.N
 import static com.grasshouse.dorandoran.common.exception.DateNotValidException.NOT_VALID_DATE_FORMAT_MESSAGE;
 
 import com.grasshouse.dorandoran.common.exception.DateNotValidException;
-import com.grasshouse.dorandoran.post.service.dto.PostSearchRequest;
+import com.grasshouse.dorandoran.post.service.dto.PostFilterRequest;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import org.springframework.core.MethodParameter;
@@ -16,7 +16,7 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
 @Component
-public class PostSearchArgumentResolver implements HandlerMethodArgumentResolver {
+public class PostFilterArgumentResolver implements HandlerMethodArgumentResolver {
 
     private static final String DATE_FORMAT = "[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}";
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter
@@ -24,7 +24,7 @@ public class PostSearchArgumentResolver implements HandlerMethodArgumentResolver
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        return parameter.hasParameterAnnotation(PostSearch.class);
+        return parameter.hasParameterAnnotation(PostFilter.class);
     }
 
     @Override
@@ -35,7 +35,7 @@ public class PostSearchArgumentResolver implements HandlerMethodArgumentResolver
         String endDate = webRequest.getParameter("endDate");
 
         if (StringUtils.isEmpty(startDate) || StringUtils.isEmpty(endDate)) {
-            return new PostSearchRequest(keyword, null, null);
+            return new PostFilterRequest(keyword, null, null);
         }
 
         if (!startDate.matches(DATE_FORMAT) || !endDate.matches(DATE_FORMAT)) {
@@ -49,7 +49,7 @@ public class PostSearchArgumentResolver implements HandlerMethodArgumentResolver
             throw new DateNotValidException(NOT_VALID_DATE_AREA_MESSAGE);
         }
 
-        return new PostSearchRequest(keyword, parsedStartDate, parsedEndDate);
+        return new PostFilterRequest(keyword, parsedStartDate, parsedEndDate);
     }
 
 }
