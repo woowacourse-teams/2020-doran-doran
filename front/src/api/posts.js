@@ -19,7 +19,7 @@ const api = (() => {
   const loadPostsIn24Hours = () => {
     const data = {
       startDate: moment().subtract(1, "days").format("YYYY-MM-DD HH:mm:ss"),
-      endDate: moment().format("YYYY-MM-DD HH:mm:ss")
+      endDate: moment().add(1, "seconds").format("YYYY-MM-DD HH:mm:ss"),
     };
     const params = new URLSearchParams(data).toString();
     return client.get(`/filter?` + params).then((res) => res.data);
