@@ -41,7 +41,7 @@ export default {
   },
   async mounted() {
     await this.$kakaoMap.drawMap(this.$refs.map);
-    await this.setCenterLocation();
+    await this.$kakaoMap.setCenterByCurrentLocation();
     await this.changeAppBarByCenterAddress();
     await this.$store.dispatch("post/loadPosts");
     await this.$kakaoMap.addEventToMap(
@@ -51,11 +51,6 @@ export default {
     this.isMapRendered = true;
   },
   methods: {
-    async setCenterLocation() {
-      const currentLocation = await this.$kakaoMap.getCurrentLocation();
-      this.$kakaoMap.setCenterLocation(currentLocation);
-      this.$kakaoMap.setCurrentLocationMarker(currentLocation);
-    },
     async changeAppBarByCenterAddress() {
       const centerLocation = await this.$kakaoMap.getCenterLocation();
       const centerAddress = await this.$kakaoMap.getAddress(centerLocation);

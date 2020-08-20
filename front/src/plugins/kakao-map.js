@@ -94,17 +94,25 @@ const KakaoMap = (() => {
     });
   };
 
-  const setCurrentLocationMarker = (currentLocation) => {
-    if (!map || !currentLocation) {
+  const setMarker = (location, img) => {
+    if (!map || !location) {
       return;
     }
-    const currentLocationImage = CURRENT_MARKER_IMAGE;
     const markerSize = new kakao.maps.Size(36, 36);
-    const markerImage = _createMarkerImage(currentLocationImage, markerSize);
+    const markerImage = _createMarkerImage(img, markerSize);
 
-    const currentKakaoLocation = _createKakaoLocation(currentLocation);
+    const currentKakaoLocation = _createKakaoLocation(location);
     const marker = _createMarker(currentKakaoLocation, markerImage);
     marker.setMap(map);
+  };
+
+  const setCenterByCurrentLocation = async () => {
+    if (!map) {
+      return;
+    }
+    const currentLocation = await getCurrentLocation();
+    setCenterLocation(currentLocation);
+    setMarker(currentLocation, CURRENT_MARKER_IMAGE);
   };
 
   const _createOverlay = (content, position) => {
@@ -184,7 +192,8 @@ const KakaoMap = (() => {
     getCurrentLocation,
     getCenterLocation,
     setCenterLocation,
-    setCurrentLocationMarker,
+    setCenterByCurrentLocation,
+    setMarker,
     getBounds,
     setPostOverlay,
     closePostOverlays,
