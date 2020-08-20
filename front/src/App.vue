@@ -1,5 +1,8 @@
 <template>
   <v-app class="app-container">
+    <v-snackbar top timeout="1500" class="snackbar" v-model="snackbarWarning">
+      {{ snackbarMessage }}
+    </v-snackbar>
     <DoranAppBar />
     <transition name="fade" mode="out-in">
       <RouterView />
@@ -14,6 +17,24 @@ export default {
   name: "App",
   components: {
     DoranAppBar,
+  },
+  computed: {
+    snackbarMessage: {
+      get() {
+        return this.$store.getters["snackbar/snackbarMessage"];
+      },
+      set(val) {
+        this.$store.commit("snackbar/SET_SNACKBAR_MESSAGE", val);
+      },
+    },
+    snackbarWarning: {
+      get() {
+        return this.$store.getters["snackbar/snackbarWarning"];
+      },
+      set(val) {
+        this.$store.commit("snackbar/SET_SNACKBAR_WARNING", val);
+      },
+    },
   },
 };
 </script>
@@ -38,6 +59,10 @@ a {
 
 .app-container > div {
   height: 100%;
+}
+
+.snackbar {
+  z-index: 9999 !important;
 }
 
 .fade-enter-active,

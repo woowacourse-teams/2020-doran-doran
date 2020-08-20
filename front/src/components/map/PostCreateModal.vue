@@ -1,8 +1,5 @@
 <template>
   <div class="modal-mask" @click.self="closeModal">
-    <v-snackbar v-model="snackbarWarning" timeout="1500" top>
-      {{ snackbarMessage }}
-    </v-snackbar>
     <div class="pa-3 modal-container">
       <VTextarea
         type="text"
@@ -39,7 +36,7 @@ import { MAP_MODE } from "@/utils/constants";
 import { DORAN_DORAN_COLORS } from "@/utils/constants";
 import { ERROR_MESSAGE } from "@/utils/constants";
 
-const NO_CONTENT_MESSAGE = "🤔 내용을 입력해주세요.";
+const CREATE_POST_SUCCESS_MESSAGE = "🎉 글이 등록되었습니다.";
 
 export default {
   name: "PostCreateModal",
@@ -47,25 +44,22 @@ export default {
     return {
       content: "",
       buttonColor: DORAN_DORAN_COLORS.POINT_COLOR,
-      snackbarWarning: false,
-      snackbarMessage: NO_CONTENT_MESSAGE,
     };
   },
   methods: {
     async createPost() {
       if (this.content === "") {
-        this.snackbarWarning = true;
+        this.$store.commit("snackbar/SHOW_SNACKBAR", ERROR_MESSAGE.NO_CONTENT_MESSAGE);
         return;
       }
+
       const postLocation = this.$kakaoMap.getCenterLocation();
       const authorLocation = await this.$kakaoMap.getCurrentLocation();
-
       if (!authorLocation) {
-        this.snackbarMessage = ERROR_MESSAGE.UNIDENTIFIABLE_LOCATION;
-        this.snackbarWarning = true;
-        this.snackbarMessage = NO_CONTENT_MESSAGE;
+        this.$store.commit("snackbar/SHOW_SNACKBAR", ERROR_MESSAGE.UNIDENTIFIABLE_LOCATION);
         return;
       }
+
       const data = {
         memberId: 1,
         content: this.content,
@@ -74,6 +68,7 @@ export default {
         authorAddress: await this.$kakaoMap.getAddress(authorLocation),
       };
       await this.$store.dispatch("post/createPost", data);
+      this.$store.commit("snackbar/SHOW_SNACKBAR", CREATE_POST_SUCCESS_MESSAGE);
       this.closeModal();
     },
     closeModal() {

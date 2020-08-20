@@ -25,7 +25,7 @@ export default {
       endDate: this.$route.query.endDate,
     };
     await this.$store.dispatch("post/searchPosts", data);
-    this.$store.commit("appBar/SEARCH_RESULT_PAGE")
+    this.$store.commit("appBar/SEARCH_RESULT_PAGE");
     this.posts = this.$store.getters["post/getSearchedPosts"].reverse();
   },
 };

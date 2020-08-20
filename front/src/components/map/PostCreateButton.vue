@@ -18,6 +18,8 @@
 <script>
 import { MAP_MODE, DORAN_DORAN_COLORS } from "@/utils/constants";
 
+const MARKER_MODE_MESSAGE = "✏️ 글을 작성할 위치를 선택해주세요.";
+
 const BUTTON_TYPE = {
   DEFAULT: {
     color: DORAN_DORAN_COLORS.POINT_COLOR,
@@ -53,6 +55,7 @@ export default {
         this.$store.commit("modal/CHANGE_STATE", MAP_MODE.MARKER);
         this.$store.commit("appBar/TOGGLE_APP_BAR");
         this.buttonType = BUTTON_TYPE.MARKER;
+        this.$store.commit("snackbar/SHOW_SNACKBAR", MARKER_MODE_MESSAGE);
       } else if (this.isMarkerMode) {
         this.$store.commit("modal/CHANGE_STATE", MAP_MODE.POST);
         this.$store.commit("appBar/TOGGLE_APP_BAR");

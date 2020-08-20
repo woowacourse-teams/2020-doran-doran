@@ -56,7 +56,7 @@ export default {
     };
   },
   created() {
-    this.$store.commit("appBar/SEARCH_PAGE")
+    this.$store.commit("appBar/SEARCH_PAGE");
   },
   methods: {
     inputStartDate(date) {
