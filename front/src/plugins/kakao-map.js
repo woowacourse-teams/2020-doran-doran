@@ -13,8 +13,8 @@ const CURRENT_MARKER_IMAGE =
 
 const KakaoMap = (() => {
   let map = null;
-  let clusterer = null;
   let postOverlays = [];
+  let clusterer = null;
 
   const script = document.createElement("script");
   script.src = KAKAO_MAP_URL + KAKAO_MAP_APP_KEY + LIBRARY;
@@ -45,6 +45,7 @@ const KakaoMap = (() => {
       level: 2,
     };
     map = new kakao.maps.Map(mapContainer, options);
+    postOverlays = [];
     clusterer = _createClusterer();
   };
 
@@ -141,7 +142,7 @@ const KakaoMap = (() => {
     postOverlays.push(customOverlay);
   };
 
-  const closePostOverlays = () => {
+  const hidePostOverlays = () => {
     if (postOverlays.length === 0) {
       return;
     }
@@ -196,7 +197,7 @@ const KakaoMap = (() => {
     setMarker,
     getBounds,
     setPostOverlay,
-    closePostOverlays,
+    hidePostOverlays,
     showPostOverlays,
     getAddress,
     addEventToMap,

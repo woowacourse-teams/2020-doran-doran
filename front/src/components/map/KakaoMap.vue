@@ -62,7 +62,7 @@ export default {
     isDefaultMode(val) {
       val
         ? this.$kakaoMap.showPostOverlays()
-        : this.$kakaoMap.closePostOverlays();
+        : this.$kakaoMap.hidePostOverlays();
     },
   },
 };
