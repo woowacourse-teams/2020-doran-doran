@@ -35,7 +35,7 @@ export default {
       state.myPageButton = true;
       state.cancelButton = false;
       state.title = "타임라인";
-      state.searchButton = true;
+      state.searchButton = false;
       state.timelineButton = false;
       state.mapButton = true;
     },

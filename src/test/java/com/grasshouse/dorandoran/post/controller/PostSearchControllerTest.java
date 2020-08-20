@@ -26,7 +26,7 @@ class PostSearchControllerTest extends CommonControllerTest {
     @DisplayName("키워드와 날짜로 검색된 글을 반환한다.")
     @Test
     void getSearchResultsPosts() throws Exception {
-        String url = "/posts/search";
+        String url = "/posts/filter";
         when(postSearchService.showSearchResults(any())).thenReturn(postResponses());
 
         this.mockMvc.perform(get(url)
@@ -44,7 +44,7 @@ class PostSearchControllerTest extends CommonControllerTest {
     @DisplayName("날짜 필터링이 없는 경우")
     @Test
     void getSearchResultsPosts2() throws Exception {
-        String url = "/posts/search";
+        String url = "/posts/filter";
         when(postSearchService.showSearchResults(any())).thenReturn(postResponses());
 
         this.mockMvc.perform(get(url)
@@ -60,7 +60,7 @@ class PostSearchControllerTest extends CommonControllerTest {
     @DisplayName("[예외] 시작 날짜가 마감 날짜보다 뒤에 있는 경우")
     @Test
     void getSearchResultsPosts3() throws Exception {
-        String url = "/posts/search";
+        String url = "/posts/filter";
         when(postSearchService.showSearchResults(any())).thenReturn(postResponses());
 
         this.mockMvc.perform(get(url)
@@ -76,7 +76,7 @@ class PostSearchControllerTest extends CommonControllerTest {
     @DisplayName("[예외] 날짜가 올바른 형식이 아닌 경우")
     @Test
     void getSearchResultsPosts4() throws Exception {
-        String url = "/posts/search";
+        String url = "/posts/filter";
         when(postSearchService.showSearchResults(any())).thenReturn(postResponses());
 
         this.mockMvc.perform(get(url)

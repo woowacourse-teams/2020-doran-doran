@@ -1,7 +1,6 @@
 <template>
   <v-app-bar flat max-height="56" color="white">
     <v-container
-      fluid
       class="d-flex flex-row align-center justify-space-between pa-0"
     >
       <v-icon v-show="backButton" @click="goToPreviousPage">
@@ -20,9 +19,9 @@
       </v-toolbar-title>
 
       <div class="text-right app-bar-right">
-        <router-link v-show="searchButton" to="/search">
-          <v-icon>mdi-magnify</v-icon>
-        </router-link>
+        <v-icon v-show="searchButton" @click="toggleMode">
+          mdi-magnify
+        </v-icon>
         <v-icon v-show="timelineButton" @click="goToTimelinePage">
           mdi-format-list-bulleted
         </v-icon>
@@ -30,6 +29,28 @@
           <v-icon>mdi-map</v-icon>
         </router-link>
       </div>
+    </v-container>
+
+    <v-container
+      v-if="!this.defaultMode"
+      fluid
+      class="d-flex flex-row align-center justify-space-between pa-0"
+    >
+      <VTextField
+        v-model="keyword"
+        autofocus
+        placeholder="검색어를 입력하세요."
+        color="amber accent-3"
+        filled
+        rounded
+        dense
+        hide-details
+        class="mx-2 font-size-small"
+        @mouseenter="searchPosts"
+      />
+      <v-icon @click="toggleMode">
+        mdi-window-close
+      </v-icon>
     </v-container>
   </v-app-bar>
 </template>
@@ -39,6 +60,12 @@ import { MAP_MODE } from "@/utils/constants";
 
 export default {
   name: "DoranAppBar",
+  data() {
+    return {
+      defaultMode: true,
+      keyword: "",
+    };
+  },
   computed: {
     backButton() {
       return this.$store.getters["appBar/backButton"];
@@ -84,6 +111,12 @@ export default {
       this.$store.commit("appBar/MAP_PAGE_DEFAULT_MODE");
       this.$store.commit("mapMode/CHANGE_STATE", MAP_MODE.DEFAULT);
     },
+    toggleMode() {
+      this.defaultMode = !this.defaultMode;
+    },
+    searchPosts() {
+
+    }
   },
 };
 </script>
