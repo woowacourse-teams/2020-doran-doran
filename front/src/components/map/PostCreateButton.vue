@@ -55,7 +55,7 @@ export default {
         this.$store.commit("modal/CHANGE_STATE", MAP_MODE.MARKER);
         this.$store.commit("appBar/TOGGLE_APP_BAR");
         this.buttonType = BUTTON_TYPE.MARKER;
-        this.$emit("marker-mode", MARKER_MODE_MESSAGE);
+        this.$store.commit("snackbar/SHOW_SNACKBAR", MARKER_MODE_MESSAGE);
       } else if (this.isMarkerMode) {
         this.$store.commit("modal/CHANGE_STATE", MAP_MODE.POST);
         this.$store.commit("appBar/TOGGLE_APP_BAR");

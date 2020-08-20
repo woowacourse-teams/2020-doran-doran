@@ -1,8 +1,5 @@
 <template>
   <div class="modal-mask" @click.self="closeModal">
-    <v-snackbar v-model="snackbarWarning" timeout="1500" top>
-      {{ snackbarMessage }}
-    </v-snackbar>
     <div class="pa-3 modal-container">
       <VTextarea
         type="text"
@@ -47,23 +44,19 @@ export default {
     return {
       content: "",
       buttonColor: DORAN_DORAN_COLORS.POINT_COLOR,
-      snackbarWarning: false,
-      snackbarMessage: "",
     };
   },
   methods: {
     async createPost() {
       if (this.content === "") {
-        this.snackbarMessage = ERROR_MESSAGE.NO_CONTENT_MESSAGE;
-        this.snackbarWarning = true;
+        this.$store.commit("snackbar/SHOW_SNACKBAR", ERROR_MESSAGE.NO_CONTENT_MESSAGE);
         return;
       }
 
       const postLocation = this.$kakaoMap.getCenterLocation();
       const authorLocation = await this.$kakaoMap.getCurrentLocation();
       if (!authorLocation) {
-        this.snackbarMessage = ERROR_MESSAGE.UNIDENTIFIABLE_LOCATION;
-        this.snackbarWarning = true;
+        this.$store.commit("snackbar/SHOW_SNACKBAR", ERROR_MESSAGE.UNIDENTIFIABLE_LOCATION);
         return;
       }
 
@@ -75,7 +68,7 @@ export default {
         authorAddress: await this.$kakaoMap.getAddress(authorLocation),
       };
       await this.$store.dispatch("post/createPost", data);
-      this.$emit("create-post", CREATE_POST_SUCCESS_MESSAGE);
+      this.$store.commit("snackbar/SHOW_SNACKBAR", CREATE_POST_SUCCESS_MESSAGE);
       this.closeModal();
     },
     closeModal() {
