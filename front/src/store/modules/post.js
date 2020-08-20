@@ -52,7 +52,7 @@ export default {
   actions: {
     async createPost({ dispatch }, newPost) {
       await api.createPost(newPost);
-      dispatch("loadPosts");
+      dispatch("loadPostsIn24Hours");
     },
     async loadPost({ commit }, postId) {
       const data = await api.loadPost(postId);
