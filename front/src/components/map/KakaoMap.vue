@@ -1,10 +1,10 @@
 <template>
-  <v-container fill-height fluid ref="map">
+  <v-container ref="map" fill-height fluid>
     <v-icon
-      class="center-marker"
-      color="red"
-      size="40"
       v-if="this.isMarkerMode"
+      size="40"
+      color="red"
+      class="center-marker"
     >
       mdi-map-marker
     </v-icon>
@@ -40,35 +40,29 @@ export default {
     },
   },
   async mounted() {
-    await this.$drawMap(this.$refs.map);
-    if (this.isDefaultMode) {
-      await this.initMainMap();
-    }
+    await this.$kakaoMap.drawMap(this.$refs.map);
+    await this.$kakaoMap.setCenterByCurrentLocation();
+    await this.changeAppBarByCenterAddress();
+    await this.$store.dispatch("post/loadPosts");
+    await this.$kakaoMap.addEventToMap(
+      EVENT_TYPE.CENTER_CHANGE,
+      this.changeAppBarByCenterAddress,
+    );
+    this.isMapRendered = true;
+  },
+  methods: {
+    async changeAppBarByCenterAddress() {
+      const centerLocation = await this.$kakaoMap.getCenterLocation();
+      const centerAddress = await this.$kakaoMap.getAddress(centerLocation);
+      const address = Object.values(centerAddress).join(" ");
+      this.$store.commit("appBar/CHANGE_TITLE", address);
+    },
   },
   watch: {
     isDefaultMode(val) {
-      val ? this.$showPostOverlays() : this.$closePostOverlays();
-    },
-  },
-  methods: {
-    async initMainMap() {
-      const currentLocation = await this.$getCurrentLocation();
-      this.$setLocation(currentLocation);
-      this.$setCurrentLocationMarker(currentLocation);
-      await this.changeAppBarAddressByCenterLocation();
-      this.$clearPostOverlay();
-      await this.$store.dispatch("post/loadPosts");
-      await this.$addEventToMap(
-        EVENT_TYPE.CENTER_CHANGE,
-        this.changeAppBarAddressByCenterLocation,
-      );
-      this.isMapRendered = true;
-    },
-    async changeAppBarAddressByCenterLocation() {
-      const centerLocation = await this.$getCenterLocation();
-      const centerAddress = await this.$getAddress(centerLocation);
-      const address = Object.values(centerAddress).join(" ");
-      this.$store.commit("appBar/CHANGE_TITLE", address);
+      val
+        ? this.$kakaoMap.showPostOverlays()
+        : this.$kakaoMap.hidePostOverlays();
     },
   },
 };

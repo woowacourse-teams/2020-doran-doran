@@ -1,158 +1,211 @@
 import { KAKAO_MAP_APP_KEY } from "@/secure/appkey";
-import INITIAL_LOCATION from "@/config/config";
 
 const KAKAO_MAP_URL = "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=";
 const LIBRARY = "&libraries=services,clusterer";
 
-const KakaoMap = {
-  install(Vue) {
-    const script = document.createElement("script");
-    script.src = KAKAO_MAP_URL + KAKAO_MAP_APP_KEY + LIBRARY;
-    document.head.appendChild(script);
+// Location of Luther Hall, Jamsil, Korea
+const INITIAL_LOCATION = {
+  latitude: 37.515416,
+  longitude: 127.103,
+};
+const CURRENT_MARKER_IMAGE =
+  "https://sheengroup.com.au/assets/Uploads/misc/current-location.png";
 
-    const postOverlays = [];
+const KakaoMap = (() => {
+  let map = null;
+  let postOverlays = [];
+  let clusterer = null;
 
-    /* global kakao */
-    const loadApi = new Promise((resolve) => {
-      script.onload = () => kakao.maps.load(resolve);
+  const script = document.createElement("script");
+  script.src = KAKAO_MAP_URL + KAKAO_MAP_APP_KEY + LIBRARY;
+  document.head.appendChild(script);
+
+  /* global kakao */
+  const loadApi = new Promise((resolve) => {
+    script.onload = () => kakao.maps.load(resolve);
+  });
+
+  const _createKakaoLocation = (location) => {
+    return new kakao.maps.LatLng(location.latitude, location.longitude);
+  };
+
+  const _createClusterer = () => {
+    return new kakao.maps.MarkerClusterer({
+      map: map,
+      averageCenter: true,
+      minLevel: 3,
+      calculator: [3, 7, 11, 15],
     });
+  };
 
-    const createKakaoLocation = (location) => {
-      return new kakao.maps.LatLng(location.latitude, location.longitude);
+  const drawMap = async (mapContainer) => {
+    await loadApi;
+    const options = {
+      center: _createKakaoLocation(INITIAL_LOCATION),
+      level: 2,
     };
+    map = new kakao.maps.Map(mapContainer, options);
+    postOverlays = [];
+    clusterer = _createClusterer();
+  };
 
-    Vue.prototype.$drawMap = async (mapContainer) => {
-      await loadApi;
-      const options = {
-        center: createKakaoLocation(INITIAL_LOCATION.JAMSIL_LUTHER),
-        level: 2,
-      };
-      this.map = new kakao.maps.Map(mapContainer, options);
-      this.clusterer = createClusterer();
+  const _getGeolocation = () => {
+    return new Promise((resolve, reject) =>
+      navigator.geolocation.getCurrentPosition(resolve, reject, {
+        timeout: 1000,
+      }),
+    ).catch(console.log);
+  };
+
+  const getCurrentLocation = async () => {
+    const currentLocation = await _getGeolocation();
+    return {
+      latitude: currentLocation.coords.latitude,
+      longitude: currentLocation.coords.longitude,
     };
+  };
 
-    const createClusterer = () => {
-      return new kakao.maps.MarkerClusterer({
-        map: this.map,
-        averageCenter: true,
-        minLevel: 3,
-        calculator: [3, 7, 11, 15],
-      });
+  const getCenterLocation = () => {
+    if (!map) {
+      return;
+    }
+    const center = map.getCenter();
+    return {
+      longitude: center.getLng(),
+      latitude: center.getLat(),
     };
+  };
 
-    Vue.prototype.$getCurrentLocation = async () => {
-      const getLocation = () =>
-        new Promise((resolve, reject) =>
-          navigator.geolocation.getCurrentPosition(resolve, reject, {
-            timeout: 1000,
-          }),
-        );
-      return await getLocation()
-        .then((location) => {
-          return {
-            latitude: location.coords.latitude,
-            longitude: location.coords.longitude,
-          };
-        })
-        .catch((e) => console.log(e));
+  const setCenterLocation = (location) => {
+    if (!map || !location) {
+      return;
+    }
+    const targetLocation = _createKakaoLocation(location);
+    map.setCenter(targetLocation);
+  };
+
+  const _createMarkerImage = (src, size, options) => {
+    return new kakao.maps.MarkerImage(src, size, options);
+  };
+
+  const _createMarker = (position, image) => {
+    return new kakao.maps.Marker({
+      position: position,
+      image: image,
+    });
+  };
+
+  const setMarker = (location, img) => {
+    if (!map || !location) {
+      return;
+    }
+    const markerSize = new kakao.maps.Size(36, 36);
+    const markerImage = _createMarkerImage(img, markerSize);
+
+    const currentKakaoLocation = _createKakaoLocation(location);
+    const marker = _createMarker(currentKakaoLocation, markerImage);
+    marker.setMap(map);
+  };
+
+  const setCenterByCurrentLocation = async () => {
+    if (!map) {
+      return;
+    }
+    const currentLocation = await getCurrentLocation();
+    setCenterLocation(currentLocation);
+    setMarker(currentLocation, CURRENT_MARKER_IMAGE);
+  };
+
+  const _createOverlay = (content, position) => {
+    return new kakao.maps.CustomOverlay({
+      content: content,
+      position: position,
+    });
+  };
+
+  const getBounds = () => {
+    if (!map) {
+      return;
+    }
+    return map.getBounds();
+  };
+
+  const setPostOverlay = (overlayTemplate, location) => {
+    if (!map) {
+      return;
+    }
+    const kakaoLocation = _createKakaoLocation(location);
+    const customOverlay = _createOverlay(overlayTemplate, kakaoLocation);
+
+    customOverlay.setMap(map);
+    clusterer.addMarker(customOverlay);
+    postOverlays.push(customOverlay);
+  };
+
+  const hidePostOverlays = () => {
+    if (postOverlays.length === 0) {
+      return;
+    }
+    postOverlays.forEach((overlay) => {
+      overlay.setMap(null);
+    });
+  };
+
+  const showPostOverlays = () => {
+    if (postOverlays.length === 0) {
+      return;
+    }
+    postOverlays.forEach((overlay) => {
+      overlay.setMap(map);
+    });
+  };
+
+  const _getAdministrativeAddress = (location) => {
+    const geocoder = new kakao.maps.services.Geocoder();
+    return new Promise((resolve) =>
+      geocoder.coord2RegionCode(location.longitude, location.latitude, resolve),
+    );
+  };
+
+  const getAddress = async (location) => {
+    if (!map || !location) {
+      return;
+    }
+
+    const address = await _getAdministrativeAddress(location);
+    return {
+      depth1: address[1].region_1depth_name,
+      depth2: address[1].region_2depth_name,
+      depth3: address[1].region_3depth_name,
     };
+  };
 
-    Vue.prototype.$getCenterLocation = () => {
-      const center = this.map.getCenter();
-      return {
-        longitude: center.getLng(),
-        latitude: center.getLat(),
-      };
-    };
+  const addEventToMap = (eventType, func) => {
+    if (!map) {
+      return;
+    }
 
-    Vue.prototype.$getBounds = () => {
-      return this.map.getBounds();
-    };
+    map.addListener(eventType, func);
+  };
 
-    Vue.prototype.$setLocation = (location) => {
-      if (!this.map || !location) {
-        return;
-      }
-      const targetLocation = createKakaoLocation(location);
-      this.map.setCenter(targetLocation);
-    };
+  return {
+    drawMap,
+    getCurrentLocation,
+    getCenterLocation,
+    setCenterLocation,
+    setCenterByCurrentLocation,
+    setMarker,
+    getBounds,
+    setPostOverlay,
+    hidePostOverlays,
+    showPostOverlays,
+    getAddress,
+    addEventToMap,
+  };
+})();
 
-    const createMarkerImage = (src, size, options) => {
-      return new kakao.maps.MarkerImage(src, size, options);
-    };
-
-    const createMarker = (position, image) => {
-      return new kakao.maps.Marker({
-        position: position,
-        image: image,
-      });
-    };
-
-    Vue.prototype.$setCurrentLocationMarker = (currentLocation) => {
-      if (!this.map || !currentLocation) {
-        return;
-      }
-      const currentLocationImage =
-        "https://sheengroup.com.au/assets/Uploads/misc/current-location.png";
-      const markerSize = new kakao.maps.Size(36, 36);
-      const markerImage = createMarkerImage(currentLocationImage, markerSize);
-
-      const currentKakaoLocation = createKakaoLocation(currentLocation);
-      const marker = createMarker(currentKakaoLocation, markerImage);
-      marker.setMap(this.map);
-    };
-
-    Vue.prototype.$clearPostOverlay = () => {
-      postOverlays.length = 0;
-    };
-
-    Vue.prototype.$setPostOverlay = (overlayTemplate, location) => {
-      const kakaoLocation = createKakaoLocation(location);
-
-      const customOverlay = new kakao.maps.CustomOverlay({
-        position: kakaoLocation,
-        content: overlayTemplate,
-      });
-      customOverlay.setMap(this.map);
-      this.clusterer.addMarker(customOverlay);
-
-      postOverlays.push(customOverlay);
-    };
-
-    Vue.prototype.$closePostOverlays = () => {
-      postOverlays.forEach((overlay) => {
-        overlay.setMap(null);
-      });
-    };
-
-    Vue.prototype.$showPostOverlays = () => {
-      postOverlays.forEach((overlay) => {
-        overlay.setMap(this.map);
-      });
-    };
-
-    Vue.prototype.$getAddress = async (location) => {
-      const geocoder = new kakao.maps.services.Geocoder();
-
-      return await new Promise((resolve) =>
-        geocoder.coord2RegionCode(
-          location.longitude,
-          location.latitude,
-          resolve,
-        ),
-      ).then((result) => {
-        return {
-          depth1: result[1].region_1depth_name,
-          depth2: result[1].region_2depth_name,
-          depth3: result[1].region_3depth_name,
-        };
-      });
-    };
-
-    Vue.prototype.$addEventToMap = (eventType, func) => {
-      this.map.addListener(eventType, func);
-    };
+export default {
+  install(Vue) {
+    Vue.prototype.$kakaoMap = KakaoMap;
   },
 };
-
-export default KakaoMap;

@@ -1,14 +1,12 @@
 <template>
-  <div class="speech-bubble" ref="post" @click.prevent="routePage">
+  <div ref="post" class="speech-bubble" @click.prevent="routePage">
     {{ shortContent }} {{ contentTail }}
-    <span class="red--text text-caption"> [{{ post.comments.length }}]</span>
+    <span class="text-caption red--text"> [{{ post.comments.length }}]</span>
     <div class="speech-arrow"></div>
   </div>
 </template>
 
 <script>
-import router from "@/router";
-
 const CONTENT_LENGTH = 15;
 
 export default {
@@ -28,11 +26,11 @@ export default {
     },
   },
   mounted() {
-    this.$setPostOverlay(this.$refs.post, this.post.location);
+    this.$kakaoMap.setPostOverlay(this.$refs.post, this.post.location);
   },
   methods: {
     routePage() {
-      router.push("posts/" + this.post.id);
+      this.$router.push("posts/" + this.post.id);
     },
   },
 };
@@ -41,24 +39,24 @@ export default {
 <style scoped>
 .speech-bubble {
   position: relative;
-  background: white;
-  border-radius: 1em;
-  padding: 10px;
   bottom: 32px;
-  box-shadow: 1px 1px 5px grey;
+  padding: 10px;
   min-width: 35px;
+  border-radius: 1em;
+  box-shadow: 1px 1px 5px grey;
+  background: white;
   text-align: center;
 }
 
 .speech-arrow {
   position: absolute;
-  background-color: white;
   left: 50%;
-  width: 10px;
-  height: 10px;
   bottom: -6px;
+  height: 10px;
+  width: 10px;
   margin-left: -5px;
   transform: rotate(45deg);
+  background-color: white;
   box-shadow: -5px 0 0 white, 0 -5px 0 white, -5px -5px 0 white,
     1px 1px 5px gray;
 }

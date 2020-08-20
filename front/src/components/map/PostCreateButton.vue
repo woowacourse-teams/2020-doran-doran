@@ -1,14 +1,14 @@
 <template>
   <div>
     <v-btn
-      @click="changeMode"
-      fab
-      dark
-      large
       fixed
       right
       bottom
+      large
+      fab
+      dark
       :color="buttonType.color"
+      @click="changeMode"
     >
       <v-icon>{{ buttonType.icon }}</v-icon>
     </v-btn>

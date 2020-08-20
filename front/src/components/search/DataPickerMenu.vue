@@ -1,24 +1,24 @@
 <template>
   <v-menu
-    :close-on-content-click="false"
+    v-model="menu"
     max-height="290px"
     offset-y
     transition="scale-transition"
-    v-model="menu"
+    :close-on-content-click="false"
   >
     <template v-slot:activator="{ on, attrs }">
       <VTextField
-        :label="label"
-        dense
-        prepend-icon="mdi-calendar"
-        readonly
+        v-on="on"
         v-bind="attrs"
         v-model="date"
-        v-on="on"
+        :label="label"
+        prepend-icon="mdi-calendar"
+        readonly
+        dense
         class="pr-3"
       />
     </template>
-    <VDatePicker @input="selectDate" no-title scrollable v-model="date" />
+    <VDatePicker v-model="date" no-title scrollable @input="selectDate" />
   </v-menu>
 </template>
 

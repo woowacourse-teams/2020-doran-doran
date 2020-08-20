@@ -31,19 +31,17 @@
 </template>
 
 <script>
-import router from "@/router";
-
 export default {
   name: "DoranAppBar",
   methods: {
     goToPreviousPage() {
-      router.go(-1);
+      this.$router.go(-1);
     },
     goToMyPage() {
-      router.push("/mypage");
+      this.$router.push("/mypage");
     },
-    async goToTimelinePage() {
-      const boundsFromKakao = await this.$getBounds();
+    goToTimelinePage() {
+      const boundsFromKakao = this.$kakaoMap.getBounds();
       const bounds = {
         upperBound: boundsFromKakao.ja,
         lowerBound: boundsFromKakao.ka,
@@ -51,7 +49,7 @@ export default {
         rightBound: boundsFromKakao.ia,
       };
       const params = new URLSearchParams(bounds).toString();
-      await router.push("/timeline?" + params);
+      this.$router.push("/timeline?" + params);
     },
   },
   computed: {
@@ -88,6 +86,7 @@ export default {
   font-size: 0.9rem;
   padding: 8px;
 }
+
 .app-bar-right > * {
   margin-left: 8px;
 }

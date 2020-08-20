@@ -2,14 +2,14 @@
   <div class="pa-6">
     <VTextField
       v-model="keyword"
-      solo
-      clearable
       placeholder="검색어를 입력해주세요"
       prepend-inner-icon="mdi-magnify"
+      solo
+      clearable
     />
     시간
     <v-sheet elevation="2" class="rounded-lg pa-3">
-      <v-radio-group dense v-model="radios">
+      <v-radio-group v-model="radios" dense>
         <VRadio label="전체" value="date-all" :color="buttonColor" />
         <VRadio label="24시간 이내" value="date-day" :color="buttonColor" />
         <VRadio label="일주일 이내" value="date-week" :color="buttonColor" />
@@ -42,7 +42,7 @@ import DatePickerMenu from "@/components/search/DataPickerMenu";
 export default {
   name: "SearchPage",
   components: {
-    DatePickerMenu
+    DatePickerMenu,
   },
   data() {
     return {

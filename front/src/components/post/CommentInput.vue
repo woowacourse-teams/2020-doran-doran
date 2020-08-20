@@ -1,22 +1,20 @@
 <template>
   <div class="pt-3 comment-input">
-    <v-text-field
+    <VTextField
       v-model="content"
       placeholder="댓글을 입력해주세요."
-      maxlength="120"
       append-icon="mdi-pencil"
-      @click:append="createComment"
-      color="black"
-      rounded
+      maxlength="120"
       dense
+      rounded
       filled
+      color="black"
+      @click:append="createComment"
     />
   </div>
 </template>
 
 <script>
-import router from "@/router";
-
 export default {
   name: "CommentInput",
   props: {
@@ -36,12 +34,12 @@ export default {
         memberId: 1,
         postId: this.postId,
         content: this.content,
-        location: await this.$getCurrentLocation(),
+        location: await this.$kakaoMap.getCurrentLocation(),
       };
       this.$store
         .dispatch("comment/createComment", data)
         .then(() => alert("댓글이 등록되었습니다."))
-        .then(() => router.go(0));
+        .then(() => this.$router.go(0));
     },
   },
 };
@@ -50,10 +48,10 @@ export default {
 <style scoped>
 .comment-input {
   position: fixed;
-  width: 90vw;
   bottom: -1%;
   left: 50%;
   transform: translate(-50%);
+  width: 90vw;
   background-color: white;
 }
 </style>
