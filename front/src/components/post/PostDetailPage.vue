@@ -68,7 +68,7 @@ export default {
   methods: {
     hasLike(like) {
       return (
-        like.memberId === this.$store.getters["member/getMembers"] &&
+        like.memberId === this.$store.getters["member/getMembers"].id &&
         like.postId === this.post.id
       );
     },
@@ -88,7 +88,6 @@ export default {
     },
     async createPostLike() {
       const data = {
-        memberId: this.post.memberResponse.id,
         postId: this.post.id,
       };
       await this.$store.dispatch("post/createPostLike", data);

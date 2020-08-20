@@ -4,7 +4,7 @@ import static org.springframework.web.context.request.RequestAttributes.SCOPE_RE
 
 import com.grasshouse.dorandoran.common.exception.InvalidAuthenticationException;
 import com.grasshouse.dorandoran.member.repository.MemberRepository;
-import java.util.Objects;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
@@ -29,10 +29,8 @@ public class LoginMemberMethodArgumentResolver implements HandlerMethodArgumentR
         NativeWebRequest webRequest, WebDataBinderFactory binderFactory) {
         String id = (String) webRequest.getAttribute("id", SCOPE_REQUEST);
 
-        try {
-            return memberRepository.findByoAuthId(id);
-        } catch (Exception e) {
-            throw new InvalidAuthenticationException("비정상적인 로그인");
-        }
+        return Optional.ofNullable(id)
+            .map(memberRepository::findByoAuthId)
+            .orElseThrow(() -> new InvalidAuthenticationException("비정상적인 로그인"));
     }
 }

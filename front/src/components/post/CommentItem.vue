@@ -48,7 +48,7 @@ export default {
   methods: {
     hasLike(like) {
       return (
-        like.memberId === this.$store.getters["member/getMembers"] &&
+        like.memberId === this.$store.getters["member/getMembers"].id &&
         like.commentId === this.comment.id
       );
     },
@@ -64,7 +64,6 @@ export default {
     },
     async createCommentLike() {
       const data = {
-        memberId: this.comment.author.id,
         commentId: this.comment.id,
       };
       await this.$store.dispatch("comment/createCommentLike", data);

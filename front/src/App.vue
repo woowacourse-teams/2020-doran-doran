@@ -39,11 +39,13 @@ export default {
       },
     },
   },
-  created(){
+  async created() {
     const token = location.href.split("token=")[1];
     if (token) {
       sessionStorage.setItem("accessToken", token);
-      location.href="/"
+      location.href = "/";
+    } else {
+      await this.$store.dispatch("member/loadMember");
     }
   },
   data() {

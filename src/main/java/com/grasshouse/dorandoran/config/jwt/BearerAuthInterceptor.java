@@ -24,7 +24,7 @@ public class BearerAuthInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
         Object handler) {
-        if (request.getMethod().equals(ALLOW_HTTP_METHOD)) {
+        if (request.getMethod().equals(ALLOW_HTTP_METHOD) && !requestUrlContains(request, "/my")) {
             return true;
         }
 
@@ -36,6 +36,12 @@ public class BearerAuthInterceptor implements HandlerInterceptor {
         String id = jwtTokenProvider.getSubject(token);
         request.setAttribute("id", id);
         return true;
+    }
+
+    private boolean requestUrlContains(HttpServletRequest request, String regex) {
+        return request.getRequestURL()
+            .toString()
+            .contains(regex);
     }
 
     @Override

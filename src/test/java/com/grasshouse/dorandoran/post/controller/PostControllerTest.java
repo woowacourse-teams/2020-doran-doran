@@ -64,6 +64,7 @@ class PostControllerTest extends CommonControllerTest {
 
         String request = objectMapper.writeValueAsString(postCreateRequest);
         when(jwtTokenProvider.validateToken(anyString())).thenReturn(true);
+        when(jwtTokenProvider.getSubject(anyString())).thenReturn("id");
         when(memberRepository.findByoAuthId(anyString())).thenReturn(PERSIST_MEMBER);
         when(postService.createPost(any(), any())).thenReturn(postCreateResponse);
 
@@ -155,6 +156,7 @@ class PostControllerTest extends CommonControllerTest {
     @Test
     void deletePostWithLoginUser() throws Exception {
         when(jwtTokenProvider.validateToken(anyString())).thenReturn(true);
+        when(jwtTokenProvider.getSubject(anyString())).thenReturn("id");
         when(memberRepository.findByoAuthId(anyString())).thenReturn(PERSIST_MEMBER);
         doNothing().when(postService).deletePost(anyLong(), any());
 
@@ -182,6 +184,7 @@ class PostControllerTest extends CommonControllerTest {
             .build();
 
         when(jwtTokenProvider.validateToken(anyString())).thenReturn(true);
+        when(jwtTokenProvider.getSubject(anyString())).thenReturn("id");
         when(memberRepository.findByoAuthId(anyString())).thenReturn(anotherMember);
         doThrow(PostOwnerMisMatchException.class).when(postService).deletePost(anyLong(), any());
 
@@ -208,6 +211,7 @@ class PostControllerTest extends CommonControllerTest {
 
         String request = objectMapper.writeValueAsString(postCreateRequest);
         when(jwtTokenProvider.validateToken(anyString())).thenReturn(true);
+        when(jwtTokenProvider.getSubject(anyString())).thenReturn("id");
         when(memberRepository.findByoAuthId(anyString())).thenReturn(PERSIST_MEMBER);
         when(postService.createPost(any(), any())).thenReturn(postCreateResponse);
 

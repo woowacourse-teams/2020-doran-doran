@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class OAuthController {
 
     @GetMapping("/my")
-    public ResponseEntity<MemberResponse> loginRedirectHandle(@LoginMember Member member) {
+    public ResponseEntity<MemberResponse> getMyProfile(@LoginMember Member member) {
         return ResponseEntity.ok(MemberResponse.from(member));
     }
 }

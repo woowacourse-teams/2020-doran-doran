@@ -43,6 +43,7 @@ public class PostLikeControllerTest extends CommonControllerTest {
 
         String request = objectMapper.writeValueAsString(postLikeCreateRequest);
         when(jwtTokenProvider.validateToken(anyString())).thenReturn(true);
+        when(jwtTokenProvider.getSubject(anyString())).thenReturn("id");
         when(memberRepository.findByoAuthId(anyString())).thenReturn(PERSIST_MEMBER);
         when(postLikeService.createPostLike(any(), any())).thenReturn(10L);
 
@@ -75,6 +76,7 @@ public class PostLikeControllerTest extends CommonControllerTest {
     @Test
     void deletePostLikeWithLoginUser() throws Exception {
         when(jwtTokenProvider.validateToken(anyString())).thenReturn(true);
+        when(jwtTokenProvider.getSubject(anyString())).thenReturn("id");
         when(memberRepository.findByoAuthId(anyString())).thenReturn(PERSIST_MEMBER);
         doNothing().when(postLikeService).deletePostLike(anyLong(), any());
 

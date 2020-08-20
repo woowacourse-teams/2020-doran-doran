@@ -52,6 +52,7 @@ class CommentControllerTest extends CommonControllerTest {
 
         String request = objectMapper.writeValueAsString(commentCreateRequest);
         when(jwtTokenProvider.validateToken(anyString())).thenReturn(true);
+        when(jwtTokenProvider.getSubject(anyString())).thenReturn("id");
         when(memberRepository.findByoAuthId(anyString())).thenReturn(PERSIST_MEMBER);
         when(commentService.createComment(any(), any())).thenReturn(1L);
 
@@ -87,6 +88,7 @@ class CommentControllerTest extends CommonControllerTest {
     @Test
     void deleteCommentWithLoginUser() throws Exception {
         when(jwtTokenProvider.validateToken(anyString())).thenReturn(true);
+        when(jwtTokenProvider.getSubject(anyString())).thenReturn("id");
         when(memberRepository.findByoAuthId(anyString())).thenReturn(PERSIST_MEMBER);
         doNothing().when(commentService)
             .deleteComment(anyLong(), any());
@@ -116,6 +118,7 @@ class CommentControllerTest extends CommonControllerTest {
             .build();
 
         when(jwtTokenProvider.validateToken(anyString())).thenReturn(true);
+        when(jwtTokenProvider.getSubject(anyString())).thenReturn("id");
         when(memberRepository.findByoAuthId(anyString())).thenReturn(anotherMember);
         doThrow(CommentOwnerMisMatchException.class).when(commentService)
             .deleteComment(anyLong(), any());
@@ -140,6 +143,7 @@ class CommentControllerTest extends CommonControllerTest {
         String request = objectMapper.writeValueAsString(commentCreateRequest);
 
         when(jwtTokenProvider.validateToken(anyString())).thenReturn(true);
+        when(jwtTokenProvider.getSubject(anyString())).thenReturn("id");
         when(memberRepository.findByoAuthId(anyString())).thenReturn(PERSIST_MEMBER);
 
         this.mockMvc.perform(post("/comments")

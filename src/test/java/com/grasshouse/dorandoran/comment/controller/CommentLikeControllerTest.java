@@ -42,6 +42,7 @@ public class CommentLikeControllerTest extends CommonControllerTest {
 
         String request = objectMapper.writeValueAsString(commentLikeCreateRequest);
         when(jwtTokenProvider.validateToken(anyString())).thenReturn(true);
+        when(jwtTokenProvider.getSubject(anyString())).thenReturn("id");
         when(memberRepository.findByoAuthId(anyString())).thenReturn(PERSIST_MEMBER);
         when(commentLikeService.createCommentLike(any(), any())).thenReturn(1L);
 
@@ -74,6 +75,7 @@ public class CommentLikeControllerTest extends CommonControllerTest {
     @Test
     void deleteCommentLikeWithLoginUser() throws Exception {
         when(jwtTokenProvider.validateToken(anyString())).thenReturn(true);
+        when(jwtTokenProvider.getSubject(anyString())).thenReturn("id");
         when(memberRepository.findByoAuthId(anyString())).thenReturn(PERSIST_MEMBER);
         doNothing().when(commentLikeService)
             .deleteCommentLike(any(), any());
