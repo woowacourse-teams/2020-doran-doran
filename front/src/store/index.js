@@ -8,6 +8,7 @@ import memberSidebar from "@/store/modules/memberSidebar";
 import appBar from "@/store/modules/appBar";
 import snackbar from "@/store/modules/snackbar";
 import postModal from "@/store/modules/postModal";
+import postDetailModal from "@/store/modules/postDetailModal";
 
 Vue.use(Vuex);
 
@@ -21,5 +22,6 @@ export default new Vuex.Store({
     appBar,
     snackbar,
     postModal,
+    postDetailModal,
   },
 });

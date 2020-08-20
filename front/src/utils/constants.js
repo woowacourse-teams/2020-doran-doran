@@ -33,6 +33,11 @@ const LIKE_BUTTON_TYPE = {
   },
 };
 
+const POST_MODE = {
+  DEFAULT: "default",
+  MAP_MODAL: "map",
+};
+
 export {
   ERROR_MESSAGE,
   API_BASE_URL,
@@ -40,4 +45,5 @@ export {
   MAP_MODE,
   DORAN_DORAN_COLORS,
   LIKE_BUTTON_TYPE,
+  POST_MODE,
 };

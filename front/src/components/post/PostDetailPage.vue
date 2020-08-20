@@ -9,6 +9,8 @@
       {{ post.address.depth1 }}
       {{ post.address.depth2 }}
       {{ post.address.depth3 }}에 외침
+      <v-icon @click="changeMode">mdi-map</v-icon>
+      <PostMapModal v-if="this.isMapModalMode" :location="post.location"/>
     </div>
     <div class="my-5 text-break">{{ post.content }}</div>
     <div>
@@ -33,13 +35,15 @@
 <script>
 import CommentInput from "@/components/post/CommentInput";
 import CommentList from "@/components/post/CommentList";
-import { LIKE_BUTTON_TYPE } from "@/utils/constants";
+import PostMapModal from "@/components/post/PostMapModal";
+import { LIKE_BUTTON_TYPE, POST_MODE } from "@/utils/constants";
 
 export default {
   name: "PostDetailPage",
   components: {
     CommentList,
     CommentInput,
+    PostMapModal,
   },
   computed: {
     post: {
@@ -56,6 +60,12 @@ export default {
     },
     likeButtonType() {
       return this.liked ? LIKE_BUTTON_TYPE.LIKED : LIKE_BUTTON_TYPE.DEFAULT;
+    },
+    isDefaultMode() {
+      return this.$store.getters["postDetailModal/isDefaultMode"];
+    },
+    isMapModalMode() {
+      return this.$store.getters["postDetailModal/isMapModalMode"];
     },
   },
   async created() {
@@ -92,6 +102,11 @@ export default {
       };
       await this.$store.dispatch("post/createPostLike", data);
       await this.loadPost();
+    },
+    async changeMode() {
+      if (this.isDefaultMode) {
+        await this.$store.commit("postDetailModal/CHANGE_MODE", POST_MODE.MAP_MODAL);
+      }
     },
   },
 };

@@ -10,6 +10,10 @@ export default {
         nickname: "",
       },
       content: "",
+      location: {
+        longitude: 0,
+        latitude: 0,
+      },
       address: {
         depth1: "",
         depth2: "",
