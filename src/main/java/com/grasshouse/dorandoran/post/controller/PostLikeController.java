@@ -25,14 +25,16 @@ public class PostLikeController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> createPostLike(@LoginMember Member member, @RequestBody @Valid PostLikeCreateRequest request) {
+    public ResponseEntity<Void> createPostLike(@LoginMember Member member,
+        @RequestBody @Valid PostLikeCreateRequest request) {
         Long postLikeId = postLikeService.createPostLike(request, member);
         return ResponseEntity.created(URI.create("/posts/likes/" + postLikeId)).build();
     }
 
     @DeleteMapping("/{postLikeId}")
-    public ResponseEntity<Void> deletePostLike(@PathVariable Long postLikeId) {
-        postLikeService.deletePostLike(postLikeId);
+    public ResponseEntity<Void> deletePostLike(@LoginMember Member member,
+        @PathVariable Long postLikeId) {
+        postLikeService.deletePostLike(postLikeId, member);
         return ResponseEntity.noContent().build();
     }
 }

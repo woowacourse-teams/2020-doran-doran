@@ -32,7 +32,7 @@ public class CommentLikeControllerTest extends CommonControllerTest {
             .build();
 
         String request = objectMapper.writeValueAsString(commentLikeCreateRequest);
-        when(commentLikeService.createCommentLike(any())).thenReturn(1L);
+        when(commentLikeService.createCommentLike(any(), any())).thenReturn(1L);
 
         this.mockMvc.perform(post("/comments/likes")
             .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -40,20 +40,20 @@ public class CommentLikeControllerTest extends CommonControllerTest {
             .andExpect(status().isCreated())
             .andDo(print());
 
-        verify(commentLikeService).createCommentLike(any());
+        verify(commentLikeService).createCommentLike(any(), any());
     }
 
     @DisplayName("댓글 좋아요를 취소(삭제)한다.")
     @Test
     void cancelCommentLike() throws Exception {
         doNothing().when(commentLikeService)
-            .deleteCommentLike(PERSIST_COMMENT_LIKE.getId());
+            .deleteCommentLike(any(), any());
 
         this.mockMvc
             .perform(delete("/comments/likes/" + PERSIST_COMMENT_LIKE.getId()))
             .andExpect(status().isNoContent())
             .andDo(print());
 
-        verify(commentLikeService).deleteCommentLike(any());
+        verify(commentLikeService).deleteCommentLike(any(), any());
     }
 }

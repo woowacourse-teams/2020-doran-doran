@@ -114,7 +114,7 @@ public class PostLikeServiceTest {
         PostLike persistPostLike = postLikeRepository.save(postLike);
         assertThat(postLikeRepository.findAll()).hasSize(1);
 
-        postLikeService.deletePostLike(persistPostLike.getId());
+        postLikeService.deletePostLike(persistPostLike.getId(), postLiker);
         assertThat(postLikeRepository.findAll()).hasSize(0);
     }
 

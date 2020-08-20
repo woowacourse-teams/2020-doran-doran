@@ -2,6 +2,7 @@ package com.grasshouse.dorandoran.post.controller;
 
 import static com.grasshouse.dorandoran.fixture.PostLikeFixture.PERSIST_POST_LIKE;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -46,7 +47,7 @@ public class PostLikeControllerTest extends CommonControllerTest {
     @DisplayName("게시물의 좋아요를 취소(삭제)한다.")
     @Test
     void deletePostLike() throws Exception {
-        doNothing().when(postLikeService).deletePostLike(PERSIST_POST_LIKE.getId());
+        doNothing().when(postLikeService).deletePostLike(anyLong(), any());
         this.mockMvc.perform(delete("/posts/likes/" + PERSIST_POST_LIKE.getId()))
             .andExpect(status().isNoContent())
             .andDo(print());

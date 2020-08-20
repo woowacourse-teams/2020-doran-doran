@@ -11,7 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class BearerAuthInterceptor implements HandlerInterceptor {
 
     private static final String ALLOW_HTTP_METHOD = "GET";
-    
+
     private AuthorizationExtractor authExtractor;
     private JwtTokenProvider jwtTokenProvider;
 

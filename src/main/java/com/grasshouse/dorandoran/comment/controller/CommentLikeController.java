@@ -2,6 +2,8 @@ package com.grasshouse.dorandoran.comment.controller;
 
 import com.grasshouse.dorandoran.comment.service.CommentLikeService;
 import com.grasshouse.dorandoran.comment.service.dto.CommentLikeCreateRequest;
+import com.grasshouse.dorandoran.config.jwt.LoginMember;
+import com.grasshouse.dorandoran.member.domain.Member;
 import java.net.URI;
 import javax.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -23,17 +25,18 @@ public class CommentLikeController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> createCommentLike(
+    public ResponseEntity<Void> createCommentLike(@LoginMember Member member,
         @RequestBody @Valid CommentLikeCreateRequest request) {
-        Long commentLikeId = commentLikeService.createCommentLike(request);
+        Long commentLikeId = commentLikeService.createCommentLike(request, member);
         return ResponseEntity
             .created(URI.create("/comments/likes/" + commentLikeId))
             .build();
     }
 
     @DeleteMapping("/{commentLikeId}")
-    public ResponseEntity<Void> deleteCommentLike(@PathVariable Long commentLikeId) {
-        commentLikeService.deleteCommentLike(commentLikeId);
+    public ResponseEntity<Void> deleteCommentLike(@LoginMember Member member,
+        @PathVariable Long commentLikeId) {
+        commentLikeService.deleteCommentLike(commentLikeId, member);
         return ResponseEntity.noContent().build();
     }
 }
