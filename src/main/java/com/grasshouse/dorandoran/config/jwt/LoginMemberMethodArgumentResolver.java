@@ -28,9 +28,7 @@ public class LoginMemberMethodArgumentResolver implements HandlerMethodArgumentR
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
         NativeWebRequest webRequest, WebDataBinderFactory binderFactory) {
         String id = (String) webRequest.getAttribute("id", SCOPE_REQUEST);
-        if (Objects.isNull(id)) {
-            throw new InvalidAuthenticationException("비정상적인 접근");
-        }
+
         try {
             return memberRepository.findByoAuthId(id);
         } catch (Exception e) {
