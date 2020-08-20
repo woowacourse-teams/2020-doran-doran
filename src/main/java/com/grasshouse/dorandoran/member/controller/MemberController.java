@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class OAuthController {
+public class MemberController {
 
     @GetMapping("/my")
-    public ResponseEntity<MemberResponse> getMyProfile(@LoginMember Member member) {
+    public ResponseEntity<MemberResponse> getProfile(@LoginMember Member member) {
         return ResponseEntity.ok(MemberResponse.from(member));
     }
 }
