@@ -4,6 +4,7 @@ HELP.md
 build/
 src/main/generated/**
 src/main/resources/application-prod.properties
+src/main/resources/application-security.properties
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/java/**
 !**/src/test/**
