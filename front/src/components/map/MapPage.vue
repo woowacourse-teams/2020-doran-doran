@@ -1,5 +1,9 @@
 <template>
   <v-container fill-height fluid class="pa-0">
+    <PeriodFilterButton />
+    <v-snackbar top timeout="1500" v-model="locationAlert">
+      ✏️ 글을 작성할 위치를 선택해주세요.
+    </v-snackbar>
     <KakaoMap />
     <PostCreateButton />
     <PostCreateModal
@@ -13,10 +17,12 @@
 import KakaoMap from "@/components/map/KakaoMap";
 import PostCreateButton from "@/components/map/PostCreateButton";
 import PostCreateModal from "@/components/map/PostCreateModal";
+import PeriodFilterButton from "@/components/map/PeriodFilterButton";
 
 export default {
   name: "MapPage",
   components: {
+    PeriodFilterButton,
     KakaoMap,
     PostCreateButton,
     PostCreateModal,
