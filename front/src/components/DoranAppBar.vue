@@ -46,7 +46,7 @@
         dense
         hide-details
         class="mx-2 font-size-small"
-        @mouseenter="searchPosts"
+        @keyup.enter="searchPosts"
       />
       <v-icon @click="toggleMode">
         mdi-window-close
@@ -56,6 +56,8 @@
 </template>
 
 <script>
+import { DATE_FILTER_TYPE } from "@/utils/time-filter-type";
+
 import { MAP_MODE } from "@/utils/constants";
 
 export default {
@@ -114,9 +116,22 @@ export default {
     toggleMode() {
       this.defaultMode = !this.defaultMode;
     },
-    searchPosts() {
-
-    }
+    async searchPosts() {
+      const data = {
+        keyword: this.keyword,
+      };
+      const dateType = Object.values(DATE_FILTER_TYPE()).find(
+        (dateType) => dateType.name === this.radios,
+      );
+      if (!dateType) {
+        data.startDate = "2020-08-19" + " 00:00:00";
+        data.endDate = "2020-09-20" + " 23:59:59";
+      } else {
+        data.startDate = dateType.startDate;
+        data.endDate = this.$moment().format("YYYY-MM-DD HH:mm:ss");
+      }
+      await this.$store.dispatch("post/searchPosts", data);
+    },
   },
 };
 </script>

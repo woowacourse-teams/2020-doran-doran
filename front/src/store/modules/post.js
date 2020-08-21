@@ -73,7 +73,7 @@ export default {
     },
     async searchPosts({ commit }, data) {
       const searchResult = await api.searchPosts(data);
-      commit("SET_SEARCHED_POSTS", searchResult);
+      commit("SET_POSTS", searchResult);
     },
     async createPostLike(context, newPostLike) {
       await api.createPostLike(newPostLike);
