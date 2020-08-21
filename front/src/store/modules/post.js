@@ -58,12 +58,20 @@ export default {
       const data = await api.loadPost(postId);
       commit("SET_POST", data);
     },
-    async loadPosts({ commit }) {
-      const data = await api.loadPosts();
-      commit("SET_POSTS", data);
-    },
     async loadPostsIn24Hours({ commit }) {
       const data = await api.loadPostsIn24Hours();
+      commit("SET_POSTS", data);
+    },
+    async loadPostsIn1Week({ commit }) {
+      const data = await api.loadPostsIn1Week();
+      commit("SET_POSTS", data);
+    },
+    async loadPostsIn1Month({ commit }) {
+      const data = await api.loadPostsIn1Month();
+      commit("SET_POSTS", data);
+    },
+    async loadAllPosts({ commit }) {
+      const data = await api.loadAllPosts();
       commit("SET_POSTS", data);
     },
     async loadPostsInBounds({ commit }, bounds) {
@@ -74,10 +82,9 @@ export default {
       await api.deletePost(postId);
       commit("REMOVE_POST", postId);
     },
-    async searchPosts({ commit }, data) {
-      commit("CLEAR_POSTS");
-      const searchResult = await api.searchPosts(data);
-      commit("SET_POSTS", searchResult);
+    async filterPosts({ commit }, data) {
+      const searchResult = await api.filterPosts(data);
+      commit("SET_SEARCHED_POSTS", searchResult);
     },
     async createPostLike(context, newPostLike) {
       await api.createPostLike(newPostLike);
