@@ -31,8 +31,8 @@ public class PostController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> createPost(@LoginMember Member member,
-        @RequestBody @Valid PostCreateRequest request) {
+    public ResponseEntity<Void> createPost(@RequestBody @Valid PostCreateRequest request,
+        @LoginMember Member member) {
         PostCreateResponse response = postService.createPost(request, member);
         return ResponseEntity.created(URI.create("/posts/" + response.getId())).build();
     }
@@ -57,7 +57,7 @@ public class PostController {
     }
 
     @DeleteMapping("/{postId}")
-    public ResponseEntity<Void> deletePost(@LoginMember Member member, @PathVariable Long postId) {
+    public ResponseEntity<Void> deletePost(@PathVariable Long postId, @LoginMember Member member) {
         postService.deletePost(postId, member);
         return ResponseEntity.noContent().build();
     }
