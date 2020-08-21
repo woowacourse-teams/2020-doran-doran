@@ -1,18 +1,14 @@
 <template>
   <div class="modal-mask" @click.self="closeModal">
     <div class="pa-1 modal-container">
-      <v-container fill-height fluid ref="map" class="map-container">
-      </v-container>
-
-      <div class="float-right">
-        <v-btn
-          @click.prevent="closeModal"
-          class="my-2 mx-1 rounded-pill"
-          color="grey lighten-4"
-        >
-          X
-        </v-btn>
-      </div>
+      <v-icon
+        @click.prevent="closeModal"
+        class="my-2 mx-1 rounded-pill close-btn"
+        color="grey lighten-4"
+      >
+        mdi-close
+      </v-icon>
+      <VContainer fill-height fluid ref="postMap" class="map-container" />
     </div>
   </div>
 </template>
@@ -20,7 +16,8 @@
 <script>
 import { POST_MODE } from "@/utils/constants";
 
-const MAP_MARKER_IMAGE = "https://dorandoran.s3.ap-northeast-2.amazonaws.com/project/map/blue_marker_with_shadow.png";
+const MAP_MARKER_IMAGE =
+  "https://dorandoran.s3.ap-northeast-2.amazonaws.com/project/map/blue_marker_with_shadow.png";
 
 export default {
   name: "PostMapModal",
@@ -31,12 +28,9 @@ export default {
     },
   },
   async mounted() {
-    await this.$kakaoMap.drawMap(this.$refs.map);
+    await this.$kakaoMap.drawMap(this.$refs.postMap);
     await this.$kakaoMap.setCenterLocation(this.location);
-    await this.$kakaoMap.setMarker(
-      this.location,
-      MAP_MARKER_IMAGE,
-    );
+    await this.$kakaoMap.setMarker(this.location, MAP_MARKER_IMAGE);
   },
   computed: {
     isMapModalMode() {
@@ -71,6 +65,12 @@ export default {
   height: 40%;
   background-color: #fff;
   border-radius: 10px;
+}
+
+.close-btn {
+  position: absolute;
+  top: -40px;
+  right: 0;
 }
 
 .map-container {
