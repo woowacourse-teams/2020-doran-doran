@@ -6,11 +6,13 @@
       <div class="float-right mt-2">{{ postDate }}</div>
     </div>
     <div class="text--disabled post-address">
-      {{ post.address.depth1 }}
-      {{ post.address.depth2 }}
-      {{ post.address.depth3 }}에 외침
-      <v-icon @click="changeMode">mdi-map</v-icon>
-      <PostMapModal v-if="this.isMapModalMode" :location="post.location"/>
+      <span @click="changeMode">
+        <v-icon size="large" color="#659FEC">mdi-map-marker-radius</v-icon>
+        {{ post.address.depth1 }}
+        {{ post.address.depth2 }}
+        {{ post.address.depth3 }}에 외침
+      </span>
+      <PostMapModal v-if="this.isMapModalMode" :location="post.location" />
     </div>
     <div class="my-5 text-break">{{ post.content }}</div>
     <div>
@@ -105,7 +107,10 @@ export default {
     },
     async changeMode() {
       if (this.isDefaultMode) {
-        await this.$store.commit("postDetailModal/CHANGE_MODE", POST_MODE.MAP_MODAL);
+        await this.$store.commit(
+          "postDetailModal/CHANGE_MODE",
+          POST_MODE.MAP_MODAL,
+        );
       }
     },
   },
