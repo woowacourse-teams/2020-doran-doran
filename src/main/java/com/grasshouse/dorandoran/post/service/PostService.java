@@ -1,7 +1,7 @@
 package com.grasshouse.dorandoran.post.service;
 
+import com.grasshouse.dorandoran.common.exception.PostAuthorMisMatchException;
 import com.grasshouse.dorandoran.common.exception.PostNotFoundException;
-import com.grasshouse.dorandoran.common.exception.PostOwnerMisMatchException;
 import com.grasshouse.dorandoran.member.domain.Member;
 import com.grasshouse.dorandoran.post.domain.Post;
 import com.grasshouse.dorandoran.post.repository.PostRepository;
@@ -57,7 +57,7 @@ public class PostService {
     public void deletePost(Long id, Member member) {
         Post post = findPostById(id);
         if (!post.isSameAuthor(member)) {
-            throw new PostOwnerMisMatchException();
+            throw new PostAuthorMisMatchException();
         }
         postRepository.delete(post);
     }
