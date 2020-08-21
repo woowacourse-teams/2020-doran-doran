@@ -29,7 +29,6 @@ export default {
       comments: [],
     },
     posts: [],
-    searchedPosts: [],
     timelinePosts: [],
   },
   mutations: {
@@ -38,9 +37,6 @@ export default {
     },
     SET_POSTS(state, posts) {
       state.posts = posts;
-    },
-    SET_SEARCHED_POSTS(state, searchedPosts) {
-      state.searchedPosts = searchedPosts;
     },
     SET_TIMELINE_POSTS(state, timelinePosts) {
       state.timelinePosts = timelinePosts;
@@ -88,9 +84,6 @@ export default {
     },
     getPosts: (state) => {
       return state.posts;
-    },
-    getSearchedPosts: (state) => {
-      return state.searchedPosts;
     },
     getPostsInBounds: (state) => {
       return state.timelinePosts;

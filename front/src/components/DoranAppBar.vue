@@ -46,7 +46,7 @@
         dense
         hide-details
         class="mx-2 font-size-small"
-        @keyup.enter="searchPosts"
+        @keyup.enter="filterPosts"
       />
       <v-icon @click="toggleMode">
         mdi-window-close
@@ -116,7 +116,7 @@ export default {
     toggleMode() {
       this.defaultMode = !this.defaultMode;
     },
-    async searchPosts() {
+    async filterPosts() {
       const data = {
         keyword: this.keyword,
       };
