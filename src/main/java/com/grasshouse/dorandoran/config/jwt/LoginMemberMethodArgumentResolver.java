@@ -2,7 +2,7 @@ package com.grasshouse.dorandoran.config.jwt;
 
 import static org.springframework.web.context.request.RequestAttributes.SCOPE_REQUEST;
 
-import com.grasshouse.dorandoran.common.exception.InvalidAuthenticationException;
+import com.grasshouse.dorandoran.common.exception.MemberNotFoundException;
 import com.grasshouse.dorandoran.member.repository.MemberRepository;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +31,6 @@ public class LoginMemberMethodArgumentResolver implements HandlerMethodArgumentR
 
         return Optional.ofNullable(id)
             .map(memberRepository::findByoAuthId)
-            .orElseThrow(() -> new InvalidAuthenticationException("비정상적인 로그인"));
+            .orElseThrow(MemberNotFoundException::new);
     }
 }

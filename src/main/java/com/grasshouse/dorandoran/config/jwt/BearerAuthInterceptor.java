@@ -1,6 +1,7 @@
 package com.grasshouse.dorandoran.config.jwt;
 
 import com.grasshouse.dorandoran.common.exception.InvalidAuthenticationException;
+import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Component;
@@ -30,10 +31,11 @@ public class BearerAuthInterceptor implements HandlerInterceptor {
 
         String token = authExtractor.extract(request, "Bearer");
 
-        if (!jwtTokenProvider.validateToken(token)) {
-            throw new InvalidAuthenticationException("올바르지 않은 토큰 입니다.");
-        }
-        String id = jwtTokenProvider.getSubject(token);
+        String id = Optional.ofNullable(token)
+            .filter(t -> jwtTokenProvider.validateToken(t))
+            .map(t -> jwtTokenProvider.getSubject(t))
+            .orElseThrow(InvalidAuthenticationException::new);
+
         request.setAttribute("id", id);
         return true;
     }
