@@ -8,21 +8,27 @@
         maxlength="200"
         :counter="200"
         no-resize
+        elevation="2"
         solo
       />
 
       <div class="float-right">
         <v-btn
           color="grey lighten-4"
-          class="my-6 mx-1 rounded-pill"
+          class="my-6 mx-1 rounded-pill letter-spacing-narrow"
           @click.prevent="closeModal"
         >
           취소
         </v-btn>
         <v-btn
-          :color="buttonColor"
-          class="my-6 mx-1 rounded-pill"
+          elevation="2"
+          :style="{
+            background: `linear-gradient(320deg, 
+            rgba(252, 144, 0, 1) 30%,
+            rgba(251, 203, 49, 1) 100%)`,
+          }"
           @click.prevent="createPost"
+          class="my-6 mx-1 rounded-pill letter-spacing-narrow"
         >
           등록
         </v-btn>
@@ -103,5 +109,9 @@ export default {
   width: 90%;
   border-radius: 10px;
   background-color: #fff;
+}
+
+.letter-spacing-narrow {
+  letter-spacing: 0px;
 }
 </style>
