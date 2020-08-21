@@ -20,6 +20,8 @@
 <script>
 import { POST_MODE } from "@/utils/constants";
 
+const MAP_MARKER_IMAGE = "https://dorandoran.s3.ap-northeast-2.amazonaws.com/project/map/blue_marker_with_shadow.png";
+
 export default {
   name: "PostMapModal",
   props: {
@@ -29,12 +31,11 @@ export default {
     },
   },
   async mounted() {
-    console.log("here");
     await this.$kakaoMap.drawMap(this.$refs.map);
     await this.$kakaoMap.setCenterLocation(this.location);
     await this.$kakaoMap.setMarker(
       this.location,
-      "https://sheengroup.com.au/assets/Uploads/misc/current-location.png",
+      MAP_MARKER_IMAGE,
     );
   },
   computed: {
@@ -70,15 +71,6 @@ export default {
   height: 40%;
   background-color: #fff;
   border-radius: 10px;
-}
-
-.center-marker {
-  position: relative;
-  z-index: 2;
-  left: 50%;
-  margin-left: -20px;
-  margin-top: -35px;
-  text-shadow: 2px 2px 3px gray;
 }
 
 .map-container {

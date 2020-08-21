@@ -9,7 +9,7 @@ const INITIAL_LOCATION = {
   longitude: 127.103,
 };
 const CURRENT_MARKER_IMAGE =
-  "https://sheengroup.com.au/assets/Uploads/misc/current-location.png";
+  "https://dorandoran.s3.ap-northeast-2.amazonaws.com/project/map/current-location.png";
 
 const KakaoMap = (() => {
   let map = null;
