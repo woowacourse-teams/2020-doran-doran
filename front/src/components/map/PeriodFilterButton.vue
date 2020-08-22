@@ -1,27 +1,54 @@
 <template>
   <div>
-    <v-btn fixed small fab dark :color="buttonType.color" @click="toggleSlider" class="filter-button">
+    <v-btn
+      fixed
+      small
+      fab
+      dark
+      :color="buttonType.color"
+      @click="toggleSlider"
+      class="filter-button"
+    >
       <v-icon small>{{ buttonType.icon }}</v-icon>
     </v-btn>
     <template v-if="isSliderOpened">
-      <v-btn-toggle v-model="choices" mandatory borderless class="period-choices">
-        <v-btn value="24hours" small @click="changeTimeFilterTo24Hours"> 24시간 이내 </v-btn>
-        <v-btn value="1week" small @click="changeTimeFilterTo1Week"> 일주일 이내 </v-btn>
-        <v-btn value="1month" small @click="changeTimeFilterTo1Month"> 한 달 이내 </v-btn>
-        <v-btn value="all" small @click="changeTimeFilterToAll"> 전체 </v-btn>
-        <v-btn value="userInput" small > 직접 입력 </v-btn>
+      <v-btn-toggle
+        v-model="periodFilterChoice"
+        mandatory
+        borderless
+        class="period-choices"
+      >
+        <v-btn value="24hours" small @click="changePeriodFilterTo24Hours">
+          24시간 이내
+        </v-btn>
+        <v-btn value="1week" small @click="changePeriodFilterTo1Week">
+          일주일 이내
+        </v-btn>
+        <v-btn value="1month" small @click="changePeriodFilterTo1Month">
+          한 달 이내
+        </v-btn>
+        <v-btn value="all" small @click="changePeriodFilterToWholePeriod">
+          전체
+        </v-btn>
+        <v-btn value="userInput" small @click="openCalendarModal">
+          직접 입력
+        </v-btn>
       </v-btn-toggle>
-<!--      <div v-if="choices === 'userInput'" class="calendar-modal">-->
-<!--        <DatePickerMenu :label="'시작 날짜'" @select-date="inputStartDate" />-->
-<!--        <DatePickerMenu :label="'종료 날짜'" @select-date="inputEndDate" />-->
-<!--      </div>-->
+      <v-sheet
+        v-if="periodFilterChoice === 'userInput' && isCalendarOpen === true"
+        class="userInputModal rounded-lg"
+        elevation="2"
+      >
+        <DatePickerMenu :label="'시작 날짜'" @select-date="inputStartDate" />
+        <DatePickerMenu :label="'종료 날짜'" @select-date="inputEndDate" />
+      </v-sheet>
     </template>
   </div>
 </template>
 
 <script>
 import { DORAN_DORAN_COLORS } from "@/utils/constants";
-// import DatePickerMenu from "@/components/search/DataPickerMenu";
+import DatePickerMenu from "@/components/search/DataPickerMenu";
 
 const BUTTON_TYPE = {
   DEFAULT: {
@@ -37,35 +64,58 @@ const BUTTON_TYPE = {
 export default {
   name: "PeriodFilterButton",
   components: {
-    // DatePickerMenu,
+    DatePickerMenu,
   },
   data() {
     return {
-      isSliderOpened: false,
       buttonType: BUTTON_TYPE.DEFAULT,
-      choices: "24hours",
+      isSliderOpened: false,
+      periodFilterChoice: "24hours",
+      isCalendarOpen: true,
     };
   },
   methods: {
     toggleSlider() {
       this.isSliderOpened = !this.isSliderOpened;
     },
-    async changeTimeFilterTo24Hours() {
+    async changePeriodFilterTo24Hours() {
       await this.$store.dispatch("post/loadPostsIn24Hours");
     },
-    async changeTimeFilterTo1Week() {
+    async changePeriodFilterTo1Week() {
       await this.$store.dispatch("post/loadPostsIn1Week");
     },
-    async changeTimeFilterTo1Month() {
+    async changePeriodFilterTo1Month() {
       await this.$store.dispatch("post/loadPostsIn1Month");
     },
-    async changeTimeFilterToAll() {
+    async changePeriodFilterToWholePeriod() {
       await this.$store.dispatch("post/loadAllPosts");
     },
-    // async changeTimeFilterToUserInput() {
-    //   this.showCalendar = true;
-    //   await this.$store.dispatch("post/loadAllPosts");
-    // },
+    async openCalendarModal() {
+      this.isCalendarOpen = true;
+    },
+    async inputStartDate(date) {
+      await this.$store.commit("filter/SET_START_DATE", date);
+      if ((await this.$store.getters["filter/endDate"]) !== "") {
+        await this.setPeriodFilter();
+        this.isCalendarOpen = false;
+        await this.$store.commit("filter/INITIALIZE_PERIOD_FILTER");
+      }
+    },
+    async inputEndDate(date) {
+      await this.$store.commit("filter/SET_END_DATE", date);
+      if ((await this.$store.getters["filter/startDate"]) !== "") {
+        await this.setPeriodFilter();
+        this.isCalendarOpen = false;
+        await this.$store.commit("filter/INITIALIZE_PERIOD_FILTER");
+      }
+    },
+    async setPeriodFilter() {
+      const data = {
+        startDate: this.$store.getters["filter/startDate"],
+        endDate: this.$store.getters["filter/endDate"],
+      };
+      await this.$store.dispatch("post/filterPosts", data);
+    },
   },
 };
 </script>
@@ -91,11 +141,12 @@ export default {
 }
 .userInputModal {
   position: fixed;
-  top: 50%;
-  left: 50%;
+  top: 100px;
+  left: 190px;
   z-index: 9998;
-  transform: translate(-50%, -50%);
   background-color: white;
-  margin: 10px;
+  height: 120px;
+  max-width: 70%;
+  padding-bottom: 20px;
 }
 </style>

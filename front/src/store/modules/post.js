@@ -84,7 +84,7 @@ export default {
     },
     async filterPosts({ commit }, data) {
       const searchResult = await api.filterPosts(data);
-      commit("SET_SEARCHED_POSTS", searchResult);
+      commit("SET_POSTS", searchResult);
     },
     async createPostLike(context, newPostLike) {
       await api.createPostLike(newPostLike);
