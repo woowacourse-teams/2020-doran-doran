@@ -36,6 +36,7 @@ export default {
       state.post = post;
     },
     SET_POSTS(state, posts) {
+      state.posts = [];
       state.posts = posts;
     },
     CLEAR_POSTS(state) {
