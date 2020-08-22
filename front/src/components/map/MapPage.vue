@@ -1,9 +1,6 @@
 <template>
   <v-container fill-height fluid class="pa-0">
     <PeriodFilterButton />
-    <v-snackbar top timeout="1500" v-model="locationAlert">
-      ✏️ 글을 작성할 위치를 선택해주세요.
-    </v-snackbar>
     <KakaoMap />
     <PostCreateButton />
     <PostCreateModal
