@@ -9,7 +9,11 @@
       mdi-map-marker
     </v-icon>
     <template v-if="isMapRendered" class="d-none">
-      <PostOverlay v-for="post in posts" :key="post.id" :post="post" />
+      <PostOverlay
+        v-for="post in clustered(posts)"
+        :key="post.id"
+        :post="post"
+      />
     </template>
   </v-container>
 </template>
@@ -58,6 +62,10 @@ export default {
     this.isMapRendered = true;
   },
   methods: {
+    clustered(posts) {
+      this.$kakaoMap.clearClusterer();
+      return posts;
+    },
     async changeAppBarByCenterAddress() {
       const centerLocation = await this.$kakaoMap.getCenterLocation();
       const centerAddress = await this.$kakaoMap.getAddress(centerLocation);

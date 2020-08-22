@@ -23,7 +23,7 @@
         <v-btn
           elevation="2"
           :style="{
-            background: `linear-gradient(320deg, 
+            background: `linear-gradient(320deg,
             rgba(252, 144, 0, 1) 30%,
             rgba(251, 203, 49, 1) 100%)`,
           }"

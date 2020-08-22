@@ -1,5 +1,5 @@
 <template>
-  <div ref="post" class="speech-bubble" @click.prevent="routePage">
+  <div ref="post" class="speech-bubble" @click.prevent="goToPostDetailPage">
     {{ shortContent }} {{ contentTail }}
     <span class="text-caption red--text"> [{{ post.comments.length }}]</span>
     <div class="speech-arrow"></div>
@@ -29,8 +29,14 @@ export default {
     this.$kakaoMap.setPostOverlay(this.$refs.post, this.post.location);
   },
   methods: {
-    routePage() {
+    goToPostDetailPage() {
       this.$router.push("posts/" + this.post.id);
+    },
+  },
+  watch: {
+    post() {
+      this.$kakaoMap.setPostOverlay(this.$refs.post, this.post.location);
+      this.$kakaoMap.redrawClusterer();
     },
   },
 };

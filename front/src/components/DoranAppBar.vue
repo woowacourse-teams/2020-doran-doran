@@ -31,33 +31,34 @@
       </div>
     </v-container>
 
-    <v-container
-      v-if="!this.defaultMode"
-      fluid
-      class="d-flex flex-row align-center justify-space-between pa-0"
-    >
-      <VTextField
-        v-model="keyword"
-        autofocus
-        placeholder="검색어를 입력하세요."
-        color="amber accent-3"
-        filled
-        rounded
-        dense
-        hide-details
-        class="mx-2 font-size-small"
-        @keyup.enter="filterPosts"
-      />
-      <v-icon @click="toggleMode">
-        mdi-window-close
-      </v-icon>
-    </v-container>
+    <v-expand-x-transition>
+      <v-container
+        v-if="!this.defaultMode"
+        fluid
+        class="d-flex flex-row align-center justify-space-between pa-0"
+      >
+        <VTextField
+          v-model="keyword"
+          autofocus
+          placeholder="검색어를 입력하세요."
+          color="amber accent-3"
+          filled
+          rounded
+          dense
+          hide-details
+          class="mx-2 font-size-small"
+          @keyup.enter="filterPosts"
+        />
+        <v-icon @click="showEveryPosts">
+          mdi-window-close
+        </v-icon>
+      </v-container>
+    </v-expand-x-transition>
   </v-app-bar>
 </template>
 
 <script>
 import { DATE_FILTER_TYPE } from "@/utils/time-filter-type";
-
 import { MAP_MODE } from "@/utils/constants";
 
 export default {
@@ -131,6 +132,11 @@ export default {
         data.endDate = this.$moment().format("YYYY-MM-DD HH:mm:ss");
       }
       await this.$store.dispatch("post/searchPosts", data);
+    },
+    async showEveryPosts() {
+      this.keyword = "";
+      this.toggleMode();
+      await this.$store.dispatch("post/loadPosts");
     },
   },
 };
