@@ -15,7 +15,7 @@
         prepend-icon="mdi-calendar"
         readonly
         dense
-        class="pr-3"
+        class="pr-3 pt-4 pl-2"
       />
     </template>
     <VDatePicker v-model="date" no-title scrollable @input="selectDate" />
