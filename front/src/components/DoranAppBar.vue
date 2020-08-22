@@ -47,7 +47,7 @@
           dense
           hide-details
           class="mx-2 font-size-small"
-          @keyup.enter="filterPosts"
+          @keypress.enter="filterPosts"
         />
         <v-icon @click="showEveryPosts">
           mdi-window-close
@@ -132,10 +132,11 @@ export default {
         data.endDate = this.$moment().format("YYYY-MM-DD HH:mm:ss");
       }
       await this.$store.dispatch("post/searchPosts", data);
+      this.keyword = "";
     },
     async showEveryPosts() {
-      this.keyword = "";
       this.toggleMode();
+      this.keyword = "";
       await this.$store.dispatch("post/loadPosts");
     },
   },

@@ -38,6 +38,9 @@ export default {
     SET_POSTS(state, posts) {
       state.posts = posts;
     },
+    CLEAR_POSTS(state) {
+      state.posts = null;
+    },
     SET_TIMELINE_POSTS(state, timelinePosts) {
       state.timelinePosts = timelinePosts;
     },
@@ -68,6 +71,7 @@ export default {
       commit("REMOVE_POST", postId);
     },
     async searchPosts({ commit }, data) {
+      commit("CLEAR_POSTS");
       const searchResult = await api.searchPosts(data);
       commit("SET_POSTS", searchResult);
     },

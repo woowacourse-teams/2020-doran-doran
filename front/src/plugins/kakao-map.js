@@ -169,10 +169,6 @@ const KakaoMap = (() => {
     clusterer.clear();
   };
 
-  const redrawClusterer = () => {
-    clusterer.redraw();
-  };
-
   const _getAdministrativeAddress = (location) => {
     const geocoder = new kakao.maps.services.Geocoder();
     return new Promise((resolve) =>
@@ -213,7 +209,6 @@ const KakaoMap = (() => {
     hidePostOverlays,
     showPostOverlays,
     clearClusterer,
-    redrawClusterer,
     getAddress,
     addEventToMap,
   };

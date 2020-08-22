@@ -36,7 +36,6 @@ export default {
   watch: {
     post() {
       this.$kakaoMap.setPostOverlay(this.$refs.post, this.post.location);
-      this.$kakaoMap.redrawClusterer();
     },
   },
 };
