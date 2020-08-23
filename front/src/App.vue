@@ -7,19 +7,19 @@
     <transition name="fade" mode="out-in">
       <RouterView />
     </transition>
-    <MyPageSideBar />
+    <MemberSidebar />
   </v-app>
 </template>
 
 <script>
 import DoranAppBar from "@/components/DoranAppBar";
-import MyPageSideBar from "@/components/member/MyPageSideBar";
+import MemberSidebar from "@/components/member/MemberSidebar";
 
 export default {
   name: "App",
   components: {
     DoranAppBar,
-    MyPageSideBar,
+    MemberSidebar,
   },
   computed: {
     snackbarMessage: {

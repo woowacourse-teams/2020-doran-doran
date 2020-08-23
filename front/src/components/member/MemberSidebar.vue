@@ -1,6 +1,6 @@
 <template>
   <v-navigation-drawer v-model="drawer" absolute temporary>
-    <v-icon @click="closeSideBar" class="float-right ma-4">
+    <v-icon @click="hideSidebar" class="float-right ma-4">
       mdi-window-close
     </v-icon>
 
@@ -35,7 +35,7 @@
 
 <script>
 export default {
-  name: "MyPageSideBar",
+  name: "MemberSidebar",
   data() {
     return {
       group: null,
@@ -62,10 +62,10 @@ export default {
   computed: {
     drawer: {
       get() {
-        return this.$store.getters["myPageSideBar/mode"];
+        return this.$store.getters["memberSidebar/visible"];
       },
       set(val) {
-        this.$store.commit("myPageSideBar/SET_SIDE_BAR", val);
+        this.$store.commit("memberSidebar/SET", val);
       },
     },
   },
@@ -73,13 +73,13 @@ export default {
     updateMember() {},
     logout() {},
     deleteMember() {},
-    closeSideBar() {
-      this.$store.commit("myPageSideBar/DEACTIVATE_SIDE_BAR");
+    hideSidebar() {
+      this.$store.commit("memberSidebar/HIDE");
     },
   },
   watch: {
     group() {
-      this.$store.commit("myPageSideBar/DEACTIVATE_SIDE_BAR");
+      this.$store.commit("memberSidebar/HIDE");
     },
   },
 };

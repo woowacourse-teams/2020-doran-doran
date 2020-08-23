@@ -4,11 +4,11 @@
 
     <div class="button-box">
       <router-link to="/map">
-        <v-btn depressed block color="white">
+        <v-btn depressed block color="white" elevation="3">
           <div>로그인 없이 둘러보기</div>
         </v-btn>
       </router-link>
-      <v-btn depressed block color="#FEE500" @click="kakaoLogin">
+      <v-btn depressed block color="#FEE500" @click="kakaoLogin" elevation="3">
         <img id="kakao-icon" src="@/assets/img/kakao-login.png" />
         <div>카카오톡으로 로그인하기</div>
       </v-btn>
@@ -20,7 +20,7 @@
 export default {
   name: "LoginPage",
   created() {
-    this.$store.commit("appBar/APP_BAR_INVISIBLE");
+    this.$store.commit("appBar/HIDE");
   },
   methods: {
     kakaoLogin() {

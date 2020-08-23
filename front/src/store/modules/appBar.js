@@ -1,7 +1,7 @@
 export default {
   namespaced: true,
   state: {
-    appBarVisible: true,
+    visible: true,
     backButton: false,
     myPageButton: false,
     title: "",
@@ -10,17 +10,17 @@ export default {
     mapButton: false,
   },
   mutations: {
-    TOGGLE_APP_BAR(state) {
-      state.appBarVisible = !state.appBarVisible;
+    TOGGLE(state) {
+      state.visible = !state.visible;
     },
-    APP_BAR_INVISIBLE(state) {
-      state.appBarVisible = false;
+    HIDE(state) {
+      state.visible = false;
     },
     CHANGE_TITLE(state, newTitle) {
       state.title = newTitle;
     },
     MAP_PAGE_DEFAULT_MODE(state) {
-      state.appBarVisible = true;
+      state.visible = true;
       state.backButton = false;
       state.myPageButton = true;
       state.searchButton = true;
@@ -28,7 +28,7 @@ export default {
       state.mapButton = false;
     },
     TIMELINE_PAGE(state) {
-      state.appBarVisible = true;
+      state.visible = true;
       state.backButton = false;
       state.myPageButton = true;
       state.title = "타임라인";
@@ -37,7 +37,7 @@ export default {
       state.mapButton = true;
     },
     POST_DETAIL_PAGE(state) {
-      state.appBarVisible = true;
+      state.visible = true;
       state.backButton = true;
       state.myPageButton = false;
       state.title = "게시글";
@@ -46,7 +46,7 @@ export default {
       state.mapButton = false;
     },
     SEARCH_PAGE(state) {
-      state.appBarVisible = true;
+      state.visible = true;
       state.backButton = true;
       state.myPageButton = false;
       state.title = "검색";
@@ -55,7 +55,7 @@ export default {
       state.mapButton = false;
     },
     SEARCH_RESULT_PAGE(state) {
-      state.appBarVisible = true;
+      state.visible = true;
       state.backButton = true;
       state.myPageButton = false;
       state.title = "검색 결과";
@@ -63,19 +63,10 @@ export default {
       state.timelineButton = false;
       state.mapButton = false;
     },
-    MY_PAGE(state) {
-      state.appBarVisible = true;
-      state.backButton = true;
-      state.myPageButton = false;
-      state.title = "마이페이지";
-      state.searchButton = false;
-      state.timelineButton = false;
-      state.mapButton = false;
-    },
   },
   getters: {
-    appBarVisible: (state) => {
-      return state.appBarVisible;
+    visible: (state) => {
+      return state.visible;
     },
     backButton: (state) => {
       return state.backButton;

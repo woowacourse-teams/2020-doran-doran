@@ -1,13 +1,12 @@
 <template>
   <v-app-bar v-show="appBarVisible" flat max-height="56" color="white">
     <v-container
-      fluid
       class="d-flex flex-row align-center justify-space-between pa-0"
     >
       <v-icon v-show="backButton" @click="goToPreviousPage">
         mdi-chevron-left
       </v-icon>
-      <v-icon v-show="myPageButton" @click="openSideBar">
+      <v-icon v-show="myPageButton" @click="openSidebar">
         mdi-account
       </v-icon>
 
@@ -35,7 +34,7 @@ export default {
   name: "DoranAppBar",
   computed: {
     appBarVisible() {
-      return this.$store.getters["appBar/appBarVisible"];
+      return this.$store.getters["appBar/visible"];
     },
     backButton() {
       return this.$store.getters["appBar/backButton"];
@@ -60,8 +59,8 @@ export default {
     goToPreviousPage() {
       this.$router.go(-1);
     },
-    openSideBar() {
-      this.$store.commit("myPageSideBar/ACTIVATE_SIDE_BAR");
+    openSidebar() {
+      this.$store.commit("memberSidebar/SHOW");
     },
     goToTimelinePage() {
       const boundsFromKakao = this.$kakaoMap.getBounds();

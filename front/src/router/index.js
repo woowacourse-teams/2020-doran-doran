@@ -22,7 +22,7 @@ const routes = [
   },
   {
     path: "/timeline",
-    name: "TimeLinePage",
+    name: "TimelinePage",
     component: TimelinePage,
   },
   {

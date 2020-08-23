@@ -4,7 +4,7 @@ import comment from "@/store/modules/comment";
 import member from "@/store/modules/member";
 import modal from "@/store/modules/modal";
 import post from "@/store/modules/post";
-import myPageSideBar from "@/store/modules/myPageSideBar";
+import memberSidebar from "@/store/modules/memberSidebar";
 import appBar from "@/store/modules/appBar";
 import snackbar from "@/store/modules/snackbar";
 
@@ -16,7 +16,7 @@ export default new Vuex.Store({
     comment,
     member,
     modal,
-    myPageSideBar,
+    memberSidebar,
     appBar,
     snackbar,
   },
