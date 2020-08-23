@@ -46,7 +46,7 @@ export default {
   text-align: center;
   font-size: 2rem;
   font-weight: bold;
-  font-family: "BM JUA_OTF", sans-serif;
+  font-family: BM_JUA, sans-serif;
   color: white;
 }
 

@@ -53,6 +53,11 @@ export default {
 </script>
 
 <style>
+@font-face {
+  font-family: BM_JUA;
+  src: url("./assets/BM_JUA.woff") format("woff");
+}
+
 * {
   letter-spacing: -0.7px;
 }
@@ -65,9 +70,9 @@ body {
 
 .doran-doran-color {
   background: linear-gradient(
-      320deg,
-      rgba(252, 144, 0, 1) 30%,
-      rgba(251, 203, 49, 1) 100%
+    320deg,
+    rgba(252, 144, 0, 1) 30%,
+    rgba(251, 203, 49, 1) 100%
   );
 }
 
