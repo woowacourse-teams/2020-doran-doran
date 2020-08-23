@@ -19,6 +19,14 @@ export default {
       state.timelineButton = true;
       state.mapButton = false;
     },
+    MAP_PAGE_MARKER_MODE(state) {
+      state.appBarVisible = true;
+      state.backButton = false;
+      state.myPageButton = false;
+      state.searchButton = false;
+      state.timelineButton = false;
+      state.mapButton = false;
+    },
     TIMELINE_PAGE(state) {
       state.backButton = false;
       state.myPageButton = true;
