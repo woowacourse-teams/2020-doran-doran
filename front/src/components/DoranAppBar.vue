@@ -1,6 +1,7 @@
 <template>
   <v-app-bar flat max-height="56" color="white">
     <v-container
+      fluid
       class="d-flex flex-row align-center justify-space-between pa-0"
     >
       <v-icon v-show="backButton" @click="goToPreviousPage">
@@ -9,6 +10,9 @@
       <v-icon v-show="myPageButton" @click="openSidebar">
         mdi-account
       </v-icon>
+      <v-icon v-show="cancelButton" @click="changeMapMode"
+        >mdi-chevron-left</v-icon
+      >
 
       <v-toolbar-title class="app-bar-title">
         {{ appBarTitle }}
@@ -30,6 +34,8 @@
 </template>
 
 <script>
+import { MAP_MODE } from "@/utils/constants";
+
 export default {
   name: "DoranAppBar",
   computed: {
@@ -38,6 +44,9 @@ export default {
     },
     myPageButton() {
       return this.$store.getters["appBar/myPageButton"];
+    },
+    cancelButton() {
+      return this.$store.getters["appBar/cancelButton"];
     },
     appBarTitle() {
       return this.$store.getters["appBar/title"];
