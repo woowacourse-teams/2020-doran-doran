@@ -1,15 +1,15 @@
 <template class="background">
-  <div class="background">
+  <div class="background doran-doran-color">
     <div class="app-title">도란도란</div>
 
-    <div class="button-box ma-6">
+    <div class="button-box">
       <router-link to="/map">
         <v-btn depressed block color="white">
           <div>로그인 없이 둘러보기</div>
         </v-btn>
       </router-link>
       <v-btn depressed block color="#FEE500" @click="kakaoLogin">
-        <img src="@/assets/img/kakao-login.png" />
+        <img id="kakao-icon" src="@/assets/img/kakao-login.png" />
         <div>카카오톡으로 로그인하기</div>
       </v-btn>
     </div>
@@ -34,37 +34,36 @@ export default {
 .background {
   width: 100%;
   height: 100vh;
-  background: linear-gradient(
-    320deg,
-    rgba(234, 77, 44, 1) 0%,
-    rgba(255, 166, 46, 1) 100%
-  );
-  /*background: linear-gradient(*/
-  /*  320deg,*/
-  /*  rgba(252, 144, 0, 1) 15%,*/
-  /*  rgba(251, 203, 49, 1) 100%*/
-  /*);*/
 }
+
 .app-title {
-  margin: auto;
+  position: fixed;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%);
   width: 50%;
+  margin: auto;
   text-align: center;
-  padding-top: 30%;
   font-size: 2rem;
   font-weight: bold;
   font-family: "BM JUA_OTF", sans-serif;
   color: white;
 }
+
 .button-box {
-  padding-top: 80%;
+  position: fixed;
+  bottom: 20%;
+  left: 50%;
+  transform: translate(-50%);
+  width: 80%;
+  max-width: 400px;
 }
-.button-box * {
-  letter-spacing: -0.7px;
-}
+
 .button-box > * {
   margin-top: 10px;
 }
-img {
+
+#kakao-icon {
   width: 15px;
   margin-right: 10px;
 }

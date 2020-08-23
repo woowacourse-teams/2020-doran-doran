@@ -53,11 +53,22 @@ export default {
 </script>
 
 <style>
+* {
+  letter-spacing: -0.7px;
+}
+
 html,
 body {
   width: 100%;
   height: 100%;
-  letter-spacing: -0.7px;
+}
+
+.doran-doran-color {
+  background: linear-gradient(
+      320deg,
+      rgba(252, 144, 0, 1) 30%,
+      rgba(251, 203, 49, 1) 100%
+  );
 }
 
 a {

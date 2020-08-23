@@ -1,19 +1,21 @@
 <template>
   <v-navigation-drawer v-model="drawer" absolute temporary>
-    <v-btn icon class="float-right ma-1">
-      <v-icon @click.self="closeModal">mdi-window-close</v-icon>
-    </v-btn>
+    <v-icon @click="closeSideBar" class="float-right ma-4">
+      mdi-window-close
+    </v-icon>
 
-    <v-list-item class="ma-5">
-      <v-list-item-avatar>
-        <img src="member.picture" />
-      </v-list-item-avatar>
-      <v-list-item-content>
-        <v-list-item-title class="font-weight-bold">
-          닉네임요기요기{{ member.nickName }}
-        </v-list-item-title>
-      </v-list-item-content>
-    </v-list-item>
+    <div class="ma-7 mt-16">
+      <img
+        :src="member.picture"
+        class="rounded-circle"
+        width="60px"
+        height="60px"
+        alt="profile"
+      />
+      <span class="mx-3 font-weight-bold">
+        닉네임요기요기{{ member.nickName }}
+      </span>
+    </div>
 
     <VDivider />
 
@@ -51,10 +53,6 @@ export default {
           action: this.logout,
         },
         {
-          title: "이용약관",
-          action: this.termsOfUse,
-        },
-        {
           title: "회원탈퇴",
           action: this.deleteMember,
         },
@@ -67,16 +65,15 @@ export default {
         return this.$store.getters["myPageSideBar/mode"];
       },
       set(val) {
-        this.$store.commit('myPageSideBar/SET_SIDE_BAR', val)
+        this.$store.commit("myPageSideBar/SET_SIDE_BAR", val);
       },
     },
   },
   methods: {
     updateMember() {},
     logout() {},
-    termsOfUse() {},
     deleteMember() {},
-    closeModal() {
+    closeSideBar() {
       this.$store.commit("myPageSideBar/DEACTIVATE_SIDE_BAR");
     },
   },

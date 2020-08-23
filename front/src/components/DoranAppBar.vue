@@ -7,7 +7,7 @@
       <v-icon v-show="backButton" @click="goToPreviousPage">
         mdi-chevron-left
       </v-icon>
-      <v-icon v-show="myPageButton" @click.stop="goToMyPage">
+      <v-icon v-show="myPageButton" @click="openSideBar">
         mdi-account
       </v-icon>
 
@@ -60,7 +60,7 @@ export default {
     goToPreviousPage() {
       this.$router.go(-1);
     },
-    goToMyPage() {
+    openSideBar() {
       this.$store.commit("myPageSideBar/ACTIVATE_SIDE_BAR");
     },
     goToTimelinePage() {
