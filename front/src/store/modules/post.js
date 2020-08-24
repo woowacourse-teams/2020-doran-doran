@@ -36,7 +36,6 @@ export default {
       state.post = post;
     },
     SET_POSTS(state, posts) {
-      state.posts = [];
       state.posts = posts;
     },
     CLEAR_POSTS(state) {
@@ -84,6 +83,7 @@ export default {
       commit("REMOVE_POST", postId);
     },
     async filterPosts({ commit }, data) {
+      commit("CLEAR_POSTS");
       const searchResult = await api.filterPosts(data);
       commit("SET_POSTS", searchResult);
     },
