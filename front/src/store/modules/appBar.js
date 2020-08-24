@@ -1,7 +1,6 @@
 export default {
   namespaced: true,
   state: {
-    visible: true,
     backButton: false,
     myPageButton: false,
     title: "",
@@ -10,17 +9,10 @@ export default {
     mapButton: false,
   },
   mutations: {
-    TOGGLE(state) {
-      state.visible = !state.visible;
-    },
-    HIDE(state) {
-      state.visible = false;
-    },
     CHANGE_TITLE(state, newTitle) {
       state.title = newTitle;
     },
     MAP_PAGE_DEFAULT_MODE(state) {
-      state.visible = true;
       state.backButton = false;
       state.myPageButton = true;
       state.searchButton = true;
@@ -28,7 +20,6 @@ export default {
       state.mapButton = false;
     },
     TIMELINE_PAGE(state) {
-      state.visible = true;
       state.backButton = false;
       state.myPageButton = true;
       state.title = "타임라인";
@@ -37,7 +28,6 @@ export default {
       state.mapButton = true;
     },
     POST_DETAIL_PAGE(state) {
-      state.visible = true;
       state.backButton = true;
       state.myPageButton = false;
       state.title = "게시글";
@@ -46,7 +36,6 @@ export default {
       state.mapButton = false;
     },
     SEARCH_PAGE(state) {
-      state.visible = true;
       state.backButton = true;
       state.myPageButton = false;
       state.title = "검색";
@@ -55,7 +44,6 @@ export default {
       state.mapButton = false;
     },
     SEARCH_RESULT_PAGE(state) {
-      state.visible = true;
       state.backButton = true;
       state.myPageButton = false;
       state.title = "검색 결과";
@@ -65,9 +53,6 @@ export default {
     },
   },
   getters: {
-    visible: (state) => {
-      return state.visible;
-    },
     backButton: (state) => {
       return state.backButton;
     },

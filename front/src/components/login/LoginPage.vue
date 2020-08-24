@@ -1,4 +1,4 @@
-<template class="background">
+<template>
   <div class="background doran-doran-color">
     <div class="app-title">도란도란</div>
 
@@ -32,8 +32,10 @@ export default {
 
 <style scoped>
 .background {
+  position: absolute;
   width: 100%;
   height: 100vh;
+  z-index: 9999;
 }
 
 .app-title {

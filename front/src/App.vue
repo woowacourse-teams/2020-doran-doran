@@ -3,7 +3,7 @@
     <v-snackbar top timeout="1500" class="snackbar" v-model="snackbarWarning">
       {{ snackbarMessage }}
     </v-snackbar>
-    <DoranAppBar @show-modal="changeVisibility" />
+    <DoranAppBar />
     <transition name="fade" mode="out-in">
       <RouterView />
     </transition>
@@ -41,14 +41,9 @@ export default {
   },
   data() {
     return {
-      showMyPageModal: false,
+      showMemberSidebar: false,
     };
-  },
-  methods: {
-    changeVisibility(value) {
-      this.showMyPageModal = value;
-    },
-  },
+  }
 };
 </script>
 
