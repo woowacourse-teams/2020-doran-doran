@@ -76,6 +76,6 @@ public class Comment {
     }
 
     public boolean isSameAuthor(Member member) {
-        return this.author.getId().equals(member.getId());
+        return author.isSameMember(member);
     }
 }

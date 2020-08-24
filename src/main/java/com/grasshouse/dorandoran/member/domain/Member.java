@@ -53,6 +53,10 @@ public class Member {
     @Builder.Default
     @OneToMany(mappedBy = "author")
     private List<Comment> comments = new ArrayList<>();
+
+    public boolean isSameMember(Member member) {
+        return this.id.equals(member.id);
+    }
 }
 
 
