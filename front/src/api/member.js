@@ -15,13 +15,7 @@ const api = (() => {
   const loadMember = () =>
     client
       .get("", options)
-      .then((res) => res.data)
-      .catch(() => {
-        return {
-          id: 0,
-          nickname: "미인증 사용자",
-        };
-      });
+      .then((res) => res.data);
   return {
     loadMember,
   };
