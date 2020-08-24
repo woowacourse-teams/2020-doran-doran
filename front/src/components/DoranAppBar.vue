@@ -10,7 +10,7 @@
       <v-icon v-show="myPageButton" @click="openSidebar">
         mdi-account
       </v-icon>
-      <v-icon v-show="cancelButton" @click="changeMapMode"
+      <v-icon v-show="cancelButton" @click="setMapToDefault"
         >mdi-chevron-left</v-icon
       >
 
@@ -78,6 +78,10 @@ export default {
       };
       const params = new URLSearchParams(bounds).toString();
       this.$router.push("/timeline?" + params);
+    },
+    setMapToDefault() {
+      this.$store.commit("appBar/MAP_PAGE_DEFAULT_MODE");
+      this.$store.commit("modal/CHANGE_STATE", MAP_MODE.DEFAULT);
     },
   },
 };
