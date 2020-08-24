@@ -55,7 +55,8 @@ public class CommonAdvice {
     }
 
     @ExceptionHandler(InvalidAuthenticationException.class)
-    public ResponseEntity<ErrorResponse> handleEntityValidationException(InvalidAuthenticationException e) {
+    public ResponseEntity<ErrorResponse> handleAuthenticationValidationException(
+        InvalidAuthenticationException e) {
         logger.error(e.getMessage());
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
             .body(new ErrorResponse(e.getMessage()));

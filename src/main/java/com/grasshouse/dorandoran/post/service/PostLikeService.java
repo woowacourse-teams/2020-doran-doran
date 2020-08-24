@@ -2,7 +2,7 @@ package com.grasshouse.dorandoran.post.service;
 
 import com.grasshouse.dorandoran.common.exception.PostLikeAlreadyExistsException;
 import com.grasshouse.dorandoran.common.exception.PostLikeNotFoundException;
-import com.grasshouse.dorandoran.common.exception.PostLikerMisMatchException;
+import com.grasshouse.dorandoran.common.exception.PostLikerMismatchException;
 import com.grasshouse.dorandoran.common.exception.PostNotFoundException;
 import com.grasshouse.dorandoran.member.domain.Member;
 import com.grasshouse.dorandoran.post.domain.Post;
@@ -49,7 +49,7 @@ public class PostLikeService {
             .orElseThrow(PostLikeNotFoundException::new);
 
         if (!postLike.isSameLiker(member)) {
-            throw new PostLikerMisMatchException();
+            throw new PostLikerMismatchException();
         }
         postLikeRepository.delete(postLike);
     }

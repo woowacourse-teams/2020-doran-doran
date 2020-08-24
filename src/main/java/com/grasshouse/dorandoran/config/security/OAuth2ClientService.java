@@ -1,5 +1,6 @@
 package com.grasshouse.dorandoran.config.security;
 
+import com.grasshouse.dorandoran.common.exception.UnsupportedOperationException;
 import com.grasshouse.dorandoran.member.domain.Member;
 import com.grasshouse.dorandoran.member.repository.MemberRepository;
 import java.util.LinkedHashMap;
@@ -8,7 +9,6 @@ import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 @Service
 public class OAuth2ClientService implements OAuth2AuthorizedClientService {
@@ -42,11 +42,11 @@ public class OAuth2ClientService implements OAuth2AuthorizedClientService {
     @Override
     public <T extends OAuth2AuthorizedClient> T loadAuthorizedClient(String clientRegistrationId,
         String principalName) {
-        throw new NotImplementedException();
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public void removeAuthorizedClient(String clientRegistrationId, String principalName) {
-        throw new NotImplementedException();
+        throw new UnsupportedOperationException();
     }
 }

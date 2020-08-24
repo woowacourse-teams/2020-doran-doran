@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.grasshouse.dorandoran.common.CommonControllerTest;
-import com.grasshouse.dorandoran.common.exception.PostAuthorMisMatchException;
+import com.grasshouse.dorandoran.common.exception.PostAuthorMismatchException;
 import com.grasshouse.dorandoran.config.jwt.JwtTokenProvider;
 import com.grasshouse.dorandoran.member.domain.Member;
 import com.grasshouse.dorandoran.member.repository.MemberRepository;
@@ -186,7 +186,7 @@ class PostControllerTest extends CommonControllerTest {
         when(jwtTokenProvider.validateToken(anyString())).thenReturn(true);
         when(jwtTokenProvider.getSubject(anyString())).thenReturn("id");
         when(memberRepository.findByoAuthId(anyString())).thenReturn(anotherMember);
-        doThrow(PostAuthorMisMatchException.class).when(postService).deletePost(anyLong(), any());
+        doThrow(PostAuthorMismatchException.class).when(postService).deletePost(anyLong(), any());
 
         this.mockMvc.perform(delete("/posts/" + PERSIST_POST.getId()))
             .andExpect(status().isBadRequest())

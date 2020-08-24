@@ -19,7 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.grasshouse.dorandoran.comment.service.CommentService;
 import com.grasshouse.dorandoran.comment.service.dto.CommentCreateRequest;
 import com.grasshouse.dorandoran.common.CommonControllerTest;
-import com.grasshouse.dorandoran.common.exception.CommentAuthorMisMatchException;
+import com.grasshouse.dorandoran.common.exception.CommentAuthorMismatchException;
 import com.grasshouse.dorandoran.config.jwt.JwtTokenProvider;
 import com.grasshouse.dorandoran.member.domain.Member;
 import com.grasshouse.dorandoran.member.repository.MemberRepository;
@@ -120,7 +120,7 @@ class CommentControllerTest extends CommonControllerTest {
         when(jwtTokenProvider.validateToken(anyString())).thenReturn(true);
         when(jwtTokenProvider.getSubject(anyString())).thenReturn("id");
         when(memberRepository.findByoAuthId(anyString())).thenReturn(anotherMember);
-        doThrow(CommentAuthorMisMatchException.class).when(commentService)
+        doThrow(CommentAuthorMismatchException.class).when(commentService)
             .deleteComment(anyLong(), any());
         this.mockMvc.perform(
             delete("/comments/" + PERSIST_COMMENT.getId()))

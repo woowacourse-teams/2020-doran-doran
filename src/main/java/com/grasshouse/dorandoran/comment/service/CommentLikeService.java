@@ -7,7 +7,7 @@ import com.grasshouse.dorandoran.comment.repository.CommentRepository;
 import com.grasshouse.dorandoran.comment.service.dto.CommentLikeCreateRequest;
 import com.grasshouse.dorandoran.common.exception.CommentLikeAlreadyExistsException;
 import com.grasshouse.dorandoran.common.exception.CommentLikeNotFoundException;
-import com.grasshouse.dorandoran.common.exception.CommentLikerMisMatchException;
+import com.grasshouse.dorandoran.common.exception.CommentLikerMismatchException;
 import com.grasshouse.dorandoran.common.exception.CommentNotFoundException;
 import com.grasshouse.dorandoran.member.domain.Member;
 import lombok.RequiredArgsConstructor;
@@ -48,7 +48,7 @@ public class CommentLikeService {
         CommentLike commentLike = commentLikeRepository.findById(commentLikeId)
             .orElseThrow(CommentLikeNotFoundException::new);
         if (!commentLike.isSameLiker(member)) {
-            throw new CommentLikerMisMatchException();
+            throw new CommentLikerMismatchException();
         }
         commentLikeRepository.delete(commentLike);
     }
