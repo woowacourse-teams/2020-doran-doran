@@ -7,5 +7,4 @@ public class PostAuthorMisMatchException extends ExpectedException {
     public PostAuthorMisMatchException() {
         super(MESSAGE);
     }
-
 }
