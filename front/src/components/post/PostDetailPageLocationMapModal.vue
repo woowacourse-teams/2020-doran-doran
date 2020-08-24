@@ -20,7 +20,7 @@ const MAP_MARKER_IMAGE =
   "https://dorandoran.s3.ap-northeast-2.amazonaws.com/project/map/blue_marker_with_shadow.png";
 
 export default {
-  name: "PostMapModal",
+  name: "PostDetailPageLocationMapModal",
   props: {
     location: {
       type: Object,

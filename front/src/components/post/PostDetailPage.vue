@@ -32,14 +32,14 @@
     <CommentList :comments="post.comments" @load-post="loadPost" />
     <div class="bottom-spacer" />
     <CommentInput :post-id="post.id" />
-    <PostMapModal v-if="this.isMapModalMode" :location="post.location" />
+    <PostDetailPageLocationMapModal v-if="this.isMapModalMode" :location="post.location" />
   </div>
 </template>
 
 <script>
 import CommentInput from "@/components/post/CommentInput";
 import CommentList from "@/components/post/CommentList";
-import PostMapModal from "@/components/post/PostMapModal";
+import PostDetailPageLocationMapModal from "@/components/post/PostDetailPageLocationMapModal";
 import { LIKE_BUTTON_TYPE, POST_MODE } from "@/utils/constants";
 
 export default {
@@ -47,7 +47,7 @@ export default {
   components: {
     CommentList,
     CommentInput,
-    PostMapModal,
+    PostDetailPageLocationMapModal,
   },
   computed: {
     post: {
