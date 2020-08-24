@@ -10,7 +10,7 @@
       filled
       color="black"
       @click:append="createComment"
-      @keydown.enter="createComment"
+      @keypress.enter="createComment"
     />
   </div>
 </template>

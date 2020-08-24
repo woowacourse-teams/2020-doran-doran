@@ -1,5 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import LoginPage from "@/components/login/LoginPage";
 import MapPage from "@/components/map/MapPage";
 import PostDetailPage from "@/components/post/PostDetailPage";
 import TimelinePage from "@/components/timeline/TimelinePage";
@@ -11,12 +12,17 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
+    name: "LoginPage",
+    component: LoginPage,
+  },
+  {
+    path: "/map",
     name: "MapPage",
     component: MapPage,
   },
   {
     path: "/timeline",
-    name: "Timeline",
+    name: "TimelinePage",
     component: TimelinePage,
   },
   {

@@ -7,16 +7,19 @@
     <transition name="fade" mode="out-in">
       <RouterView />
     </transition>
+    <MemberSidebar />
   </v-app>
 </template>
 
 <script>
 import DoranAppBar from "@/components/DoranAppBar";
+import MemberSidebar from "@/components/member/MemberSidebar";
 
 export default {
   name: "App",
   components: {
     DoranAppBar,
+    MemberSidebar,
   },
   computed: {
     snackbarMessage: {
@@ -36,15 +39,36 @@ export default {
       },
     },
   },
+  data() {
+    return {
+      showMemberSidebar: false,
+    };
+  }
 };
 </script>
 
 <style>
+@font-face {
+  font-family: BM_JUA;
+  src: url("./assets/BM_JUA.woff") format("woff");
+}
+
+* {
+  letter-spacing: -0.7px;
+}
+
 html,
 body {
   width: 100%;
   height: 100%;
-  letter-spacing: -0.7px;
+}
+
+.doran-doran-color {
+  background: linear-gradient(
+    320deg,
+    rgba(252, 144, 0, 1) 30%,
+    rgba(251, 203, 49, 1) 100%
+  );
 }
 
 a {
