@@ -2,13 +2,13 @@
   <div class="modal-mask" @click.self="closeModal">
     <div class="pa-1 modal-container">
       <v-icon
-        @click.prevent="closeModal"
-        class="my-2 mx-1 rounded-pill close-btn"
         color="grey lighten-4"
+        class="my-2 mx-1 rounded-pill close-btn"
+        @click.prevent="closeModal"
       >
         mdi-close
       </v-icon>
-      <VContainer fill-height fluid ref="postMap" class="map-container" />
+      <VContainer ref="postMap" fill-height fluid class="map-container" />
     </div>
   </div>
 </template>
