@@ -8,9 +8,11 @@
     <div class="text--disabled post-address">
       <span @click="changeMode">
         <v-icon size="large" color="#659FEC">mdi-map-marker-radius</v-icon>
+        <span style="color: #659fec;">
         {{ post.address.depth1 }}
         {{ post.address.depth2 }}
         {{ post.address.depth3 }}에 외침
+        </span>
       </span>
     </div>
     <div class="my-5 text-break">{{ post.content }}</div>
