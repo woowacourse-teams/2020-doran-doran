@@ -22,13 +22,8 @@
         </v-btn>
         <v-btn
           elevation="2"
-          :style="{
-            background: `linear-gradient(320deg,
-            rgba(252, 144, 0, 1) 30%,
-            rgba(251, 203, 49, 1) 100%)`,
-          }"
           @click.prevent="createPost"
-          class="my-6 mx-1 rounded-pill letter-spacing-narrow"
+          class="my-6 mx-1 rounded-pill letter-spacing-narrow doran-doran-color"
         >
           등록
         </v-btn>

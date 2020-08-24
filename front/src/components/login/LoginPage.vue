@@ -21,9 +21,6 @@ import { API_BASE_URL } from "@/utils/constants";
 
 export default {
   name: "LoginPage",
-  created() {
-    this.$store.commit("appBar/HIDE");
-  },
   methods: {
     kakaoLogin() {
       window.location.href = API_BASE_URL.EC2 + "/oauth2/authorization/kakao";

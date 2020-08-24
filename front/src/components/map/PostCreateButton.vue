@@ -8,11 +8,7 @@
       dark
       large
       elevation="2"
-      :style="{
-        background: `linear-gradient(320deg,
-        rgba(252, 144, 0, 1) 30%,
-        rgba(251, 203, 49, 1) 100%)`,
-      }"
+      class="doran-doran-color"
       @click="changeMode"
     >
       <v-icon>{{ buttonType.icon }}</v-icon>

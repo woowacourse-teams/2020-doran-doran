@@ -33,7 +33,7 @@
 
     <v-expand-x-transition>
       <v-container
-        v-if="!this.defaultMode"
+        v-if="!this.defaultAppBarMode"
         fluid
         class="d-flex flex-row align-center justify-space-between pa-0"
       >
@@ -65,7 +65,7 @@ export default {
   name: "DoranAppBar",
   data() {
     return {
-      defaultMode: true,
+      defaultAppBarMode: true,
       keyword: "",
     };
   },
@@ -110,12 +110,12 @@ export default {
       const params = new URLSearchParams(bounds).toString();
       this.$router.push("/timeline?" + params);
     },
+    toggleMode() {
+      this.defaultAppBarMode = !this.defaultAppBarMode;
+    },
     setMapToDefault() {
       this.$store.commit("appBar/MAP_PAGE_DEFAULT_MODE");
       this.$store.commit("mapMode/CHANGE_STATE", MAP_MODE.DEFAULT);
-    },
-    toggleMode() {
-      this.defaultMode = !this.defaultMode;
     },
     async filterPosts() {
       const data = {
