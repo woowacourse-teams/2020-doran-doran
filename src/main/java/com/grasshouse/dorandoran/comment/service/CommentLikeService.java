@@ -1,5 +1,7 @@
 package com.grasshouse.dorandoran.comment.service;
 
+import static com.grasshouse.dorandoran.common.exception.MemberMismatchException.COMMENT_LIKER_MISMATCH_MESSAGE;
+
 import com.grasshouse.dorandoran.comment.domain.Comment;
 import com.grasshouse.dorandoran.comment.domain.CommentLike;
 import com.grasshouse.dorandoran.comment.repository.CommentLikeRepository;
@@ -7,8 +9,8 @@ import com.grasshouse.dorandoran.comment.repository.CommentRepository;
 import com.grasshouse.dorandoran.comment.service.dto.CommentLikeCreateRequest;
 import com.grasshouse.dorandoran.common.exception.CommentLikeAlreadyExistsException;
 import com.grasshouse.dorandoran.common.exception.CommentLikeNotFoundException;
-import com.grasshouse.dorandoran.common.exception.CommentLikerMismatchException;
 import com.grasshouse.dorandoran.common.exception.CommentNotFoundException;
+import com.grasshouse.dorandoran.common.exception.MemberMismatchException;
 import com.grasshouse.dorandoran.member.domain.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -48,7 +50,7 @@ public class CommentLikeService {
         CommentLike commentLike = commentLikeRepository.findById(commentLikeId)
             .orElseThrow(CommentLikeNotFoundException::new);
         if (!commentLike.isSameLiker(member)) {
-            throw new CommentLikerMismatchException();
+            throw new MemberMismatchException(COMMENT_LIKER_MISMATCH_MESSAGE);
         }
         commentLikeRepository.delete(commentLike);
     }

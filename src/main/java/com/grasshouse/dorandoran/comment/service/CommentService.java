@@ -1,10 +1,12 @@
 package com.grasshouse.dorandoran.comment.service;
 
+import static com.grasshouse.dorandoran.common.exception.MemberMismatchException.COMMENT_AUTHOR_MISMATCH_MESSAGE;
+
 import com.grasshouse.dorandoran.comment.domain.Comment;
 import com.grasshouse.dorandoran.comment.repository.CommentRepository;
 import com.grasshouse.dorandoran.comment.service.dto.CommentCreateRequest;
-import com.grasshouse.dorandoran.common.exception.CommentAuthorMismatchException;
 import com.grasshouse.dorandoran.common.exception.CommentNotFoundException;
+import com.grasshouse.dorandoran.common.exception.MemberMismatchException;
 import com.grasshouse.dorandoran.common.exception.PostNotFoundException;
 import com.grasshouse.dorandoran.member.domain.Member;
 import com.grasshouse.dorandoran.post.domain.Post;
@@ -47,7 +49,7 @@ public class CommentService {
             .orElseThrow(CommentNotFoundException::new);
 
         if (!comment.isSameAuthor(member)) {
-            throw new CommentAuthorMismatchException();
+            throw new MemberMismatchException(COMMENT_AUTHOR_MISMATCH_MESSAGE);
         }
 
         Post post = comment.getPost();
