@@ -39,15 +39,6 @@ export default {
       },
     },
   },
-  async created() {
-    const token = location.href.split("token=")[1];
-    if (token) {
-      sessionStorage.setItem("accessToken", token);
-      location.href = "/";
-    } else {
-      await this.$store.dispatch("member/loadMember");
-    }
-  },
   data() {
     return {
       showMemberSidebar: false,

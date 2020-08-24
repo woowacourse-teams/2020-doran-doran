@@ -18,8 +18,16 @@ export default {
     PostCreateButton,
     PostCreateModal,
   },
-  created() {
+  async created() {
     this.$store.commit("appBar/MAP_PAGE_DEFAULT_MODE");
+
+    const token = location.href.split("token=")[1];
+    if (token) {
+      sessionStorage.setItem("accessToken", token);
+      location.href = "/";
+    } else {
+      await this.$store.dispatch("member/loadMember");
+    }
   },
   computed: {
     isPostMode() {

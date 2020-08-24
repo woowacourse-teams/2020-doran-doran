@@ -6,6 +6,7 @@ export default {
     member: {
       id: 0,
       nickname: "로그인해주세요",
+      picture: "",
     },
   },
   mutations: {
@@ -20,7 +21,7 @@ export default {
     },
   },
   getters: {
-    getMembers: (state) => {
+    getMember: (state) => {
       return state.member;
     },
   },

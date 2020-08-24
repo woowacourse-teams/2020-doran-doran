@@ -13,7 +13,7 @@
         alt="profile"
       />
       <span class="mx-3 font-weight-bold">
-        닉네임요기요기{{ member.nickName }}
+        {{ member.nickname }}
       </span>
     </div>
 
@@ -38,10 +38,6 @@ export default {
   data() {
     return {
       selected: false,
-      member: {
-        nickName: "",
-        picture: "",
-      },
       items: [
         {
           title: "정보수정",
@@ -59,6 +55,9 @@ export default {
     };
   },
   computed: {
+    member() {
+      return this.$store.getters["member/getMember"];
+    },
     drawer: {
       get() {
         return this.$store.getters["memberSidebar/visible"];
