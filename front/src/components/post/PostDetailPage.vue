@@ -5,7 +5,7 @@
       <span class="font-weight-bold">{{ post.memberResponse.nickname }}</span>
       <div class="float-right mt-2">{{ postDate }}</div>
     </div>
-    <div class="text--disabled post-address">
+    <div class="text--disabled font-size-small">
       <span style="color: #659fec;" @click="openMapModal">
         <v-icon size="large" color="#659FEC">mdi-map-marker-radius</v-icon>
         {{ postAddress }}
@@ -20,7 +20,7 @@
         {{ likeButtonType.icon }}
       </v-icon>
       <span class="mx-1">{{ post.likes.length }}</span>
-      <div class="float-right text--disabled post-address">
+      <div class="float-right text--disabled font-size-small">
         {{ authorAddress }}에서
       </div>
     </div>
@@ -122,9 +122,6 @@ export default {
 </script>
 
 <style scoped>
-.post-address {
-  font-size: 0.9rem;
-}
 
 .bottom-spacer {
   height: 60px;

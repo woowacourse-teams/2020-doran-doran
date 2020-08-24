@@ -14,7 +14,7 @@
         mdi-chevron-left
       </v-icon>
 
-      <v-toolbar-title class="app-bar-title">
+      <v-toolbar-title class="app-bar-title font-size-small">
         {{ appBarTitle }}
       </v-toolbar-title>
 
@@ -148,7 +148,6 @@ export default {
   position: fixed;
   left: 50%;
   transform: translate(-50%);
-  font-size: 0.9rem;
   padding: 8px;
 }
 

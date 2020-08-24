@@ -75,6 +75,18 @@ a {
   text-decoration: none;
 }
 
+.font-size-x-large {
+  font-size: 2rem;
+}
+
+.font-size-small {
+  font-size: 0.9rem;
+}
+
+.font-size-x-small {
+  font-size: 0.8rem;
+}
+
 .app-container {
   width: 100%;
   height: 100%;
