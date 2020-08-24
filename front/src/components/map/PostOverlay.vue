@@ -1,12 +1,15 @@
 <template>
   <div ref="post" class="speech-bubble" @click.prevent="goToPostDetailPage">
     {{ shortContent }} {{ contentTail }}
+    <div class="new-icon" v-if="isRecentPost">N</div>
     <span class="text-caption red--text"> [{{ post.comments.length }}]</span>
     <div class="speech-arrow"></div>
   </div>
 </template>
 
 <script>
+import moment from "moment";
+
 const CONTENT_LENGTH = 15;
 
 export default {
@@ -18,6 +21,18 @@ export default {
     },
   },
   computed: {
+    isRecentPost() {
+      const halfAnHourAgo = moment()
+        .subtract(30, "minutes")
+        .format("YYYY-MM-DD HH:mm:ss");
+      const postCreatedAt = moment(this.post.createdAt).format(
+        "YYYY-MM-DD HH:mm:ss",
+      );
+      if (halfAnHourAgo < postCreatedAt) {
+        return true;
+      }
+      return false;
+    },
     shortContent() {
       return this.post.content.substring(0, CONTENT_LENGTH).trim();
     },
@@ -42,6 +57,18 @@ export default {
 </script>
 
 <style scoped>
+.new-icon {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 20px;
+  height: 20px;
+  border-radius: 15px;
+  background-color: red;
+  color: white;
+  font-size: 12px;
+}
+
 .speech-bubble {
   position: relative;
   bottom: 32px;
