@@ -23,6 +23,7 @@ export default {
     },
     refreshPosts() {
       this.$store.dispatch("post/loadPosts");
+      // TODO: 113번 브랜치 머지되면 24시간 내 글들만 가져오도록 로직 변경
     },
   },
 };
