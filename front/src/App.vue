@@ -63,6 +63,11 @@ body {
   height: 100%;
 }
 
+body {
+  max-width: 500px;
+  margin: auto;
+}
+
 .doran-doran-color {
   background: linear-gradient(
     320deg,

@@ -2,9 +2,7 @@
   <v-container fill-height fluid class="pa-0">
     <KakaoMap />
     <PostCreateButton />
-    <transition name="bounce">
-      <PostCreateModal v-if="this.isPostMode" />
-    </transition>
+    <PostCreateModal v-if="this.isPostMode" />
   </v-container>
 </template>
 
@@ -41,22 +39,6 @@ export default {
   },
 };
 </script>
+
 <style scoped>
-.bounce-enter-active {
-  animation: bounce-in 0.4s;
-}
-.bounce-leave-active {
-  animation: bounce-in 0.5s reverse;
-}
-@keyframes bounce-in {
-  0% {
-    transform: scale(0);
-  }
-  70% {
-    transform: scale(1.1);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
 </style>

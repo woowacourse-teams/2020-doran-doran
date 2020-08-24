@@ -1,6 +1,8 @@
 <template>
   <v-app-bar flat max-height="56" color="white">
     <v-container
+      v-show="this.isSearching"
+      fluid
       class="d-flex flex-row align-center justify-space-between pa-0"
     >
       <v-icon v-show="backButton" @click="goToPreviousPage">
@@ -19,7 +21,7 @@
       </v-toolbar-title>
 
       <div class="text-right app-bar-right">
-        <v-icon v-show="searchButton" @click="toggleMode">
+        <v-icon v-show="searchButton" @click="toggleSearchInput">
           mdi-magnify
         </v-icon>
         <v-icon v-show="timelineButton" @click="goToTimelinePage">
@@ -32,27 +34,21 @@
     </v-container>
 
     <v-expand-x-transition>
-      <v-container
-        v-if="!this.defaultAppBarMode"
-        fluid
-        class="d-flex flex-row align-center justify-space-between pa-0"
-      >
-        <VTextField
-          v-model="keyword"
-          autofocus
-          placeholder="검색어를 입력하세요."
-          color="amber accent-3"
-          filled
-          rounded
-          dense
-          hide-details
-          class="mx-2 font-size-small"
-          @keypress.enter="filterPosts"
-        />
-        <v-icon @click="showEveryPosts">
-          mdi-window-close
-        </v-icon>
-      </v-container>
+      <VTextField
+        v-show="isSearching"
+        v-model="keyword"
+        autofocus
+        placeholder="검색어를 입력하세요."
+        color="black"
+        filled
+        rounded
+        dense
+        hide-details
+        append-outer-icon="mdi-window-close"
+        class="search-input font-size-small"
+        @keypress.enter="filterPosts"
+        @click:append-outer="showEveryPosts"
+      />
     </v-expand-x-transition>
   </v-app-bar>
 </template>
@@ -65,7 +61,7 @@ export default {
   name: "DoranAppBar",
   data() {
     return {
-      defaultAppBarMode: true,
+      isSearching: false,
       keyword: "",
     };
   },
@@ -110,8 +106,8 @@ export default {
       const params = new URLSearchParams(bounds).toString();
       this.$router.push("/timeline?" + params);
     },
-    toggleMode() {
-      this.defaultAppBarMode = !this.defaultAppBarMode;
+    toggleSearchInput() {
+      this.isSearching = !this.isSearching;
     },
     setMapToDefault() {
       this.$store.commit("appBar/MAP_PAGE_DEFAULT_MODE");
@@ -132,10 +128,9 @@ export default {
         data.endDate = this.$moment().format("YYYY-MM-DD HH:mm:ss");
       }
       await this.$store.dispatch("post/searchPosts", data);
-      this.keyword = "";
     },
     async showEveryPosts() {
-      this.toggleMode();
+      this.toggleSearchInput();
       this.keyword = "";
       await this.$store.dispatch("post/loadPosts");
     },
@@ -153,5 +148,12 @@ export default {
 
 .app-bar-right > * {
   margin-left: 8px;
+}
+
+.search-input {
+  position: absolute;
+  right: 48px;
+  width: calc(100% - 100px);
+  background-color: white;
 }
 </style>
