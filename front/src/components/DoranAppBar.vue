@@ -1,13 +1,18 @@
 <template>
   <v-app-bar flat max-height="56" color="white">
     <v-container
+      fluid
       class="d-flex flex-row align-center justify-space-between pa-0"
     >
       <v-icon v-show="backButton" @click="goToPreviousPage">
         mdi-chevron-left
       </v-icon>
-      <v-icon v-show="myPageButton" @click="openSidebar">
+      <v-icon v-show="myPageButton" @click="showSidebar">
         mdi-account
+      </v-icon>
+      <!--TODO: backButton으로 변경하기-->
+      <v-icon v-show="cancelButton" @click="setMapToDefault">
+        mdi-chevron-left
       </v-icon>
 
       <v-toolbar-title class="app-bar-title">
@@ -30,6 +35,8 @@
 </template>
 
 <script>
+import { MAP_MODE } from "@/utils/constants";
+
 export default {
   name: "DoranAppBar",
   computed: {
@@ -38,6 +45,9 @@ export default {
     },
     myPageButton() {
       return this.$store.getters["appBar/myPageButton"];
+    },
+    cancelButton() {
+      return this.$store.getters["appBar/cancelButton"];
     },
     appBarTitle() {
       return this.$store.getters["appBar/title"];
@@ -56,7 +66,7 @@ export default {
     goToPreviousPage() {
       this.$router.go(-1);
     },
-    openSidebar() {
+    showSidebar() {
       this.$store.commit("memberSidebar/SHOW");
     },
     goToTimelinePage() {
@@ -69,6 +79,10 @@ export default {
       };
       const params = new URLSearchParams(bounds).toString();
       this.$router.push("/timeline?" + params);
+    },
+    setMapToDefault() {
+      this.$store.commit("appBar/MAP_PAGE_DEFAULT_MODE");
+      this.$store.commit("modal/CHANGE_STATE", MAP_MODE.DEFAULT);
     },
   },
 };

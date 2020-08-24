@@ -33,11 +33,6 @@ const BUTTON_TYPE = {
 
 export default {
   name: "PostCreateButton",
-  data() {
-    return {
-      buttonType: BUTTON_TYPE.DEFAULT,
-    };
-  },
   computed: {
     isDefaultMode() {
       return this.$store.getters["modal/isDefaultMode"];
@@ -48,16 +43,18 @@ export default {
     isPostMode() {
       return this.$store.getters["modal/isPostMode"];
     },
+    buttonType() {
+      return this.isMarkerMode ? BUTTON_TYPE.MARKER : BUTTON_TYPE.DEFAULT;
+    }
   },
   methods: {
     changeMode() {
       if (this.isDefaultMode) {
         this.$store.commit("modal/CHANGE_STATE", MAP_MODE.MARKER);
-        this.buttonType = BUTTON_TYPE.MARKER;
         this.$store.commit("snackbar/SHOW", MARKER_MODE_MESSAGE);
+        this.$store.commit("appBar/MAP_PAGE_MARKER_MODE");
       } else if (this.isMarkerMode) {
         this.$store.commit("modal/CHANGE_STATE", MAP_MODE.POST);
-        this.buttonType = BUTTON_TYPE.DEFAULT;
       }
     },
   },
