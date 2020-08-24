@@ -12,7 +12,6 @@
         {{ post.address.depth2 }}
         {{ post.address.depth3 }}에 외침
       </span>
-      <PostMapModal v-if="this.isMapModalMode" :location="post.location" />
     </div>
     <div class="my-5 text-break">{{ post.content }}</div>
     <div>
@@ -31,6 +30,7 @@
     <CommentList :comments="post.comments" @load-post="loadPost" />
     <div class="bottom-spacer" />
     <CommentInput :post-id="post.id" />
+    <PostMapModal v-if="this.isMapModalMode" :location="post.location" />
   </div>
 </template>
 
