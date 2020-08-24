@@ -20,15 +20,14 @@
     <VDivider />
 
     <v-list>
-      <v-list-item-group v-model="group">
-        <v-list-item v-for="item in items" :key="item.title" link>
-          <v-list-item-content>
-            <v-list-item-title @click="item.action">
-              {{ item.title }}
-            </v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list-item-group>
+      <v-list-item
+        v-for="item in items"
+        :key="item.title"
+        link
+        @click="hideSidebar(item.action)"
+      >
+        {{ item.title }}
+      </v-list-item>
     </v-list>
   </v-navigation-drawer>
 </template>
@@ -38,7 +37,7 @@ export default {
   name: "MemberSidebar",
   data() {
     return {
-      group: null,
+      selected: false,
       member: {
         nickName: "",
         picture: "",
@@ -73,12 +72,16 @@ export default {
     updateMember() {},
     logout() {},
     deleteMember() {},
-    hideSidebar() {
+    hideSidebar(action) {
       this.$store.commit("memberSidebar/HIDE");
+      if (action instanceof Function) {
+        action();
+      }
     },
   },
   watch: {
-    group() {
+    selected() {
+      this.selected = true;
       this.$store.commit("memberSidebar/HIDE");
     },
   },
