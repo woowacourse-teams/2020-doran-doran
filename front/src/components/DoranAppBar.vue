@@ -10,9 +10,10 @@
       <v-icon v-show="myPageButton" @click="openSidebar">
         mdi-account
       </v-icon>
-      <v-icon v-show="cancelButton" @click="setMapToDefault"
-        >mdi-chevron-left</v-icon
-      >
+      <!--TODO: backButton으로 변경하기-->
+      <v-icon v-show="cancelButton" @click="setMapToDefault">
+        mdi-chevron-left
+      </v-icon>
 
       <v-toolbar-title class="app-bar-title">
         {{ appBarTitle }}
