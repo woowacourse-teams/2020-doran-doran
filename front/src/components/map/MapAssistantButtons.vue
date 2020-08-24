@@ -6,7 +6,7 @@
       :retain-focus-on-click="false"
       @click="setMapToCurrentLocation"
     >
-      <v-icon>mdi-radiobox-marked</v-icon>
+      <v-icon>mdi-crosshairs-gps</v-icon>
     </v-btn>
     <v-btn small fab class="mt-2" @click="refreshPosts">
       <v-icon>mdi-refresh</v-icon>
