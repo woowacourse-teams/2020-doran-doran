@@ -7,7 +7,7 @@
       <v-icon v-show="backButton" @click="goToPreviousPage">
         mdi-chevron-left
       </v-icon>
-      <v-icon v-show="myPageButton" @click="openSidebar">
+      <v-icon v-show="myPageButton" @click="showSidebar">
         mdi-account
       </v-icon>
       <!--TODO: backButton으로 변경하기-->
@@ -66,7 +66,7 @@ export default {
     goToPreviousPage() {
       this.$router.go(-1);
     },
-    openSidebar() {
+    showSidebar() {
       this.$store.commit("memberSidebar/SHOW");
     },
     goToTimelinePage() {
