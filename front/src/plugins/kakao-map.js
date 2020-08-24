@@ -54,11 +54,16 @@ const KakaoMap = (() => {
       navigator.geolocation.getCurrentPosition(resolve, reject, {
         timeout: 1000,
       }),
-    ).catch(console.log);
+    ).catch((e) => {
+      console.log(e);
+      throw e;
+    });
   };
 
   const getCurrentLocation = async () => {
-    const currentLocation = await _getGeolocation();
+    const currentLocation = await _getGeolocation().catch((e) => {
+      throw e;
+    });
     return {
       latitude: currentLocation.coords.latitude,
       longitude: currentLocation.coords.longitude,

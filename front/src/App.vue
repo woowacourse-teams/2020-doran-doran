@@ -24,18 +24,18 @@ export default {
   computed: {
     snackbarMessage: {
       get() {
-        return this.$store.getters["snackbar/snackbarMessage"];
+        return this.$store.getters["snackbar/message"];
       },
       set(val) {
-        this.$store.commit("snackbar/SET_SNACKBAR_MESSAGE", val);
+        this.$store.commit("snackbar/SET_MESSAGE", val);
       },
     },
     snackbarWarning: {
       get() {
-        return this.$store.getters["snackbar/snackbarWarning"];
+        return this.$store.getters["snackbar/visible"];
       },
       set(val) {
-        this.$store.commit("snackbar/SET_SNACKBAR_WARNING", val);
+        this.$store.commit("snackbar/SET_VISIBLE", val);
       },
     },
   },

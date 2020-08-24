@@ -16,7 +16,7 @@
 
 <script>
 import PostOverlay from "@/components/map/PostOverlay";
-import { EVENT_TYPE } from "@/utils/constants";
+import { ERROR_MESSAGE, EVENT_TYPE } from "@/utils/constants";
 
 export default {
   name: "KakaoMap",
@@ -41,7 +41,14 @@ export default {
   },
   async mounted() {
     await this.$kakaoMap.drawMap(this.$refs.map);
-    await this.$kakaoMap.setCenterByCurrentLocation();
+    await this.$kakaoMap
+      .setCenterByCurrentLocation()
+      .catch(() =>
+        this.$store.commit(
+          "snackbar/SHOW",
+          ERROR_MESSAGE.UNIDENTIFIABLE_LOCATION,
+        ),
+      );
     await this.changeAppBarByCenterAddress();
     await this.$store.dispatch("post/loadPosts");
     await this.$kakaoMap.addEventToMap(
