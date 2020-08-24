@@ -49,10 +49,7 @@ export default {
   methods: {
     async createPost() {
       if (this.content === "") {
-        this.$store.commit(
-          "snackbar/SHOW_SNACKBAR",
-          ERROR_MESSAGE.NO_CONTENT_MESSAGE,
-        );
+        this.$store.commit("snackbar/SHOW", ERROR_MESSAGE.NO_CONTENT_MESSAGE);
         return;
       }
 
@@ -61,7 +58,7 @@ export default {
         .getCurrentLocation()
         .catch(() =>
           this.$store.commit(
-            "snackbar/SHOW_SNACKBAR",
+            "snackbar/SHOW",
             ERROR_MESSAGE.UNIDENTIFIABLE_LOCATION,
           ),
         );
@@ -77,7 +74,7 @@ export default {
         authorAddress: await this.$kakaoMap.getAddress(authorLocation),
       };
       await this.$store.dispatch("post/createPost", data);
-      this.$store.commit("snackbar/SHOW_SNACKBAR", CREATE_POST_SUCCESS_MESSAGE);
+      this.$store.commit("snackbar/SHOW", CREATE_POST_SUCCESS_MESSAGE);
       this.closeModal();
     },
     closeModal() {

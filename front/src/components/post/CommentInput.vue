@@ -36,17 +36,14 @@ export default {
   methods: {
     async createComment() {
       if (this.content === "") {
-        this.$store.commit(
-          "snackbar/SHOW_SNACKBAR",
-          ERROR_MESSAGE.NO_CONTENT_MESSAGE,
-        );
+        this.$store.commit("snackbar/SHOW", ERROR_MESSAGE.NO_CONTENT_MESSAGE);
         return;
       }
 
       const authorLocation = await this.$kakaoMap.getCurrentLocation();
       if (!authorLocation) {
         this.$store.commit(
-          "snackbar/SHOW_SNACKBAR",
+          "snackbar/SHOW",
           ERROR_MESSAGE.UNIDENTIFIABLE_LOCATION,
         );
         return;
@@ -61,10 +58,7 @@ export default {
       await this.$store.dispatch("comment/createComment", data);
       await this.$store.dispatch("post/loadPost", this.postId);
       this.content = "";
-      this.$store.commit(
-        "snackbar/SHOW_SNACKBAR",
-        CREATE_COMMENT_SUCCESS_MESSAGE,
-      );
+      this.$store.commit("snackbar/SHOW", CREATE_COMMENT_SUCCESS_MESSAGE);
     },
   },
 };

@@ -45,7 +45,7 @@ export default {
       .setCenterByCurrentLocation()
       .catch(() =>
         this.$store.commit(
-          "snackbar/SHOW_SNACKBAR",
+          "snackbar/SHOW",
           ERROR_MESSAGE.UNIDENTIFIABLE_LOCATION,
         ),
       );

@@ -1,27 +1,27 @@
 export default {
   namespaced: true,
   state: {
-    snackbarMessage: "",
-    snackbarWarning: false,
+    message: "",
+    visible: false,
   },
   mutations: {
-    SHOW_SNACKBAR(state, message) {
-      state.snackbarMessage = message;
-      state.snackbarWarning = true;
+    SHOW(state, message) {
+      state.message = message;
+      state.visible = true;
     },
-    SET_SNACKBAR_MESSAGE(state, val) {
-      state.snackbarMessage = val;
+    SET_MESSAGE(state, val) {
+      state.message = val;
     },
-    SET_SNACKBAR_WARNING(state, val) {
-      state.snackbarWarning = val;
+    SET_VISIBLE(state, val) {
+      state.visible = val;
     },
   },
   getters: {
-    snackbarMessage(state) {
-      return state.snackbarMessage;
+    message(state) {
+      return state.message;
     },
-    snackbarWarning(state) {
-      return state.snackbarWarning;
+    visible(state) {
+      return state.visible;
     },
   },
 };
