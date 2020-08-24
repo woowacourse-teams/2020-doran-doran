@@ -39,7 +39,6 @@ export default {
         this.$store.commit("snackbar/SHOW", ERROR_MESSAGE.NO_CONTENT_MESSAGE);
         return;
       }
-
       const authorLocation = await this.$kakaoMap.getCurrentLocation();
       if (!authorLocation) {
         this.$store.commit(
@@ -48,7 +47,6 @@ export default {
         );
         return;
       }
-
       const data = {
         memberId: 1,
         postId: this.postId,
