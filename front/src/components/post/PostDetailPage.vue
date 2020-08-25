@@ -91,10 +91,6 @@ export default {
       );
     },
     async toggleLike() {
-      if (this.$store.getters["member/isGuest"]) {
-        this.$store.commit("snackbar/SHOW", ERROR_MESSAGE.LOGIN_REQUIRED);
-        return;
-      }
       this.liked ? await this.deletePostLike() : await this.createPostLike();
     },
     async loadPost() {
@@ -105,14 +101,20 @@ export default {
     },
     async deletePostLike() {
       const data = this.post.likes.find(this.hasLike);
-      await this.$store.dispatch("post/deletePostLike", data.id);
+      await this.$store.dispatch("post/deletePostLike", data.id).catch((e) => {
+        this.$store.commit("snackbar/SHOW", ERROR_MESSAGE.LOGIN_REQUIRED);
+        throw e;
+      });
       await this.loadPost();
     },
     async createPostLike() {
       const data = {
         postId: this.post.id,
       };
-      await this.$store.dispatch("post/createPostLike", data);
+      await this.$store.dispatch("post/createPostLike", data).catch((e) => {
+        this.$store.commit("snackbar/SHOW", ERROR_MESSAGE.LOGIN_REQUIRED);
+        throw e;
+      });
       await this.loadPost();
     },
     openMapModal() {
@@ -126,7 +128,6 @@ export default {
 </script>
 
 <style scoped>
-
 .bottom-spacer {
   height: 60px;
 }
