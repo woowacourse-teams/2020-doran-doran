@@ -43,7 +43,6 @@ export default {
       if (storageToken && storageToken !== "guest") {
         await this.$store.dispatch("member/loadMember");
       } else if (!storageToken) {
-        sessionStorage.setItem("accessToken", "guest");
         this.$router.push("/login");
       }
     },
