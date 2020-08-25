@@ -82,7 +82,7 @@ export default {
         authorAddress: await this.$kakaoMap.getAddress(authorLocation),
       };
       await this.$store.dispatch("post/createPost", data);
-      this.$store.commit("snackbar/SHOW_SNACKBAR", CREATE_POST_SUCCESS_MESSAGE);
+      this.$store.commit("snackbar/SHOW", CREATE_POST_SUCCESS_MESSAGE);
       this.closeModal();
     },
     closeModal() {
