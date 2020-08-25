@@ -1,7 +1,7 @@
 <template>
-  <div class="d-flex flex-column modal-mask" @click.self="closeModal">
+  <div class="d-flex flex-column modal-mask" @click.self="bounceOut">
     <VSpacer />
-    <transition name="bounce" @after-leave="afterLeave">
+    <transition name="bounce" @after-leave="close">
       <div v-if="rendered">
         <VTextarea
           type="text"
@@ -18,7 +18,7 @@
           <v-btn
             color="grey lighten-4"
             class="my-6 mx-1 mt-2 rounded-pill"
-            @click.prevent="closeModal"
+            @click.prevent="bounceOut"
           >
             취소
           </v-btn>
@@ -90,13 +90,13 @@ export default {
         throw e;
       });
       this.$store.commit("snackbar/SHOW", CREATE_POST_SUCCESS_MESSAGE);
-      this.closeModal();
+      this.bounceOut();
     },
-    closeModal() {
+    bounceOut() {
       this.content = "";
       this.rendered = false;
     },
-    afterLeave() {
+    close() {
       this.$store.commit("mapMode/CHANGE_STATE", MAP_MODE.DEFAULT);
       this.$store.commit("appBar/MAP_PAGE_DEFAULT_MODE");
     },
