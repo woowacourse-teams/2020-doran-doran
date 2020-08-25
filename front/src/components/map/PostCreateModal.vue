@@ -57,23 +57,21 @@ export default {
   methods: {
     async createPost() {
       if (this.content === "") {
-        this.$store.commit(
-          "snackbar/SHOW_SNACKBAR",
-          ERROR_MESSAGE.NO_CONTENT_MESSAGE,
-        );
+        this.$store.commit("snackbar/SHOW", ERROR_MESSAGE.NO_CONTENT_MESSAGE);
         return;
       }
-
       const postLocation = this.$kakaoMap.getCenterLocation();
-      const authorLocation = await this.$kakaoMap.getCurrentLocation();
-      if (!authorLocation) {
-        this.$store.commit(
-          "snackbar/SHOW_SNACKBAR",
-          ERROR_MESSAGE.UNIDENTIFIABLE_LOCATION,
+      const authorLocation = await this.$kakaoMap
+        .getCurrentLocation()
+        .catch(() =>
+          this.$store.commit(
+            "snackbar/SHOW",
+            ERROR_MESSAGE.UNIDENTIFIABLE_LOCATION,
+          ),
         );
+      if (!authorLocation) {
         return;
       }
-
       const data = {
         memberId: 1,
         content: this.content,
