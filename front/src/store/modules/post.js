@@ -50,18 +50,12 @@ export default {
     },
   },
   actions: {
-    async createPost({ commit }, newPost) {
+    async createPost(context, newPost) {
       await api.createPost(newPost);
-      commit("CLEAR_POSTS");
     },
     async loadPost({ commit }, postId) {
       const data = await api.loadPost(postId);
       commit("SET_POST", data);
-    },
-    async filterPosts({ commit }, data) {
-      commit("CLEAR_POSTS");
-      const searchResult = await api.filterPosts(data);
-      commit("SET_POSTS", searchResult);
     },
     async loadPostsInBounds({ commit }, bounds) {
       const postsInBounds = await api.loadPostsInBounds(bounds);
