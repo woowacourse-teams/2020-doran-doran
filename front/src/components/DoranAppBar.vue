@@ -20,17 +20,9 @@
         {{ appBarTitle }}
       </v-toolbar-title>
 
-      <div class="text-right app-bar-right">
-        <v-icon v-show="searchButton" @click="toggleSearchInput">
-          mdi-magnify
-        </v-icon>
-        <v-icon v-show="timelineButton" @click="goToTimelinePage">
-          mdi-format-list-bulleted
-        </v-icon>
-        <router-link v-show="mapButton" to="/">
-          <v-icon>mdi-map</v-icon>
-        </router-link>
-      </div>
+      <v-icon v-show="searchButton" @click="toggleSearchInput">
+        mdi-magnify
+      </v-icon>
     </v-container>
 
     <v-expand-x-transition>
@@ -80,12 +72,6 @@ export default {
     searchButton() {
       return this.$store.getters["appBar/searchButton"];
     },
-    timelineButton() {
-      return this.$store.getters["appBar/timelineButton"];
-    },
-    mapButton() {
-      return this.$store.getters["appBar/mapButton"];
-    },
   },
   methods: {
     goToPreviousPage() {
@@ -94,23 +80,12 @@ export default {
     showSidebar() {
       this.$store.commit("memberSidebar/SHOW");
     },
-    goToTimelinePage() {
-      const boundsFromKakao = this.$kakaoMap.getBounds();
-      const bounds = {
-        upperBound: boundsFromKakao.ja,
-        lowerBound: boundsFromKakao.ka,
-        leftBound: boundsFromKakao.da,
-        rightBound: boundsFromKakao.ia,
-      };
-      const params = new URLSearchParams(bounds).toString();
-      this.$router.push("/timeline?" + params);
-    },
-    toggleSearchInput() {
-      this.isSearching = !this.isSearching;
-    },
     setMapToDefault() {
       this.$store.commit("appBar/MAP_PAGE_DEFAULT_MODE");
       this.$store.commit("mapMode/CHANGE_STATE", MAP_MODE.DEFAULT);
+    },
+    toggleSearchInput() {
+      this.isSearching = !this.isSearching;
     },
     async filterPosts() {
       if (this.keyword === "") {

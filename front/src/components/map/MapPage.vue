@@ -2,6 +2,10 @@
   <v-container fill-height fluid class="pa-0">
     <KakaoMap />
     <PeriodFilterButton v-if="isDefaultMode" />
+    <v-btn color="white" class="timeline-btn" @click="goToTimeline">
+      <v-icon>mdi-format-list-bulleted</v-icon>
+      목록
+    </v-btn>
     <MapAssistantButtons v-if="isDefaultMode" />
     <PostCreateButton class="post-create-btn" />
     <PostCreateModal
@@ -74,11 +78,29 @@ export default {
     closeMemberUpdateModal() {
       this.isInitialMember = false;
     },
+    goToTimeline() {
+      const boundsFromKakao = this.$kakaoMap.getBounds();
+      const bounds = {
+        upperBound: boundsFromKakao.ja,
+        lowerBound: boundsFromKakao.ka,
+        leftBound: boundsFromKakao.da,
+        rightBound: boundsFromKakao.ia,
+      };
+      const params = new URLSearchParams(bounds).toString();
+      this.$router.push("/timeline?" + params);
+    },
   },
 };
 </script>
 
 <style scoped>
+.timeline-btn {
+  position: fixed;
+  top: 60px;
+  right: 5px;
+  z-index: 9999;
+}
+
 .post-create-btn {
   position: absolute;
   bottom: 15px;
