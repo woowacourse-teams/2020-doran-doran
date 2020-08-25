@@ -5,7 +5,7 @@
         mdi-window-close
       </v-icon>
 
-      <div class="ma-7 mt-16" @click="login">
+      <div class="ma-5 mt-10 mb-5" @click="login">
         <v-avatar>
           <v-icon size="36">mdi-account-circle</v-icon>
         </v-avatar>
@@ -14,9 +14,8 @@
         </span>
       </div>
 
-      <VDivider />
-
-      <v-list>
+      <v-list v-show="!isGuest">
+        <VDivider />
         <v-list-item
           v-for="item in items"
           :key="item.title"
@@ -68,6 +67,9 @@ export default {
     member() {
       return this.$store.getters["member/getMember"];
     },
+    isGuest() {
+      return this.$store.getters["member/isGuest"];
+    },
     drawer: {
       get() {
         return this.$store.getters["memberSidebar/visible"];
@@ -79,7 +81,7 @@ export default {
   },
   methods: {
     login() {
-      if (this.$store.getters["member/isGuest"]) {
+      if (this.isGuest) {
         window.location.href = API_BASE_URL.EC2 + "/oauth2/authorization/kakao";
       }
     },
