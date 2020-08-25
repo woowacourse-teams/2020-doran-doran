@@ -14,82 +14,82 @@
 </template>
 
 <script>
-  import PostItem from "@/components/timeline/PostItem";
+import PostItem from "@/components/timeline/PostItem";
 
-  export default {
-    name: "TimelineModal",
-    components: {
-      PostItem,
-    },
-    data() {
-      return {
-        rendered: false,
+export default {
+  name: "TimelineModal",
+  components: {
+    PostItem,
+  },
+  data() {
+    return {
+      rendered: false,
+    };
+  },
+  computed: {
+    posts() {
+      const kakaoBounds = this.$kakaoMap.getBounds();
+      const bounds = {
+        top: kakaoBounds.ja,
+        bottom: kakaoBounds.ka,
+        left: kakaoBounds.da,
+        right: kakaoBounds.ia,
       };
+      return this.$store.getters["post/postsInBounds"](bounds).reverse();
     },
-    computed: {
-      posts() {
-        const kakaoBounds = this.$kakaoMap.getBounds();
-        const bounds = {
-          top: kakaoBounds.ja,
-          bottom: kakaoBounds.ka,
-          left: kakaoBounds.da,
-          right: kakaoBounds.ia,
-        };
-        return this.$store.getters["post/postsInBounds"](bounds).reverse();
-      },
+  },
+  mounted() {
+    this.rendered = true;
+  },
+  methods: {
+    slideDown() {
+      this.rendered = false;
     },
-    mounted() {
-      this.rendered = true;
+    close() {
+      this.$emit("close");
     },
-    methods: {
-      slideDown() {
-        this.rendered = false;
-      },
-      close() {
-        this.$emit("close");
-      },
-    },
-  };
+  },
+};
 </script>
 
 <style scoped>
-  .modal-mask {
-    position: fixed;
-    z-index: 9999;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-  }
+.modal-mask {
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
 
-  .modal-container {
-    position: absolute;
-    top: 20px;
-    width: 100%;
-    height: calc(100% - 20px);
-    background-color: #fff;
-    border-radius: 15px 15px 0 0;
-  }
+.modal-container {
+  position: absolute;
+  top: 20px;
+  width: 100%;
+  height: calc(100% - 20px);
+  background-color: #fff;
+  border-radius: 15px 15px 0 0;
+}
 
-  .close-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-  }
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
 
-  .slide-up-enter-active {
-    animation: slide-up 0.5s;
+.slide-up-enter-active {
+  animation: slide-up 0.5s;
+}
+.slide-up-leave-active {
+  animation: slide-up 0.5s reverse;
+}
+@keyframes slide-up {
+  0% {
+    transform: translateY(100%);
   }
-  .slide-up-leave-active {
-    animation: slide-up 0.5s reverse;
+  100% {
+    transform: translateY(0);
   }
-  @keyframes slide-up {
-    0% {
-      transform: translateY(100%);
-    }
-    100% {
-      transform: translateY(0);
-    }
-  }
+}
 </style>
