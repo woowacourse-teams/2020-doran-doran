@@ -32,14 +32,17 @@ export default {
   },
   methods: {
     async checkLoginUser() {
-      const token = location.href.split("token=")[1];
+      const urlToken = location.href.split("token=")[1];
+      const storageToken = sessionStorage.getItem("accessToken");
 
-      if (token || token === "guest") {
-        sessionStorage.setItem("accessToken", token);
+      if (urlToken) {
+        sessionStorage.setItem("accessToken", urlToken);
         location.href = "/";
-      } else if (sessionStorage.getItem("accessToken")) {
+      }
+
+      if (storageToken !== "guest") {
         await this.$store.dispatch("member/loadMember");
-      } else {
+      } else if (!storageToken) {
         sessionStorage.setItem("accessToken", "guest");
         this.$router.push("/login");
       }
