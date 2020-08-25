@@ -109,9 +109,6 @@ export default {
 </script>
 
 <style scoped>
-.modal-mask {
-}
-
 .modal-container {
   width: 90%;
   margin: auto;
