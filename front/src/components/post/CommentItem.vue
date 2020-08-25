@@ -5,13 +5,13 @@
       <div class="mb-1">
         <v-icon class="mr-2">mdi-account-circle</v-icon>
         <span class="font-weight-bold">{{ comment.author.nickname }}</span>
-        <div class="float-right text--disabled comment-distance">
+        <div class="float-right text--disabled font-size-x-small">
           {{ comment.distance.toFixed(2) }} km 밖에서
         </div>
       </div>
       <div>{{ comment.content }}</div>
       <div>
-        <span class="text--disabled comment-created">{{ commentDate }}</span>
+        <span class="text--disabled font-size-x-small">{{ commentDate }}</span>
         <span class="float-right">
           <v-icon small @click="toggleLike" :color="likeButtonType.color">
             {{ likeButtonType.icon }}
@@ -73,9 +73,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.comment-distance,
-.comment-created {
-  font-size: 0.8rem;
-}
-</style>
+<style scoped></style>

@@ -1,6 +1,7 @@
 <template>
   <v-app-bar flat max-height="56" color="white">
     <v-container
+      v-show="this.isSearching"
       fluid
       class="d-flex flex-row align-center justify-space-between pa-0"
     >
@@ -15,14 +16,14 @@
         mdi-chevron-left
       </v-icon>
 
-      <v-toolbar-title class="app-bar-title">
+      <v-toolbar-title class="app-bar-title font-size-small">
         {{ appBarTitle }}
       </v-toolbar-title>
 
       <div class="text-right app-bar-right">
-        <router-link v-show="searchButton" to="/search">
-          <v-icon>mdi-magnify</v-icon>
-        </router-link>
+        <v-icon v-show="searchButton" @click="toggleSearchInput">
+          mdi-magnify
+        </v-icon>
         <v-icon v-show="timelineButton" @click="goToTimelinePage">
           mdi-format-list-bulleted
         </v-icon>
@@ -31,14 +32,39 @@
         </router-link>
       </div>
     </v-container>
+
+    <v-expand-x-transition>
+      <VTextField
+        v-show="isSearching"
+        v-model="keyword"
+        autofocus
+        placeholder="검색어를 입력하세요."
+        color="black"
+        filled
+        rounded
+        dense
+        hide-details
+        append-outer-icon="mdi-window-close"
+        class="search-input font-size-small"
+        @keypress.enter="filterPosts"
+        @click:append-outer="initializeMapPage"
+      />
+    </v-expand-x-transition>
   </v-app-bar>
 </template>
 
 <script>
+import { DATE_FILTER_TYPE } from "@/utils/time-filter-type";
 import { MAP_MODE } from "@/utils/constants";
 
 export default {
   name: "DoranAppBar",
+  data() {
+    return {
+      isSearching: false,
+      keyword: "",
+    };
+  },
   computed: {
     backButton() {
       return this.$store.getters["appBar/backButton"];
@@ -80,9 +106,33 @@ export default {
       const params = new URLSearchParams(bounds).toString();
       this.$router.push("/timeline?" + params);
     },
+    toggleSearchInput() {
+      this.isSearching = !this.isSearching;
+    },
     setMapToDefault() {
       this.$store.commit("appBar/MAP_PAGE_DEFAULT_MODE");
       this.$store.commit("mapMode/CHANGE_STATE", MAP_MODE.DEFAULT);
+    },
+    async filterPosts() {
+      const data = {
+        keyword: this.keyword,
+      };
+      const dateType = Object.values(DATE_FILTER_TYPE()).find(
+        (dateType) => dateType.name === this.radios,
+      );
+      if (!dateType) {
+        data.startDate = "2020-08-19" + " 00:00:00";
+        data.endDate = "2020-09-20" + " 23:59:59";
+      } else {
+        data.startDate = dateType.startDate;
+        data.endDate = this.$moment().format("YYYY-MM-DD HH:mm:ss");
+      }
+      await this.$store.dispatch("post/searchPosts", data);
+    },
+    async initializeMapPage() {
+      this.toggleSearchInput();
+      this.keyword = "";
+      await this.$store.dispatch("post/loadPosts");
     },
   },
 };
@@ -93,11 +143,17 @@ export default {
   position: fixed;
   left: 50%;
   transform: translate(-50%);
-  font-size: 0.9rem;
   padding: 8px;
 }
 
 .app-bar-right > * {
   margin-left: 8px;
+}
+
+.search-input {
+  position: absolute;
+  right: 48px;
+  width: calc(100% - 100px);
+  background-color: white;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div class="background doran-doran-color">
-    <div class="app-title">도란도란</div>
+    <div class="app-title font-size-x-large">도란도란</div>
 
     <div class="button-box">
       <router-link to="/">
@@ -21,9 +21,6 @@ import { API_BASE_URL } from "@/utils/constants";
 
 export default {
   name: "LoginPage",
-  created() {
-    this.$store.commit("appBar/HIDE");
-  },
   methods: {
     kakaoLogin() {
       window.location.href = API_BASE_URL.EC2 + "/oauth2/authorization/kakao";
@@ -48,7 +45,6 @@ export default {
   width: 50%;
   margin: auto;
   text-align: center;
-  font-size: 2rem;
   font-weight: bold;
   font-family: BM_JUA, sans-serif;
   color: white;

@@ -22,7 +22,7 @@ const api = (() => {
   const deletePost = (postId) => client.delete(`/${postId}`, options);
   const searchPosts = (data) => {
     const params = new URLSearchParams(data).toString();
-    return client.get(`/search?` + params).then((res) => res.data);
+    return client.get(`/filter?` + params).then((res) => res.data);
   };
   const createPostLike = (newPostLike) => client.post(`/likes`, newPostLike, options);
   const deletePostLike = (postLikeId) => client.delete(`/likes/${postLikeId}`, options);

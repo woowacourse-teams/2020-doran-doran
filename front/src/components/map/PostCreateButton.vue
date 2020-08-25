@@ -4,10 +4,11 @@
       fixed
       right
       bottom
-      large
       fab
       dark
-      :color="buttonType.color"
+      large
+      elevation="2"
+      class="doran-doran-color"
       @click="changeMode"
     >
       <v-icon>{{ buttonType.icon }}</v-icon>

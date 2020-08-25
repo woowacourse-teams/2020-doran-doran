@@ -22,7 +22,6 @@ export default {
       state.mapButton = false;
     },
     MAP_PAGE_MARKER_MODE(state) {
-      state.appBarVisible = true;
       state.backButton = false;
       state.myPageButton = false;
       state.cancelButton = true;
@@ -35,7 +34,7 @@ export default {
       state.myPageButton = true;
       state.cancelButton = false;
       state.title = "타임라인";
-      state.searchButton = true;
+      state.searchButton = false;
       state.timelineButton = false;
       state.mapButton = true;
     },

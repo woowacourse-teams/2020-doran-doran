@@ -29,7 +29,6 @@ export default {
       comments: [],
     },
     posts: [],
-    searchedPosts: [],
     timelinePosts: [],
   },
   mutations: {
@@ -39,8 +38,8 @@ export default {
     SET_POSTS(state, posts) {
       state.posts = posts;
     },
-    SET_SEARCHED_POSTS(state, searchedPosts) {
-      state.searchedPosts = searchedPosts;
+    CLEAR_POSTS(state) {
+      state.posts = null;
     },
     SET_TIMELINE_POSTS(state, timelinePosts) {
       state.timelinePosts = timelinePosts;
@@ -72,8 +71,9 @@ export default {
       commit("REMOVE_POST", postId);
     },
     async searchPosts({ commit }, data) {
+      commit("CLEAR_POSTS");
       const searchResult = await api.searchPosts(data);
-      commit("SET_SEARCHED_POSTS", searchResult);
+      commit("SET_POSTS", searchResult);
     },
     async createPostLike(context, newPostLike) {
       await api.createPostLike(newPostLike);
@@ -88,9 +88,6 @@ export default {
     },
     getPosts: (state) => {
       return state.posts;
-    },
-    getSearchedPosts: (state) => {
-      return state.searchedPosts;
     },
     getPostsInBounds: (state) => {
       return state.timelinePosts;
