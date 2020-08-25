@@ -1,7 +1,6 @@
 <template>
   <div>
     <PostItem v-for="post in posts" :key="post.id" :post="post" />
-    <div class="bottom-spacer" />
   </div>
 </template>
 
@@ -32,9 +31,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.bottom-spacer {
-  width: 100%;
-  height: 70px;
-}
-</style>
+<style scoped></style>

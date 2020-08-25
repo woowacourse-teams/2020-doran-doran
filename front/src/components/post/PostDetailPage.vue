@@ -35,7 +35,7 @@
       </div>
     </div>
     <CommentList :comments="post.comments" @load-post="loadPost" />
-    <div class="bottom-spacer" />
+    <VSpacer class="bottom-spacer" />
     <CommentInput :post-id="post.id" />
     <PostDetailPageLocationMapModal
       v-if="isMapModalVisible"
