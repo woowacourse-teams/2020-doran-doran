@@ -44,6 +44,16 @@ class MemberServiceTest {
         assertThat(response.getNickname()).isEqualTo(request.getNickname());
     }
 
+    @DisplayName("사용자의 정보를 삭제한다.")
+    @Test
+    void delete() {
+        assertThat(memberRepository.findAll()).hasSize(1);
+
+        memberService.delete(member);
+
+        assertThat(memberRepository.findAll()).hasSize(0);
+    }
+
     @AfterEach
     void tearDown() {
         memberRepository.deleteAll();
