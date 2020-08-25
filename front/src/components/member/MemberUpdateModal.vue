@@ -3,12 +3,12 @@
     <VSpacer />
     <transition name="bounce">
       <div v-if="rendered" class="pa-6 pb-1 modal-container">
-        <v-text-field
+        <VTextField
           label="새 닉네임을 입력하세요."
           color="grey darken-2"
-          :value="member.nickname"
-        >
-        </v-text-field>
+          v-model="newNickname"
+          @keypress.enter="updateMember"
+        />
         <div class="button-box">
           <v-btn
             text
@@ -18,7 +18,8 @@
             취소
           </v-btn>
           <v-btn
-              text
+            text
+            :disabled="this.nicknameNotChanged()"
             class="mb-2 text-subtitle-1 font-weight-bold amber--text text--accent-4"
             @click.prevent="updateMember"
           >
@@ -32,16 +33,19 @@
 </template>
 
 <script>
+import api from "@/api/member";
+
 export default {
   name: "PostCreateModal",
   data() {
     return {
-      newNickname: "",
       rendered: false,
+      newNickname: "",
     };
   },
   mounted() {
     this.rendered = true;
+    this.newNickname = this.member.nickname;
   },
   computed: {
     member() {
@@ -49,10 +53,23 @@ export default {
     },
   },
   methods: {
-    async updateMember() {},
+    async updateMember() {
+      const updatedMember = await api.updateMember(this.newNickname);
+      this.$store.commit("member/SET_MEMBER", updatedMember);
+      this.$store.commit("snackbar/SHOW", "🥳 성공적으로 변경되었습니다.")
+      this.closeModal();
+    },
     closeModal() {
       this.$emit("close-modal");
     },
+    nicknameNotChanged() {
+      return this.member.nickname === this.newNickname;
+    }
+  },
+  watch: {
+    newNickname(val) {
+      return val;
+    }
   },
 };
 </script>
