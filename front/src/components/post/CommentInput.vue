@@ -35,10 +35,7 @@ export default {
   },
   methods: {
     async createComment() {
-      if (
-        !sessionStorage.getItem("accessToken") ||
-        sessionStorage.getItem("accessToken") === "guest"
-      ) {
+      if (this.$store.getters["member/isLoginUser"]) {
         this.$store.commit("snackbar/SHOW", ERROR_MESSAGE.LOGIN_REQUIRED);
         return;
       }

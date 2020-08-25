@@ -24,5 +24,11 @@ export default {
     getMember: (state) => {
       return state.member;
     },
+    isLoginUser: () => {
+      return (
+        !sessionStorage.getItem("accessToken") ||
+        sessionStorage.getItem("accessToken") === "guest"
+      );
+    },
   },
 };
