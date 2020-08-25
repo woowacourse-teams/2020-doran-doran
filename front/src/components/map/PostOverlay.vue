@@ -1,8 +1,8 @@
 <template>
   <div ref="post" class="speech-bubble" @click.prevent="goToPostDetailPage">
     {{ shortContent }} {{ contentTail }}
-    <div class="new-icon" v-if="isRecentPost">N</div>
     <span class="text-caption red--text"> [{{ post.comments.length }}]</span>
+    <div class="new-icon" v-if="isRecentPost">N</div>
     <div class="speech-arrow"></div>
   </div>
 </template>
@@ -28,10 +28,7 @@ export default {
       const postCreatedAt = moment(this.post.createdAt).format(
         "YYYY-MM-DD HH:mm:ss",
       );
-      if (halfAnHourAgo < postCreatedAt) {
-        return true;
-      }
-      return false;
+      return halfAnHourAgo < postCreatedAt;
     },
     shortContent() {
       return this.post.content.substring(0, CONTENT_LENGTH).trim();
