@@ -36,7 +36,7 @@
       </v-btn-toggle>
       <v-sheet
         v-if="periodFilterChoice === 'userInput' && isCalendarOpen === true"
-        class="userInputModal rounded-lg"
+        class="user-input-modal rounded-lg"
         elevation="2"
       >
         <DatePickerMenu :label="'시작 날짜'" @select-date="inputStartDate" />
@@ -139,7 +139,7 @@ export default {
 .theme--light.v-btn-toggle:not(.v-btn-toggle--group) {
   background: transparent;
 }
-.userInputModal {
+.user-input-modal {
   position: fixed;
   top: 100px;
   left: 190px;
