@@ -2,7 +2,10 @@
   <v-container fill-height fluid class="pa-0">
     <KakaoMap />
     <PostCreateButton />
-    <PostCreateModal v-if="this.isPostMode" />
+    <PostCreateModal
+      v-if="this.isPostMode"
+      :location="this.$kakaoMap.getCenterLocation()"
+    />
   </v-container>
 </template>
 

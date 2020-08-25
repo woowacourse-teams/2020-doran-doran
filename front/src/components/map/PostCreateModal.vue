@@ -1,7 +1,7 @@
 <template>
-  <div class="d-flex flex-column modal-mask" @click.self="closeModal">
+  <div class="d-flex flex-column modal-mask" @click.self="bounceOut">
     <VSpacer />
-    <transition name="bounce">
+    <transition name="bounce" @after-leave="close">
       <div v-if="rendered">
         <VTextarea
           type="text"
@@ -18,7 +18,7 @@
           <v-btn
             color="grey lighten-4"
             class="my-6 mx-1 mt-2 rounded-pill"
-            @click.prevent="closeModal"
+            @click.prevent="bounceOut"
           >
             취소
           </v-btn>
@@ -44,6 +44,12 @@ const CREATE_POST_SUCCESS_MESSAGE = "🎉 글이 등록되었습니다.";
 
 export default {
   name: "PostCreateModal",
+  props: {
+    location: {
+      type: Object,
+      required: true,
+    },
+  },
   data() {
     return {
       content: "",
@@ -60,7 +66,7 @@ export default {
         this.$store.commit("snackbar/SHOW", ERROR_MESSAGE.NO_CONTENT_MESSAGE);
         return;
       }
-      const postLocation = this.$kakaoMap.getCenterLocation();
+      const postLocation = this.location;
       const authorLocation = await this.$kakaoMap
         .getCurrentLocation()
         .catch(() =>
@@ -84,10 +90,13 @@ export default {
         throw e;
       });
       this.$store.commit("snackbar/SHOW", CREATE_POST_SUCCESS_MESSAGE);
-      this.closeModal();
+      this.bounceOut();
     },
-    closeModal() {
+    bounceOut() {
       this.content = "";
+      this.rendered = false;
+    },
+    close() {
       this.$store.commit("mapMode/CHANGE_STATE", MAP_MODE.DEFAULT);
       this.$store.commit("appBar/MAP_PAGE_DEFAULT_MODE");
     },
