@@ -12,8 +12,8 @@
       v-if="isPostMode"
       :location="this.$kakaoMap.getCenterLocation()"
     />
-    <TimelineModal v-if="timeline" @close="closeTimelineModal"/>
-    <PostDetailModal v-if="postModal" />
+    <TimelineModal v-if="timeline" @close="closeTimelineModal" />
+    <PostModal v-if="postModal" />
     <MemberUpdateModal
       v-if="isInitialMember"
       @close="closeMemberUpdateModal"
@@ -29,13 +29,13 @@ import MapAssistantButtons from "@/components/map/MapAssistantButtons";
 import PeriodFilterButton from "@/components/map/filter/PeriodFilterButton";
 import TimelineModal from "@/components/timeline/TimelineModal";
 import MemberUpdateModal from "@/components/member/MemberUpdateModal";
-import PostDetailModal from "@/components/post/PostDetailModal";
+import PostModal from "@/components/post/PostModal";
 
 export default {
   name: "MapPage",
   components: {
-    PostDetailModal,
     MapAssistantButtons,
+    PostModal,
     PeriodFilterButton,
     TimelineModal,
     KakaoMap,
@@ -61,7 +61,7 @@ export default {
     },
     postModal() {
       return this.$store.getters["post/modal"];
-    }
+    },
   },
   async created() {
     this.$store.commit("appBar/MAP_PAGE_DEFAULT_MODE");

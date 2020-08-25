@@ -29,7 +29,7 @@
       <CommentList :comments="post.comments" @load-post="loadPost" />
       <VSpacer class="bottom-spacer" />
       <CommentInput :post-id="post.id" />
-      <PostDetailPageLocationMapModal
+      <PostLocationModal
         v-if="this.isMapModalVisible"
         :location="post.location"
         @close-modal="closeMapModal"
@@ -41,21 +41,21 @@
 <script>
 import CommentInput from "@/components/post/CommentInput";
 import CommentList from "@/components/post/CommentList";
-import PostDetailPageLocationMapModal from "@/components/post/PostDetailPageLocationMapModal";
+import PostLocationModal from "@/components/post/PostLocationModal";
 import OptionsModal from "@/components/post/OptionsModal";
-import { ERROR_MESSAGE, LIKE_BUTTON_TYPE } from "@/utils/constants";
 import DoranAppBar from "@/components/DoranAppBar";
+import { ERROR_MESSAGE, LIKE_BUTTON_TYPE } from "@/utils/constants";
 
 const DELETE_POST_SUCCESS_MESSAGE = "👻 글이 삭제되었습니다.";
 const DELETE_POST_FAIL_MESSAGE = "😭 글 삭제에 실패했습니다.";
 
 export default {
-  name: "PostDetailModal",
+  name: "PostModal",
   components: {
     DoranAppBar,
     CommentList,
     CommentInput,
-    PostDetailPageLocationMapModal,
+    PostLocationModal,
     OptionsModal,
   },
   data() {
