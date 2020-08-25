@@ -33,10 +33,10 @@ export default {
   methods: {
     async checkLoginUser() {
       const urlToken = location.href.split("token=")[1];
-      const storageToken = sessionStorage.getItem("accessToken");
+      const storageToken = localStorage.getItem("accessToken");
 
       if (urlToken) {
-        sessionStorage.setItem("accessToken", urlToken);
+        localStorage.setItem("accessToken", urlToken);
         location.href = "/";
       }
 
@@ -50,5 +50,4 @@ export default {
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

@@ -21,7 +21,7 @@ export default {
   name: "LoginPage",
   methods: {
     guest() {
-      sessionStorage.setItem("accessToken", "guest");
+      localStorage.setItem("accessToken", "guest");
       this.$router.push("/");
     },
     kakaoLogin() {

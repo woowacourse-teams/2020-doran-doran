@@ -7,9 +7,9 @@ const client = axios.create({
 
 const options = {
   headers: {
-    Authorization: 'Bearer ' + sessionStorage.getItem("accessToken")
-  }
-}
+    Authorization: "Bearer " + localStorage.getItem("accessToken"),
+  },
+};
 
 const api = (() => {
   const createComment = (newComment) => client.post("", newComment, options);

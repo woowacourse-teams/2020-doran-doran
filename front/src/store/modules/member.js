@@ -26,8 +26,8 @@ export default {
     },
     isGuest: () => {
       return (
-        !sessionStorage.getItem("accessToken") ||
-        sessionStorage.getItem("accessToken") === "guest"
+        !localStorage.getItem("accessToken") ||
+        localStorage.getItem("accessToken") === "guest"
       );
     },
   },
