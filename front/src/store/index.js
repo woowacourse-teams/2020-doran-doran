@@ -6,8 +6,7 @@ import post from "@/store/modules/post";
 import memberSidebar from "@/store/modules/memberSidebar";
 import appBar from "@/store/modules/appBar";
 import snackbar from "@/store/modules/snackbar";
-import postModal from "@/store/modules/postModal";
-import postDetailModal from "@/store/modules/postDetailModal";
+import mapMode from "@/store/modules/mapMode";
 
 Vue.use(Vuex);
 
@@ -19,7 +18,6 @@ export default new Vuex.Store({
     memberSidebar,
     appBar,
     snackbar,
-    postModal,
-    postDetailModal,
+    mapMode,
   },
 });

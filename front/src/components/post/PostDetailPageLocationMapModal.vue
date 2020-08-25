@@ -14,8 +14,6 @@
 </template>
 
 <script>
-import { POST_MODE } from "@/utils/constants";
-
 const MAP_MARKER_IMAGE =
   "https://dorandoran.s3.ap-northeast-2.amazonaws.com/project/map/blue_marker_with_shadow.png";
 
@@ -39,7 +37,7 @@ export default {
   },
   methods: {
     closeModal() {
-      this.$store.commit("postDetailModal/CHANGE_MODE", POST_MODE.DEFAULT);
+      this.$emit("close-modal");
     },
   },
 };

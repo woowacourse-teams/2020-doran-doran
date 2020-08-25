@@ -6,12 +6,12 @@
       <div class="float-right mt-2">{{ postDate }}</div>
     </div>
     <div class="text--disabled post-address">
-      <span @click="changeMode">
+      <span @click="openMapModal">
         <v-icon size="large" color="#659FEC">mdi-map-marker-radius</v-icon>
         <span style="color: #659fec;">
-        {{ post.address.depth1 }}
-        {{ post.address.depth2 }}
-        {{ post.address.depth3 }}에 외침
+          {{ post.address.depth1 }}
+          {{ post.address.depth2 }}
+          {{ post.address.depth3 }}에 외침
         </span>
       </span>
     </div>
@@ -32,7 +32,11 @@
     <CommentList :comments="post.comments" @load-post="loadPost" />
     <div class="bottom-spacer" />
     <CommentInput :post-id="post.id" />
-    <PostDetailPageLocationMapModal v-if="this.isMapModalMode" :location="post.location" />
+    <PostDetailPageLocationMapModal
+      v-if="this.isMapModalMode"
+      :location="post.location"
+      @close-modal="closeMapModal"
+    />
   </div>
 </template>
 
@@ -40,7 +44,7 @@
 import CommentInput from "@/components/post/CommentInput";
 import CommentList from "@/components/post/CommentList";
 import PostDetailPageLocationMapModal from "@/components/post/PostDetailPageLocationMapModal";
-import { LIKE_BUTTON_TYPE, POST_MODE } from "@/utils/constants";
+import { LIKE_BUTTON_TYPE } from "@/utils/constants";
 
 export default {
   name: "PostDetailPage",
@@ -48,6 +52,11 @@ export default {
     CommentList,
     CommentInput,
     PostDetailPageLocationMapModal,
+  },
+  data() {
+    return {
+      modalMode: false,
+    };
   },
   computed: {
     post: {
@@ -66,10 +75,10 @@ export default {
       return this.liked ? LIKE_BUTTON_TYPE.LIKED : LIKE_BUTTON_TYPE.DEFAULT;
     },
     isDefaultMode() {
-      return this.$store.getters["postDetailModal/isDefaultMode"];
+      return !this.modalMode;
     },
     isMapModalMode() {
-      return this.$store.getters["postDetailModal/isMapModalMode"];
+      return this.modalMode;
     },
   },
   async created() {
@@ -107,13 +116,11 @@ export default {
       await this.$store.dispatch("post/createPostLike", data);
       await this.loadPost();
     },
-    async changeMode() {
-      if (this.isDefaultMode) {
-        await this.$store.commit(
-          "postDetailModal/CHANGE_MODE",
-          POST_MODE.MAP_MODAL,
-        );
-      }
+    openMapModal() {
+      this.modalMode = !!this.isDefaultMode;
+    },
+    closeMapModal() {
+      this.modalMode = false;
     },
   },
 };
