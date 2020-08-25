@@ -43,12 +43,6 @@ public class PostController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping
-    public ResponseEntity<List<PostResponse>> showPosts() {
-        List<PostResponse> responses = postService.showPosts();
-        return ResponseEntity.ok(responses);
-    }
-
     @GetMapping("/bounds")
     public ResponseEntity<List<PostResponse>> showPostsInBounds(
         @ModelAttribute PostBoundsRequest request) {
