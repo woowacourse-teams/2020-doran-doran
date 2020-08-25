@@ -55,7 +55,7 @@ export default {
   },
   data() {
     return {
-      modalMode: false,
+      isMapModalMode: false,
     };
   },
   computed: {
@@ -73,12 +73,6 @@ export default {
     },
     likeButtonType() {
       return this.liked ? LIKE_BUTTON_TYPE.LIKED : LIKE_BUTTON_TYPE.DEFAULT;
-    },
-    isDefaultMode() {
-      return !this.modalMode;
-    },
-    isMapModalMode() {
-      return this.modalMode;
     },
   },
   async created() {
@@ -117,10 +111,10 @@ export default {
       await this.loadPost();
     },
     openMapModal() {
-      this.modalMode = !!this.isDefaultMode;
+      this.isMapModalMode = true;
     },
     closeMapModal() {
-      this.modalMode = false;
+      this.isMapModalMode = false;
     },
   },
 };

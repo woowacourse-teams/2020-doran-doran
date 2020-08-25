@@ -30,11 +30,6 @@ export default {
     await this.$kakaoMap.setCenterLocation(this.location);
     await this.$kakaoMap.setMarker(this.location, MAP_MARKER_IMAGE);
   },
-  computed: {
-    isMapModalMode() {
-      return this.$store.getters["postDetailModal/isMapModalMode"];
-    },
-  },
   methods: {
     closeModal() {
       this.$emit("close-modal");
