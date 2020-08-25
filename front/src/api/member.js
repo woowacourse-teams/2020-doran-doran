@@ -18,7 +18,7 @@ const api = (() => {
     const request = JSON.stringify(newNickname);
     return client.put("", request, options).then((res) => res.data);
   };
-  const deleteMember = () => client.delete("");
+  const deleteMember = () => client.delete("", options);
 
   return {
     loadMember,

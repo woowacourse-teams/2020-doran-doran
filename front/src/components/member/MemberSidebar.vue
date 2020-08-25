@@ -31,12 +31,26 @@
       v-if="this.isUpdating"
       @close-modal="closeMemberUpdateModal"
     />
+
+    <v-dialog v-model="isDeleting" persistent class="a">
+      <v-card>
+        <v-card-text class="pa-5">정말 탈퇴하시겠어요?</v-card-text>
+        <v-card-actions>
+          <VSpacer/>
+          <v-btn text @click="isDeleting = false">
+            아니오
+          </v-btn>
+          <v-btn text @click="deleteMember">네</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
 <script>
 import { API_BASE_URL } from "@/utils/constants";
 import MemberUpdateModal from "@/components/member/MemberUpdateModal";
+import api from "@/api/member";
 
 export default {
   name: "MemberSidebar",
@@ -49,7 +63,7 @@ export default {
       items: [
         {
           title: "정보수정",
-          action: this.updateMember,
+          action: this.ooenUpdateMemberModal,
         },
         {
           title: "로그아웃",
@@ -57,10 +71,11 @@ export default {
         },
         {
           title: "회원탈퇴",
-          action: this.deleteMember,
+          action: this.openDeleteMemberDialog,
         },
       ],
       isUpdating: false,
+      isDeleting: false,
     };
   },
   computed: {
@@ -85,14 +100,19 @@ export default {
         window.location.href = API_BASE_URL.EC2 + "/oauth2/authorization/kakao";
       }
     },
-    updateMember() {
+    ooenUpdateMemberModal() {
       this.isUpdating = true;
     },
     logout() {
       this.$store.commit("member/SET_LOGOUT_MEMBER");
       this.$store.commit("snackbar/SHOW", "성공적으로 로그아웃 되었습니다.");
     },
-    deleteMember() {},
+    async deleteMember() {
+      await api.deleteMember();
+      this.$store.commit("member/SET_LOGOUT_MEMBER");
+      this.$store.commit("snackbar/SHOW", "성공적으로 탈퇴를 완료했습니다.");
+      this.$router.push("/login");
+    },
     hideSidebar(action) {
       this.$store.commit("memberSidebar/HIDE");
       if (action instanceof Function) {
