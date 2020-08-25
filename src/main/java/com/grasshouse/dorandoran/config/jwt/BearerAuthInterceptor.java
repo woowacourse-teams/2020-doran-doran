@@ -25,7 +25,7 @@ public class BearerAuthInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
         Object handler) {
-        if (request.getMethod().equals(ALLOW_HTTP_METHOD) && !requestUrlContains(request, "/my")) {
+        if (request.getMethod().equals(ALLOW_HTTP_METHOD) && !requestUrlContains(request, "/me")) {
             return true;
         }
 
