@@ -40,7 +40,7 @@ export default {
         location.href = "/";
       }
 
-      if (storageToken !== "guest") {
+      if (storageToken && storageToken !== "guest") {
         await this.$store.dispatch("member/loadMember");
       } else if (!storageToken) {
         sessionStorage.setItem("accessToken", "guest");

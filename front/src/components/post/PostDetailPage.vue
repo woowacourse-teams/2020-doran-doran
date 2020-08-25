@@ -39,7 +39,7 @@
 import CommentInput from "@/components/post/CommentInput";
 import CommentList from "@/components/post/CommentList";
 import PostDetailPageLocationMapModal from "@/components/post/PostDetailPageLocationMapModal";
-import { LIKE_BUTTON_TYPE } from "@/utils/constants";
+import { ERROR_MESSAGE, LIKE_BUTTON_TYPE } from "@/utils/constants";
 
 export default {
   name: "PostDetailPage",
@@ -91,6 +91,13 @@ export default {
       );
     },
     async toggleLike() {
+      if (
+        !sessionStorage.getItem("accessToken") ||
+        sessionStorage.getItem("accessToken") === "guest"
+      ) {
+        this.$store.commit("snackbar/SHOW", ERROR_MESSAGE.LOGIN_REQUIRED);
+        return;
+      }
       this.liked ? await this.deletePostLike() : await this.createPostLike();
     },
     async loadPost() {

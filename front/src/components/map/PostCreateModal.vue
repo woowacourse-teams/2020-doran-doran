@@ -56,6 +56,14 @@ export default {
   },
   methods: {
     async createPost() {
+      if (
+        !sessionStorage.getItem("accessToken") ||
+        sessionStorage.getItem("accessToken") === "guest"
+      ) {
+        this.$store.commit("snackbar/SHOW", ERROR_MESSAGE.LOGIN_REQUIRED);
+        return;
+      }
+
       if (this.content === "") {
         this.$store.commit("snackbar/SHOW", ERROR_MESSAGE.NO_CONTENT_MESSAGE);
         return;
