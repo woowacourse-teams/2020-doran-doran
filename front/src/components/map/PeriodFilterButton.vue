@@ -18,16 +18,16 @@
         borderless
         class="period-choices"
       >
-        <v-btn value="24hours" small @click="changePeriodFilterTo24Hours">
+        <v-btn value="24hours" small @click="loadPostsWithinXhours(24)">
           24시간 이내
         </v-btn>
-        <v-btn value="1week" small @click="changePeriodFilterTo1Week">
-          일주일 이내
+        <v-btn value="7days" small @click="loadPostsWithinXdays(7)">
+          7일 이내
         </v-btn>
-        <v-btn value="1month" small @click="changePeriodFilterTo1Month">
-          한 달 이내
+        <v-btn value="30days" small @click="loadPostsWithinXdays(30)">
+          30일 이내
         </v-btn>
-        <v-btn value="all" small @click="changePeriodFilterToWholePeriod">
+        <v-btn value="all" small @click="loadAllPosts">
           전체
         </v-btn>
         <v-btn value="userInput" small @click="openCalendarModal">
@@ -72,49 +72,52 @@ export default {
       isSliderOpened: false,
       periodFilterChoice: "24hours",
       isCalendarOpen: true,
+      oneUserInputFilled: false,
     };
   },
   methods: {
     toggleSlider() {
       this.isSliderOpened = !this.isSliderOpened;
     },
-    async changePeriodFilterTo24Hours() {
-      await this.$store.dispatch("post/loadPostsIn24Hours");
+    async loadPostsWithinXhours(x) {
+      await this.$store.commit("filter/SET_FILTER_FROM_X_HOURS_AGO_TO_NOW", x);
+      await this.filterPosts();
     },
-    async changePeriodFilterTo1Week() {
-      await this.$store.dispatch("post/loadPostsIn1Week");
+    async loadPostsWithinXdays(x) {
+      await this.$store.commit("filter/SET_FILTER_FROM_X_DAYS_AGO_TO_NOW", x);
+      await this.filterPosts();
     },
-    async changePeriodFilterTo1Month() {
-      await this.$store.dispatch("post/loadPostsIn1Month");
-    },
-    async changePeriodFilterToWholePeriod() {
-      await this.$store.dispatch("post/loadAllPosts");
+    async loadAllPosts() {
+      await this.$store.commit("filter/INITIALIZE_PERIOD_FILTER");
+      await this.filterPosts();
     },
     async openCalendarModal() {
       this.isCalendarOpen = true;
     },
     async inputStartDate(date) {
       await this.$store.commit("filter/SET_START_DATE", date);
-      if ((await this.$store.getters["filter/endDate"]) !== "") {
-        await this.setPeriodFilter();
+      if (this.oneUserInputFilled === false) {
+        this.oneUserInputFilled = true;
+      } else {
+        await this.filterPosts();
+        this.oneUserInputFilled = false;
         this.isCalendarOpen = false;
-        await this.$store.commit("filter/INITIALIZE_PERIOD_FILTER");
       }
     },
     async inputEndDate(date) {
       await this.$store.commit("filter/SET_END_DATE", date);
-      if ((await this.$store.getters["filter/startDate"]) !== "") {
-        await this.setPeriodFilter();
+      if (this.oneUserInputFilled === false) {
+        this.oneUserInputFilled = true;
+      } else {
+        await this.filterPosts();
+        this.oneUserInputFilled = false;
         this.isCalendarOpen = false;
-        await this.$store.commit("filter/INITIALIZE_PERIOD_FILTER");
       }
     },
-    async setPeriodFilter() {
-      const data = {
-        startDate: this.$store.getters["filter/startDate"],
-        endDate: this.$store.getters["filter/endDate"],
-      };
-      await this.$store.dispatch("post/filterPosts", data);
+    async filterPosts() {
+      await this.$store.commit("post/CLEAR_POSTS");
+      const filteredPosts = await this.$store.dispatch("filter/filterPosts");
+      await this.$store.commit("post/SET_POSTS", filteredPosts);
     },
   },
 };

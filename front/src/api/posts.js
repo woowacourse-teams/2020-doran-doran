@@ -1,6 +1,5 @@
-import {API_BASE_URL, DATE_FORMAT_TYPE} from "@/utils/constants";
+import { API_BASE_URL } from "@/utils/constants";
 import axios from "axios";
-import moment from "moment";
 
 const client = axios.create({
   baseURL: API_BASE_URL.EC2 + "/posts",
@@ -15,31 +14,10 @@ const options = {
 const api = (() => {
   const createPost = (newPost) => client.post("", newPost, options);
   const loadPost = (postId) => client.get(`/${postId}`).then((res) => res.data);
-  const loadPostsIn24Hours = () => {
-    const data = {
-      startDate: moment().subtract(24, "hours").format(DATE_FORMAT_TYPE.DEFAULT),
-      endDate: moment().add(1, "seconds").format(DATE_FORMAT_TYPE.DEFAULT),
-    };
+  const filterPosts = (data) => {
     const params = new URLSearchParams(data).toString();
     return client.get(`/filter?` + params).then((res) => res.data);
   };
-  const loadPostsIn1Week = () => {
-    const data = {
-      startDate: moment().subtract(7, "days").format(DATE_FORMAT_TYPE.DEFAULT),
-      endDate: moment().add(1, "seconds").format(DATE_FORMAT_TYPE.DEFAULT),
-    };
-    const params = new URLSearchParams(data).toString();
-    return client.get(`/filter?` + params).then((res) => res.data);
-  };
-  const loadPostsIn1Month = () => {
-    const data = {
-      startDate: moment().subtract(1, "months").format(DATE_FORMAT_TYPE.DEFAULT),
-      endDate: moment().add(1, "seconds").format(DATE_FORMAT_TYPE.DEFAULT),
-    };
-    const params = new URLSearchParams(data).toString();
-    return client.get(`/filter?` + params).then((res) => res.data);
-  };
-  const loadAllPosts = () => client.get("").then((res) => res.data);
   const loadPostsInBounds = (bounds) => {
     const params = new URLSearchParams(bounds).toString();
     return client.get(`/bounds?` + params).then((res) => res.data);
@@ -58,13 +36,9 @@ const api = (() => {
   return {
     createPost,
     loadPost,
-    loadPostsIn24Hours,
-    loadPostsIn1Week,
-    loadPostsIn1Month,
-    loadAllPosts,
+    filterPosts,
     loadPostsInBounds,
     deletePost,
-    filterPosts,
     createPostLike,
     deletePostLike,
   };
