@@ -13,7 +13,9 @@
       :location="this.$kakaoMap.getCenterLocation()"
     />
     <TimelineModal v-if="timeline" @close="closeTimelineModal" />
-    <PostModal v-if="postModal" />
+    <v-slide-y-reverse-transition>
+      <PostModal v-if="postModal" />
+    </v-slide-y-reverse-transition>
     <MemberUpdateModal
       v-if="isInitialMember"
       @close="closeMemberUpdateModal"

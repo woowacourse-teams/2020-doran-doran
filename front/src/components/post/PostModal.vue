@@ -8,7 +8,7 @@
         <div class="float-right mt-2">{{ postDate }}</div>
       </div>
       <div class="text--disabled font-size-small">
-        <span style="color: #659fec;" @click="openMapModal">
+        <span class="post-address" @click="openMapModal">
           <v-icon size="large" color="#659FEC">mdi-map-marker-radius</v-icon>
           {{ postAddress }}
         </span>
@@ -102,7 +102,7 @@ export default {
       );
     },
   },
-  async created() {
+  created() {
     this.$store.commit("appBar/POST_DETAIL_PAGE");
   },
   methods: {
@@ -169,6 +169,10 @@ export default {
   height: 100%;
   width: 100%;
   background-color: white;
+}
+
+.post-address {
+  color: #659fec;
 }
 
 .bottom-spacer {
