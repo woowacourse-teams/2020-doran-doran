@@ -11,7 +11,7 @@
         {{ postAddress }}
       </span>
       에 외침
-      <div v-show="this.isPostOfCurrentMember" class="float-right mt-2" @click="deletePost">
+      <div v-show="this.isPostOfCurrentMember" class="float-right" @click="deletePost">
         <v-icon size="large">mdi-delete</v-icon>
         삭제
       </div>
@@ -130,8 +130,9 @@ export default {
     closeMapModal() {
       this.isMapModalVisible = false;
     },
-    deletePost() {
-
+    async deletePost() {
+      await this.$store.dispatch("post/deletePost", this.post.id);
+      this.$router.go(-1);
     }
   },
 };
