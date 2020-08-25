@@ -9,7 +9,17 @@
           {{ comment.distance.toFixed(2) }} km 밖에서
         </div>
       </div>
-      <div>{{ comment.content }}</div>
+      <div>
+        {{ comment.content }}
+        <div
+          v-show="this.isCommentOfCurrentMember"
+          class="float-right"
+          @click="deleteComment"
+        >
+          <v-icon size="large">mdi-delete</v-icon>
+          삭제
+        </div>
+      </div>
       <div>
         <span class="text--disabled font-size-x-small">{{ commentDate }}</span>
         <span class="float-right">
@@ -43,6 +53,12 @@ export default {
     },
     likeButtonType() {
       return this.liked ? LIKE_BUTTON_TYPE.LIKED : LIKE_BUTTON_TYPE.DEFAULT;
+    },
+    isCommentOfCurrentMember() {
+      console.log(this.comment);
+      return (
+        this.comment.author.id === this.$store.getters["member/getMember"].id
+      );
     },
   },
   methods: {
@@ -78,6 +94,9 @@ export default {
           throw e;
         });
       this.$store.dispatch("post/loadPost", this.comment.postId);
+    },
+    deleteComment() {
+      this.$emit("delete-comment", this.comment.postId, this.comment.id);
     },
   },
 };

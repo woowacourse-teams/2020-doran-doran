@@ -4,6 +4,7 @@
       v-for="comment in comments"
       :key="comment.id"
       :comment="comment"
+      @delete-comment="deleteComment"
     />
   </div>
 </template>
@@ -19,6 +20,12 @@ export default {
     comments: {
       type: Array,
       required: true,
+    },
+  },
+  methods: {
+    async deleteComment(postId, commentId) {
+      await this.$store.dispatch("comment/deleteComment", commentId);
+      this.$store.dispatch("post/loadPost", postId);
     },
   },
 };
