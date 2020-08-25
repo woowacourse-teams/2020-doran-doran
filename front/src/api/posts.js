@@ -1,4 +1,4 @@
-import { API_BASE_URL } from "@/utils/constants";
+import {API_BASE_URL, DATE_FORMAT_TYPE} from "@/utils/constants";
 import axios from "axios";
 import moment from "moment";
 
@@ -17,24 +17,24 @@ const api = (() => {
   const loadPost = (postId) => client.get(`/${postId}`).then((res) => res.data);
   const loadPostsIn24Hours = () => {
     const data = {
-      startDate: moment().subtract(1, "days").format("YYYY-MM-DD HH:mm:ss"),
-      endDate: moment().add(1, "seconds").format("YYYY-MM-DD HH:mm:ss"),
+      startDate: moment().subtract(1, "days").format(DATE_FORMAT_TYPE.DEFAULT),
+      endDate: moment().add(1, "seconds").format(DATE_FORMAT_TYPE.DEFAULT),
     };
     const params = new URLSearchParams(data).toString();
     return client.get(`/filter?` + params).then((res) => res.data);
   };
   const loadPostsIn1Week = () => {
     const data = {
-      startDate: moment().subtract(7, "days").format("YYYY-MM-DD HH:mm:ss"),
-      endDate: moment().add(1, "seconds").format("YYYY-MM-DD HH:mm:ss"),
+      startDate: moment().subtract(7, "days").format(DATE_FORMAT_TYPE.DEFAULT),
+      endDate: moment().add(1, "seconds").format(DATE_FORMAT_TYPE.DEFAULT),
     };
     const params = new URLSearchParams(data).toString();
     return client.get(`/filter?` + params).then((res) => res.data);
   };
   const loadPostsIn1Month = () => {
     const data = {
-      startDate: moment().subtract(1, "months").format("YYYY-MM-DD HH:mm:ss"),
-      endDate: moment().add(1, "seconds").format("YYYY-MM-DD HH:mm:ss"),
+      startDate: moment().subtract(1, "months").format(DATE_FORMAT_TYPE.DEFAULT),
+      endDate: moment().add(1, "seconds").format(DATE_FORMAT_TYPE.DEFAULT),
     };
     const params = new URLSearchParams(data).toString();
     return client.get(`/filter?` + params).then((res) => res.data);
