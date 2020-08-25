@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { LIKE_BUTTON_TYPE } from "@/utils/constants";
+import { ERROR_MESSAGE, LIKE_BUTTON_TYPE } from "@/utils/constants";
 
 export default {
   name: "CommentItem",
@@ -59,14 +59,24 @@ export default {
     },
     async deleteCommentLike() {
       const data = this.comment.likes.find(this.hasLike);
-      await this.$store.dispatch("comment/deleteCommentLike", data.id);
+      await this.$store
+        .dispatch("comment/deleteCommentLike", data.id)
+        .catch((e) => {
+          this.$store.commit("snackbar/SHOW", ERROR_MESSAGE.LOGIN_REQUIRED);
+          throw e;
+        });
       this.$store.dispatch("post/loadPost", this.comment.postId);
     },
     async createCommentLike() {
       const data = {
         commentId: this.comment.id,
       };
-      await this.$store.dispatch("comment/createCommentLike", data);
+      await this.$store
+        .dispatch("comment/createCommentLike", data)
+        .catch((e) => {
+          this.$store.commit("snackbar/SHOW", ERROR_MESSAGE.LOGIN_REQUIRED);
+          throw e;
+        });
       this.$store.dispatch("post/loadPost", this.comment.postId);
     },
   },

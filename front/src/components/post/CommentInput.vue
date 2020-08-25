@@ -60,7 +60,10 @@ export default {
         content: this.content,
         location: authorLocation,
       };
-      await this.$store.dispatch("comment/createComment", data);
+      await this.$store.dispatch("comment/createComment", data).catch((e) => {
+        this.$store.commit("snackbar/SHOW", ERROR_MESSAGE.LOGIN_REQUIRED);
+        throw e;
+      });
       await this.$store.dispatch("post/loadPost", this.postId);
       this.content = "";
       this.$store.commit("snackbar/SHOW", CREATE_COMMENT_SUCCESS_MESSAGE);

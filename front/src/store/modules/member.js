@@ -24,5 +24,11 @@ export default {
     getMember: (state) => {
       return state.member;
     },
+    isGuest: () => {
+      return (
+        !localStorage.getItem("accessToken") ||
+        localStorage.getItem("accessToken") === "guest"
+      );
+    },
   },
 };

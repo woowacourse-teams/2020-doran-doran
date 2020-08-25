@@ -4,14 +4,10 @@
       mdi-window-close
     </v-icon>
 
-    <div class="ma-7 mt-16">
-      <img
-        :src="member.picture"
-        class="rounded-circle"
-        width="60px"
-        height="60px"
-        alt="profile"
-      />
+    <div class="ma-7 mt-16" @click="login">
+      <v-avatar>
+        <v-icon size="36">mdi-account-circle</v-icon>
+      </v-avatar>
       <span class="mx-3 font-weight-bold">
         {{ member.nickname }}
       </span>
@@ -33,6 +29,8 @@
 </template>
 
 <script>
+import {API_BASE_URL} from "@/utils/constants";
+
 export default {
   name: "MemberSidebar",
   data() {
@@ -69,6 +67,11 @@ export default {
   },
   methods: {
     updateMember() {},
+    login() {
+      if (this.$store.getters["member/isGuest"]) {
+        window.location.href = API_BASE_URL.EC2 + "/oauth2/authorization/kakao";
+      }
+    },
     logout() {},
     deleteMember() {},
     hideSidebar(action) {

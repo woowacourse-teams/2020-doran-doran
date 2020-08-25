@@ -7,15 +7,12 @@ const client = axios.create({
 
 const options = {
   headers: {
-    Authorization: "Bearer " + sessionStorage.getItem("accessToken"),
+    Authorization: "Bearer " + localStorage.getItem("accessToken"),
   },
 };
 
 const api = (() => {
-  const loadMember = () =>
-    client
-      .get("", options)
-      .then((res) => res.data);
+  const loadMember = () => client.get("", options).then((res) => res.data);
   return {
     loadMember,
   };

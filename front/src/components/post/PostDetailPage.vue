@@ -39,7 +39,7 @@
 import CommentInput from "@/components/post/CommentInput";
 import CommentList from "@/components/post/CommentList";
 import PostDetailPageLocationMapModal from "@/components/post/PostDetailPageLocationMapModal";
-import { LIKE_BUTTON_TYPE } from "@/utils/constants";
+import { ERROR_MESSAGE, LIKE_BUTTON_TYPE } from "@/utils/constants";
 
 export default {
   name: "PostDetailPage",
@@ -101,14 +101,20 @@ export default {
     },
     async deletePostLike() {
       const data = this.post.likes.find(this.hasLike);
-      await this.$store.dispatch("post/deletePostLike", data.id);
+      await this.$store.dispatch("post/deletePostLike", data.id).catch((e) => {
+        this.$store.commit("snackbar/SHOW", ERROR_MESSAGE.LOGIN_REQUIRED);
+        throw e;
+      });
       await this.loadPost();
     },
     async createPostLike() {
       const data = {
         postId: this.post.id,
       };
-      await this.$store.dispatch("post/createPostLike", data);
+      await this.$store.dispatch("post/createPostLike", data).catch((e) => {
+        this.$store.commit("snackbar/SHOW", ERROR_MESSAGE.LOGIN_REQUIRED);
+        throw e;
+      });
       await this.loadPost();
     },
     openMapModal() {
@@ -122,7 +128,6 @@ export default {
 </script>
 
 <style scoped>
-
 .bottom-spacer {
   height: 60px;
 }

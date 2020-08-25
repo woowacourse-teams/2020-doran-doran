@@ -7,9 +7,9 @@ const client = axios.create({
 
 const options = {
   headers: {
-    Authorization: 'Bearer ' + sessionStorage.getItem("accessToken")
-  }
-}
+    Authorization: "Bearer " + localStorage.getItem("accessToken"),
+  },
+};
 
 const api = (() => {
   const createPost = (newPost) => client.post("", newPost, options);
@@ -24,8 +24,10 @@ const api = (() => {
     const params = new URLSearchParams(data).toString();
     return client.get(`/filter?` + params).then((res) => res.data);
   };
-  const createPostLike = (newPostLike) => client.post(`/likes`, newPostLike, options);
-  const deletePostLike = (postLikeId) => client.delete(`/likes/${postLikeId}`, options);
+  const createPostLike = (newPostLike) =>
+    client.post(`/likes`, newPostLike, options);
+  const deletePostLike = (postLikeId) =>
+    client.delete(`/likes/${postLikeId}`, options);
   return {
     createPost,
     loadPost,

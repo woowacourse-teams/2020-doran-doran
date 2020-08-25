@@ -18,16 +18,10 @@ export default {
     PostCreateButton,
     PostCreateModal,
   },
-  async created() {
+  created() {
     this.$store.commit("appBar/MAP_PAGE_DEFAULT_MODE");
-
-    const token = location.href.split("token=")[1];
-    if (token) {
-      sessionStorage.setItem("accessToken", token);
-      location.href = "/";
-    } else {
-      await this.$store.dispatch("member/loadMember");
-    }
+    this.checkUrl();
+    this.checkToken();
   },
   computed: {
     isMarkerMode() {
@@ -37,8 +31,24 @@ export default {
       return this.$store.getters["mapMode/isPost"];
     },
   },
+  methods: {
+    checkUrl() {
+      const urlToken = location.href.split("token=")[1];
+      if (urlToken) {
+        localStorage.setItem("accessToken", urlToken);
+        location.href = "/";
+      }
+    },
+    async checkToken() {
+      const storageToken = localStorage.getItem("accessToken");
+      if (storageToken && storageToken !== "guest") {
+        await this.$store.dispatch("member/loadMember");
+      } else if (!storageToken) {
+        this.$router.push("/login");
+      }
+    },
+  },
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

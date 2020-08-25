@@ -79,7 +79,10 @@ export default {
         address: await this.$kakaoMap.getAddress(postLocation),
         authorAddress: await this.$kakaoMap.getAddress(authorLocation),
       };
-      await this.$store.dispatch("post/createPost", data);
+      await this.$store.dispatch("post/createPost", data).catch((e) => {
+        this.$store.commit("snackbar/SHOW", ERROR_MESSAGE.LOGIN_REQUIRED);
+        throw e;
+      });
       this.$store.commit("snackbar/SHOW", CREATE_POST_SUCCESS_MESSAGE);
       this.closeModal();
     },
