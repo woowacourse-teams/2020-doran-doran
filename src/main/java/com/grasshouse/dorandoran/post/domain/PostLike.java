@@ -1,5 +1,6 @@
 package com.grasshouse.dorandoran.post.domain;
 
+import com.grasshouse.dorandoran.member.domain.Member;
 import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -42,5 +43,9 @@ public class PostLike {
             this.post = post;
             this.post.getLikes().add(this);
         }
+    }
+
+    public boolean isSameLiker(Member member) {
+        return this.memberId.equals(member.getId());
     }
 }

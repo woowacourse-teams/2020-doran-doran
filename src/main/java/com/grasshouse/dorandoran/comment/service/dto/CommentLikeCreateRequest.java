@@ -14,7 +14,4 @@ public class CommentLikeCreateRequest {
 
     @NotNull
     Long commentId;
-
-    @NotNull
-    Long memberId;
 }

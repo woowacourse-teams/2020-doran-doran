@@ -1,8 +1,12 @@
 package com.grasshouse.dorandoran.post.service;
 
+import static com.grasshouse.dorandoran.common.exception.MemberMismatchException.POST_LIKER_MISMATCH_MESSAGE;
+
+import com.grasshouse.dorandoran.common.exception.MemberMismatchException;
 import com.grasshouse.dorandoran.common.exception.PostLikeAlreadyExistsException;
 import com.grasshouse.dorandoran.common.exception.PostLikeNotFoundException;
 import com.grasshouse.dorandoran.common.exception.PostNotFoundException;
+import com.grasshouse.dorandoran.member.domain.Member;
 import com.grasshouse.dorandoran.post.domain.Post;
 import com.grasshouse.dorandoran.post.domain.PostLike;
 import com.grasshouse.dorandoran.post.repository.PostLikeRepository;
@@ -20,14 +24,14 @@ public class PostLikeService {
     private final PostRepository postRepository;
 
     @Transactional
-    public Long createPostLike(PostLikeCreateRequest request) {
+    public Long createPostLike(PostLikeCreateRequest request, Member member) {
         Post post = postRepository
             .findById(request.getPostId())
             .orElseThrow(PostNotFoundException::new);
-        validatePostLikeDuplication(request.getMemberId(), post);
+        validatePostLikeDuplication(member.getId(), post);
 
         PostLike postLike = PostLike.builder()
-            .memberId(request.getMemberId())
+            .memberId(member.getId())
             .post(post)
             .build();
 
@@ -42,9 +46,13 @@ public class PostLikeService {
     }
 
     @Transactional
-    public void deletePostLike(Long postLikeId) {
+    public void deletePostLike(Long postLikeId, Member member) {
         PostLike postLike = postLikeRepository.findById(postLikeId)
             .orElseThrow(PostLikeNotFoundException::new);
+
+        if (!postLike.isSameLiker(member)) {
+            throw new MemberMismatchException(POST_LIKER_MISMATCH_MESSAGE);
+        }
         postLikeRepository.delete(postLike);
     }
 }

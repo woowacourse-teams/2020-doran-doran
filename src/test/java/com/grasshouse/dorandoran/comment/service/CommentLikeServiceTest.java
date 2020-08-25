@@ -91,12 +91,12 @@ class CommentLikeServiceTest {
     @Test
     void createCommentLike() {
         CommentLikeCreateRequest request = CommentLikeCreateRequest.builder()
-            .memberId(commentLiker.getId())
             .commentId(comment.getId())
             .build();
 
-        commentLikeService.createCommentLike(request);
-        Comment persistComment = commentRepositorySupport.findCommentContainingLikes(comment.getId());
+        commentLikeService.createCommentLike(request, commentLiker);
+        Comment persistComment = commentRepositorySupport
+            .findCommentContainingLikes(comment.getId());
 
         assertThat(persistComment.getLikes()).hasSize(1);
     }
@@ -105,16 +105,15 @@ class CommentLikeServiceTest {
     @Test
     void duplicateCommentLike() {
         CommentLikeCreateRequest firstRequest = CommentLikeCreateRequest.builder()
-            .memberId(commentLiker.getId())
             .commentId(comment.getId())
             .build();
-        commentLikeService.createCommentLike(firstRequest);
+        commentLikeService.createCommentLike(firstRequest, commentLiker);
 
         CommentLikeCreateRequest duplicateRequest = CommentLikeCreateRequest.builder()
-            .memberId(commentLiker.getId())
             .commentId(comment.getId())
             .build();
-        assertThatThrownBy(() -> commentLikeService.createCommentLike(duplicateRequest))
+        assertThatThrownBy(
+            () -> commentLikeService.createCommentLike(duplicateRequest, commentLiker))
             .isInstanceOf(CommentLikeAlreadyExistsException.class);
     }
 
@@ -129,7 +128,7 @@ class CommentLikeServiceTest {
         CommentLike persistCommentLike = commentLikeRepository.save(commentLike);
         assertThat(commentLikeRepository.findAll()).hasSize(1);
 
-        commentLikeService.deleteCommentLike(persistCommentLike.getId());
+        commentLikeService.deleteCommentLike(persistCommentLike.getId(), commentLiker);
         assertThat(commentLikeRepository.findAll()).hasSize(0);
     }
 
@@ -137,15 +136,15 @@ class CommentLikeServiceTest {
     @Test
     void deleteCommentWithCommentLike() {
         CommentLikeCreateRequest request = CommentLikeCreateRequest.builder()
-            .memberId(commentLiker.getId())
             .commentId(comment.getId())
             .build();
 
-        commentLikeService.createCommentLike(request);
-        Comment persistComment = commentRepositorySupport.findCommentContainingLikes(comment.getId());
+        commentLikeService.createCommentLike(request, commentLiker);
+        Comment persistComment = commentRepositorySupport
+            .findCommentContainingLikes(comment.getId());
         assertThat(persistComment.getLikes()).hasSize(1);
 
-        commentService.deleteComment(persistComment.getId());
+        commentService.deleteComment(persistComment.getId(), author);
         assertThat(commentRepository.findAll()).hasSize(0);
         assertThat(commentLikeRepository.findAll()).hasSize(0);
     }

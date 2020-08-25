@@ -76,11 +76,10 @@ public class PostLikeServiceTest {
     @Test
     void createPostLike() {
         PostLikeCreateRequest request = PostLikeCreateRequest.builder()
-            .memberId(postLiker.getId())
             .postId(post.getId())
             .build();
 
-        postLikeService.createPostLike(request);
+        postLikeService.createPostLike(request, author);
         Post persistPost = postRepositorySupport.findPostContainingLikes(post.getId());
 
         assertThat(persistPost.getLikes()).hasSize(1);
@@ -90,16 +89,14 @@ public class PostLikeServiceTest {
     @Test
     void duplicatePostLike() {
         PostLikeCreateRequest firstRequest = PostLikeCreateRequest.builder()
-            .memberId(postLiker.getId())
             .postId(post.getId())
             .build();
-        postLikeService.createPostLike(firstRequest);
+        postLikeService.createPostLike(firstRequest, author);
 
         PostLikeCreateRequest duplicateRequest = PostLikeCreateRequest.builder()
-            .memberId(postLiker.getId())
             .postId(post.getId())
             .build();
-        assertThatThrownBy(() -> postLikeService.createPostLike(duplicateRequest))
+        assertThatThrownBy(() -> postLikeService.createPostLike(duplicateRequest, author))
             .isInstanceOf(PostLikeAlreadyExistsException.class);
     }
 
@@ -114,7 +111,7 @@ public class PostLikeServiceTest {
         PostLike persistPostLike = postLikeRepository.save(postLike);
         assertThat(postLikeRepository.findAll()).hasSize(1);
 
-        postLikeService.deletePostLike(persistPostLike.getId());
+        postLikeService.deletePostLike(persistPostLike.getId(), postLiker);
         assertThat(postLikeRepository.findAll()).hasSize(0);
     }
 
@@ -122,15 +119,14 @@ public class PostLikeServiceTest {
     @Test
     void deleteCommentWithCommentLike() {
         PostLikeCreateRequest request = PostLikeCreateRequest.builder()
-            .memberId(postLiker.getId())
             .postId(post.getId())
             .build();
 
-        postLikeService.createPostLike(request);
+        postLikeService.createPostLike(request, author);
         Post persistPost = postRepositorySupport.findPostContainingLikes(post.getId());
         assertThat(persistPost.getLikes()).hasSize(1);
 
-        postService.deletePost(persistPost.getId());
+        postService.deletePost(persistPost.getId(), author);
         assertThat(postRepository.findAll()).hasSize(0);
         assertThat(postLikeRepository.findAll()).hasSize(0);
     }

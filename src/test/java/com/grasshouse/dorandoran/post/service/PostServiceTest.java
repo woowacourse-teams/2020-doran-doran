@@ -63,7 +63,7 @@ class PostServiceTest {
             .location(JAMSIL_STATION)
             .build();
 
-        PostCreateResponse createResponse = postService.createPost(postCreateRequest);
+        PostCreateResponse createResponse = postService.createPost(postCreateRequest, member);
         assertThat(createResponse.getId()).isNotNull();
     }
 
@@ -114,7 +114,7 @@ class PostServiceTest {
 
         assertThat(postRepository.findAll()).hasSize(1);
 
-        postService.deletePost(persistPost.getId());
+        postService.deletePost(persistPost.getId(), member);
         assertThat(postRepository.findAll()).hasSize(0);
     }
 
@@ -134,7 +134,7 @@ class PostServiceTest {
 
         assertThat(commentRepository.findAll()).hasSize(1);
 
-        postService.deletePost(persistPost.getId());
+        postService.deletePost(persistPost.getId(), member);
         assertThat(commentRepository.findAll()).hasSize(0);
     }
 
@@ -152,7 +152,7 @@ class PostServiceTest {
             .location(GANGNAM_STATION)
             .build();
 
-        assertThatThrownBy(() -> postService.createPost(postCreateRequest))
+        assertThatThrownBy(() -> postService.createPost(postCreateRequest, member))
             .isInstanceOf(ConstraintViolationException.class)
             .hasMessageContaining("200자");
     }
@@ -167,7 +167,7 @@ class PostServiceTest {
             .location(JAMSIL_STATION)
             .build();
 
-        PostCreateResponse createResponse = postService.createPost(postCreateRequest);
+        PostCreateResponse createResponse = postService.createPost(postCreateRequest, member);
         Post createdPost = postRepository.findById(createResponse.getId())
             .orElseThrow(PostNotFoundException::new);
         assertThat(createdPost.getCreatedAt()).isNotNull();

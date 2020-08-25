@@ -43,7 +43,7 @@ public class Post {
     private Long id;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Member author;
 
     @Embedded
@@ -83,5 +83,9 @@ public class Post {
 
     public void removeComment(Comment comment) {
         comments.remove(comment);
+    }
+
+    public boolean isSameAuthor(Member member) {
+        return author.isSameMember(member);
     }
 }

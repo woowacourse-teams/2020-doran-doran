@@ -1,5 +1,7 @@
 package com.grasshouse.dorandoran.post.controller;
 
+import com.grasshouse.dorandoran.config.jwt.LoginMember;
+import com.grasshouse.dorandoran.member.domain.Member;
 import com.grasshouse.dorandoran.post.service.PostService;
 import com.grasshouse.dorandoran.post.service.dto.PostBoundsRequest;
 import com.grasshouse.dorandoran.post.service.dto.PostCreateRequest;
@@ -29,8 +31,9 @@ public class PostController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> createPost(@RequestBody @Valid PostCreateRequest request) {
-        PostCreateResponse response = postService.createPost(request);
+    public ResponseEntity<Void> createPost(@RequestBody @Valid PostCreateRequest request,
+        @LoginMember Member member) {
+        PostCreateResponse response = postService.createPost(request, member);
         return ResponseEntity.created(URI.create("/posts/" + response.getId())).build();
     }
 
@@ -54,8 +57,8 @@ public class PostController {
     }
 
     @DeleteMapping("/{postId}")
-    public ResponseEntity<Void> deletePost(@PathVariable Long postId) {
-        postService.deletePost(postId);
+    public ResponseEntity<Void> deletePost(@PathVariable Long postId, @LoginMember Member member) {
+        postService.deletePost(postId, member);
         return ResponseEntity.noContent().build();
     }
 }

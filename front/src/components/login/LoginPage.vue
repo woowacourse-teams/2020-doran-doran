@@ -3,7 +3,7 @@
     <div class="app-title">도란도란</div>
 
     <div class="button-box">
-      <router-link to="/map">
+      <router-link to="/">
         <v-btn depressed block color="white" elevation="3">
           <div>로그인 없이 둘러보기</div>
         </v-btn>
@@ -17,6 +17,8 @@
 </template>
 
 <script>
+import {API_BASE_URL} from "@/utils/constants";
+
 export default {
   name: "LoginPage",
   created() {
@@ -24,7 +26,7 @@ export default {
   },
   methods: {
     kakaoLogin() {
-      console.log("카카오 로그인 구현이 아직 안 되었어요.");
+      window.location.href = API_BASE_URL.EC2 + "/oauth2/authorization/kakao";
     },
   },
 };

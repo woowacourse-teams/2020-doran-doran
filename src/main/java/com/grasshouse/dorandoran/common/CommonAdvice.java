@@ -1,6 +1,7 @@
 package com.grasshouse.dorandoran.common;
 
 import com.grasshouse.dorandoran.common.exception.ExpectedException;
+import com.grasshouse.dorandoran.common.exception.InvalidAuthenticationException;
 import com.grasshouse.dorandoran.common.exception.dto.ErrorResponse;
 import java.util.stream.Collectors;
 import javax.validation.ConstraintViolationException;
@@ -36,8 +37,7 @@ public class CommonAdvice {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ErrorResponse> handleDtoValidationException(
-        MethodArgumentNotValidException e) {
+    public ResponseEntity<ErrorResponse> handleDtoValidationException(MethodArgumentNotValidException e) {
         String errorMessage = e.getBindingResult().getAllErrors()
             .stream()
             .map(DefaultMessageSourceResolvable::getDefaultMessage)
@@ -48,10 +48,17 @@ public class CommonAdvice {
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
-    public ResponseEntity<ErrorResponse> handleEntityValidationException(
-        ConstraintViolationException e) {
+    public ResponseEntity<ErrorResponse> handleEntityValidationException(ConstraintViolationException e) {
         logger.error(e.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body(new ErrorResponse(e.getMessage()));
+    }
+
+    @ExceptionHandler(InvalidAuthenticationException.class)
+    public ResponseEntity<ErrorResponse> handleAuthenticationValidationException(
+        InvalidAuthenticationException e) {
+        logger.error(e.getMessage());
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
             .body(new ErrorResponse(e.getMessage()));
     }
 }

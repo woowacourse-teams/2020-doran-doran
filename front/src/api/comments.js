@@ -5,12 +5,18 @@ const client = axios.create({
   baseURL: API_BASE_URL.EC2 + "/comments",
 });
 
+const options = {
+  headers: {
+    Authorization: 'Bearer ' + sessionStorage.getItem("accessToken")
+  }
+}
+
 const api = (() => {
-  const createComment = (newComment) => client.post("", newComment);
+  const createComment = (newComment) => client.post("", newComment, options);
   const createCommentLike = (newCommentLike) =>
-    client.post(`/likes`, newCommentLike);
+    client.post(`/likes`, newCommentLike, options);
   const deleteCommentLike = (commentLikeId) =>
-    client.delete(`/likes/${commentLikeId}`);
+    client.delete(`/likes/${commentLikeId}`, options);
   return {
     createComment,
     createCommentLike,

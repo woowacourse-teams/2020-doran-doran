@@ -1,9 +1,10 @@
 package com.grasshouse.dorandoran.post.service;
 
-import com.grasshouse.dorandoran.common.exception.MemberNotFoundException;
+import static com.grasshouse.dorandoran.common.exception.MemberMismatchException.POST_AUTHOR_MISMATCH_MESSAGE;
+
+import com.grasshouse.dorandoran.common.exception.MemberMismatchException;
 import com.grasshouse.dorandoran.common.exception.PostNotFoundException;
 import com.grasshouse.dorandoran.member.domain.Member;
-import com.grasshouse.dorandoran.member.repository.MemberRepository;
 import com.grasshouse.dorandoran.post.domain.Post;
 import com.grasshouse.dorandoran.post.repository.PostRepository;
 import com.grasshouse.dorandoran.post.repository.PostRepositorySupport;
@@ -20,18 +21,14 @@ public class PostService {
 
     private PostRepository postRepository;
     private PostRepositorySupport postRepositorySupport;
-    private MemberRepository memberRepository;
 
-    public PostService(PostRepository postRepository, PostRepositorySupport postRepositorySupport,
-        MemberRepository memberRepository) {
+    public PostService(PostRepository postRepository, PostRepositorySupport postRepositorySupport) {
         this.postRepository = postRepository;
         this.postRepositorySupport = postRepositorySupport;
-        this.memberRepository = memberRepository;
     }
 
     @Transactional
-    public PostCreateResponse createPost(PostCreateRequest request) {
-        Member member = findMemberById(request.getMemberId());
+    public PostCreateResponse createPost(PostCreateRequest request, Member member) {
         Post post = request.toPost(member);
         postRepository.save(post);
 
@@ -59,14 +56,12 @@ public class PostService {
     }
 
     @Transactional
-    public void deletePost(Long id) {
+    public void deletePost(Long id, Member member) {
         Post post = findPostById(id);
+        if (!post.isSameAuthor(member)) {
+            throw new MemberMismatchException(POST_AUTHOR_MISMATCH_MESSAGE);
+        }
         postRepository.delete(post);
-    }
-
-    private Member findMemberById(Long id) {
-        return memberRepository.findById(id)
-            .orElseThrow(MemberNotFoundException::new);
     }
 
     private Post findPostById(Long id) {

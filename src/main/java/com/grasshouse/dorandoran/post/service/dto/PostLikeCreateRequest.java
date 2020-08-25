@@ -14,7 +14,4 @@ public class PostLikeCreateRequest {
 
     @NotNull
     Long postId;
-
-    @NotNull
-    Long memberId;
 }

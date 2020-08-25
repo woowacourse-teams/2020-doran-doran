@@ -46,7 +46,7 @@ export default {
     },
     hasLike(like) {
       return (
-        like.memberId === this.$store.getters["member/getMembers"] &&
+        like.memberId === this.$store.getters["member/getMember"] &&
         like.postId === this.post.id
       );
     },

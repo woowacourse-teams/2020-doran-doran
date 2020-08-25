@@ -21,7 +21,7 @@ public class PostSearchController {
 
     @GetMapping
     public ResponseEntity<List<PostResponse>> showSearchResults(
-            @PostSearch PostSearchRequest request) {
+        @PostSearch PostSearchRequest request) {
         List<PostResponse> responses = postSearchService.showSearchResults(request);
         return ResponseEntity.ok(responses);
     }
