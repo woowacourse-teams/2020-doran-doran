@@ -11,7 +11,11 @@
         {{ postAddress }}
       </span>
       에 외침
-      <div v-show="this.isPostOfCurrentMember" class="float-right" @click="deletePost">
+      <div
+        v-show="this.isPostOfCurrentMember"
+        class="float-right"
+        @click="deletePost"
+      >
         <v-icon size="large">mdi-delete</v-icon>
         삭제
       </div>
@@ -44,6 +48,8 @@ import CommentInput from "@/components/post/CommentInput";
 import CommentList from "@/components/post/CommentList";
 import PostDetailPageLocationMapModal from "@/components/post/PostDetailPageLocationMapModal";
 import { ERROR_MESSAGE, LIKE_BUTTON_TYPE } from "@/utils/constants";
+
+const DELETE_POST_SUCCESS_MESSAGE = "👻 글이 삭제되었습니다.";
 
 export default {
   name: "PostDetailPage",
@@ -80,7 +86,10 @@ export default {
       return Object.values(this.post.authorAddress).join(" ");
     },
     isPostOfCurrentMember() {
-      return this.post.memberResponse.id === this.$store.getters["member/getMember"].id;
+      return (
+        this.post.memberResponse.id ===
+        this.$store.getters["member/getMember"].id
+      );
     },
   },
   async created() {
@@ -91,6 +100,11 @@ export default {
     this.$store.commit("appBar/POST_DETAIL_PAGE");
   },
   methods: {
+    async deletePost() {
+      await this.$store.dispatch("post/deletePost", this.post.id);
+      this.$store.commit("snackbar/SHOW", DELETE_POST_SUCCESS_MESSAGE);
+      this.$router.go(-1);
+    },
     hasLike(like) {
       return (
         like.memberId === this.$store.getters["member/getMember"].id &&
@@ -130,10 +144,6 @@ export default {
     closeMapModal() {
       this.isMapModalVisible = false;
     },
-    async deletePost() {
-      await this.$store.dispatch("post/deletePost", this.post.id);
-      this.$router.go(-1);
-    }
   },
 };
 </script>
