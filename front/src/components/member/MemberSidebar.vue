@@ -5,13 +5,9 @@
     </v-icon>
 
     <div class="ma-7 mt-16">
-      <img
-        :src="member.picture"
-        class="rounded-circle"
-        width="60px"
-        height="60px"
-        alt="profile"
-      />
+      <v-avatar>
+        <v-icon size="36">mdi-account-circle</v-icon>
+      </v-avatar>
       <span class="mx-3 font-weight-bold">
         {{ member.nickname }}
       </span>

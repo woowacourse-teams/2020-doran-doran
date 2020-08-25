@@ -5,7 +5,7 @@ export default {
   state: {
     member: {
       id: 0,
-      nickname: "로그인해주세요",
+      nickname: "로그인",
       picture: "",
     },
   },
