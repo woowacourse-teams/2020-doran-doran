@@ -63,11 +63,6 @@ body {
   height: 100%;
 }
 
-body {
-  max-width: 500px;
-  margin: auto;
-}
-
 .doran-doran-color {
   background: linear-gradient(
     320deg,
@@ -82,6 +77,10 @@ a {
 
 .font-size-x-large {
   font-size: 2rem;
+}
+
+.font-size-regular {
+  font-size: 1rem;
 }
 
 .font-size-small {

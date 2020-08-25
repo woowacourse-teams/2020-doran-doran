@@ -10,7 +10,7 @@
     </v-icon>
     <template v-if="isMapRendered" class="d-none">
       <PostOverlay
-        v-for="post in clustered(posts)"
+        v-for="post in posts"
         :key="post.id"
         :post="post"
       />
@@ -62,10 +62,6 @@ export default {
     this.isMapRendered = true;
   },
   methods: {
-    clustered(posts) {
-      this.$kakaoMap.clearClusterer();
-      return posts;
-    },
     async changeAppBarByCenterAddress() {
       const centerLocation = await this.$kakaoMap.getCenterLocation();
       const centerAddress = await this.$kakaoMap.getAddress(centerLocation);
@@ -74,6 +70,9 @@ export default {
     },
   },
   watch: {
+    posts() {
+      this.$kakaoMap.clearClusterer();
+    },
     isDefaultMode(val) {
       val
         ? this.$kakaoMap.showPostOverlays()

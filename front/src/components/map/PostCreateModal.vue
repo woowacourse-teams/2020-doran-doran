@@ -9,9 +9,9 @@
           placeholder="글 내용을 입력해주세요."
           maxlength="200"
           :counter="200"
-          no-resize
           elevation="2"
           solo
+          auto-grow
           class="pa-3 modal-container"
         />
         <div class="button-box">

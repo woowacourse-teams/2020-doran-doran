@@ -47,7 +47,7 @@
         append-outer-icon="mdi-window-close"
         class="search-input font-size-small"
         @keypress.enter="filterPosts"
-        @click:append-outer="showEveryPosts"
+        @click:append-outer="initializeMapPage"
       />
     </v-expand-x-transition>
   </v-app-bar>
@@ -129,7 +129,7 @@ export default {
       }
       await this.$store.dispatch("post/searchPosts", data);
     },
-    async showEveryPosts() {
+    async initializeMapPage() {
       this.toggleSearchInput();
       this.keyword = "";
       await this.$store.dispatch("post/loadPosts");
