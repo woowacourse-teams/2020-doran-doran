@@ -5,6 +5,7 @@ import com.grasshouse.dorandoran.member.domain.Member;
 import com.grasshouse.dorandoran.member.service.MemberService;
 import com.grasshouse.dorandoran.member.service.dto.MemberResponse;
 import com.grasshouse.dorandoran.member.service.dto.MemberUpdateRequest;
+import com.grasshouse.dorandoran.member.service.dto.MemberUpdateResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,8 +26,8 @@ public class MemberController {
     }
 
     @PutMapping
-    public ResponseEntity<MemberResponse> updateMember(@LoginMember Member member, MemberUpdateRequest request) {
-        MemberResponse response = memberService.update(member, request);
+    public ResponseEntity<MemberUpdateResponse> updateMember(@LoginMember Member member, MemberUpdateRequest request) {
+        MemberUpdateResponse response = memberService.update(member, request);
         return ResponseEntity.ok(response);
     }
 }

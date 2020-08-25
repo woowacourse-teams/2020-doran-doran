@@ -15,8 +15,8 @@ import com.grasshouse.dorandoran.common.CommonControllerTest;
 import com.grasshouse.dorandoran.config.jwt.JwtTokenProvider;
 import com.grasshouse.dorandoran.member.repository.MemberRepository;
 import com.grasshouse.dorandoran.member.service.MemberService;
-import com.grasshouse.dorandoran.member.service.dto.MemberResponse;
 import com.grasshouse.dorandoran.member.service.dto.MemberUpdateRequest;
+import com.grasshouse.dorandoran.member.service.dto.MemberUpdateResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -62,7 +62,7 @@ class MemberControllerTest extends CommonControllerTest {
         MemberUpdateRequest memberUpdateRequest = new MemberUpdateRequest("new nickname");
         String request = objectMapper.writeValueAsString(memberUpdateRequest);
 
-        MemberResponse response = new MemberResponse(PERSIST_MEMBER.getId(), "new nickname");
+        MemberUpdateResponse response = new MemberUpdateResponse(PERSIST_MEMBER.getId(), "new nickname");
 
         when(jwtTokenProvider.validateToken(anyString())).thenReturn(true);
         when(jwtTokenProvider.getSubject(anyString())).thenReturn("id");
