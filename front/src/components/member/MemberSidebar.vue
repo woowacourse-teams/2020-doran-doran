@@ -4,7 +4,7 @@
       mdi-window-close
     </v-icon>
 
-    <div class="ma-7 mt-16">
+    <div class="ma-7 mt-16" @click="login">
       <v-avatar>
         <v-icon size="36">mdi-account-circle</v-icon>
       </v-avatar>
@@ -65,6 +65,11 @@ export default {
   },
   methods: {
     updateMember() {},
+    login() {
+      if (this.member.id === 0) {
+        this.$router.push("/login");
+      }
+    },
     logout() {},
     deleteMember() {},
     hideSidebar(action) {
