@@ -6,9 +6,11 @@
       <div class="float-right mt-2">{{ postDate }}</div>
     </div>
     <div class="text--disabled post-address">
-      {{ post.address.depth1 }}
-      {{ post.address.depth2 }}
-      {{ post.address.depth3 }}에 외침
+      <span style="color: #659fec;" @click="openMapModal">
+        <v-icon size="large" color="#659FEC">mdi-map-marker-radius</v-icon>
+        {{ postAddress }}
+      </span>
+      에 외침
     </div>
     <div class="my-5 text-break">{{ post.content }}</div>
     <div>
@@ -19,20 +21,24 @@
       </v-icon>
       <span class="mx-1">{{ post.likes.length }}</span>
       <div class="float-right text--disabled post-address">
-        {{ post.authorAddress.depth1 }}
-        {{ post.authorAddress.depth2 }}
-        {{ post.authorAddress.depth3 }}에서
+        {{ authorAddress }}에서
       </div>
     </div>
     <CommentList :comments="post.comments" @load-post="loadPost" />
     <div class="bottom-spacer" />
     <CommentInput :post-id="post.id" />
+    <PostDetailPageLocationMapModal
+      v-if="this.isMapModalVisible"
+      :location="post.location"
+      @close-modal="closeMapModal"
+    />
   </div>
 </template>
 
 <script>
 import CommentInput from "@/components/post/CommentInput";
 import CommentList from "@/components/post/CommentList";
+import PostDetailPageLocationMapModal from "@/components/post/PostDetailPageLocationMapModal";
 import { LIKE_BUTTON_TYPE } from "@/utils/constants";
 
 export default {
@@ -40,6 +46,12 @@ export default {
   components: {
     CommentList,
     CommentInput,
+    PostDetailPageLocationMapModal,
+  },
+  data() {
+    return {
+      isMapModalVisible: false,
+    };
   },
   computed: {
     post: {
@@ -56,6 +68,12 @@ export default {
     },
     likeButtonType() {
       return this.liked ? LIKE_BUTTON_TYPE.LIKED : LIKE_BUTTON_TYPE.DEFAULT;
+    },
+    postAddress() {
+      return Object.values(this.post.address).join(" ");
+    },
+    authorAddress() {
+      return Object.values(this.post.authorAddress).join(" ");
     },
   },
   async created() {
@@ -92,6 +110,12 @@ export default {
       };
       await this.$store.dispatch("post/createPostLike", data);
       await this.loadPost();
+    },
+    openMapModal() {
+      this.isMapModalVisible = true;
+    },
+    closeMapModal() {
+      this.isMapModalVisible = false;
     },
   },
 };

@@ -30,8 +30,11 @@ export default {
     }
   },
   computed: {
+    isMarkerMode() {
+      return this.$store.getters["mapMode/isMarker"];
+    },
     isPostMode() {
-      return this.$store.getters["modal/isPostMode"];
+      return this.$store.getters["mapMode/isPost"];
     },
   },
 };

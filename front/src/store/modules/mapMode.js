@@ -11,13 +11,13 @@ export default {
     },
   },
   getters: {
-    isDefaultMode(state) {
+    isDefault(state) {
       return state.mapMode === MAP_MODE.DEFAULT;
     },
-    isMarkerMode(state) {
+    isMarker(state) {
       return state.mapMode === MAP_MODE.MARKER;
     },
-    isPostMode(state) {
+    isPost(state) {
       return state.mapMode === MAP_MODE.POST;
     },
   },

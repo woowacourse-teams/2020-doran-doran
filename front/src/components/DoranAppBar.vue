@@ -82,7 +82,7 @@ export default {
     },
     setMapToDefault() {
       this.$store.commit("appBar/MAP_PAGE_DEFAULT_MODE");
-      this.$store.commit("modal/CHANGE_STATE", MAP_MODE.DEFAULT);
+      this.$store.commit("mapMode/CHANGE_STATE", MAP_MODE.DEFAULT);
     },
   },
 };
