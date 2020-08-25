@@ -7,6 +7,7 @@
           <v-icon class="close-btn" @click="slideDown">mdi-close</v-icon>
         </div>
         <PostItem v-for="post in posts" :key="post.id" :post="post" />
+        <div class="mt-6 text-center text--disabled">더 이상 글이 없습니다</div>
       </div>
     </transition>
   </div>
