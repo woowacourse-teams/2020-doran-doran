@@ -77,7 +77,7 @@ export default {
     },
     closeModal() {
       this.content = "";
-      this.$store.commit("postModal/CHANGE_STATE", MAP_MODE.DEFAULT);
+      this.$store.commit("mapMode/CHANGE_STATE", MAP_MODE.DEFAULT);
       this.$store.commit("appBar/MAP_PAGE_DEFAULT_MODE");
     },
   },

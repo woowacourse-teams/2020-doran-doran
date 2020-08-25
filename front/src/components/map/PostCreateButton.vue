@@ -35,13 +35,13 @@ export default {
   name: "PostCreateButton",
   computed: {
     isDefaultMode() {
-      return this.$store.getters["postModal/isDefaultMode"];
+      return this.$store.getters["mapMode/isDefault"];
     },
     isMarkerMode() {
-      return this.$store.getters["postModal/isMarkerMode"];
+      return this.$store.getters["mapMode/isMarker"];
     },
     isPostMode() {
-      return this.$store.getters["postModal/isPostMode"];
+      return this.$store.getters["mapMode/isPost"];
     },
     buttonType() {
       return this.isMarkerMode ? BUTTON_TYPE.MARKER : BUTTON_TYPE.DEFAULT;
@@ -50,11 +50,11 @@ export default {
   methods: {
     changeMode() {
       if (this.isDefaultMode) {
-        this.$store.commit("postModal/CHANGE_STATE", MAP_MODE.MARKER);
+        this.$store.commit("mapMode/CHANGE_STATE", MAP_MODE.MARKER);
         this.$store.commit("snackbar/SHOW", MARKER_MODE_MESSAGE);
         this.$store.commit("appBar/MAP_PAGE_MARKER_MODE");
       } else if (this.isMarkerMode) {
-        this.$store.commit("postModal/CHANGE_STATE", MAP_MODE.POST);
+        this.$store.commit("mapMode/CHANGE_STATE", MAP_MODE.POST);
       }
     },
   },
