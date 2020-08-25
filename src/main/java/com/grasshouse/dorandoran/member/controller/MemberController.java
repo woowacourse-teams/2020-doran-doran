@@ -8,6 +8,7 @@ import com.grasshouse.dorandoran.member.service.dto.MemberUpdateRequest;
 import com.grasshouse.dorandoran.member.service.dto.MemberUpdateResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,5 +30,11 @@ public class MemberController {
     public ResponseEntity<MemberUpdateResponse> updateMember(@LoginMember Member member, MemberUpdateRequest request) {
         MemberUpdateResponse response = memberService.update(member, request);
         return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping
+    public ResponseEntity<Void> deleteMember(@LoginMember Member member) {
+        memberService.delete(member);
+        return ResponseEntity.noContent().build();
     }
 }

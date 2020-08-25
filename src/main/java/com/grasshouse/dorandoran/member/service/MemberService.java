@@ -18,12 +18,23 @@ public class MemberService {
 
     @Transactional
     public MemberUpdateResponse update(Member member, MemberUpdateRequest request) {
-        Member persistMember = memberRepository.findById(member.getId())
-            .orElseThrow(MemberNotFoundException::new);
+        Member persistMember = findMemberById(member.getId());
 
         Member updatedMember = persistMember.update(request.getNickname());
         memberRepository.save(updatedMember);
 
         return MemberUpdateResponse.from(updatedMember);
+    }
+
+    @Transactional
+    public void delete(Member member) {
+        Member persistMember = findMemberById(member.getId());
+
+        memberRepository.delete(persistMember);
+    }
+
+    private Member findMemberById(Long id) {
+        return memberRepository.findById(id)
+            .orElseThrow(MemberNotFoundException::new);
     }
 }

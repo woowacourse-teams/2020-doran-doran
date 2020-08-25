@@ -4,8 +4,10 @@ import static com.grasshouse.dorandoran.fixture.MemberFixture.PERSIST_MEMBER;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -80,5 +82,21 @@ class MemberControllerTest extends CommonControllerTest {
         assertThat(mvcResult.getResponse().getContentAsString()).contains(PERSIST_MEMBER.getId().toString());
         assertThat(mvcResult.getResponse().getContentAsString()).contains("new nickname");
         verify(memberService).update(any(), any());
+    }
+
+    @DisplayName("로그인된 사용자가 탈퇴한다.")
+    @Test
+    void deleteMember() throws Exception {
+        when(jwtTokenProvider.validateToken(anyString())).thenReturn(true);
+        when(jwtTokenProvider.getSubject(anyString())).thenReturn("id");
+        when(memberRepository.findByoAuthId(anyString())).thenReturn(PERSIST_MEMBER);
+        doNothing().when(memberService).delete(any());
+
+        this.mockMvc.perform(delete("/me"))
+            .andExpect(status().isNoContent())
+            .andDo(print())
+            .andReturn();
+
+        verify(memberService).delete(any());
     }
 }
