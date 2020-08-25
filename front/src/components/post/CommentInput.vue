@@ -39,7 +39,14 @@ export default {
         this.$store.commit("snackbar/SHOW", ERROR_MESSAGE.NO_CONTENT_MESSAGE);
         return;
       }
-      const authorLocation = await this.$kakaoMap.getCurrentLocation();
+      const authorLocation = await this.$kakaoMap
+        .getCurrentLocation()
+        .catch(() =>
+          this.$store.commit(
+            "snackbar/SHOW",
+            ERROR_MESSAGE.UNIDENTIFIABLE_LOCATION,
+          ),
+        );
       if (!authorLocation) {
         this.$store.commit(
           "snackbar/SHOW",
