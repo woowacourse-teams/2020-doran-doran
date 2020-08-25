@@ -2,7 +2,7 @@ import { API_BASE_URL } from "@/utils/constants";
 import axios from "axios";
 
 const client = axios.create({
-  baseURL: API_BASE_URL.EC2 + "/my",
+  baseURL: API_BASE_URL.EC2 + "/me",
 });
 
 const options = {
