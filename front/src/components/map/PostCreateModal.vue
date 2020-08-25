@@ -44,6 +44,12 @@ const CREATE_POST_SUCCESS_MESSAGE = "🎉 글이 등록되었습니다.";
 
 export default {
   name: "PostCreateModal",
+  props: {
+    location: {
+      type: Object,
+      required: true,
+    },
+  },
   data() {
     return {
       content: "",
@@ -60,7 +66,7 @@ export default {
         this.$store.commit("snackbar/SHOW", ERROR_MESSAGE.NO_CONTENT_MESSAGE);
         return;
       }
-      const postLocation = this.$kakaoMap.getCenterLocation();
+      const postLocation = this.location;
       const authorLocation = await this.$kakaoMap
         .getCurrentLocation()
         .catch(() =>
