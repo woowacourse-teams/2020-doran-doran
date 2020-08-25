@@ -13,8 +13,13 @@ const options = {
 
 const api = (() => {
   const loadMember = () => client.get("", options).then((res) => res.data);
+  const updateMember = () => client.put("", options).then((res) => res.data);
+  const deleteMember = () => client.delete("");
+
   return {
     loadMember,
+    updateMember,
+    deleteMember,
   };
 })();
 
