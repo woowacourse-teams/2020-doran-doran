@@ -4,7 +4,6 @@ import LoginPage from "@/components/login/LoginPage";
 import MapPage from "@/components/map/MapPage";
 import PostDetailPage from "@/components/post/PostDetailPage";
 import TimelinePage from "@/components/timeline/TimelinePage";
-import SearchResultPage from "@/components/search/SearchResultPage";
 
 Vue.use(VueRouter);
 
