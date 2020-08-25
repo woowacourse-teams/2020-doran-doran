@@ -36,7 +36,7 @@ export default {
       return this.$store.getters["mapMode/isMarker"];
     },
     posts() {
-      return this.$store.getters["post/getPosts"];
+      return this.$store.getters["post/posts"];
     },
   },
   async mounted() {

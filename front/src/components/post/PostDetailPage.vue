@@ -87,7 +87,7 @@ export default {
     },
     post: {
       get() {
-        return this.$store.getters["post/getPost"];
+        return this.$store.getters["post/post"];
       },
       set() {},
     },

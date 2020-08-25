@@ -72,10 +72,10 @@ export default {
     },
   },
   getters: {
-    getPost: (state) => {
+    post: (state) => {
       return state.post;
     },
-    getPosts: (state) => {
+    posts: (state) => {
       return state.posts;
     },
     postsInBounds: (state) => (bounds) => {
