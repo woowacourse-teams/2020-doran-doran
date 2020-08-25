@@ -1,6 +1,6 @@
 <template>
   <v-container fill-height fluid class="pa-0">
-    <PeriodFilterButton v-if="this.isDefaultMode"/>
+    <PeriodFilterButton v-if="this.isDefaultMode" />
     <KakaoMap />
     <PostCreateButton />
     <PostCreateModal
