@@ -97,7 +97,7 @@ a {
   width: 100%;
   max-width: 500px;
   margin: auto;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 .app-container > div {
