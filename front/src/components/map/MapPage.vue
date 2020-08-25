@@ -1,9 +1,9 @@
 <template>
   <v-container fill-height fluid class="pa-0">
     <KakaoMap />
-    <PeriodFilterButton v-if="this.isDefaultMode" />
-    <MapAssistantButtons v-if="this.isDefaultMode"/>
-    <PostCreateButton />
+    <PeriodFilterButton v-if="isDefaultMode" />
+    <MapAssistantButtons v-if="isDefaultMode"/>
+    <PostCreateButton class="post-create-btn" />
     <PostCreateModal
       v-if="this.isPostMode"
       :location="this.$kakaoMap.getCenterLocation()"
@@ -63,4 +63,11 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.post-create-btn {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  z-index: 1;
+}
+</style>

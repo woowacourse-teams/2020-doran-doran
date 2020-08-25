@@ -59,8 +59,8 @@ export default {
 
 html,
 body {
-  width: 100%;
   height: 100%;
+  width: 100%;
 }
 
 .doran-doran-color {
@@ -92,9 +92,12 @@ a {
 }
 
 .app-container {
-  width: 100%;
-  height: 100%;
   flex-direction: column;
+  height: 100%;
+  width: 100%;
+  max-width: 500px;
+  margin: auto;
+  overflow: hidden;
 }
 
 .app-container > div {
@@ -103,6 +106,19 @@ a {
 
 .snackbar {
   z-index: 9999 !important;
+}
+
+.modal-mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 9998;
+  height: 100%;
+  width: 100%;
+  max-width: 500px;
+  margin: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+  text-align: center;
 }
 
 .fade-enter-active,

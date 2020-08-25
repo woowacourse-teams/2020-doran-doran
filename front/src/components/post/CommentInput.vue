@@ -74,11 +74,11 @@ export default {
 
 <style scoped>
 .comment-input {
-  position: fixed;
+  position: absolute;
   bottom: -1%;
   left: 50%;
   transform: translate(-50%);
-  width: 90vw;
+  width: 90%;
   background-color: white;
 }
 </style>

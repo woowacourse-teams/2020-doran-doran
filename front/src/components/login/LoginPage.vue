@@ -40,11 +40,10 @@ export default {
 }
 
 .app-title {
-  position: fixed;
+  position: absolute;
   top: 30%;
   left: 50%;
   transform: translate(-50%);
-  width: 50%;
   margin: auto;
   text-align: center;
   font-weight: bold;
@@ -53,7 +52,7 @@ export default {
 }
 
 .button-box {
-  position: fixed;
+  position: absolute;
   bottom: 20%;
   left: 50%;
   transform: translate(-50%);
