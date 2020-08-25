@@ -79,10 +79,10 @@ export default {
 }
 
 .slide-up-enter-active {
-  animation: slide-up 0.5s;
+  animation: slide-up 0.4s;
 }
 .slide-up-leave-active {
-  animation: slide-up 0.5s reverse;
+  animation: slide-up 0.4s reverse;
 }
 @keyframes slide-up {
   0% {
