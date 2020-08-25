@@ -11,6 +11,10 @@
         {{ postAddress }}
       </span>
       에 외침
+      <div v-show="this.isPostOfCurrentMember" class="float-right mt-2" @click="deletePost">
+        <v-icon size="large">mdi-delete</v-icon>
+        삭제
+      </div>
     </div>
     <div class="my-5 text-break">{{ post.content }}</div>
     <div>
@@ -75,6 +79,9 @@ export default {
     authorAddress() {
       return Object.values(this.post.authorAddress).join(" ");
     },
+    isPostOfCurrentMember() {
+      return this.post.memberResponse.id === this.$store.getters["member/getMember"].id;
+    },
   },
   async created() {
     this.post = await this.$store.dispatch(
@@ -123,6 +130,9 @@ export default {
     closeMapModal() {
       this.isMapModalVisible = false;
     },
+    deletePost() {
+
+    }
   },
 };
 </script>
