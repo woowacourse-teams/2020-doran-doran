@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex flex-column modal-mask" @click.self="closeModal">
     <VSpacer />
-    <transition name="bounce">
+    <transition name="bounce" @after-leave="afterLeave">
       <div v-if="rendered">
         <VTextarea
           type="text"
@@ -94,6 +94,9 @@ export default {
     },
     closeModal() {
       this.content = "";
+      this.rendered = false;
+    },
+    afterLeave() {
       this.$store.commit("mapMode/CHANGE_STATE", MAP_MODE.DEFAULT);
       this.$store.commit("appBar/MAP_PAGE_DEFAULT_MODE");
     },
