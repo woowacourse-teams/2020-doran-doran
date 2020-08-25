@@ -128,8 +128,8 @@ export default {
 
 .search-input {
   position: absolute;
-  right: 48px;
-  width: calc(100% - 100px);
+  right: 18px;
+  width: calc(100% - 65px);
   background-color: white;
 }
 </style>
