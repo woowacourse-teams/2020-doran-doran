@@ -1,6 +1,6 @@
 <template>
   <div class="background doran-doran-color">
-    <div class="app-title">도란도란</div>
+    <div class="app-title font-size-x-large">도란도란</div>
 
     <div class="button-box">
       <router-link to="/">
@@ -45,7 +45,6 @@ export default {
   width: 50%;
   margin: auto;
   text-align: center;
-  font-size: 2rem;
   font-weight: bold;
   font-family: BM_JUA, sans-serif;
   color: white;
