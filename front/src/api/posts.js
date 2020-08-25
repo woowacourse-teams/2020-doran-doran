@@ -17,7 +17,7 @@ const api = (() => {
   const loadPost = (postId) => client.get(`/${postId}`).then((res) => res.data);
   const loadPostsIn24Hours = () => {
     const data = {
-      startDate: moment().subtract(1, "days").format(DATE_FORMAT_TYPE.DEFAULT),
+      startDate: moment().subtract(24, "hours").format(DATE_FORMAT_TYPE.DEFAULT),
       endDate: moment().add(1, "seconds").format(DATE_FORMAT_TYPE.DEFAULT),
     };
     const params = new URLSearchParams(data).toString();
