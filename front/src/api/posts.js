@@ -23,16 +23,8 @@ const api = (() => {
     return client.get(`/bounds?` + params).then((res) => res.data);
   };
   const deletePost = (postId) => client.delete(`/${postId}`, options);
-  const searchPosts = (data) => {
-  const deletePost = (postId) => client.delete(`/${postId}`);
-  const filterPosts = (data) => {
-    const params = new URLSearchParams(data).toString();
-    return client.get(`/filter?` + params).then((res) => res.data);
-  };
-  const createPostLike = (newPostLike) =>
-    client.post(`/likes`, newPostLike, options);
-  const deletePostLike = (postLikeId) =>
-    client.delete(`/likes/${postLikeId}`, options);
+  const createPostLike = (newPostLike) => client.post(`/likes`, newPostLike, options);
+  const deletePostLike = (postLikeId) => client.delete(`/likes/${postLikeId}`, options);
   return {
     createPost,
     loadPost,
