@@ -20,7 +20,8 @@ export default {
   },
   created() {
     this.$store.commit("appBar/MAP_PAGE_DEFAULT_MODE");
-    this.checkLoginUser();
+    this.checkUrl();
+    this.checkToken();
   },
   computed: {
     isMarkerMode() {
@@ -31,15 +32,15 @@ export default {
     },
   },
   methods: {
-    async checkLoginUser() {
+    checkUrl() {
       const urlToken = location.href.split("token=")[1];
-      const storageToken = localStorage.getItem("accessToken");
-
       if (urlToken) {
         localStorage.setItem("accessToken", urlToken);
         location.href = "/";
       }
-
+    },
+    async checkToken() {
+      const storageToken = localStorage.getItem("accessToken");
       if (storageToken && storageToken !== "guest") {
         await this.$store.dispatch("member/loadMember");
       } else if (!storageToken) {
