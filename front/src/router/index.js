@@ -3,7 +3,6 @@ import VueRouter from "vue-router";
 import LoginPage from "@/components/login/LoginPage";
 import MapPage from "@/components/map/MapPage";
 import PostDetailPage from "@/components/post/PostDetailPage";
-import TimelinePage from "@/components/timeline/TimelinePage";
 
 Vue.use(VueRouter);
 
@@ -17,11 +16,6 @@ const routes = [
     path: "/login",
     name: "LoginPage",
     component: LoginPage,
-  },
-  {
-    path: "/timeline",
-    name: "TimelinePage",
-    component: TimelinePage,
   },
   {
     path: "/posts/:id",

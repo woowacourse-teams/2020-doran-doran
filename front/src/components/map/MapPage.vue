@@ -2,7 +2,7 @@
   <v-container fill-height fluid class="pa-0">
     <KakaoMap />
     <PeriodFilterButton v-if="isDefaultMode" />
-    <v-btn color="white" class="timeline-btn" @click="goToTimeline">
+    <v-btn color="white" class="timeline-btn" @click="openTimelineModal">
       <v-icon>mdi-format-list-bulleted</v-icon>
       목록
     </v-btn>
@@ -12,6 +12,7 @@
       v-if="isPostMode"
       :location="this.$kakaoMap.getCenterLocation()"
     />
+    <TimelineModal v-if="timeline" @close="closeTimelineModal"/>
     <MemberUpdateModal
       v-if="isInitialMember"
       @close="closeMemberUpdateModal"
@@ -25,6 +26,7 @@ import PostCreateButton from "@/components/map/PostCreateButton";
 import PostCreateModal from "@/components/map/PostCreateModal";
 import MapAssistantButtons from "@/components/map/MapAssistantButtons";
 import PeriodFilterButton from "@/components/map/filter/PeriodFilterButton";
+import TimelineModal from "@/components/timeline/TimelineModal";
 import MemberUpdateModal from "@/components/member/MemberUpdateModal";
 
 export default {
@@ -32,6 +34,7 @@ export default {
   components: {
     MapAssistantButtons,
     PeriodFilterButton,
+    TimelineModal,
     KakaoMap,
     PostCreateButton,
     PostCreateModal,
@@ -40,6 +43,7 @@ export default {
   data() {
     return {
       isInitialMember: false,
+      timeline: false,
     };
   },
   computed: {
@@ -78,17 +82,12 @@ export default {
     closeMemberUpdateModal() {
       this.isInitialMember = false;
     },
-    goToTimeline() {
-      const boundsFromKakao = this.$kakaoMap.getBounds();
-      const bounds = {
-        upperBound: boundsFromKakao.ja,
-        lowerBound: boundsFromKakao.ka,
-        leftBound: boundsFromKakao.da,
-        rightBound: boundsFromKakao.ia,
-      };
-      const params = new URLSearchParams(bounds).toString();
-      this.$router.push("/timeline?" + params);
+    openTimelineModal() {
+      this.timeline = true;
     },
+    closeTimelineModal() {
+      this.timeline = false;
+    }
   },
 };
 </script>

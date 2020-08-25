@@ -1,0 +1,66 @@
+<template>
+  <div class="modal-mask" @click.self="hide">
+    <div class="pa-3 modal-container">
+      <div class="text-center">
+        <span class="ma-auto text-center">타임라인</span>
+        <v-icon class="close-btn" @click="hide">mdi-close</v-icon>
+      </div>
+      <PostItem v-for="post in posts" :key="post.id" :post="post" />
+    </div>
+  </div>
+</template>
+
+<script>
+import PostItem from "@/components/timeline/PostItem";
+
+export default {
+  name: "TimelineModal",
+  components: {
+    PostItem,
+  },
+  computed: {
+    posts() {
+      const kakaoBounds = this.$kakaoMap.getBounds();
+      const bounds = {
+        top: kakaoBounds.ja,
+        bottom: kakaoBounds.ka,
+        left: kakaoBounds.da,
+        right: kakaoBounds.ia,
+      };
+      return this.$store.getters["post/postsInBounds"](bounds).reverse();
+    },
+  },
+  methods: {
+    hide() {
+      this.$emit("close");
+    },
+  },
+};
+</script>
+
+<style scoped>
+.modal-mask {
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-container {
+  position: absolute;
+  top: 20px;
+  width: 100%;
+  height: calc(100% - 20px);
+  background-color: #fff;
+  border-radius: 15px 15px 0 0;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+</style>
