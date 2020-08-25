@@ -88,7 +88,10 @@ export default {
     updateMember() {
       this.isUpdating = true;
     },
-    logout() {},
+    logout() {
+      this.$store.commit("member/SET_LOGOUT_MEMBER");
+      this.$store.commit("snackbar/SHOW", "성공적으로 로그아웃 되었습니다.");
+    },
     deleteMember() {},
     hideSidebar(action) {
       this.$store.commit("memberSidebar/HIDE");
