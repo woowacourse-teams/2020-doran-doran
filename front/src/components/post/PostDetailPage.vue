@@ -33,7 +33,7 @@
     <div class="bottom-spacer" />
     <CommentInput :post-id="post.id" />
     <PostDetailPageLocationMapModal
-      v-if="this.isMapModalMode"
+      v-if="this.isMapModalVisible"
       :location="post.location"
       @close-modal="closeMapModal"
     />
@@ -55,7 +55,7 @@ export default {
   },
   data() {
     return {
-      isMapModalMode: false,
+      isMapModalVisible: false,
     };
   },
   computed: {
@@ -111,10 +111,10 @@ export default {
       await this.loadPost();
     },
     openMapModal() {
-      this.isMapModalMode = true;
+      this.isMapModalVisible = true;
     },
     closeMapModal() {
-      this.isMapModalMode = false;
+      this.isMapModalVisible = false;
     },
   },
 };

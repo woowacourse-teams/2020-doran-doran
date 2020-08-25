@@ -45,7 +45,7 @@ export default {
     },
     buttonType() {
       return this.isMarkerMode ? BUTTON_TYPE.MARKER : BUTTON_TYPE.DEFAULT;
-    }
+    },
   },
   methods: {
     changeMode() {
