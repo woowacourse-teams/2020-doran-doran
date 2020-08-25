@@ -5,7 +5,7 @@ export default {
   state: {
     member: {
       id: 0,
-      nickname: "로그인",
+      nickname: "로그인해주세요",
       picture: "",
     },
   },
@@ -24,7 +24,7 @@ export default {
     getMember: (state) => {
       return state.member;
     },
-    isLoginUser: () => {
+    isGuest: () => {
       return (
         !sessionStorage.getItem("accessToken") ||
         sessionStorage.getItem("accessToken") === "guest"

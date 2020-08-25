@@ -35,7 +35,7 @@ export default {
   },
   methods: {
     async createComment() {
-      if (this.$store.getters["member/isLoginUser"]) {
+      if (this.$store.getters["member/isGuest"]) {
         this.$store.commit("snackbar/SHOW", ERROR_MESSAGE.LOGIN_REQUIRED);
         return;
       }

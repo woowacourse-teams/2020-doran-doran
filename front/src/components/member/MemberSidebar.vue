@@ -29,6 +29,8 @@
 </template>
 
 <script>
+import {API_BASE_URL} from "@/utils/constants";
+
 export default {
   name: "MemberSidebar",
   data() {
@@ -66,8 +68,8 @@ export default {
   methods: {
     updateMember() {},
     login() {
-      if (this.member.id === 0) {
-        this.$router.push("/login");
+      if (this.$store.getters["member/isGuest"]) {
+        window.location.href = API_BASE_URL.EC2 + "/oauth2/authorization/kakao";
       }
     },
     logout() {},
