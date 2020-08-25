@@ -29,6 +29,7 @@ export default {
       comments: [],
     },
     posts: [],
+    modal: false,
   },
   mutations: {
     SET_POST(state, post) {
@@ -46,6 +47,12 @@ export default {
     REMOVE_POST(state, postId) {
       const deleteIndex = state.posts.findIndex((post) => post.id === postId);
       state.posts.splice(deleteIndex, 1);
+    },
+    OPEN(state) {
+      state.modal = true;
+    },
+    CLOSE(state) {
+      state.modal = false;
     },
   },
   actions: {
@@ -86,6 +93,9 @@ export default {
           bounds.left < location.longitude &&
           bounds.right > location.longitude,
       );
+    },
+    modal: (state) => {
+      return state.modal;
     },
   },
 };

@@ -64,7 +64,7 @@ export default {
       const centerLocation = await this.$kakaoMap.getCenterLocation();
       const centerAddress = await this.$kakaoMap.getAddress(centerLocation);
       const address = Object.values(centerAddress).join(" ");
-      this.$store.commit("appBar/CHANGE_TITLE", address);
+      this.$store.commit("appBar/CHANGE_ADDRESS", address);
     },
   },
   watch: {

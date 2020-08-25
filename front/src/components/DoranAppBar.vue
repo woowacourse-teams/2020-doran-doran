@@ -5,14 +5,10 @@
       fluid
       class="d-flex flex-row align-center justify-space-between pa-0"
     >
-      <v-icon v-show="backButton" @click="goToPreviousPage">
-        mdi-chevron-left
-      </v-icon>
       <v-icon v-show="myPageButton" @click="showSidebar">
         mdi-account
       </v-icon>
-      <!--TODO: backButton으로 변경하기-->
-      <v-icon v-show="cancelButton" @click="setMapToDefault">
+      <v-icon v-show="backButton" @click="setMapToDefault">
         mdi-chevron-left
       </v-icon>
 
@@ -74,15 +70,13 @@ export default {
     },
   },
   methods: {
-    goToPreviousPage() {
-      this.$router.go(-1);
-    },
     showSidebar() {
       this.$store.commit("memberSidebar/SHOW");
     },
     setMapToDefault() {
       this.$store.commit("appBar/MAP_PAGE_DEFAULT_MODE");
       this.$store.commit("mapMode/CHANGE_STATE", MAP_MODE.DEFAULT);
+      this.$store.commit("post/CLOSE");
     },
     toggleSearchInput() {
       this.isSearching = !this.isSearching;
