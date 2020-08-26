@@ -15,6 +15,7 @@ const KakaoMap = (() => {
   let map = null;
   let postOverlays = [];
   let clusterer = null;
+  let marker = null;
 
   const script = document.createElement("script");
   script.src = KAKAO_MAP_URL + KAKAO_MAP_APP_KEY + LIBRARY;
@@ -107,9 +108,10 @@ const KakaoMap = (() => {
     const markerSize = new kakao.maps.Size(36, 36);
     const markerImage = _createMarkerImage(img, markerSize);
 
-    const currentKakaoLocation = _createKakaoLocation(location);
-    const marker = _createMarker(currentKakaoLocation, markerImage);
-    marker.setMap(map);
+    const kakaoLocation = _createKakaoLocation(location);
+    const newMarker = _createMarker(kakaoLocation, markerImage);
+    newMarker.setMap(map);
+    return newMarker;
   };
 
   const setCenterByCurrentLocation = async () => {
@@ -118,7 +120,11 @@ const KakaoMap = (() => {
     }
     const currentLocation = await getCurrentLocation();
     setCenterLocation(currentLocation);
-    setMarker(currentLocation, CURRENT_MARKER_IMAGE);
+    if (!marker) {
+      marker = setMarker(currentLocation, CURRENT_MARKER_IMAGE);
+    } else {
+      marker.setPosition(_createKakaoLocation(currentLocation));
+    }
   };
 
   const _createOverlay = (content, position) => {
