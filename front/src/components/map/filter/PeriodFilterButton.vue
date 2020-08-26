@@ -77,7 +77,8 @@ export default {
       isSliderOpened: false,
       periodFilterChoice: "24hours",
       isCalendarOpen: true,
-      oneUserInputFilled: false,
+      inputStartDateFilled: false,
+      inputEndDateFilled: false,
       previousStartDateFilter: "",
       previousEndDateFilter: "",
       previousFilterChoice: "",
@@ -102,34 +103,32 @@ export default {
     async openCalendarModal() {
       this.isCalendarOpen = true;
     },
-    async inputStartDate(date) {
+     async inputStartDate(date) {
       await this.$store.commit("filter/SET_START_DATE", date);
-      await this.handleUserDateInput();
+      this.inputStartDateFilled = true;
+      if (this.inputEndDateFilled === true) {
+        await this.handleUserInputFiltering();
+      }
     },
     async inputEndDate(date) {
       await this.$store.commit("filter/SET_END_DATE", date);
-      await this.handleUserDateInput();
+      this.inputEndDateFilled = true;
+      if (this.inputStartDateFilled === true) {
+        await this.handleUserInputFiltering();
+      }
     },
-    async handleUserDateInput() {
-      if (this.oneUserInputFilled === false) {
-        this.oneUserInputFilled = true;
+    async handleUserInputFiltering() {
+      if (this.$store.getters["filter/startDate"] > this.$store.getters["filter/endDate"]) {
+        this.$store.commit("snackbar/SHOW", ERROR_MESSAGE.INVALID_USER_DATE_INPUT);
+        this.rollBackPeriodFilter();
+        this.inputStartDateFilled = false;
+        this.inputEndDateFilled = false;
+        this.isCalendarOpen = false;
       } else {
-        if (
-          this.$store.getters["filter/startDate"] >
-          this.$store.getters["filter/endDate"]
-        ) {
-          this.$store.commit(
-            "snackbar/SHOW",
-            ERROR_MESSAGE.INVALID_USER_DATE_INPUT,
-          );
-          this.rollBackPeriodFilter();
-          this.oneUserInputFilled = false;
-          this.isCalendarOpen = false;
-        } else {
-          await this.filterPosts();
-          this.oneUserInputFilled = false;
-          this.isCalendarOpen = false;
-        }
+        await this.filterPosts();
+        this.inputStartDateFilled = false;
+        this.inputEndDateFilled = false;
+        this.isCalendarOpen = false;
       }
     },
     rollBackPeriodFilter() {
@@ -138,11 +137,11 @@ export default {
       this.periodFilterChoice = this.previousFilterChoice;
     },
     async filterPosts() {
-      await this.$store.commit("post/CLEAR_POSTS");
       const filteredPosts = await this.$store.dispatch("filter/filterPosts");
       if (filteredPosts.length === 0) {
         this.$store.commit("snackbar/SHOW", ERROR_MESSAGE.NO_POST_MESSAGE);
       }
+      await this.$store.commit("post/CLEAR_POSTS");
       await this.$store.commit("post/SET_POSTS", filteredPosts);
       this.previousFilterChoice = this.periodFilterChoice;
       this.previousStartDateFilter = this.$store.getters["filter/startDate"];
@@ -169,9 +168,6 @@ export default {
 }
 .period-choices::-webkit-scrollbar {
   display: none;
-}
-.theme--light.v-btn-toggle:not(.v-btn-toggle--group) {
-  background: transparent;
 }
 .user-input-modal {
   max-width: 70%;
