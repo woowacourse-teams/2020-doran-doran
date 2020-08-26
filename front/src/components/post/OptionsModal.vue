@@ -9,9 +9,7 @@
     </div>
     <ConfirmModal
       v-if="isConfirmModalVisible"
-      :type="type"
-      @delete-post="deletePost"
-      @delete-comment="deleteComment"
+      :remove="remove"
       @close="closeModals"
     />
   </div>
@@ -25,28 +23,22 @@ export default {
   components: {
     ConfirmModal,
   },
-  data() {
-    return {
-      isConfirmModalVisible: false,
-    };
-  },
   props: {
     isMine: {
       type: Boolean,
       required: true,
     },
-    type: {
-      type: String,
+    remove: {
+      type: Function,
       required: true,
     },
   },
+  data() {
+    return {
+      isConfirmModalVisible: false,
+    };
+  },
   methods: {
-    deletePost() {
-      this.$emit("delete-post");
-    },
-    deleteComment() {
-      this.$emit("delete-comment");
-    },
     openConfirmModal() {
       this.isConfirmModalVisible = true;
     },

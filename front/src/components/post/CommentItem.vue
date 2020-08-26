@@ -32,9 +32,8 @@
     </div>
     <OptionsModal
       v-if="isOptionsModalVisible"
-      :is-mine="isMyComment"
-      :type="'comment'"
-      @delete-comment="deleteComment"
+      :is-mine="isMine"
+      :remove="remove"
       @close="closeOptionsModal"
     />
   </div>
@@ -44,6 +43,9 @@
 import { ERROR_MESSAGE, LIKE_BUTTON_TYPE } from "@/utils/constants";
 import OptionsModal from "@/components/post/OptionsModal";
 
+const DELETE_COMMENT_SUCCESS_MESSAGE = "👻 댓글이 삭제되었습니다.";
+const DELETE_COMMENT_FAIL_MESSAGE = "😭 댓글 삭제에 실패했습니다.";
+
 export default {
   name: "CommentItem",
   components: {
@@ -51,7 +53,6 @@ export default {
   },
   data() {
     return {
-      isMyComment: false,
       isOptionsModalVisible: false,
     };
   },
@@ -62,6 +63,12 @@ export default {
     },
   },
   computed: {
+    isMine() {
+      return (
+        this.comment.author.id ===
+        this.$store.getters["member/getMember"].id
+      );
+    },
     commentDate() {
       return this.$moment(this.comment.createdAt).fromNow();
     },
@@ -77,6 +84,16 @@ export default {
       this.comment.author.id === this.$store.getters["member/getMember"].id;
   },
   methods: {
+    async remove() {
+      await this.$store
+        .dispatch("comment/deleteComment", this.comment.id)
+        .catch((e) => {
+          this.$store.commit("snackbar/SHOW", DELETE_COMMENT_FAIL_MESSAGE);
+          throw e;
+        });
+      this.$store.commit("snackbar/SHOW", DELETE_COMMENT_SUCCESS_MESSAGE);
+      this.$store.dispatch("post/loadPost", this.$route.params.id);
+    },
     hasLike(like) {
       return (
         like.memberId === this.$store.getters["member/getMember"].id &&
@@ -111,7 +128,8 @@ export default {
       this.$store.dispatch("post/loadPost", this.comment.postId);
     },
     deleteComment() {
-      this.$emit("delete-comment", this.comment.postId, this.comment.id);
+      console.log("delete");
+      this.$emit("delete", this.comment.id);
     },
     openOptionsModal() {
       this.isOptionsModalVisible = true;

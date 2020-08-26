@@ -44,9 +44,8 @@
     />
     <OptionsModal
       v-if="isOptionsModalVisible"
-      :is-mine="isMyPost"
-      :type="'post'"
-      @delete-post="deletePost()"
+      :is-mine="isMine"
+      :remove="remove"
       @close="closeOptionsModal"
     />
   </div>
@@ -60,6 +59,7 @@ import OptionsModal from "@/components/post/OptionsModal";
 import { ERROR_MESSAGE, LIKE_BUTTON_TYPE } from "@/utils/constants";
 
 const DELETE_POST_SUCCESS_MESSAGE = "👻 글이 삭제되었습니다.";
+const DELETE_POST_FAIL_MESSAGE = "😭 글 삭제에 실패했습니다.";
 
 export default {
   name: "PostDetailPage",
@@ -78,6 +78,12 @@ export default {
   computed: {
     existMember() {
       return localStorage.getItem("accessToken");
+    },
+    isMine() {
+      return (
+        this.post.memberResponse.id ===
+        this.$store.getters["member/getMember"].id
+      );
     },
     post: {
       get() {
@@ -115,8 +121,11 @@ export default {
     this.$store.commit("appBar/POST_DETAIL_PAGE");
   },
   methods: {
-    async deletePost() {
-      await this.$store.dispatch("post/deletePost", this.post.id);
+    async remove() {
+      await this.$store.dispatch("post/deletePost", this.post.id).catch((e) => {
+        this.$store.commit("snackbar/SHOW", DELETE_POST_FAIL_MESSAGE);
+        throw e;
+      });
       this.$store.commit("snackbar/SHOW", DELETE_POST_SUCCESS_MESSAGE);
       this.$router.go(-1);
     },

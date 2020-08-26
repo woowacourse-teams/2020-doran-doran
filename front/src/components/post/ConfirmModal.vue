@@ -5,7 +5,7 @@
         <v-card-text class="text-left">정말 삭제하시겠어요?</v-card-text>
         <v-card-actions>
           <VSpacer />
-          <v-btn color="red" text @click="deleteObject">삭제</v-btn>
+          <v-btn color="red" text @click="remove">삭제</v-btn>
           <v-btn text @click="closeConfirmModal">취소</v-btn>
         </v-card-actions>
       </div>
@@ -17,19 +17,12 @@
 export default {
   name: "ConfirmModal",
   props: {
-    type: {
-      type: String,
+    remove: {
+      type: Function,
       required: true,
     },
   },
   methods: {
-    async deleteObject() {
-      if (this.type === "post") {
-        this.$emit("delete-post");
-      } else if (this.type === "comment") {
-        this.$emit("delete-comment");
-      }
-    },
     closeConfirmModal() {
       this.$emit("close");
     },
