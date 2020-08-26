@@ -2,8 +2,8 @@
   <v-container fill-height fluid class="pa-0">
     <KakaoMap />
     <PeriodFilterButton v-if="isDefaultMode" />
-    <router-link to="/timeline" class="px-3 py-2 font-size-small timeline-btn">
-      <v-icon color="black" dense>mdi-format-list-bulleted</v-icon>
+    <router-link to="/timeline" class="px-3 font-size-x-small timeline-btn">
+      <v-icon color="black" class="mb-1" small>mdi-format-list-bulleted</v-icon>
       목록
     </router-link>
     <MapAssistantButtons v-if="isDefaultMode" />
@@ -79,9 +79,12 @@ export default {
   top: 66px;
   right: 10px;
   z-index: 1;
+  height: 30px;
+  padding-top: 6px !important;
+  padding-bottom: 6px !important;
   border-radius: 100px;
   background-color: white;
-  border: 1px solid grey;
+  box-shadow: 1px 1px 8px grey;
 }
 
 .post-create-btn {

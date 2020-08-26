@@ -15,12 +15,13 @@
         v-model="periodFilterChoice"
         mandatory
         rounded
+        borderless
         class="period-choices"
       >
         <v-btn
           value="24hours"
           small
-          class="period-btn"
+          class="period-btn px-3"
           @click="loadPostsWithinXhours(24)"
         >
           24시간 이내
@@ -28,7 +29,7 @@
         <v-btn
           value="7days"
           small
-          class="period-btn"
+          class="period-btn px-3"
           @click="loadPostsWithinXdays(7)"
         >
           7일 이내
@@ -36,19 +37,24 @@
         <v-btn
           value="30days"
           small
-          class="period-btn"
+          class="period-btn px-3"
           @click="loadPostsWithinXdays(30)"
         >
           30일 이내
         </v-btn>
-        <v-btn value="all" small class="period-btn" @click="loadAllPosts">
+        <v-btn
+          value="all"
+          small
+          class="period-button px-3"
+          @click="loadAllPosts"
+        >
           전체
         </v-btn>
         <v-btn
           value="userInput"
           small
           depressed
-          color="period-btn"
+          color="period-btn px-3"
           @click="openCalendarModal"
         >
           직접 입력
@@ -179,10 +185,11 @@ export default {
 .period-choices {
   position: absolute;
   top: 66px;
-  left: 55px;
+  left: 45px;
   z-index: 999;
-  max-width: 62%;
+  max-width: 68%;
   overflow-x: auto;
+  box-shadow: 1px 1px 8px grey;
 }
 
 .period-choices::-webkit-scrollbar {
