@@ -125,6 +125,7 @@ export default {
         this.$store.commit("member/SET_LOGOUT_MEMBER");
         this.$store.commit("snackbar/SHOW", "성공적으로 탈퇴를 완료했습니다.");
         this.$router.push("/login");
+        this.isDeleting = false;
       }
     },
     hideSidebar(action) {
