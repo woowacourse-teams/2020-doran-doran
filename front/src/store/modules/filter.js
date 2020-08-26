@@ -36,11 +36,11 @@ export default {
     },
   },
   actions: {
-    async filterPosts(context) {
+    async filterPosts({ state }) {
       const data = {
-        keyword: context.state.keyword,
-        startDate: context.state.startDate,
-        endDate: context.state.endDate,
+        keyword: state.keyword,
+        startDate: state.startDate,
+        endDate: state.endDate,
       };
       return await api.filterPosts(data);
     },
