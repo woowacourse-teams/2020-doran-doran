@@ -15,23 +15,27 @@
       <v-btn-toggle
         v-model="periodFilterChoice"
         mandatory
-        background-color="white"
         rounded
         class="period-choices"
       >
-        <v-btn value="24hours" small text @click="loadPostsWithinXhours(24)">
+        <v-btn
+          value="24hours"
+          small
+          depressed
+          @click="loadPostsWithinXhours(24)"
+        >
           24시간 이내
         </v-btn>
-        <v-btn value="7days" small text @click="loadPostsWithinXdays(7)">
+        <v-btn value="7days" small depressed @click="loadPostsWithinXdays(7)">
           7일 이내
         </v-btn>
-        <v-btn value="30days" small text @click="loadPostsWithinXdays(30)">
+        <v-btn value="30days" small depressed @click="loadPostsWithinXdays(30)">
           30일 이내
         </v-btn>
-        <v-btn value="all" small text @click="loadAllPosts">
+        <v-btn value="all" small depressed @click="loadAllPosts">
           전체
         </v-btn>
-        <v-btn value="userInput" small text @click="openCalendarModal">
+        <v-btn value="userInput" small depressed @click="openCalendarModal">
           직접 입력
         </v-btn>
       </v-btn-toggle>
@@ -159,8 +163,12 @@ export default {
   position: absolute;
   top: 65px;
   left: 45px;
-  z-index: 9999;
+  z-index: 999;
+  width: 86%;
   overflow-x: auto;
+}
+.period-choices::-webkit-scrollbar {
+  display: none;
 }
 .theme--light.v-btn-toggle:not(.v-btn-toggle--group) {
   background: transparent;
