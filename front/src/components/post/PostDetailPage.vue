@@ -5,13 +5,8 @@
       <span class="font-weight-bold">{{ post.memberResponse.nickname }}</span>
       <span class="float-right mt-2">
         {{ postDate }}
-        <v-icon
-          size="medium"
-          class="ml-1 mb-1"
-          color="grey lighten-1"
-          v-if="this.isMyPost"
-          @click="deletePost"
-          >mdi-delete
+        <v-icon color="black" size="large" class="mb-1" @click="openOptionsModal">
+          mdi-dots-vertical
         </v-icon>
       </span>
     </div>
@@ -42,6 +37,12 @@
       :location="post.location"
       @close-modal="closeMapModal"
     />
+    <OptionsModal
+      v-if="this.isOptionsModalVisible"
+      :is-mine="this.isMyPost"
+      :post-id="this.post.id"
+      @close-modal="closeOptionsModal"
+    ></OptionsModal>
   </div>
 </template>
 
@@ -49,6 +50,7 @@
 import CommentInput from "@/components/post/CommentInput";
 import CommentList from "@/components/post/CommentList";
 import PostDetailPageLocationMapModal from "@/components/post/PostDetailPageLocationMapModal";
+import OptionsModal from "@/components/post/OptionsModal";
 import { ERROR_MESSAGE, LIKE_BUTTON_TYPE } from "@/utils/constants";
 
 const DELETE_POST_SUCCESS_MESSAGE = "👻 글이 삭제되었습니다.";
@@ -59,11 +61,13 @@ export default {
     CommentList,
     CommentInput,
     PostDetailPageLocationMapModal,
+    OptionsModal,
   },
   data() {
     return {
       isMapModalVisible: false,
       isMyPost: false,
+      isOptionsModalVisible: false,
     };
   },
   computed: {
@@ -147,6 +151,12 @@ export default {
     closeMapModal() {
       this.isMapModalVisible = false;
     },
+    openOptionsModal() {
+      this.isOptionsModalVisible = true;
+    },
+    closeOptionsModal() {
+      this.isOptionsModalVisible = false;
+    }
   },
 };
 </script>
