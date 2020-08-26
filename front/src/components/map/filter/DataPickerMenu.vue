@@ -15,6 +15,7 @@
         prepend-icon="mdi-calendar"
         readonly
         dense
+        color="black"
         class="pr-3"
       />
     </template>
