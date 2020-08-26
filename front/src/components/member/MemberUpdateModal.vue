@@ -54,6 +54,10 @@ export default {
   },
   methods: {
     async updateMember() {
+      if (!this.newNickname) {
+        this.$store.commit("snackbar/SHOW", "❗️ 닉네임을 입력해주세요.");
+        return;
+      }
       const updatedMember = await api.updateMember(this.newNickname);
       this.$store.commit("member/SET_MEMBER", updatedMember);
       this.$store.commit("snackbar/SHOW", "🥳 성공적으로 변경되었습니다.");
