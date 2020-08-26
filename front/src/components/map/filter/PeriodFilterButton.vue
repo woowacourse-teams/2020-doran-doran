@@ -74,6 +74,9 @@ export default {
       periodFilterChoice: "24hours",
       isCalendarOpen: true,
       oneUserInputFilled: false,
+      previousStartDateFilter: "",
+      previousEndDateFilter: "",
+      previousFilterChoice: "",
     };
   },
   methods: {
@@ -115,6 +118,7 @@ export default {
             "snackbar/SHOW",
             ERROR_MESSAGE.INVALID_USER_DATE_INPUT,
           );
+          this.rollBackPeriodFilter();
           this.oneUserInputFilled = false;
           this.isCalendarOpen = false;
         } else {
@@ -124,6 +128,11 @@ export default {
         }
       }
     },
+    rollBackPeriodFilter() {
+      this.$store.commit("filter/SET_START_DATE", this.previousStartDateFilter);
+      this.$store.commit("filter/SET_END_DATE", this.previousEndDateFilter);
+      this.periodFilterChoice = this.previousFilterChoice;
+    },
     async filterPosts() {
       await this.$store.commit("post/CLEAR_POSTS");
       const filteredPosts = await this.$store.dispatch("filter/filterPosts");
@@ -131,6 +140,9 @@ export default {
         this.$store.commit("snackbar/SHOW", ERROR_MESSAGE.NO_POST_MESSAGE);
       }
       await this.$store.commit("post/SET_POSTS", filteredPosts);
+      this.previousFilterChoice = this.periodFilterChoice;
+      this.previousStartDateFilter = this.$store.getters["filter/startDate"];
+      this.previousEndDateFilter = this.$store.getters["filter/endDate"];
     },
   },
 };
