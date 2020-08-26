@@ -1,7 +1,7 @@
 <template>
   <v-container ref="map" fill-height fluid>
     <v-icon
-      v-if="this.isMarkerMode"
+      v-if="isMarkerMode"
       size="40"
       color="red"
       class="center-marker"
