@@ -58,6 +58,7 @@ export default {
   right: -6px;
   width: 20px;
   height: 20px;
+  padding: 1px;
   border-radius: 15px;
   background-color: red;
   color: white;
