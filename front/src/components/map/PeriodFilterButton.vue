@@ -155,13 +155,14 @@ export default {
   background: transparent;
 }
 .user-input-modal {
+  max-width: 70%;
   position: fixed;
   top: 100px;
   left: 190px;
   z-index: 9998;
   background-color: white;
   height: 120px;
-  max-width: 70%;
-  padding-bottom: 20px;
+  padding-top: 15px;
+  padding-left: 10px;
 }
 </style>
