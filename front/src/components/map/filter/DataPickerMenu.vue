@@ -1,11 +1,5 @@
 <template>
-  <v-menu
-    v-model="menu"
-    max-height="290px"
-    offset-y
-    transition="scale-transition"
-    :close-on-content-click="false"
-  >
+  <v-menu v-model="menu" offset-y transition="scale-transition">
     <template v-slot:activator="{ on, attrs }">
       <VTextField
         v-on="on"
@@ -16,7 +10,6 @@
         readonly
         dense
         color="black"
-        class="pr-3"
       />
     </template>
     <VDatePicker v-model="date" no-title scrollable @input="selectDate" />
@@ -47,4 +40,9 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.v-menu__content {
+  min-height: 290px;
+  height: 290px;
+}
+</style>
