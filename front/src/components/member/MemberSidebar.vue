@@ -63,7 +63,7 @@ export default {
       items: [
         {
           title: "정보수정",
-          action: this.ooenUpdateMemberModal,
+          action: this.openUpdateMemberModal,
         },
         {
           title: "로그아웃",
@@ -100,7 +100,7 @@ export default {
         window.location.href = API_BASE_URL.EC2 + "/oauth2/authorization/kakao";
       }
     },
-    ooenUpdateMemberModal() {
+    openUpdateMemberModal() {
       this.isUpdating = true;
     },
     logout() {
