@@ -27,7 +27,7 @@
       </v-list>
     </v-navigation-drawer>
 
-    <MemberUpdateModal v-if="this.isUpdating" @close="closeMemberUpdateModal" />
+    <MemberUpdateModal v-if="isUpdating" @close="closeMemberUpdateModal" />
 
     <v-dialog v-model="isDeleting" persistent>
       <v-card>

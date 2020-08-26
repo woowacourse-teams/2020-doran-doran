@@ -1,7 +1,7 @@
 <template>
   <v-app-bar flat max-height="56" color="white">
     <v-container
-      v-show="this.isSearching"
+      v-show="isSearching"
       fluid
       class="d-flex flex-row align-center justify-space-between pa-0"
     >

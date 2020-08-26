@@ -12,9 +12,7 @@
       v-if="isPostMode"
       :location="this.$kakaoMap.getCenterLocation()"
     />
-    <template v-if="timeline">
-      <TimelineModal />
-    </template>
+    <TimelineModal v-if="timeline" />
     <v-slide-y-reverse-transition>
       <PostModal v-if="post" />
     </v-slide-y-reverse-transition>
