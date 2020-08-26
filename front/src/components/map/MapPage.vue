@@ -2,17 +2,19 @@
   <v-container fill-height fluid class="pa-0">
     <KakaoMap />
     <PeriodFilterButton v-if="isDefaultMode" />
-    <v-btn color="white" class="timeline-btn" @click="openTimelineModal">
-      <v-icon>mdi-format-list-bulleted</v-icon>
+    <router-link to="/timeline" class="pa-2 text-subtitle-2 timeline-btn">
+      <v-icon dense>mdi-format-list-bulleted</v-icon>
       목록
-    </v-btn>
-    <MapAssistantButtons v-if="isDefaultMode" />
+    </router-link>
+    <MapAssistantButtons v-if="isDefaultMode"/>
     <PostCreateButton class="post-create-btn" />
     <PostCreateModal
       v-if="isPostMode"
       :location="this.$kakaoMap.getCenterLocation()"
     />
-    <TimelineModal v-if="timeline" @close="closeTimelineModal" />
+    <template v-if="timeline">
+      <TimelineModal />
+    </template>
     <v-slide-y-reverse-transition>
       <PostModal v-if="postModal" />
     </v-slide-y-reverse-transition>
@@ -48,7 +50,7 @@ export default {
   data() {
     return {
       isInitialMember: false,
-      timeline: false,
+      timeline: this.$route.meta.timeline,
     };
   },
   computed: {
@@ -67,34 +69,11 @@ export default {
   },
   async created() {
     this.$store.commit("appBar/MAP_PAGE_DEFAULT_MODE");
-    this.checkUrl();
-    await this.checkToken();
     this.isInitialMember = this.$store.getters["member/isInitialMember"];
   },
-  methods: {
-    checkUrl() {
-      const urlToken = location.href.split("token=")[1];
-      if (urlToken) {
-        localStorage.setItem("accessToken", urlToken);
-        location.href = "/";
-      }
-    },
-    async checkToken() {
-      const storageToken = localStorage.getItem("accessToken");
-      if (storageToken && storageToken !== "guest") {
-        await this.$store.dispatch("member/loadMember");
-      } else if (!storageToken) {
-        this.$router.push("/login");
-      }
-    },
-    closeMemberUpdateModal() {
-      this.isInitialMember = false;
-    },
-    openTimelineModal() {
-      this.timeline = true;
-    },
-    closeTimelineModal() {
-      this.timeline = false;
+  watch: {
+    "$route.meta"({ timeline }) {
+      this.timeline = timeline;
     },
   },
 };
@@ -102,10 +81,12 @@ export default {
 
 <style scoped>
 .timeline-btn {
-  position: fixed;
-  top: 60px;
-  right: 5px;
+  position: absolute;
+  top: 66px;
+  right: 10px;
   z-index: 1;
+  border-radius: 5px;
+  background-color: white;
 }
 
 .post-create-btn {

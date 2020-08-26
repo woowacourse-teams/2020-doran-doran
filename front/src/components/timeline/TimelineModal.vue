@@ -24,6 +24,7 @@ export default {
   data() {
     return {
       rendered: false,
+      flag: false,
     };
   },
   computed: {
@@ -38,6 +39,15 @@ export default {
       return this.$store.getters["post/postsInBounds"](bounds).reverse();
     },
   },
+  created() {
+    this.$router.beforeEach((to, from, next) => {
+      if (this.flag) {
+        next(true);
+      }
+      this.rendered = false;
+      next(false);
+    });
+  },
   mounted() {
     this.rendered = true;
   },
@@ -46,7 +56,8 @@ export default {
       this.rendered = false;
     },
     close() {
-      this.$emit("close");
+      this.flag = true;
+      this.$router.go(-1);
     },
   },
 };
