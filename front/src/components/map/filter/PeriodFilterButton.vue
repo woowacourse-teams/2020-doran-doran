@@ -178,9 +178,10 @@ export default {
 
 .period-choices {
   position: absolute;
-  top: 65px;
-  left: 45px;
+  top: 66px;
+  left: 55px;
   z-index: 999;
+  max-width: 62%;
   overflow-x: auto;
 }
 
@@ -190,6 +191,19 @@ export default {
 
 .period-btn {
   background: white !important;
+}
+
+.theme--light.v-btn-toggle:not(.v-btn-toggle--group) {
+  border-color: grey !important;
+}
+
+.theme--light.v-btn-toggle:not(.v-btn-toggle--group) .v-btn.v-btn {
+  border-color: grey !important;
+}
+
+.period-button {
+  background: white !important;
+  color: black;
 }
 
 .user-input-modal {
