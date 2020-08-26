@@ -1,9 +1,19 @@
 <template>
-  <div class="pa-4">
+  <div v-if="existMember" class="pa-4">
     <div class="mb-3">
       <v-icon x-large class="mr-3">mdi-account-circle</v-icon>
       <span class="font-weight-bold">{{ post.memberResponse.nickname }}</span>
-      <div class="float-right mt-2">{{ postDate }}</div>
+      <span class="float-right mt-2">
+        {{ postDate }}
+        <v-icon
+          size="medium"
+          class="ml-1 mb-1"
+          color="grey lighten-1"
+          v-if="this.isMyPost"
+          @click="deletePost"
+          >mdi-delete
+        </v-icon>
+      </span>
     </div>
     <div class="text--disabled font-size-small">
       <span style="color: #659fec;" @click="openMapModal">
@@ -11,14 +21,6 @@
         {{ postAddress }}
       </span>
       에 외침
-      <div
-        v-if="this.isPostOfCurrentMember"
-        class="float-right"
-        @click="deletePost"
-      >
-        <v-icon size="large">mdi-delete</v-icon>
-        삭제
-      </div>
     </div>
     <div class="my-5 text-break">{{ post.content }}</div>
     <div>
@@ -61,10 +63,13 @@ export default {
   data() {
     return {
       isMapModalVisible: false,
-      isPostOfCurrentMember: false,
+      isMyPost: false,
     };
   },
   computed: {
+    existMember() {
+      return localStorage.getItem("accessToken");
+    },
     post: {
       get() {
         return this.$store.getters["post/getPost"];
@@ -93,9 +98,7 @@ export default {
       this.$route.params.id,
     );
     this.$store.commit("appBar/POST_DETAIL_PAGE");
-  },
-  async mounted() {
-    this.isPostOfCurrentMember =
+    this.isMyPost =
       this.post.memberResponse.id ===
       this.$store.getters["member/getMember"].id;
   },

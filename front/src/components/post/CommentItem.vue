@@ -7,18 +7,18 @@
         <span class="font-weight-bold">{{ comment.author.nickname }}</span>
         <div class="float-right text--disabled font-size-x-small">
           {{ comment.distance.toFixed(2) }} km 밖에서
+          <v-icon
+            size="medium"
+            class="ml-1 mb-1"
+            color="grey lighten-1"
+            v-if="this.isMyComment"
+            @click="deleteComment"
+            >mdi-delete
+          </v-icon>
         </div>
       </div>
       <div>
         {{ comment.content }}
-        <div
-          v-show="this.isCommentOfCurrentMember"
-          class="float-right"
-          @click="deleteComment"
-        >
-          <v-icon size="large">mdi-delete</v-icon>
-          삭제
-        </div>
       </div>
       <div>
         <span class="text--disabled font-size-x-small">{{ commentDate }}</span>
@@ -38,6 +38,11 @@ import { ERROR_MESSAGE, LIKE_BUTTON_TYPE } from "@/utils/constants";
 
 export default {
   name: "CommentItem",
+  data() {
+    return {
+      isMyComment: false,
+    };
+  },
   props: {
     comment: {
       type: Object,
@@ -54,12 +59,10 @@ export default {
     likeButtonType() {
       return this.liked ? LIKE_BUTTON_TYPE.LIKED : LIKE_BUTTON_TYPE.DEFAULT;
     },
-    isCommentOfCurrentMember() {
-      console.log(this.comment);
-      return (
-        this.comment.author.id === this.$store.getters["member/getMember"].id
-      );
-    },
+  },
+  async created() {
+    this.isMyComment =
+      this.comment.author.id === this.$store.getters["member/getMember"].id;
   },
   methods: {
     hasLike(like) {
