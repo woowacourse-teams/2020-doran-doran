@@ -187,7 +187,7 @@ export default {
   top: 66px;
   left: 45px;
   z-index: 999;
-  max-width: 68%;
+  max-width: 65%;
   overflow-x: auto;
   box-shadow: 1px 1px 8px grey;
 }
@@ -219,6 +219,8 @@ export default {
   left: 150px;
   z-index: 9998;
   max-width: 60%;
+  padding-top: 15px;
+  padding-left: 10px;
   background-color: white;
 }
 </style>
