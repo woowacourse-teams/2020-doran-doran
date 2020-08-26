@@ -77,8 +77,8 @@ export default {
       isSliderOpened: false,
       periodFilterChoice: "24hours",
       isCalendarOpen: true,
-      inputStartDateFilled: false,
-      inputEndDateFilled: false,
+      isInputStartDateFilled: false,
+      isInputEndDateFilled: false,
       previousStartDateFilter: "",
       previousEndDateFilter: "",
       previousFilterChoice: "",
@@ -105,15 +105,15 @@ export default {
     },
      async inputStartDate(date) {
       await this.$store.commit("filter/SET_START_DATE", date);
-      this.inputStartDateFilled = true;
-      if (this.inputEndDateFilled === true) {
+      this.isInputStartDateFilled = true;
+      if (this.isInputEndDateFilled === true) {
         await this.handleUserInputFiltering();
       }
     },
     async inputEndDate(date) {
       await this.$store.commit("filter/SET_END_DATE", date);
-      this.inputEndDateFilled = true;
-      if (this.inputStartDateFilled === true) {
+      this.isInputEndDateFilled = true;
+      if (this.isInputStartDateFilled === true) {
         await this.handleUserInputFiltering();
       }
     },
@@ -121,13 +121,13 @@ export default {
       if (this.$store.getters["filter/startDate"] > this.$store.getters["filter/endDate"]) {
         this.$store.commit("snackbar/SHOW", ERROR_MESSAGE.INVALID_USER_DATE_INPUT);
         this.rollBackPeriodFilter();
-        this.inputStartDateFilled = false;
-        this.inputEndDateFilled = false;
+        this.isInputStartDateFilled = false;
+        this.isInputEndDateFilled = false;
         this.isCalendarOpen = false;
       } else {
         await this.filterPosts();
-        this.inputStartDateFilled = false;
-        this.inputEndDateFilled = false;
+        this.isInputStartDateFilled = false;
+        this.isInputEndDateFilled = false;
         this.isCalendarOpen = false;
       }
     },
