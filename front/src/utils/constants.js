@@ -1,7 +1,9 @@
 const ERROR_MESSAGE = {
   UNIDENTIFIABLE_LOCATION: "😢 위치 정보를 확인할 수 없습니다.",
   NO_CONTENT_MESSAGE: "🤔 내용을 입력해주세요.",
+  NO_POST_MESSAGE: "😭 해당 기간에 글이 존재하지 않습니다.",
   NO_SEARCH_RESULT_MESSAGE: "😭 해당 기간에 검색 결과가 없습니다.",
+  INVALID_USER_DATE_INPUT: "😨 시작 날짜는 종료 날짜보다 뒤일 수 없습니다.",
   LOGIN_REQUIRED: "🔑 로그인이 필요해요.",
 };
 

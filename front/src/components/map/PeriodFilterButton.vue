@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import { DORAN_DORAN_COLORS } from "@/utils/constants";
+import { DORAN_DORAN_COLORS, ERROR_MESSAGE } from "@/utils/constants";
 import DatePickerMenu from "@/components/search/DataPickerMenu";
 
 const BUTTON_TYPE = {
@@ -96,27 +96,39 @@ export default {
     },
     async inputStartDate(date) {
       await this.$store.commit("filter/SET_START_DATE", date);
-      if (this.oneUserInputFilled === false) {
-        this.oneUserInputFilled = true;
-      } else {
-        await this.filterPosts();
-        this.oneUserInputFilled = false;
-        this.isCalendarOpen = false;
-      }
+      await this.handleUserDateInput();
     },
     async inputEndDate(date) {
       await this.$store.commit("filter/SET_END_DATE", date);
+      await this.handleUserDateInput();
+    },
+    async handleUserDateInput() {
       if (this.oneUserInputFilled === false) {
         this.oneUserInputFilled = true;
       } else {
-        await this.filterPosts();
-        this.oneUserInputFilled = false;
-        this.isCalendarOpen = false;
+        if (
+          this.$store.getters["filter/startDate"] >
+          this.$store.getters["filter/endDate"]
+        ) {
+          this.$store.commit(
+            "snackbar/SHOW",
+            ERROR_MESSAGE.INVALID_USER_DATE_INPUT,
+          );
+          this.oneUserInputFilled = false;
+          this.isCalendarOpen = false;
+        } else {
+          await this.filterPosts();
+          this.oneUserInputFilled = false;
+          this.isCalendarOpen = false;
+        }
       }
     },
     async filterPosts() {
       await this.$store.commit("post/CLEAR_POSTS");
       const filteredPosts = await this.$store.dispatch("filter/filterPosts");
+      if (filteredPosts.length === 0) {
+        this.$store.commit("snackbar/SHOW", ERROR_MESSAGE.NO_POST_MESSAGE);
+      }
       await this.$store.commit("post/SET_POSTS", filteredPosts);
     },
   },
