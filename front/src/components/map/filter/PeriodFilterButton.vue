@@ -15,22 +15,23 @@
       <v-btn-toggle
         v-model="periodFilterChoice"
         mandatory
-        borderless
+        background-color="white"
+        rounded
         class="period-choices"
       >
-        <v-btn value="24hours" small @click="loadPostsWithinXhours(24)">
+        <v-btn value="24hours" small text @click="loadPostsWithinXhours(24)">
           24시간 이내
         </v-btn>
-        <v-btn value="7days" small @click="loadPostsWithinXdays(7)">
+        <v-btn value="7days" small text @click="loadPostsWithinXdays(7)">
           7일 이내
         </v-btn>
-        <v-btn value="30days" small @click="loadPostsWithinXdays(30)">
+        <v-btn value="30days" small text @click="loadPostsWithinXdays(30)">
           30일 이내
         </v-btn>
-        <v-btn value="all" small @click="loadAllPosts">
+        <v-btn value="all" small text @click="loadAllPosts">
           전체
         </v-btn>
-        <v-btn value="userInput" small @click="openCalendarModal">
+        <v-btn value="userInput" small text @click="openCalendarModal">
           직접 입력
         </v-btn>
       </v-btn-toggle>
