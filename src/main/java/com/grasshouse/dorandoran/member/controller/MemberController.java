@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,7 +28,7 @@ public class MemberController {
     }
 
     @PutMapping
-    public ResponseEntity<MemberUpdateResponse> updateMember(@LoginMember Member member, MemberUpdateRequest request) {
+    public ResponseEntity<MemberUpdateResponse> updateMember(@LoginMember Member member, @RequestBody MemberUpdateRequest request) {
         MemberUpdateResponse response = memberService.update(member, request);
         return ResponseEntity.ok(response);
     }

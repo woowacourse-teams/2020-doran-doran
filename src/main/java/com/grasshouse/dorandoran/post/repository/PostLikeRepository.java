@@ -7,4 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface PostLikeRepository extends JpaRepository<PostLike, Long> {
 
     boolean existsByMemberIdAndPost(Long memberId, Post post);
+
+    void deleteByMemberId(Long memberId);
 }

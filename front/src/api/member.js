@@ -8,13 +8,17 @@ const client = axios.create({
 const options = {
   headers: {
     Authorization: "Bearer " + localStorage.getItem("accessToken"),
+    "Content-Type": "application/json",
   },
 };
 
 const api = (() => {
   const loadMember = () => client.get("", options).then((res) => res.data);
-  const updateMember = () => client.put("", options).then((res) => res.data);
-  const deleteMember = () => client.delete("");
+  const updateMember = (newNickname) => {
+    const request = JSON.stringify(newNickname);
+    return client.put("", request, options).then((res) => res.data);
+  };
+  const deleteMember = () => client.delete("", options);
 
   return {
     loadMember,

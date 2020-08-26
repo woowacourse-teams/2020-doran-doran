@@ -62,16 +62,23 @@ public class Comment {
     @Builder
     public Comment(Long id, Member author, Post post, String content, Double distance) {
         this.id = id;
-        this.author = author;
+        setAuthor(author);
         setPost(post);
         this.content = content;
         this.distance = distance;
     }
 
+    private void setAuthor(Member author) {
+        if (Objects.isNull(author)) {
+            this.author = author;
+            this.author.addComment(this);
+        }
+    }
+
     private void setPost(Post post) {
         if (Objects.isNull(this.post)) {
             this.post = post;
-            this.post.getComments().add(this);
+            this.post.addComment(this);
         }
     }
 

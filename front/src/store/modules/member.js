@@ -13,6 +13,12 @@ export default {
     SET_MEMBER(state, member) {
       state.member = member;
     },
+    SET_LOGOUT_MEMBER(state) {
+      localStorage.setItem("accessToken", "guest");
+      state.member.id = 0;
+      state.member.nickname = "로그인해주세요";
+      state.member.picture = "";
+    },
   },
   actions: {
     async loadMember({ commit }) {
@@ -24,10 +30,11 @@ export default {
     getMember: (state) => {
       return state.member;
     },
-    isGuest: () => {
+    isGuest: (state) => {
       return (
         !localStorage.getItem("accessToken") ||
-        localStorage.getItem("accessToken") === "guest"
+        localStorage.getItem("accessToken") === "guest" ||
+        state.member.id === 0
       );
     },
   },

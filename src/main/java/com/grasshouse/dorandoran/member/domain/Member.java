@@ -5,6 +5,7 @@ import com.grasshouse.dorandoran.post.domain.Post;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
@@ -47,12 +48,20 @@ public class Member {
     private String oAuthId;
 
     @Builder.Default
-    @OneToMany(mappedBy = "author")
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Post> posts = new ArrayList<>();
 
     @Builder.Default
-    @OneToMany(mappedBy = "author")
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments = new ArrayList<>();
+
+    public void addPost(Post post) {
+        this.posts.add(post);
+    }
+
+    public void addComment(Comment comment) {
+        this.comments.add(comment);
+    }
 
     public boolean isSameMember(Member member) {
         return this.id.equals(member.id);
@@ -63,7 +72,6 @@ public class Member {
 
         return this;
     }
-
 }
 
 

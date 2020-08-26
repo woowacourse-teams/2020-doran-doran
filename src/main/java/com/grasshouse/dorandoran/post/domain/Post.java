@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
@@ -46,14 +47,6 @@ public class Post {
     @ManyToOne(fetch = FetchType.EAGER)
     private Member author;
 
-    @Embedded
-    @AttributeOverrides({
-        @AttributeOverride(name = "depth1", column = @Column(name = "AUTHOR_ADDRESS_DEPTH_1")),
-        @AttributeOverride(name = "depth2", column = @Column(name = "AUTHOR_ADDRESS_DEPTH_2")),
-        @AttributeOverride(name = "depth3", column = @Column(name = "AUTHOR_ADDRESS_DEPTH_3"))
-    })
-    private Address authorAddress;
-
     @Length(max = 200, message = "글은 200자를 초과할 수 없습니다.")
     @NotBlank(message = "글의 내용은 비어 있을 수 없습니다.")
     private String content;
@@ -80,6 +73,35 @@ public class Post {
         @AttributeOverride(name = "depth3", column = @Column(name = "ADDRESS_DEPTH_3"))
     })
     private Address address;
+
+    @Embedded
+    @AttributeOverrides({
+        @AttributeOverride(name = "depth1", column = @Column(name = "AUTHOR_ADDRESS_DEPTH_1")),
+        @AttributeOverride(name = "depth2", column = @Column(name = "AUTHOR_ADDRESS_DEPTH_2")),
+        @AttributeOverride(name = "depth3", column = @Column(name = "AUTHOR_ADDRESS_DEPTH_3"))
+    })
+    private Address authorAddress;
+
+    @Builder
+    public Post(Long id, Member author, String content, Location location, Address address, Address authorAddress) {
+        this.id = id;
+        setAuthor(author);
+        this.content = content;
+        this.location = location;
+        this.address = address;
+        this.authorAddress = authorAddress;
+    }
+
+    private void setAuthor(Member author) {
+        if (Objects.isNull(this.author)) {
+            this.author = author;
+            this.author.addPost(this);
+        }
+    }
+
+    public void addComment(Comment comment) {
+        comments.add(comment);
+    }
 
     public void removeComment(Comment comment) {
         comments.remove(comment);
