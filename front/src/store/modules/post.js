@@ -50,17 +50,12 @@ export default {
     },
   },
   actions: {
-    async createPost({ dispatch }, newPost) {
+    async createPost(context, newPost) {
       await api.createPost(newPost);
-      dispatch("loadPosts");
     },
     async loadPost({ commit }, postId) {
       const data = await api.loadPost(postId);
       commit("SET_POST", data);
-    },
-    async loadPosts({ commit }) {
-      const data = await api.loadPosts();
-      commit("SET_POSTS", data);
     },
     async loadPostsInBounds({ commit }, bounds) {
       const postsInBounds = await api.loadPostsInBounds(bounds);
@@ -69,11 +64,6 @@ export default {
     async deletePost({ commit }, postId) {
       await api.deletePost(postId);
       commit("REMOVE_POST", postId);
-    },
-    async searchPosts({ commit }, data) {
-      commit("CLEAR_POSTS");
-      const searchResult = await api.searchPosts(data);
-      commit("SET_POSTS", searchResult);
     },
     async createPostLike(context, newPostLike) {
       await api.createPostLike(newPostLike);

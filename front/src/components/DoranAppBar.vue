@@ -54,8 +54,7 @@
 </template>
 
 <script>
-import { DATE_FILTER_TYPE } from "@/utils/time-filter-type";
-import { MAP_MODE } from "@/utils/constants";
+import { ERROR_MESSAGE, MAP_MODE } from "@/utils/constants";
 
 export default {
   name: "DoranAppBar",
@@ -114,25 +113,27 @@ export default {
       this.$store.commit("mapMode/CHANGE_STATE", MAP_MODE.DEFAULT);
     },
     async filterPosts() {
-      const data = {
-        keyword: this.keyword,
-      };
-      const dateType = Object.values(DATE_FILTER_TYPE()).find(
-        (dateType) => dateType.name === this.radios,
-      );
-      if (!dateType) {
-        data.startDate = "2020-08-19" + " 00:00:00";
-        data.endDate = "2020-09-20" + " 23:59:59";
-      } else {
-        data.startDate = dateType.startDate;
-        data.endDate = this.$moment().format("YYYY-MM-DD HH:mm:ss");
+      if (this.keyword === "") {
+        this.$store.commit("snackbar/SHOW", ERROR_MESSAGE.NO_KEYWORD_INPUT);
+        return;
       }
-      await this.$store.dispatch("post/searchPosts", data);
+      this.$store.commit("filter/SET_KEYWORD", this.keyword);
+      this.$store.commit("post/CLEAR_POSTS");
+      const filteredPosts = await this.$store.dispatch("filter/filterPosts");
+      this.$store.commit("post/SET_POSTS", filteredPosts);
+      if (filteredPosts.length === 0) {
+        this.$store.commit(
+          "snackbar/SHOW",
+          ERROR_MESSAGE.NO_SEARCH_RESULT_MESSAGE,
+        );
+      }
     },
     async initializeMapPage() {
       this.toggleSearchInput();
       this.keyword = "";
-      await this.$store.dispatch("post/loadPosts");
+      this.$store.commit("filter/SET_KEYWORD", "");
+      const filteredPosts = await this.$store.dispatch("filter/filterPosts");
+      await this.$store.commit("post/SET_POSTS", filteredPosts);
     },
   },
 };

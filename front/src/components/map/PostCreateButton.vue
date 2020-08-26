@@ -7,7 +7,7 @@
       fab
       dark
       large
-      elevation="2"
+      elevation="10"
       class="doran-doran-color"
       @click="changeMode"
     >

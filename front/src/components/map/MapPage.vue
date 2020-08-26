@@ -1,5 +1,6 @@
 <template>
   <v-container fill-height fluid class="pa-0">
+    <PeriodFilterButton v-if="this.isDefaultMode" />
     <KakaoMap />
     <PostCreateButton />
     <PostCreateModal
@@ -13,10 +14,12 @@
 import KakaoMap from "@/components/map/KakaoMap";
 import PostCreateButton from "@/components/map/PostCreateButton";
 import PostCreateModal from "@/components/map/PostCreateModal";
+import PeriodFilterButton from "@/components/map/filter/PeriodFilterButton";
 
 export default {
   name: "MapPage",
   components: {
+    PeriodFilterButton,
     KakaoMap,
     PostCreateButton,
     PostCreateModal,
@@ -27,6 +30,9 @@ export default {
     this.checkToken();
   },
   computed: {
+    isDefaultMode() {
+      return this.$store.getters["mapMode/isDefault"];
+    },
     isMarkerMode() {
       return this.$store.getters["mapMode/isMarker"];
     },

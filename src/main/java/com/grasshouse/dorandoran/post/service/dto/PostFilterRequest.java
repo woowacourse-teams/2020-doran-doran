@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class PostSearchRequest {
+public class PostFilterRequest {
 
     private String keyword;
 
