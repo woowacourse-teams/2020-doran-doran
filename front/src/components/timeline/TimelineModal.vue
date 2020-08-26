@@ -40,12 +40,15 @@ export default {
     },
   },
   created() {
-    this.$router.beforeEach((to, from, next) => {
-      if (this.flag) {
+    const preventRoute = this.$router.beforeEach((to, from, next) => {
+      if (this.flag || to.path !== "/") {
         next(true);
       }
       this.rendered = false;
       next(false);
+    });
+    this.$once("hook:destroyed", () => {
+      preventRoute();
     });
   },
   mounted() {
@@ -57,7 +60,7 @@ export default {
     },
     close() {
       this.flag = true;
-      this.$router.go(-1);
+      this.$router.push("/");
     },
   },
 };

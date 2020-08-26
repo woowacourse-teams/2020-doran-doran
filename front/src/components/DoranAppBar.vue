@@ -8,7 +8,7 @@
       <v-icon v-show="myPageButton" @click="showSidebar">
         mdi-account
       </v-icon>
-      <v-icon v-show="backButton" @click="setMapToDefault">
+      <v-icon v-show="backButton" @click="goToPrevious">
         mdi-chevron-left
       </v-icon>
 
@@ -42,7 +42,8 @@
 </template>
 
 <script>
-import { ERROR_MESSAGE, MAP_MODE } from "@/utils/constants";
+import { ERROR_MESSAGE } from "@/utils/constants";
+import { DATE_FILTER_TYPE } from "@/utils/time-filter-type";
 
 export default {
   name: "DoranAppBar",
@@ -59,9 +60,6 @@ export default {
     myPageButton() {
       return this.$store.getters["appBar/myPageButton"];
     },
-    cancelButton() {
-      return this.$store.getters["appBar/cancelButton"];
-    },
     appBarTitle() {
       return this.$store.getters["appBar/title"];
     },
@@ -73,10 +71,8 @@ export default {
     showSidebar() {
       this.$store.commit("memberSidebar/SHOW");
     },
-    setMapToDefault() {
-      this.$store.commit("appBar/MAP_PAGE_DEFAULT_MODE");
-      this.$store.commit("mapMode/CHANGE_STATE", MAP_MODE.DEFAULT);
-      this.$store.commit("post/CLOSE");
+    goToPrevious() {
+      this.$router.go(-1);
     },
     toggleSearchInput() {
       this.isSearching = !this.isSearching;

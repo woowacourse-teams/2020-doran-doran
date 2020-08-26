@@ -40,8 +40,7 @@ export default {
   },
   methods: {
     openPostModal() {
-      this.$store.dispatch("post/loadPost", this.post.id);
-      this.$store.commit("post/OPEN");
+      this.$router.push("posts/" + this.post.id);
     },
   },
   watch: {

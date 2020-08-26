@@ -16,7 +16,7 @@
       <TimelineModal />
     </template>
     <v-slide-y-reverse-transition>
-      <PostModal v-if="postModal" />
+      <PostModal v-if="post" />
     </v-slide-y-reverse-transition>
     <MemberUpdateModal
       v-if="isInitialMember"
@@ -51,6 +51,7 @@ export default {
     return {
       isInitialMember: false,
       timeline: this.$route.meta.timeline,
+      post: this.$route.meta.post,
     };
   },
   computed: {
@@ -63,17 +64,15 @@ export default {
     isPostMode() {
       return this.$store.getters["mapMode/isPost"];
     },
-    postModal() {
-      return this.$store.getters["post/modal"];
-    },
   },
   async created() {
     this.$store.commit("appBar/MAP_PAGE_DEFAULT_MODE");
     this.isInitialMember = this.$store.getters["member/isInitialMember"];
   },
   watch: {
-    "$route.meta"({ timeline }) {
-      this.timeline = timeline;
+    "$route.meta"(value) {
+      this.timeline = value.timeline;
+      this.post = value.post;
     },
   },
 };

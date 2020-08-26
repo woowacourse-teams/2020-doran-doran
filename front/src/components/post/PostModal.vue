@@ -102,7 +102,8 @@ export default {
       );
     },
   },
-  created() {
+  async created() {
+    await this.$store.dispatch("post/loadPost", this.$route.params.id);
     this.$store.commit("appBar/POST_DETAIL_PAGE");
   },
   methods: {
@@ -124,7 +125,7 @@ export default {
       this.liked ? await this.deletePostLike() : await this.createPostLike();
     },
     async loadPost() {
-      this.post = await this.$store.dispatch("post/loadPost", this.post.id);
+      await this.$store.dispatch("post/loadPost", this.post.id);
     },
     async deletePostLike() {
       const data = this.post.likes.find(this.hasLike);

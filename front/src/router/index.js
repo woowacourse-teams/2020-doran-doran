@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import LoginPage from "@/components/login/LoginPage";
 import MapPage from "@/components/map/MapPage";
 import TimelineModal from "@/components/timeline/TimelineModal";
+import PostModal from "@/components/post/PostModal";
 
 Vue.use(VueRouter);
 
@@ -13,6 +14,7 @@ const routes = [
     component: MapPage,
     meta: {
       timeline: false,
+      post: false,
     },
     children: [
       {
@@ -23,6 +25,16 @@ const routes = [
         },
         meta: {
           timeline: true,
+        },
+      },
+      {
+        path: "posts/:id",
+        name: "PostModal",
+        components: {
+          page: PostModal,
+        },
+        meta: {
+          post: true,
         },
       },
     ],

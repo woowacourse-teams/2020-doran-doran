@@ -65,6 +65,14 @@ export default {
       }
     },
   },
+  created() {
+    this.$router.beforeEach((to, from, next) => {
+      if (to.path === "/" || to.path === "/timeline") {
+        this.$store.commit("appBar/MAP_PAGE_DEFAULT_MODE");
+      }
+      next(true);
+    });
+  },
 };
 </script>
 
