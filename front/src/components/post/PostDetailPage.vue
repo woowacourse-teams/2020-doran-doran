@@ -12,7 +12,7 @@
       </span>
       에 외침
       <div
-        v-show="this.isPostOfCurrentMember"
+        v-if="this.isPostOfCurrentMember"
         class="float-right"
         @click="deletePost"
       >
@@ -61,6 +61,7 @@ export default {
   data() {
     return {
       isMapModalVisible: false,
+      isPostOfCurrentMember: false,
     };
   },
   computed: {
@@ -85,12 +86,6 @@ export default {
     authorAddress() {
       return Object.values(this.post.authorAddress).join(" ");
     },
-    isPostOfCurrentMember() {
-      return (
-        this.post.memberResponse.id ===
-        this.$store.getters["member/getMember"].id
-      );
-    },
   },
   async created() {
     this.post = await this.$store.dispatch(
@@ -98,6 +93,11 @@ export default {
       this.$route.params.id,
     );
     this.$store.commit("appBar/POST_DETAIL_PAGE");
+  },
+  async mounted() {
+    this.isPostOfCurrentMember =
+      this.post.memberResponse.id ===
+      this.$store.getters["member/getMember"].id;
   },
   methods: {
     async deletePost() {
