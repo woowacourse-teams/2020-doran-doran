@@ -43,7 +43,6 @@
 
 <script>
 import { ERROR_MESSAGE } from "@/utils/constants";
-import { DATE_FILTER_TYPE } from "@/utils/time-filter-type";
 
 export default {
   name: "DoranAppBar",
