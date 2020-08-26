@@ -54,7 +54,7 @@
 </template>
 
 <script>
-  import {ERROR_MESSAGE, MAP_MODE} from "@/utils/constants";
+import { ERROR_MESSAGE, MAP_MODE } from "@/utils/constants";
 
 export default {
   name: "DoranAppBar",
@@ -113,12 +113,19 @@ export default {
       this.$store.commit("mapMode/CHANGE_STATE", MAP_MODE.DEFAULT);
     },
     async filterPosts() {
+      if (this.keyword === "") {
+        this.$store.commit("snackbar/SHOW", ERROR_MESSAGE.NO_KEYWORD_INPUT);
+        return;
+      }
       this.$store.commit("filter/SET_KEYWORD", this.keyword);
-      const filteredPosts = await this.$store.dispatch("filter/filterPosts");
       this.$store.commit("post/CLEAR_POSTS");
+      const filteredPosts = await this.$store.dispatch("filter/filterPosts");
       this.$store.commit("post/SET_POSTS", filteredPosts);
       if (filteredPosts.length === 0) {
-        this.$store.commit("snackbar/SHOW", ERROR_MESSAGE.NO_SEARCH_RESULT_MESSAGE);
+        this.$store.commit(
+          "snackbar/SHOW",
+          ERROR_MESSAGE.NO_SEARCH_RESULT_MESSAGE,
+        );
       }
     },
     async initializeMapPage() {
