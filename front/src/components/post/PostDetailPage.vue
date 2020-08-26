@@ -5,7 +5,12 @@
       <span class="font-weight-bold">{{ post.memberResponse.nickname }}</span>
       <span class="float-right mt-2">
         {{ postDate }}
-        <v-icon color="black" size="large" class="mb-1" @click="openOptionsModal">
+        <v-icon
+          color="black"
+          size="large"
+          class="mb-1"
+          @click="openOptionsModal"
+        >
           mdi-dots-vertical
         </v-icon>
       </span>
@@ -33,16 +38,17 @@
     <div class="bottom-spacer" />
     <CommentInput :post-id="post.id" />
     <PostDetailPageLocationMapModal
-      v-if="this.isMapModalVisible"
+      v-if="isMapModalVisible"
       :location="post.location"
       @close-modal="closeMapModal"
     />
     <OptionsModal
-      v-if="this.isOptionsModalVisible"
-      :is-mine="this.isMyPost"
-      :post-id="this.post.id"
-      @close-modal="closeOptionsModal"
-    ></OptionsModal>
+      v-if="isOptionsModalVisible"
+      :is-mine="isMyPost"
+      :type="'post'"
+      @delete-post="deletePost()"
+      @close="closeOptionsModal"
+    />
   </div>
 </template>
 
@@ -156,7 +162,7 @@ export default {
     },
     closeOptionsModal() {
       this.isOptionsModalVisible = false;
-    }
+    },
   },
 };
 </script>

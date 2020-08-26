@@ -2,18 +2,18 @@
   <div class="modal-mask" @click.self="closeModal">
     <div class="pa-0 modal-container">
       <div class="button-box ma-0 pa-0">
-        <v-btn v-if="this.isMine" block text @click="openModal"
-          >삭제</v-btn
-        >
-        <v-btn v-if="!this.isMine" block text>신고</v-btn>
+        <v-btn v-if="isMine" block text @click="openModal">삭제</v-btn>
+        <v-btn v-if="!isMine" block text @click="report">신고</v-btn>
         <v-btn block text @click="closeModal">취소</v-btn>
       </div>
     </div>
     <ConfirmModal
-      v-if="this.isConfirmModalVisible"
-      @close-modal="closeModal"
-      :post-id="postId"
-    ></ConfirmModal>
+      v-if="isConfirmModalVisible"
+      :type="type"
+      @delete-post="deletePost"
+      @delete-comment="deleteComment"
+      @close="closeModal"
+    />
   </div>
 </template>
 
@@ -35,18 +35,28 @@ export default {
       type: Boolean,
       required: true,
     },
-    postId: {
-      type: Number,
+    type: {
+      type: String,
       required: true,
     },
   },
   methods: {
+    deletePost() {
+      this.$emit("delete-post");
+    },
+    deleteComment() {
+      this.$emit("delete-comment");
+    },
     openModal() {
       this.isConfirmModalVisible = true;
     },
     closeModal() {
       this.isConfirmModalVisible = false;
-      this.$emit("close-modal");
+      this.$emit("close");
+    },
+    report() {
+      console.log("아직 신고기능 없음");
+      this.closeModal();
     },
   },
 };

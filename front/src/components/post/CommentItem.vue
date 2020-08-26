@@ -8,12 +8,12 @@
         <div class="float-right text--disabled font-size-x-small">
           {{ comment.distance.toFixed(2) }} km 밖에서
           <v-icon
-            size="medium"
-            class="ml-1 mb-1"
-            color="grey lighten-1"
-            v-if="this.isMyComment"
-            @click="deleteComment"
-            >mdi-delete
+            color="black"
+            size="large"
+            class="mb-1"
+            @click="openOptionsModal"
+          >
+            mdi-dots-vertical
           </v-icon>
         </div>
       </div>
@@ -30,17 +30,29 @@
         </span>
       </div>
     </div>
+    <OptionsModal
+      v-if="isOptionsModalVisible"
+      :is-mine="isMyComment"
+      :type="'comment'"
+      @delete-comment="deleteComment"
+      @close="closeOptionsModal"
+    />
   </div>
 </template>
 
 <script>
 import { ERROR_MESSAGE, LIKE_BUTTON_TYPE } from "@/utils/constants";
+import OptionsModal from "@/components/post/OptionsModal";
 
 export default {
   name: "CommentItem",
+  components: {
+    OptionsModal,
+  },
   data() {
     return {
       isMyComment: false,
+      isOptionsModalVisible: false,
     };
   },
   props: {
@@ -99,7 +111,14 @@ export default {
       this.$store.dispatch("post/loadPost", this.comment.postId);
     },
     deleteComment() {
+      console.log("delete");
       this.$emit("delete-comment", this.comment.postId, this.comment.id);
+    },
+    openOptionsModal() {
+      this.isOptionsModalVisible = true;
+    },
+    closeOptionsModal() {
+      this.isOptionsModalVisible = false;
     },
   },
 };

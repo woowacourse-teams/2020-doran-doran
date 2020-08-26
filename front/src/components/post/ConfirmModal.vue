@@ -4,7 +4,7 @@
       <div class="button-box ma-0 pa-0">
         <v-card-text>정말 삭제하시겠어요?</v-card-text>
         <v-card-actions>
-          <v-spacer></v-spacer>
+          <VSpacer />
           <v-btn color="red" text @click="deleteObject">삭제</v-btn>
           <v-btn text @click="closeModal">취소</v-btn>
         </v-card-actions>
@@ -14,48 +14,40 @@
 </template>
 
 <script>
-  import { DORAN_DORAN_COLORS } from "@/utils/constants";
-  import router from "@/router";
-
-  const DELETE_POST_SUCCESS_MESSAGE = "👻 글이 삭제되었습니다.";
-
-  export default {
-    name: "ConfirmModal",
-    props: {
-      postId: {
-        type: Number,
-        required: true,
-      },
+export default {
+  name: "ConfirmModal",
+  props: {
+    type: {
+      type: String,
+      required: true,
     },
-    data() {
-      return {
-        buttonColor: DORAN_DORAN_COLORS.POINT_COLOR,
-      };
-    },
-    methods: {
-      async deleteObject() {
-        await this.$store.dispatch("post/deletePost", this.postId);
-        this.$store.commit("snackbar/SHOW", DELETE_POST_SUCCESS_MESSAGE);
-        router.go(-1);
-      },
-      closeModal() {
-        this.$emit("close-modal");
+  },
+  methods: {
+    async deleteObject() {
+      if (this.type === "post") {
+        this.$emit("delete-post");
+      } else if (this.type === "comment") {
+        this.$emit("delete-comment");
       }
     },
-  };
+    closeModal() {
+      this.$emit("close");
+    },
+  },
+};
 </script>
 
 <style scoped>
-  .modal-container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 90%;
-    background-color: #fff;
-    border-radius: 10px;
-  }
+.modal-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  background-color: #fff;
+  border-radius: 10px;
+}
 
-  .button-box * {
-  }
+.button-box * {
+}
 </style>
