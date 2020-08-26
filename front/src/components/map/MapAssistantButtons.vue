@@ -1,11 +1,6 @@
 <template>
   <div class="assistant-buttons">
-    <v-btn
-      small
-      fab
-      :retain-focus-on-click="false"
-      @click="setMapToCurrentLocation"
-    >
+    <v-btn small fab @click="setCenterByCurrentLocation">
       <v-icon>mdi-crosshairs-gps</v-icon>
     </v-btn>
     <v-btn small fab class="mt-2" @click="refreshPosts">
@@ -15,11 +10,20 @@
 </template>
 
 <script>
+import { ERROR_MESSAGE } from "@/utils/constants";
+
 export default {
   name: "MapAssistantButtons",
   methods: {
-    async setMapToCurrentLocation() {
-      await this.$kakaoMap.setCenterByCurrentLocation();
+    async setCenterByCurrentLocation() {
+      await this.$kakaoMap
+        .setCenterByCurrentLocation()
+        .catch(() =>
+          this.$store.commit(
+            "snackbar/SHOW",
+            ERROR_MESSAGE.UNIDENTIFIABLE_LOCATION,
+          ),
+        );
     },
     refreshPosts() {
       this.$store.dispatch("post/loadPosts");
