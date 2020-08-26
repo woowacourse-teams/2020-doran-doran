@@ -1,7 +1,7 @@
 <template>
-  <div class="d-flex flex-column modal-mask" @click.self="closeModal">
+  <div class="d-flex flex-column modal-mask" @click.self="close">
     <VSpacer />
-    <transition name="bounce">
+    <transition name="bounce" @after-leave="close">
       <div v-if="rendered" class="pa-6 pb-1 modal-container">
         <VTextField
           label="새 닉네임을 입력하세요."
@@ -13,15 +13,15 @@
           <v-btn
             text
             class="mb-2 text-subtitle-1 font-weight-bold grey--text text--darken-1"
-            @click.prevent="closeModal"
+            @click="bounceOut"
           >
             취소
           </v-btn>
           <v-btn
             text
-            :disabled="this.nicknameNotChanged()"
+            :disabled="nicknameNotChanged()"
             class="mb-2 text-subtitle-1 font-weight-bold amber--text text--accent-4"
-            @click.prevent="updateMember"
+            @click="updateMember"
           >
             저장
           </v-btn>
@@ -56,20 +56,18 @@ export default {
     async updateMember() {
       const updatedMember = await api.updateMember(this.newNickname);
       this.$store.commit("member/SET_MEMBER", updatedMember);
-      this.$store.commit("snackbar/SHOW", "🥳 성공적으로 변경되었습니다.")
-      this.closeModal();
+      this.$store.commit("snackbar/SHOW", "🥳 성공적으로 변경되었습니다.");
+      this.close();
     },
-    closeModal() {
+    close() {
       this.$emit("close-modal");
     },
     nicknameNotChanged() {
       return this.member.nickname === this.newNickname;
-    }
-  },
-  watch: {
-    newNickname(val) {
-      return val;
-    }
+    },
+    bounceOut() {
+      this.rendered = false;
+    },
   },
 };
 </script>

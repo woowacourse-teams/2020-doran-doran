@@ -36,7 +36,7 @@
       <v-card>
         <v-card-text class="pa-5">정말 탈퇴하시겠어요?</v-card-text>
         <v-card-actions>
-          <VSpacer/>
+          <VSpacer />
           <v-btn text @click="isDeleting = false">
             아니오
           </v-btn>
@@ -106,12 +106,26 @@ export default {
     logout() {
       this.$store.commit("member/SET_LOGOUT_MEMBER");
       this.$store.commit("snackbar/SHOW", "성공적으로 로그아웃 되었습니다.");
+      this.$router.push("/login");
+    },
+    openDeleteMemberDialog() {
+      this.isDeleting = true;
     },
     async deleteMember() {
-      await api.deleteMember();
-      this.$store.commit("member/SET_LOGOUT_MEMBER");
-      this.$store.commit("snackbar/SHOW", "성공적으로 탈퇴를 완료했습니다.");
-      this.$router.push("/login");
+      await api.deleteMember().catch((err) => {
+        if (err.response.status === 500) {
+          this.$store.commit(
+            "snackbar/SHOW",
+            "탈퇴에 실패했습니다. 다시 요청해주세요.",
+          );
+          this.isDeleting = false;
+        }
+      });
+      if (this.isDeleting) {
+        this.$store.commit("member/SET_LOGOUT_MEMBER");
+        this.$store.commit("snackbar/SHOW", "성공적으로 탈퇴를 완료했습니다.");
+        this.$router.push("/login");
+      }
     },
     hideSidebar(action) {
       this.$store.commit("memberSidebar/HIDE");
