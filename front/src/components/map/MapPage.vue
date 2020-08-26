@@ -14,7 +14,7 @@
 import KakaoMap from "@/components/map/KakaoMap";
 import PostCreateButton from "@/components/map/PostCreateButton";
 import PostCreateModal from "@/components/map/PostCreateModal";
-import PeriodFilterButton from "@/components/map/PeriodFilterButton";
+import PeriodFilterButton from "@/components/map/filter/PeriodFilterButton";
 
 export default {
   name: "MapPage",

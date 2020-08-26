@@ -48,7 +48,7 @@
 
 <script>
 import { DORAN_DORAN_COLORS, ERROR_MESSAGE } from "@/utils/constants";
-import DatePickerMenu from "@/components/search/DataPickerMenu";
+import DatePickerMenu from "@/components/map/filter/DataPickerMenu";
 
 const BUTTON_TYPE = {
   DEFAULT: {
