@@ -79,9 +79,9 @@ export default {
   top: 66px;
   right: 10px;
   z-index: 1;
-  height: 30px;
   padding-top: 6px !important;
   padding-bottom: 6px !important;
+  height: 30px;
   border-radius: 100px;
   background-color: white;
   box-shadow: 1px 1px 8px grey;
