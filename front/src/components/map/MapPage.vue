@@ -86,6 +86,7 @@ export default {
   z-index: 1;
   border-radius: 5px;
   background-color: white;
+  box-shadow: 3px 3px 6px 0 gray;
 }
 
 .post-create-btn {
