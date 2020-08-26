@@ -43,7 +43,8 @@ export default {
   bottom: 20px;
   z-index: 9998;
 }
-.v-btn:not(.v-btn--text):not(.v-btn--outlined):hover:before {
+
+.v-btn:before {
   opacity: 0 !important;
 }
 </style>
