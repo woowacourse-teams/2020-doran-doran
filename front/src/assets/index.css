@@ -9,8 +9,8 @@
 
 html,
 body {
-  height: 100%;
   width: 100%;
+  height: 100%;
 }
 
 .doran-doran-color {
@@ -50,8 +50,8 @@ a {
   top: 0;
   left: 0;
   z-index: 9998;
-  height: 100%;
   width: 100%;
+  height: 100%;
   max-width: 500px;
   margin: auto;
   background-color: rgba(0, 0, 0, 0.5);

@@ -172,8 +172,8 @@ export default {
   top: 65px;
   left: 10px;
   z-index: 9999;
-  height: 25px;
   width: 25px;
+  height: 25px;
 }
 
 .period-choices {

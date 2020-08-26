@@ -80,8 +80,8 @@ export default {
   position: absolute;
   left: 50%;
   bottom: -6px;
-  height: 10px;
   width: 10px;
+  height: 10px;
   margin-left: -5px;
   transform: rotate(45deg);
   background-color: white;
