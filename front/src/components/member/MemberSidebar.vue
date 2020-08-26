@@ -1,5 +1,5 @@
 <template>
-  <v-navigation-drawer v-model="drawer" absolute temporary>
+  <v-navigation-drawer v-model="drawer" absolute temporary class="drawer">
     <v-icon @click="hideSidebar" class="float-right ma-4">
       mdi-window-close
     </v-icon>
@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import {API_BASE_URL} from "@/utils/constants";
+import { API_BASE_URL } from "@/utils/constants";
 
 export default {
   name: "MemberSidebar",
@@ -90,4 +90,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.drawer {
+  z-index: 9999;
+}
+</style>
