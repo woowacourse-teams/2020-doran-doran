@@ -1,5 +1,5 @@
 import api from "@/api/posts";
-import { DATE_FORMAT_TYPE } from "@/utils/constants";
+import { DATE_FORMAT } from "@/utils/constants";
 import moment from "moment";
 
 export default {
@@ -22,17 +22,13 @@ export default {
     SET_FILTER_FROM_X_HOURS_AGO_TO_NOW(state, x) {
       state.startDate = moment()
         .subtract(x, "hours")
-        .format(DATE_FORMAT_TYPE.DEFAULT);
-      state.endDate = moment()
-        .add(1, "seconds")
-        .format(DATE_FORMAT_TYPE.DEFAULT);
+        .format(DATE_FORMAT.DEFAULT);
+      state.endDate = moment().add(1, "seconds").format(DATE_FORMAT.DEFAULT);
     },
     SET_FILTER_FROM_X_DAYS_AGO_TO_NOW(state, x) {
       state.startDate =
         moment().subtract(x, "days").format("YYYY-MM-DD") + " 00:00:00";
-      state.endDate = moment()
-        .add(1, "seconds")
-        .format(DATE_FORMAT_TYPE.DEFAULT);
+      state.endDate = moment().add(1, "seconds").format(DATE_FORMAT.DEFAULT);
     },
     INITIALIZE_PERIOD_FILTER(state) {
       state.startDate = "";
