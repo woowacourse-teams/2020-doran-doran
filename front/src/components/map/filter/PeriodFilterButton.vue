@@ -160,8 +160,6 @@ export default {
   top: 65px;
   left: 45px;
   z-index: 9999;
-  height: 30px;
-  width: 86%;
   overflow-x: auto;
 }
 .theme--light.v-btn-toggle:not(.v-btn-toggle--group) {
