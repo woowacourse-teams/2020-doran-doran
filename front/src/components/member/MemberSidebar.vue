@@ -37,7 +37,7 @@
         <v-card-text class="pa-5">정말 탈퇴하시겠어요?</v-card-text>
         <v-card-actions>
           <VSpacer />
-          <v-btn text @click="isDeleting = false">
+          <v-btn text @click="closeMemberDeleteDialog">
             아니오
           </v-btn>
           <v-btn text @click="deleteMember">네</v-btn>
@@ -52,6 +52,10 @@ import { API_BASE_URL } from "@/utils/constants";
 import MemberUpdateModal from "@/components/member/MemberUpdateModal";
 import api from "@/api/member";
 
+const LOGOUT_SUCCESS_MESSAGE = "성공적으로 로그아웃 되었습니다.";
+const FAILED_TO_DELETE_MEMBER_MESSAGE = "탈퇴에 실패했습니다. 다시 요청해주세요.";
+const DELETE_MEMBER_SUCCESS = "성공적으로 탈퇴를 완료했습니다.";
+
 export default {
   name: "MemberSidebar",
   components: {
@@ -63,7 +67,7 @@ export default {
       items: [
         {
           title: "정보수정",
-          action: this.openUpdateMemberModal,
+          action: this.openMemberUpdateModal,
         },
         {
           title: "로그아웃",
@@ -71,7 +75,7 @@ export default {
         },
         {
           title: "회원탈퇴",
-          action: this.openDeleteMemberDialog,
+          action: this.openMemberDeleteDialog,
         },
       ],
       isUpdating: false,
@@ -100,32 +104,35 @@ export default {
         window.location.href = API_BASE_URL.EC2 + "/oauth2/authorization/kakao";
       }
     },
-    openUpdateMemberModal() {
+    openMemberUpdateModal() {
       this.isUpdating = true;
+    },
+    closeMemberUpdateModal() {
+      this.isUpdating = false;
     },
     logout() {
       this.$store.commit("member/SET_LOGOUT_MEMBER");
-      this.$store.commit("snackbar/SHOW", "성공적으로 로그아웃 되었습니다.");
+      this.$store.commit("snackbar/SHOW", LOGOUT_SUCCESS_MESSAGE);
       this.$router.push("/login");
     },
-    openDeleteMemberDialog() {
+    openMemberDeleteDialog() {
       this.isDeleting = true;
+    },
+    closeMemberDeleteDialog() {
+      this.isDeleting = false;
     },
     async deleteMember() {
       await api.deleteMember().catch((err) => {
         if (err.response.status === 500) {
-          this.$store.commit(
-            "snackbar/SHOW",
-            "탈퇴에 실패했습니다. 다시 요청해주세요.",
-          );
-          this.isDeleting = false;
+          this.$store.commit("snackbar/SHOW", FAILED_TO_DELETE_MEMBER_MESSAGE);
+          this.closeMemberDeleteDialog();
         }
       });
       if (this.isDeleting) {
         this.$store.commit("member/SET_LOGOUT_MEMBER");
-        this.$store.commit("snackbar/SHOW", "성공적으로 탈퇴를 완료했습니다.");
-        this.$router.push("/login");
-        this.isDeleting = false;
+        this.$store.commit("snackbar/SHOW", DELETE_MEMBER_SUCCESS);
+        await this.$router.push("/login");
+        this.closeMemberDeleteDialog();
       }
     },
     hideSidebar(action) {
@@ -133,9 +140,6 @@ export default {
       if (action instanceof Function) {
         action();
       }
-    },
-    closeMemberUpdateModal() {
-      this.isUpdating = false;
     },
   },
   watch: {
