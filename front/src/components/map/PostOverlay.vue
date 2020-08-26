@@ -8,8 +8,6 @@
 </template>
 
 <script>
-import moment from "moment";
-
 const CONTENT_LENGTH = 15;
 
 export default {
@@ -22,10 +20,10 @@ export default {
   },
   computed: {
     isRecentPost() {
-      const halfAnHourAgo = moment()
+      const halfAnHourAgo = this.$moment()
         .subtract(30, "minutes")
         .format("YYYY-MM-DD HH:mm:ss");
-      const postCreatedAt = moment(this.post.createdAt).format(
+      const postCreatedAt = this.$moment(this.post.createdAt).format(
         "YYYY-MM-DD HH:mm:ss",
       );
       return halfAnHourAgo < postCreatedAt;
