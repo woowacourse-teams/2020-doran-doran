@@ -6,12 +6,9 @@
       <v-icon dense>mdi-format-list-bulleted</v-icon>
       목록
     </router-link>
-    <MapAssistantButtons v-if="isDefaultMode"/>
+    <MapAssistantButtons v-if="isDefaultMode" />
     <PostCreateButton class="post-create-btn" />
-    <PostCreateModal
-      v-if="isPostMode"
-      :location="this.$kakaoMap.getCenterLocation()"
-    />
+    <PostCreateModal v-if="isPostMode" />
     <TimelineModal v-if="timeline" />
     <v-slide-y-reverse-transition>
       <PostModal v-if="post" />

@@ -44,15 +44,10 @@ const CREATE_POST_SUCCESS_MESSAGE = "🎉 글이 등록되었습니다.";
 
 export default {
   name: "PostCreateModal",
-  props: {
-    location: {
-      type: Object,
-      required: true,
-    },
-  },
   data() {
     return {
       content: "",
+      location: this.$kakaoMap.getCenterLocation(),
       buttonColor: DORAN_DORAN_COLORS.POINT_COLOR,
       rendered: false,
     };
