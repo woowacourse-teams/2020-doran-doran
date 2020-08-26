@@ -57,6 +57,7 @@ export default {
   max-width: 500px;
   margin: auto;
   overflow-x: hidden;
+  box-shadow: 0 0 100px 1px gray;
 }
 
 .app-container > div {
