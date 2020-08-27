@@ -71,7 +71,7 @@ export default {
   padding: 10px;
   min-width: 35px;
   border-radius: 1em;
-  box-shadow: 1px 1px 5px grey;
+  box-shadow: 1px 1px 5px silver;
   background: white;
   text-align: center;
 }
@@ -86,6 +86,6 @@ export default {
   transform: rotate(45deg);
   background-color: white;
   box-shadow: -5px 0 0 white, 0 -5px 0 white, -5px -5px 0 white,
-    1px 1px 5px gray;
+    1px 1px 5px grey;
 }
 </style>

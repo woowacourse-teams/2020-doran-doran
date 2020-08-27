@@ -10,7 +10,7 @@
     />
     <MemberUpdateModal
       v-if="isInitialMember"
-      @close-modal="closeMemberUpdateModal"
+      @close="closeMemberUpdateModal"
     />
   </v-container>
 </template>
