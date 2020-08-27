@@ -1,11 +1,6 @@
 <template>
   <v-container ref="map" fill-height fluid>
-    <v-icon
-      v-if="this.isMarkerMode"
-      size="40"
-      color="red"
-      class="center-marker"
-    >
+    <v-icon v-if="isMarkerMode" size="40" color="red" class="center-marker">
       mdi-map-marker
     </v-icon>
     <template v-if="isMapRendered" class="d-none">
@@ -36,7 +31,7 @@ export default {
       return this.$store.getters["mapMode/isMarker"];
     },
     posts() {
-      return this.$store.getters["post/getPosts"];
+      return this.$store.getters["post/posts"];
     },
   },
   async mounted() {
@@ -58,13 +53,14 @@ export default {
       this.changeAppBarByCenterAddress,
     );
     this.isMapRendered = true;
+    this.$emit("render");
   },
   methods: {
     async changeAppBarByCenterAddress() {
       const centerLocation = await this.$kakaoMap.getCenterLocation();
       const centerAddress = await this.$kakaoMap.getAddress(centerLocation);
       const address = Object.values(centerAddress).join(" ");
-      this.$store.commit("appBar/CHANGE_TITLE", address);
+      this.$store.commit("appBar/CHANGE_ADDRESS", address);
     },
   },
   watch: {
@@ -83,7 +79,7 @@ export default {
 <style scoped>
 .center-marker {
   position: relative;
-  z-index: 2;
+  z-index: 1;
   left: 50%;
   margin-left: -20px;
   margin-top: -35px;

@@ -29,7 +29,6 @@ export default {
       comments: [],
     },
     posts: [],
-    timelinePosts: [],
   },
   mutations: {
     SET_POST(state, post) {
@@ -73,14 +72,20 @@ export default {
     },
   },
   getters: {
-    getPost: (state) => {
+    post: (state) => {
       return state.post;
     },
-    getPosts: (state) => {
+    posts: (state) => {
       return state.posts;
     },
-    getPostsInBounds: (state) => {
-      return state.timelinePosts;
+    postsInBounds: (state) => (bounds) => {
+      return state.posts.filter(
+        ({ location }) =>
+          bounds.top > location.latitude &&
+          bounds.bottom < location.latitude &&
+          bounds.left < location.longitude &&
+          bounds.right > location.longitude,
+      );
     },
   },
 };

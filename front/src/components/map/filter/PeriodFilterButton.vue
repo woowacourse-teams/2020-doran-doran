@@ -15,12 +15,13 @@
         v-model="periodFilterChoice"
         mandatory
         rounded
+        borderless
         class="period-choices"
       >
         <v-btn
           value="24hours"
           small
-          class="period-btn"
+          class="period-btn px-3"
           @click="loadPostsWithinXhours(24)"
         >
           24시간 이내
@@ -28,7 +29,7 @@
         <v-btn
           value="7days"
           small
-          class="period-btn"
+          class="period-btn px-3"
           @click="loadPostsWithinXdays(7)"
         >
           7일 이내
@@ -36,19 +37,24 @@
         <v-btn
           value="30days"
           small
-          class="period-btn"
+          class="period-btn px-3"
           @click="loadPostsWithinXdays(30)"
         >
           30일 이내
         </v-btn>
-        <v-btn value="all" small class="period-btn" @click="loadAllPosts">
+        <v-btn
+          value="all"
+          small
+          class="period-button px-3"
+          @click="loadAllPosts"
+        >
           전체
         </v-btn>
         <v-btn
           value="userInput"
           small
           depressed
-          color="period-btn"
+          color="period-btn px-3"
           @click="openCalendarModal"
         >
           직접 입력
@@ -118,7 +124,7 @@ export default {
     async openCalendarModal() {
       this.isCalendarOpen = true;
     },
-     async inputStartDate(date) {
+    async inputStartDate(date) {
       await this.$store.commit("filter/SET_START_DATE", date);
       this.isInputStartDateFilled = true;
       if (this.isInputEndDateFilled === true) {
@@ -133,8 +139,14 @@ export default {
       }
     },
     async handleUserInputFiltering() {
-      if (this.$store.getters["filter/startDate"] > this.$store.getters["filter/endDate"]) {
-        this.$store.commit("snackbar/SHOW", ERROR_MESSAGE.INVALID_USER_DATE_INPUT);
+      if (
+        this.$store.getters["filter/startDate"] >
+        this.$store.getters["filter/endDate"]
+      ) {
+        this.$store.commit(
+          "snackbar/SHOW",
+          ERROR_MESSAGE.INVALID_USER_DATE_INPUT,
+        );
         this.rollBackPeriodFilter();
         this.isInputStartDateFilled = false;
         this.isInputEndDateFilled = false;
@@ -178,10 +190,12 @@ export default {
 
 .period-choices {
   position: absolute;
-  top: 65px;
+  top: 66px;
   left: 45px;
-  z-index: 999;
+  z-index: 1;
+  max-width: 65%;
   overflow-x: auto;
+  box-shadow: 1px 1px 8px grey;
 }
 
 .period-choices::-webkit-scrollbar {
@@ -192,12 +206,19 @@ export default {
   background: white !important;
 }
 
+.period-button {
+  background: white !important;
+  color: black;
+}
+
 .user-input-modal {
   position: absolute;
-  top: 100px;
-  left: 150px;
-  z-index: 9998;
+  top: 105px;
+  left: 190px;
+  z-index: 1;
   max-width: 60%;
+  padding-top: 15px;
+  padding-left: 10px;
   background-color: white;
 }
 </style>

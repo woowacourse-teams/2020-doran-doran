@@ -65,8 +65,7 @@ export default {
   computed: {
     isMine() {
       return (
-        this.comment.author.id ===
-        this.$store.getters["member/getMember"].id
+        this.comment.author.id === this.$store.getters["member/getMember"].id
       );
     },
     commentDate() {
@@ -79,10 +78,6 @@ export default {
       return this.liked ? LIKE_BUTTON_TYPE.LIKED : LIKE_BUTTON_TYPE.DEFAULT;
     },
   },
-  async created() {
-    this.isMyComment =
-      this.comment.author.id === this.$store.getters["member/getMember"].id;
-  },
   methods: {
     async remove() {
       await this.$store
@@ -92,7 +87,7 @@ export default {
           throw e;
         });
       this.$store.commit("snackbar/SHOW", DELETE_COMMENT_SUCCESS_MESSAGE);
-      this.$store.dispatch("post/loadPost", this.$route.params.id);
+      await this.$store.dispatch("post/loadPost", this.$route.params.id);
     },
     hasLike(like) {
       return (
@@ -113,7 +108,7 @@ export default {
           this.$store.commit("snackbar/SHOW", ERROR_MESSAGE.LOGIN_REQUIRED);
           throw e;
         });
-      this.$store.dispatch("post/loadPost", this.comment.postId);
+      await this.$store.dispatch("post/loadPost", this.comment.postId);
     },
     async createCommentLike() {
       const data = {
@@ -125,10 +120,9 @@ export default {
           this.$store.commit("snackbar/SHOW", ERROR_MESSAGE.LOGIN_REQUIRED);
           throw e;
         });
-      this.$store.dispatch("post/loadPost", this.comment.postId);
+      await this.$store.dispatch("post/loadPost", this.comment.postId);
     },
     deleteComment() {
-      console.log("delete");
       this.$emit("delete", this.comment.id);
     },
     openOptionsModal() {

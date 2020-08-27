@@ -1,5 +1,5 @@
 <template>
-  <div class="mx-4 my-3" @click="routePage">
+  <div class="mx-4 my-3" @click="openPostModal">
     <div class="my-2">
       <v-icon large class="mr-3">mdi-account-circle</v-icon>
       <span class="font-weight-bold">{{ post.memberResponse.nickname }}</span>
@@ -41,7 +41,7 @@ export default {
     },
   },
   methods: {
-    routePage() {
+    openPostModal() {
       this.$router.push("posts/" + this.post.id);
     },
     hasLike(like) {

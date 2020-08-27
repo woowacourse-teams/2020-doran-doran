@@ -1,5 +1,5 @@
 <template>
-  <div ref="post" class="speech-bubble" @click.prevent="goToPostDetailPage">
+  <div ref="post" class="speech-bubble" @click="openPostModal">
     {{ shortContent }} {{ contentTail }}
     <span class="text-caption red--text"> [{{ post.comments.length }}]</span>
     <div class="new-icon" v-if="isRecentPost">N</div>
@@ -39,7 +39,7 @@ export default {
     this.$kakaoMap.setPostOverlay(this.$refs.post, this.post.location);
   },
   methods: {
-    goToPostDetailPage() {
+    openPostModal() {
       this.$router.push("posts/" + this.post.id);
     },
   },

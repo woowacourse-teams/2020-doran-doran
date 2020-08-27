@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex flex-column modal-mask" @click.self="bounceOut">
     <VSpacer @click.self="bounceOut" />
-    <transition name="bounce" @after-leave="close">
+    <transition name="bounce" @after-leave="closeModal">
       <div v-if="rendered">
         <VTextarea
           type="text"
@@ -44,15 +44,10 @@ const CREATE_POST_SUCCESS_MESSAGE = "🎉 글이 등록되었습니다.";
 
 export default {
   name: "PostCreateModal",
-  props: {
-    location: {
-      type: Object,
-      required: true,
-    },
-  },
   data() {
     return {
       content: "",
+      location: this.$kakaoMap.getCenterLocation(),
       buttonColor: DORAN_DORAN_COLORS.POINT_COLOR,
       rendered: false,
     };
@@ -97,11 +92,10 @@ export default {
       this.bounceOut();
     },
     bounceOut() {
-      console.log("e");
       this.content = "";
       this.rendered = false;
     },
-    close() {
+    closeModal() {
       this.$store.commit("mapMode/CHANGE_STATE", MAP_MODE.DEFAULT);
       this.$store.commit("appBar/MAP_PAGE_DEFAULT_MODE");
     },

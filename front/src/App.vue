@@ -47,6 +47,12 @@ export default {
   created() {
     this.checkUrl();
     this.checkToken();
+    this.$router.beforeEach((to, from, next) => {
+      if (to.path === "/" || to.path === "/timeline") {
+        this.$store.commit("appBar/MAP_PAGE_DEFAULT_MODE");
+      }
+      next(true);
+    });
   },
   methods: {
     checkUrl() {
@@ -70,6 +76,10 @@ export default {
 
 <style>
 @import "assets/index.css";
+
+.snackbar {
+  z-index: 10000 !important;
+}
 
 .app-container {
   flex-direction: column;
