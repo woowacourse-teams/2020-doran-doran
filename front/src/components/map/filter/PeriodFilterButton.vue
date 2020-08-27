@@ -104,11 +104,8 @@ export default {
       isSliderOpened: false,
       isCalendarOpened: false,
       periodFilterChoice: "24hours",
-      isInputStartDateFilled: false,
-      isInputEndDateFilled: false,
       startDate: "",
       endDate: "",
-      previousFilterChoice: "",
     };
   },
   methods: {
@@ -136,54 +133,38 @@ export default {
       await this.filterPosts();
     },
     async inputStartDate(date) {
-      await this.$store.commit("filter/SET_START_DATE", date);
-      this.isInputStartDateFilled = true;
-      if (this.isInputEndDateFilled === true) {
+      this.startDate = date;
+      this.$store.commit("filter/SET_START_DATE", date);
+      if (this.endDate) {
         await this.handleUserInputFiltering();
       }
     },
     async inputEndDate(date) {
+      this.endDate = date;
       this.$store.commit("filter/SET_END_DATE", date);
-      this.isInputEndDateFilled = true;
-      if (this.isInputStartDateFilled === true) {
+      if (this.startDate) {
         await this.handleUserInputFiltering();
       }
     },
     async handleUserInputFiltering() {
-      if (
-        this.$store.getters["filter/startDate"] >
-        this.$store.getters["filter/endDate"]
-      ) {
+      if (this.startDate > this.endDate) {
         this.$store.commit(
           "snackbar/SHOW",
           ERROR_MESSAGE.INVALID_USER_DATE_INPUT,
         );
-        this.rollBackPeriodFilter();
-        this.isInputStartDateFilled = false;
-        this.isInputEndDateFilled = false;
-        this.isCalendarOpened = false;
-      } else {
-        await this.filterPosts();
-        this.isInputStartDateFilled = false;
-        this.isInputEndDateFilled = false;
-        this.isCalendarOpened = false;
+        return;
       }
-    },
-    rollBackPeriodFilter() {
-      this.$store.commit("filter/SET_START_DATE", this.startDate);
-      this.$store.commit("filter/SET_END_DATE", this.endDate);
-      this.periodFilterChoice = this.previousFilterChoice;
+      await this.filterPosts();
     },
     async filterPosts() {
       this.$store.commit("post/CLEAR_POSTS");
       const filteredPosts = await this.$store.dispatch("filter/filterPosts");
+      this.$store.commit("post/SET_POSTS", filteredPosts);
       if (filteredPosts.length === 0) {
         this.$store.commit("snackbar/SHOW", ERROR_MESSAGE.NO_POST_MESSAGE);
+        return;
       }
-      this.$store.commit("post/SET_POSTS", filteredPosts);
-      this.previousFilterChoice = this.periodFilterChoice;
-      this.startDate = this.$store.getters["filter/startDate"];
-      this.endDate = this.$store.getters["filter/endDate"];
+      this.isCalendarOpened = false;
     },
   },
   watch: {
