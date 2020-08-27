@@ -19,6 +19,9 @@ export default {
     SET_END_DATE(state, endDate) {
       state.endDate = endDate + " 23:59:59";
     },
+    SET_END_DATE_TO_NOW(state) {
+      state.endDate = moment().add(1, "seconds").format(DATE_FORMAT.DEFAULT);
+    },
     SET_FILTER_FROM_X_HOURS_AGO_TO_NOW(state, x) {
       state.startDate = moment()
         .subtract(x, "hours")
