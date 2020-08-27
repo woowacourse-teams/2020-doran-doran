@@ -85,10 +85,10 @@ export default {
         throw e;
       });
       this.$store.commit("snackbar/SHOW", CREATE_POST_SUCCESS_MESSAGE);
-      await this.$store.commit("post/CLEAR_POSTS");
-      await this.$store.commit("filter/SET_FILTER_FROM_X_HOURS_AGO_TO_NOW", 24);
+      this.$store.commit("post/CLEAR_POSTS");
+      this.$store.commit("filter/SET_FILTER_FROM_X_HOURS_AGO_TO_NOW", 24);
       const filteredPosts = await this.$store.dispatch("filter/filterPosts");
-      await this.$store.commit("post/SET_POSTS", filteredPosts);
+      this.$store.commit("post/SET_POSTS", filteredPosts);
       this.bounceOut();
     },
     bounceOut() {

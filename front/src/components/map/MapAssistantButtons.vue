@@ -26,9 +26,9 @@ export default {
         );
     },
     async refreshPosts() {
-      await this.$store.commit("post/CLEAR_POSTS");
+      this.$store.commit("post/CLEAR_POSTS");
       const filteredPosts = await this.$store.dispatch("filter/filterPosts");
-      await this.$store.commit("post/SET_POSTS", filteredPosts);
+      this.$store.commit("post/SET_POSTS", filteredPosts);
     },
   },
 };

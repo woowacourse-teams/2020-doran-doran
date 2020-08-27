@@ -132,7 +132,7 @@ export default {
       }
     },
     async inputEndDate(date) {
-      await this.$store.commit("filter/SET_END_DATE", date);
+      this.$store.commit("filter/SET_END_DATE", date);
       this.isInputEndDateFilled = true;
       if (this.isInputStartDateFilled === true) {
         await this.handleUserInputFiltering();
@@ -168,8 +168,8 @@ export default {
       if (filteredPosts.length === 0) {
         this.$store.commit("snackbar/SHOW", ERROR_MESSAGE.NO_POST_MESSAGE);
       }
-      await this.$store.commit("post/CLEAR_POSTS");
-      await this.$store.commit("post/SET_POSTS", filteredPosts);
+      this.$store.commit("post/CLEAR_POSTS");
+      this.$store.commit("post/SET_POSTS", filteredPosts);
       this.previousFilterChoice = this.periodFilterChoice;
       this.previousStartDateFilter = this.$store.getters["filter/startDate"];
       this.previousEndDateFilter = this.$store.getters["filter/endDate"];

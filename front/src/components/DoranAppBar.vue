@@ -107,7 +107,7 @@ export default {
       this.keyword = "";
       this.$store.commit("filter/SET_KEYWORD", "");
       const filteredPosts = await this.$store.dispatch("filter/filterPosts");
-      await this.$store.commit("post/SET_POSTS", filteredPosts);
+      this.$store.commit("post/SET_POSTS", filteredPosts);
     },
   },
 };

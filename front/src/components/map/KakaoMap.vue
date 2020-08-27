@@ -45,10 +45,10 @@ export default {
         ),
       );
     await this.changeAppBarByCenterAddress();
-    await this.$store.commit("filter/SET_FILTER_FROM_X_HOURS_AGO_TO_NOW", 24);
+    this.$store.commit("filter/SET_FILTER_FROM_X_HOURS_AGO_TO_NOW", 24);
     const filteredPosts = await this.$store.dispatch("filter/filterPosts");
-    await this.$store.commit("post/SET_POSTS", filteredPosts);
-    await this.$kakaoMap.addEventToMap(
+    this.$store.commit("post/SET_POSTS", filteredPosts);
+    this.$kakaoMap.addEventToMap(
       EVENT_TYPE.CENTER_CHANGE,
       this.changeAppBarByCenterAddress,
     );
@@ -57,7 +57,7 @@ export default {
   },
   methods: {
     async changeAppBarByCenterAddress() {
-      const centerLocation = await this.$kakaoMap.getCenterLocation();
+      const centerLocation = this.$kakaoMap.getCenterLocation();
       const centerAddress = await this.$kakaoMap.getAddress(centerLocation);
       const address = Object.values(centerAddress).join(" ");
       this.$store.commit("appBar/CHANGE_ADDRESS", address);

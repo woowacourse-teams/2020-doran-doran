@@ -27,8 +27,8 @@ export default {
   },
   async mounted() {
     await this.$kakaoMap.drawMap(this.$refs.postMap);
-    await this.$kakaoMap.setCenterLocation(this.location);
-    await this.$kakaoMap.setMarker(this.location, MAP_MARKER_IMAGE);
+    this.$kakaoMap.setCenterLocation(this.location);
+    this.$kakaoMap.setMarker(this.location, MAP_MARKER_IMAGE);
   },
   methods: {
     closeModal() {
