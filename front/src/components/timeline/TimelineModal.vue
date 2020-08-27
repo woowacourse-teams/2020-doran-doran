@@ -47,9 +47,7 @@ export default {
       this.rendered = false;
       next(false);
     });
-    this.$once("hook:destroyed", () => {
-      preventRoute();
-    });
+    this.$once("hook:destroyed", preventRoute);
   },
   mounted() {
     this.rendered = true;
