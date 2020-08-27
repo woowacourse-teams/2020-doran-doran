@@ -19,10 +19,6 @@
       <PostCreateModal v-if="isPostMode" />
       <TimelineModal v-if="timeline" />
       <PostModal v-if="post" />
-      <MemberUpdateModal
-        v-if="isInitialMember"
-        @close="closeMemberUpdateModal"
-      />
     </template>
   </v-container>
 </template>
@@ -34,7 +30,6 @@ import PostCreateModal from "@/components/map/PostCreateModal";
 import MapAssistantButtons from "@/components/map/MapAssistantButtons";
 import PeriodFilterButton from "@/components/map/filter/PeriodFilterButton";
 import TimelineModal from "@/components/timeline/TimelineModal";
-import MemberUpdateModal from "@/components/member/MemberUpdateModal";
 import PostModal from "@/components/post/PostModal";
 
 export default {
@@ -47,7 +42,6 @@ export default {
     KakaoMap,
     PostCreateButton,
     PostCreateModal,
-    MemberUpdateModal,
   },
   data() {
     return {
@@ -70,14 +64,10 @@ export default {
   },
   created() {
     this.$store.commit("appBar/MAP_PAGE_DEFAULT_MODE");
-    this.isInitialMember = this.$store.getters["member/isInitialMember"];
   },
   methods: {
     renderMap() {
       this.isMapRendered = true;
-    },
-    closeMemberUpdateModal() {
-      this.isInitialMember = false;
     },
   },
   watch: {
