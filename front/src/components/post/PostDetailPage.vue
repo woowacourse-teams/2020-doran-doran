@@ -72,7 +72,6 @@ export default {
   data() {
     return {
       isMapModalVisible: false,
-      isMyPost: false,
       isOptionsModalVisible: false,
     };
   },
@@ -101,6 +100,12 @@ export default {
     authorAddress() {
       return Object.values(this.post.authorAddress).join(" ");
     },
+    isMyPost() {
+      return (
+        this.post.memberResponse.id ===
+        this.$store.getters["member/getMember"].id
+      );
+    },
   },
   async created() {
     this.post = await this.$store.dispatch(
@@ -108,9 +113,6 @@ export default {
       this.$route.params.id,
     );
     this.$store.commit("appBar/POST_DETAIL_PAGE");
-    this.isMyPost =
-      this.post.memberResponse.id ===
-      this.$store.getters["member/getMember"].id;
   },
   methods: {
     async deletePost() {
