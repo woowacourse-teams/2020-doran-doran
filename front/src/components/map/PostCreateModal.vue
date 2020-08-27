@@ -85,6 +85,7 @@ export default {
         throw e;
       });
       this.$store.commit("snackbar/SHOW", CREATE_POST_SUCCESS_MESSAGE);
+      this.$kakaoMap.clearPostOverlay();
       this.$store.commit("post/CLEAR_POSTS");
       this.$store.commit("filter/SET_END_DATE_TO_NOW");
       const filteredPosts = await this.$store.dispatch("filter/filterPosts");

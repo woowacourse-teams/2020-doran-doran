@@ -11,7 +11,7 @@ const INITIAL_LOCATION = {
 const CURRENT_MARKER_IMAGE =
   "https://dorandoran.s3.ap-northeast-2.amazonaws.com/project/map/current-location.png";
 
-const KakaoMap = (() => {
+export const KakaoMap = (() => {
   let map = null;
   let postOverlays = [];
   let clusterer = null;
@@ -224,6 +224,7 @@ const KakaoMap = (() => {
     if (postOverlays.length === 0) {
       return;
     }
+    clearClusterer();
     postOverlays.forEach((overlay) => {
       overlay.setMap(map);
       clusterer.addMarker(overlay);
@@ -232,6 +233,10 @@ const KakaoMap = (() => {
 
   const clearClusterer = () => {
     clusterer.clear();
+  };
+
+  const clearPostOverlay = () => {
+    postOverlays = [];
   };
 
   const _getAdministrativeAddress = (location) => {
@@ -274,6 +279,7 @@ const KakaoMap = (() => {
     hidePostOverlays,
     showPostOverlays,
     clearClusterer,
+    clearPostOverlay,
     getAddress,
     addEventToMap,
   };
