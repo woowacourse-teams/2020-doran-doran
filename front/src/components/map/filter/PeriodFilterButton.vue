@@ -24,44 +24,13 @@
           class="period-choices"
         >
           <v-btn
-            value="24hours"
+            v-for="period in periodFilters"
+            :key="period.order"
+            :value="period"
             height="30"
             class="period-btn px-3"
-            @click="loadPostsWithinXhours(24)"
           >
-            24시간 이내
-          </v-btn>
-          <v-btn
-            value="7days"
-            height="30"
-            class="period-btn px-3"
-            @click="loadPostsWithinXdays(7)"
-          >
-            7일 이내
-          </v-btn>
-          <v-btn
-            value="30days"
-            height="30"
-            class="period-btn px-3"
-            @click="loadPostsWithinXdays(30)"
-          >
-            30일 이내
-          </v-btn>
-          <v-btn
-            value="all"
-            height="30"
-            class="period-btn px-3"
-            @click="loadAllPosts"
-          >
-            전체
-          </v-btn>
-          <v-btn
-            value="userInput"
-            height="30"
-            class="period-btn px-3"
-            @click="openCalendar"
-          >
-            직접 입력
+            {{ period.title }}
           </v-btn>
         </v-btn-toggle>
       </template>
@@ -80,6 +49,7 @@
 
 <script>
 import { DORAN_DORAN_COLORS, ERROR_MESSAGE } from "@/utils/constants";
+import { PERIOD_FILTERS } from "@/utils/periodFilter";
 import DatePickerMenu from "@/components/map/filter/DatePickerMenu";
 
 export default {
@@ -89,6 +59,7 @@ export default {
   },
   data() {
     return {
+      periodFilters: PERIOD_FILTERS,
       buttonColor: DORAN_DORAN_COLORS.POINT_COLOR,
       selected: "24hours",
       isSliderOpened: false,
@@ -102,40 +73,36 @@ export default {
       this.isSliderOpened = !this.isSliderOpened;
     },
     openCalendar() {
-      if (this.selected === "userInput") {
+      if (this.selected === this.periodFilters.CUSTOM) {
         this.isCalendarOpened = true;
       }
     },
     closeCalender() {
       this.isCalendarOpened = false;
     },
-    async loadPostsWithinXhours(x) {
-      await this.$store.commit("filter/SET_FILTER_FROM_X_HOURS_AGO_TO_NOW", x);
-      await this.filterPosts();
+    loadPosts(action) {
+      if (this.selected === this.periodFilters.CUSTOM) {
+        this.openCalendar();
+        return;
+      }
+      action();
+      this.filterPosts();
     },
-    async loadPostsWithinXdays(x) {
-      await this.$store.commit("filter/SET_FILTER_FROM_X_DAYS_AGO_TO_NOW", x);
-      await this.filterPosts();
-    },
-    async loadAllPosts() {
-      await this.$store.commit("filter/INITIALIZE_PERIOD_FILTER");
-      await this.filterPosts();
-    },
-    async inputStartDate(date) {
+    inputStartDate(date) {
       this.startDate = date;
       this.$store.commit("filter/SET_START_DATE", date);
       if (this.endDate) {
-        await this.handleUserInputFiltering();
+        this.handleUserInputFiltering();
       }
     },
-    async inputEndDate(date) {
+    inputEndDate(date) {
       this.endDate = date;
       this.$store.commit("filter/SET_END_DATE", date);
       if (this.startDate) {
-        await this.handleUserInputFiltering();
+        this.handleUserInputFiltering();
       }
     },
-    async handleUserInputFiltering() {
+    handleUserInputFiltering() {
       if (this.startDate > this.endDate) {
         this.$store.commit(
           "snackbar/SHOW",
@@ -143,7 +110,7 @@ export default {
         );
         return;
       }
-      await this.filterPosts();
+      this.filterPosts();
     },
     async filterPosts() {
       this.$store.commit("post/CLEAR_POSTS");
@@ -158,7 +125,7 @@ export default {
   },
   watch: {
     selected(val) {
-      this.isCalendarOpened = val === "userInput";
+      this.loadPosts(val.action);
     },
   },
 };
