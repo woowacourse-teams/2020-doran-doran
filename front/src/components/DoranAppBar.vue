@@ -11,6 +11,9 @@
       <v-icon v-show="backButton" @click="goToPrevious">
         mdi-chevron-left
       </v-icon>
+      <v-icon v-show="cancelButton" @click="setMapDefault">
+        mdi-chevron-left
+      </v-icon>
 
       <v-toolbar-title class="app-bar-title font-size-small">
         {{ appBarTitle }}
@@ -42,7 +45,7 @@
 </template>
 
 <script>
-import { ERROR_MESSAGE } from "@/utils/constants";
+import { ERROR_MESSAGE, MAP_MODE } from "@/utils/constants";
 
 export default {
   name: "DoranAppBar",
@@ -53,11 +56,14 @@ export default {
     };
   },
   computed: {
+    myPageButton() {
+      return this.$store.getters["appBar/myPageButton"];
+    },
     backButton() {
       return this.$store.getters["appBar/backButton"];
     },
-    myPageButton() {
-      return this.$store.getters["appBar/myPageButton"];
+    cancelButton() {
+      return this.$store.getters["appBar/cancelButton"];
     },
     appBarTitle() {
       return this.$store.getters["appBar/title"];
@@ -72,6 +78,10 @@ export default {
     },
     goToPrevious() {
       this.$router.go(-1);
+    },
+    setMapDefault() {
+      this.$store.commit("mapMode/CHANGE_STATE", MAP_MODE.DEFAULT);
+      this.$store.commit("appBar/MAP_PAGE_DEFAULT_MODE");
     },
     toggleSearchInput() {
       this.isSearching = !this.isSearching;
