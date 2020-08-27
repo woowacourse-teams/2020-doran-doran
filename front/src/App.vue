@@ -51,13 +51,8 @@ export default {
   async created() {
     this.checkUrl();
     await this.checkToken();
+    this.preventRoute();
     this.isInitialMember = this.$store.getters["member/isInitialMember"];
-    this.$router.beforeEach((to, from, next) => {
-      if (to.path === "/" || to.path === "/timeline") {
-        this.$store.commit("appBar/MAP_PAGE_DEFAULT_MODE");
-      }
-      next(true);
-    });
   },
   methods: {
     checkUrl() {
@@ -74,6 +69,14 @@ export default {
       } else if (!storageToken) {
         await this.$router.push("/login");
       }
+    },
+    preventRoute() {
+      this.$router.beforeEach((to, from, next) => {
+        if (to.path === "/" || to.path === "/timeline") {
+          this.$store.commit("appBar/MAP_PAGE_DEFAULT_MODE");
+        }
+        next(true);
+      });
     },
     closeMemberUpdateModal() {
       this.isInitialMember = false;
