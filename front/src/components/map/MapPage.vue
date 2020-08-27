@@ -12,9 +12,7 @@
     <template v-if="isMapRendered">
       <TimelineModal v-if="timeline" />
     </template>
-    <v-slide-y-reverse-transition>
-      <PostModal v-if="post" />
-    </v-slide-y-reverse-transition>
+    <PostModal v-if="post" />
     <MemberUpdateModal
       v-if="isInitialMember"
       @close="closeMemberUpdateModal"
@@ -73,9 +71,9 @@ export default {
     },
   },
   watch: {
-    "$route.meta"(value) {
-      this.timeline = value.timeline;
-      this.post = value.post;
+    "$route.meta"(val) {
+      this.timeline = val.timeline;
+      this.post = val.post;
     },
   },
 };
