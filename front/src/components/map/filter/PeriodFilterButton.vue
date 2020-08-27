@@ -200,14 +200,6 @@ export default {
   background: white !important;
 }
 
-.theme--light.v-btn-toggle:not(.v-btn-toggle--group) {
-  border-color: grey !important;
-}
-
-.theme--light.v-btn-toggle:not(.v-btn-toggle--group) .v-btn.v-btn {
-  border-color: grey !important;
-}
-
 .period-button {
   background: white !important;
   color: black;
@@ -215,8 +207,8 @@ export default {
 
 .user-input-modal {
   position: absolute;
-  top: 100px;
-  left: 150px;
+  top: 105px;
+  left: 190px;
   z-index: 9998;
   max-width: 60%;
   padding-top: 15px;

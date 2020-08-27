@@ -1,6 +1,6 @@
 <template>
   <div class="modal-mask" @click.self="slideDown">
-    <transition name="slide-up" @after-leave="closeModal">
+    <transition name="slide-up" @after-leave="close">
       <div v-if="rendered" class="pa-3 modal-container">
         <div class="text-center">
           <span class="ma-auto text-center">타임라인</span>
@@ -15,7 +15,6 @@
 
 <script>
 import PostItem from "@/components/timeline/PostItem";
-
 export default {
   name: "TimelineModal",
   components: {
@@ -56,7 +55,7 @@ export default {
     slideDown() {
       this.rendered = false;
     },
-    closeModal() {
+    close() {
       this.flag = true;
       this.$router.go(-1);
     },
@@ -65,16 +64,6 @@ export default {
 </script>
 
 <style scoped>
-.modal-mask {
-  position: fixed;
-  z-index: 9999;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-}
-
 .modal-container {
   position: absolute;
   top: 20px;
@@ -82,6 +71,7 @@ export default {
   height: calc(100% - 20px);
   background-color: #fff;
   border-radius: 15px 15px 0 0;
+  text-align: left;
 }
 
 .close-btn {
@@ -89,7 +79,6 @@ export default {
   top: 10px;
   right: 10px;
 }
-
 .slide-up-enter-active {
   animation: slide-up 0.4s;
 }
