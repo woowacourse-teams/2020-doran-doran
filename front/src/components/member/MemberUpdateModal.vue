@@ -61,7 +61,7 @@ export default {
       const updatedMember = await api.updateMember(this.newNickname);
       this.$store.commit("member/SET_MEMBER", updatedMember);
       this.$store.commit("snackbar/SHOW", "🥳 성공적으로 변경되었습니다.");
-      this.closeModal();
+      this.bounceOut();
     },
     closeModal() {
       this.$emit("close");
