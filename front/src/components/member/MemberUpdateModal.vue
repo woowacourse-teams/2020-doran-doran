@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex flex-column modal-mask" @click.self="closeModal">
-    <VSpacer />
+    <VSpacer @click.self="closeModal" />
     <transition name="bounce" @after-leave="closeModal">
       <div v-if="rendered" class="pa-6 pb-1 modal-container">
         <VTextField
@@ -28,7 +28,7 @@
         </div>
       </div>
     </transition>
-    <VSpacer />
+    <VSpacer @click.self="closeModal" />
   </div>
 </template>
 
@@ -64,7 +64,7 @@ export default {
       this.closeModal();
     },
     closeModal() {
-      this.$emit("close-modal");
+      this.$emit("close");
     },
     nicknameNotChanged() {
       return this.member.nickname === this.newNickname;

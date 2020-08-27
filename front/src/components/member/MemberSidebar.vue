@@ -29,7 +29,7 @@
 
     <MemberUpdateModal
       v-if="this.isUpdating"
-      @close-modal="closeMemberUpdateModal"
+      @close="closeMemberUpdateModal"
     />
 
     <v-dialog v-model="isDeleting" persistent class="a">
