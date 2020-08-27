@@ -4,7 +4,7 @@
       <v-icon
         color="grey lighten-4"
         class="my-2 mx-1 rounded-pill close-btn"
-        @click.prevent="closeModal"
+        @click="closeModal"
       >
         mdi-close
       </v-icon>
