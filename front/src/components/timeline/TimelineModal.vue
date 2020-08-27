@@ -1,6 +1,6 @@
 <template>
   <div class="modal-mask" @click.self="slideDown">
-    <transition name="slide-up" @after-leave="close">
+    <transition name="slide-up" @after-leave="closeModal">
       <div v-if="rendered" class="pa-3 modal-container">
         <div class="text-center">
           <span class="ma-auto text-center">타임라인</span>
@@ -56,7 +56,7 @@ export default {
     slideDown() {
       this.rendered = false;
     },
-    close() {
+    closeModal() {
       this.flag = true;
       this.$router.go(-1);
     },
