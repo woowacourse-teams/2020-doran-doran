@@ -195,7 +195,7 @@ export default {
   z-index: 1;
   max-width: 65%;
   overflow-x: auto;
-  box-shadow: 1px 1px 8px grey;
+  box-shadow: 1px 1px 8px silver;
 }
 
 .period-choices::-webkit-scrollbar {

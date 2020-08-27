@@ -100,7 +100,7 @@ export default {
   height: 30px;
   border-radius: 100px;
   background-color: white;
-  box-shadow: 1px 1px 8px grey;
+  box-shadow: 1px 1px 8px silver;
 }
 
 .post-create-btn {
