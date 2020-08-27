@@ -111,7 +111,6 @@ export default {
       this.$store.dispatch("post/loadPost", this.comment.postId);
     },
     deleteComment() {
-      console.log("delete");
       this.$emit("delete-comment", this.comment.postId, this.comment.id);
     },
     openOptionsModal() {

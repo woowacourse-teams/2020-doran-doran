@@ -55,7 +55,7 @@ export default {
       this.$emit("close");
     },
     report() {
-      console.log("아직 신고기능 없음");
+      this.$store.commit("snackbar/SHOW", "👩🏻‍💻아직 신고 기능이 구현되지 않았어요.")
       this.closeModal();
     },
   },
