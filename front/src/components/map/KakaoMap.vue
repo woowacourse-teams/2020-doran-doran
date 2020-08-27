@@ -58,6 +58,7 @@ export default {
       this.changeAppBarByCenterAddress,
     );
     this.isMapRendered = true;
+    this.$emit("render");
   },
   methods: {
     async changeAppBarByCenterAddress() {

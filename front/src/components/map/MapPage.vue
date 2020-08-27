@@ -1,6 +1,6 @@
 <template>
   <v-container fill-height fluid class="pa-0">
-    <KakaoMap />
+    <KakaoMap @render="renderMap" />
     <PeriodFilterButton v-if="isDefaultMode" />
     <router-link to="/timeline" class="px-3 font-size-x-small timeline-btn">
       <v-icon color="black" class="mb-1" small>mdi-format-list-bulleted</v-icon>
@@ -9,7 +9,9 @@
     <MapAssistantButtons v-if="isDefaultMode" />
     <PostCreateButton class="post-create-btn" />
     <PostCreateModal v-if="isPostMode" />
-    <TimelineModal v-if="timeline" />
+    <template v-if="isMapRendered">
+      <TimelineModal v-if="timeline" />
+    </template>
     <v-slide-y-reverse-transition>
       <PostModal v-if="post" />
     </v-slide-y-reverse-transition>
@@ -44,6 +46,7 @@ export default {
   },
   data() {
     return {
+      isMapRendered: false,
       isInitialMember: false,
       timeline: this.$route.meta.timeline,
       post: this.$route.meta.post,
@@ -60,9 +63,14 @@ export default {
       return this.$store.getters["mapMode/isPost"];
     },
   },
-  async created() {
+  created() {
     this.$store.commit("appBar/MAP_PAGE_DEFAULT_MODE");
     this.isInitialMember = this.$store.getters["member/isInitialMember"];
+  },
+  methods: {
+    renderMap() {
+      this.isMapRendered = true;
+    },
   },
   watch: {
     "$route.meta"(value) {
