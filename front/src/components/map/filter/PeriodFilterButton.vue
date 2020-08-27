@@ -171,7 +171,7 @@ export default {
   position: absolute;
   top: 65px;
   left: 10px;
-  z-index: 9999;
+  z-index: 9998;
   width: 25px;
   height: 25px;
 }
