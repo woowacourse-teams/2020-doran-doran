@@ -20,7 +20,7 @@
       >
         <v-btn
           value="24hours"
-          small
+          height="30"
           class="period-btn px-3"
           @click="loadPostsWithinXhours(24)"
         >
@@ -28,7 +28,7 @@
         </v-btn>
         <v-btn
           value="7days"
-          small
+          height="30"
           class="period-btn px-3"
           @click="loadPostsWithinXdays(7)"
         >
@@ -36,7 +36,7 @@
         </v-btn>
         <v-btn
           value="30days"
-          small
+          height="30"
           class="period-btn px-3"
           @click="loadPostsWithinXdays(30)"
         >
@@ -44,17 +44,16 @@
         </v-btn>
         <v-btn
           value="all"
-          small
-          class="period-button px-3"
+          height="30"
+          class="period-btn px-3"
           @click="loadAllPosts"
         >
           전체
         </v-btn>
         <v-btn
           value="userInput"
-          small
-          depressed
-          color="period-btn px-3"
+          height="30"
+          class="period-btn px-3"
           @click="openCalendarModal"
         >
           직접 입력
@@ -184,8 +183,8 @@ export default {
   top: 65px;
   left: 10px;
   z-index: 1;
-  width: 25px;
-  height: 25px;
+  width: 30px;
+  height: 30px;
 }
 
 .period-choices {
@@ -204,11 +203,6 @@ export default {
 
 .period-btn {
   background: white !important;
-}
-
-.period-button {
-  background: white !important;
-  color: black;
 }
 
 .user-input-modal {
