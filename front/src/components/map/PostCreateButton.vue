@@ -1,9 +1,6 @@
 <template>
   <div>
     <v-btn
-      fixed
-      right
-      bottom
       fab
       dark
       large

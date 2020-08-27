@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex flex-column modal-mask" @click.self="bounceOut">
-    <VSpacer />
+    <VSpacer @click.self="bounceOut" />
     <transition name="bounce" @after-leave="close">
       <div v-if="rendered">
         <VTextarea
@@ -18,20 +18,20 @@
           <v-btn
             color="grey lighten-4"
             class="my-6 mx-1 mt-2 rounded-pill"
-            @click.prevent="bounceOut"
+            @click="bounceOut"
           >
             취소
           </v-btn>
           <v-btn
             class="my-6 mx-1 mt-2 rounded-pill doran-doran-color"
-            @click.prevent="createPost"
+            @click="createPost"
           >
             등록
           </v-btn>
         </div>
       </div>
     </transition>
-    <VSpacer />
+    <VSpacer @click.self="bounceOut" />
   </div>
 </template>
 
@@ -97,6 +97,7 @@ export default {
       this.bounceOut();
     },
     bounceOut() {
+      console.log("e");
       this.content = "";
       this.rendered = false;
     },
@@ -109,17 +110,6 @@ export default {
 </script>
 
 <style scoped>
-.modal-mask {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 9998;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  text-align: center;
-}
-
 .modal-container {
   width: 90%;
   margin: auto;

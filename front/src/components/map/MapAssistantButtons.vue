@@ -38,7 +38,7 @@ export default {
 .assistant-buttons {
   display: flex;
   flex-direction: column;
-  position: fixed;
+  position: absolute;
   left: 15px;
   bottom: 20px;
   z-index: 9998;

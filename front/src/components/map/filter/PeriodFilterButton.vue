@@ -1,13 +1,12 @@
 <template>
   <div>
     <v-btn
-      fixed
       small
       fab
       dark
       :color="buttonType.color"
       @click="toggleSlider"
-      class="filter-button"
+      class="filter-btn"
     >
       <v-icon small>{{ buttonType.icon }}</v-icon>
     </v-btn>
@@ -21,28 +20,44 @@
         <v-btn
           value="24hours"
           small
-          depressed
+          class="period-btn"
           @click="loadPostsWithinXhours(24)"
         >
           24시간 이내
         </v-btn>
-        <v-btn value="7days" small depressed @click="loadPostsWithinXdays(7)">
+        <v-btn
+          value="7days"
+          small
+          class="period-btn"
+          @click="loadPostsWithinXdays(7)"
+        >
           7일 이내
         </v-btn>
-        <v-btn value="30days" small depressed @click="loadPostsWithinXdays(30)">
+        <v-btn
+          value="30days"
+          small
+          class="period-btn"
+          @click="loadPostsWithinXdays(30)"
+        >
           30일 이내
         </v-btn>
-        <v-btn value="all" small depressed @click="loadAllPosts">
+        <v-btn value="all" small class="period-btn" @click="loadAllPosts">
           전체
         </v-btn>
-        <v-btn value="userInput" small depressed @click="openCalendarModal">
+        <v-btn
+          value="userInput"
+          small
+          depressed
+          color="period-btn"
+          @click="openCalendarModal"
+        >
           직접 입력
         </v-btn>
       </v-btn-toggle>
       <v-sheet
         v-if="periodFilterChoice === 'userInput' && isCalendarOpen === true"
-        class="user-input-modal rounded-lg"
         elevation="2"
+        class="pa-3 rounded-lg user-input-modal"
       >
         <DatePickerMenu :label="'시작 날짜'" @select-date="inputStartDate" />
         <DatePickerMenu :label="'종료 날짜'" @select-date="inputEndDate" />
@@ -53,7 +68,7 @@
 
 <script>
 import { DORAN_DORAN_COLORS, ERROR_MESSAGE } from "@/utils/constants";
-import DatePickerMenu from "@/components/map/filter/DataPickerMenu";
+import DatePickerMenu from "@/components/map/filter/DatePickerMenu";
 
 const BUTTON_TYPE = {
   DEFAULT: {
@@ -152,32 +167,37 @@ export default {
 </script>
 
 <style scoped>
-.filter-button {
+.filter-btn {
+  position: absolute;
   top: 65px;
   left: 10px;
-  height: 25px;
+  z-index: 9999;
   width: 25px;
+  height: 25px;
 }
+
 .period-choices {
   position: absolute;
   top: 65px;
   left: 45px;
   z-index: 999;
-  width: 86%;
   overflow-x: auto;
 }
+
 .period-choices::-webkit-scrollbar {
   display: none;
 }
+
+.period-btn {
+  background: white !important;
+}
+
 .user-input-modal {
-  max-width: 70%;
-  position: fixed;
+  position: absolute;
   top: 100px;
-  left: 190px;
+  left: 150px;
   z-index: 9998;
+  max-width: 60%;
   background-color: white;
-  height: 120px;
-  padding-top: 15px;
-  padding-left: 10px;
 }
 </style>

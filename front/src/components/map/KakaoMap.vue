@@ -9,11 +9,7 @@
       mdi-map-marker
     </v-icon>
     <template v-if="isMapRendered" class="d-none">
-      <PostOverlay
-        v-for="post in posts"
-        :key="post.id"
-        :post="post"
-      />
+      <PostOverlay v-for="post in posts" :key="post.id" :post="post" />
     </template>
   </v-container>
 </template>

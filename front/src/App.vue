@@ -48,72 +48,20 @@ export default {
 </script>
 
 <style>
-@font-face {
-  font-family: BM_JUA;
-  src: url("./assets/BM_JUA.woff") format("woff");
-}
-
-* {
-  letter-spacing: -0.7px;
-}
-
-html,
-body {
-  width: 100%;
-  height: 100%;
-}
-
-.doran-doran-color {
-  background: linear-gradient(
-    320deg,
-    rgba(252, 144, 0, 1) 30%,
-    rgba(251, 203, 49, 1) 100%
-  );
-}
-
-a {
-  text-decoration: none;
-}
-
-.font-size-x-large {
-  font-size: 2rem;
-}
-
-.font-size-regular {
-  font-size: 1rem;
-}
-
-.font-size-small {
-  font-size: 0.9rem;
-}
-
-.font-size-x-small {
-  font-size: 0.8rem;
-}
+@import "assets/index.css";
 
 .app-container {
+  flex-direction: column;
   width: 100%;
   height: 100%;
-  flex-direction: column;
+  max-width: 500px;
+  margin: auto;
+  overflow-x: hidden;
+  box-shadow: 0 0 40px 2px gray;
 }
 
 .app-container > div {
+  min-height: 100%;
   height: 100%;
-}
-
-.snackbar {
-  z-index: 9999 !important;
-}
-
-.fade-enter-active,
-.fade-leave-active {
-  transition-duration: 0.2s;
-  transition-property: opacity;
-  transition-timing-function: ease;
-}
-
-.fade-enter,
-.fade-leave-active {
-  opacity: 0;
 }
 </style>

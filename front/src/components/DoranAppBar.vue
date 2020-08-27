@@ -141,7 +141,7 @@ export default {
 
 <style scoped>
 .app-bar-title {
-  position: fixed;
+  position: absolute;
   left: 50%;
   transform: translate(-50%);
   padding: 8px;
