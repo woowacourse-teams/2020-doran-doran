@@ -163,11 +163,11 @@ export default {
       this.periodFilterChoice = this.previousFilterChoice;
     },
     async filterPosts() {
+      this.$store.commit("post/CLEAR_POSTS");
       const filteredPosts = await this.$store.dispatch("filter/filterPosts");
       if (filteredPosts.length === 0) {
         this.$store.commit("snackbar/SHOW", ERROR_MESSAGE.NO_POST_MESSAGE);
       }
-      this.$store.commit("post/CLEAR_POSTS");
       this.$store.commit("post/SET_POSTS", filteredPosts);
       this.previousFilterChoice = this.periodFilterChoice;
       this.previousStartDateFilter = this.$store.getters["filter/startDate"];
