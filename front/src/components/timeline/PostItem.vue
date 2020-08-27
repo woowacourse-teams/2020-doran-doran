@@ -7,12 +7,12 @@
     </div>
     <div class="text-break">{{ post.content }}</div>
     <div class="text-right">
-      <v-icon small>mdi-comment-processing-outline</v-icon>
-      <span class="mx-1">{{ post.comments.length }}</span>
       <v-icon small :color="likeButtonType.color">
         {{ likeButtonType.icon }}
       </v-icon>
       <span class="mx-1">{{ post.likes.length }}</span>
+      <v-icon small>mdi-comment-processing-outline</v-icon>
+      <span class="mx-1">{{ post.comments.length }}</span>
     </div>
     <VDivider class="my-2" />
   </div>
