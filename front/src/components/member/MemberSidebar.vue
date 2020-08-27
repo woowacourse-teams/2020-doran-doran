@@ -71,10 +71,6 @@ export default {
           title: "로그아웃",
           action: this.logout,
         },
-        {
-          title: "회원탈퇴",
-          action: this.openMemberDeleteDialog,
-        },
       ],
       isUpdating: false,
       isDeleting: false,
