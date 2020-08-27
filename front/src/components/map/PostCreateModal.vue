@@ -86,7 +86,6 @@ export default {
       });
       this.$store.commit("snackbar/SHOW", CREATE_POST_SUCCESS_MESSAGE);
       this.$store.commit("post/CLEAR_POSTS");
-      this.$store.commit("filter/SET_FILTER_FROM_X_HOURS_AGO_TO_NOW", 24);
       const filteredPosts = await this.$store.dispatch("filter/filterPosts");
       this.$store.commit("post/SET_POSTS", filteredPosts);
       this.bounceOut();
