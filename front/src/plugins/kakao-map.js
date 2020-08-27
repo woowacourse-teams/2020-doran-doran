@@ -11,7 +11,7 @@ const INITIAL_LOCATION = {
 const CURRENT_MARKER_IMAGE =
   "https://dorandoran.s3.ap-northeast-2.amazonaws.com/project/map/current-location.png";
 
-const KakaoMap = (() => {
+export const KakaoMap = (() => {
   let map = null;
   let postOverlays = [];
   let clusterer = null;
@@ -42,7 +42,8 @@ const KakaoMap = (() => {
           width: "52px",
           height: "52px",
           lineHeight: "54px",
-          background: "url(https://dorandoran.s3.ap-northeast-2.amazonaws.com/project/map/cluster-size-1.png) no-repeat",
+          background:
+            "url(https://dorandoran.s3.ap-northeast-2.amazonaws.com/project/map/cluster-size-1.png) no-repeat",
           textAlign: "center",
           fontSize: "14px",
           fontWeight: "bold",
@@ -52,7 +53,8 @@ const KakaoMap = (() => {
           width: "56px",
           height: "56px",
           lineHeight: "57px",
-          background: "url(https://dorandoran.s3.ap-northeast-2.amazonaws.com/project/map/cluster-size-2.png) no-repeat",
+          background:
+            "url(https://dorandoran.s3.ap-northeast-2.amazonaws.com/project/map/cluster-size-2.png) no-repeat",
           textAlign: "center",
           fontSize: "16px",
           fontWeight: "bold",
@@ -62,7 +64,8 @@ const KakaoMap = (() => {
           width: "66px",
           height: "66px",
           lineHeight: "68px",
-          background: "url(https://dorandoran.s3.ap-northeast-2.amazonaws.com/project/map/cluster-size-3.png) no-repeat",
+          background:
+            "url(https://dorandoran.s3.ap-northeast-2.amazonaws.com/project/map/cluster-size-3.png) no-repeat",
           textAlign: "center",
           fontSize: "18px",
           fontWeight: "bold",
@@ -72,7 +75,8 @@ const KakaoMap = (() => {
           width: "78px",
           height: "78px",
           lineHeight: "81px",
-          background: "url(https://dorandoran.s3.ap-northeast-2.amazonaws.com/project/map/cluster-size-4.png) no-repeat",
+          background:
+            "url(https://dorandoran.s3.ap-northeast-2.amazonaws.com/project/map/cluster-size-4.png) no-repeat",
           textAlign: "center",
           fontSize: "20px",
           fontWeight: "bold",
@@ -82,7 +86,8 @@ const KakaoMap = (() => {
           width: "90px",
           height: "90px",
           lineHeight: "94px",
-          background: "url(https://dorandoran.s3.ap-northeast-2.amazonaws.com/project/map/cluster-size-5.png) no-repeat",
+          background:
+            "url(https://dorandoran.s3.ap-northeast-2.amazonaws.com/project/map/cluster-size-5.png) no-repeat",
           textAlign: "center",
           fontSize: "22px",
           fontWeight: "bold",
@@ -209,6 +214,7 @@ const KakaoMap = (() => {
     if (postOverlays.length === 0) {
       return;
     }
+    clearClusterer();
     postOverlays.forEach((overlay) => {
       overlay.setMap(null);
     });
@@ -218,13 +224,19 @@ const KakaoMap = (() => {
     if (postOverlays.length === 0) {
       return;
     }
+    clearClusterer();
     postOverlays.forEach((overlay) => {
       overlay.setMap(map);
+      clusterer.addMarker(overlay);
     });
   };
 
   const clearClusterer = () => {
     clusterer.clear();
+  };
+
+  const clearPostOverlay = () => {
+    postOverlays = [];
   };
 
   const _getAdministrativeAddress = (location) => {
@@ -267,6 +279,7 @@ const KakaoMap = (() => {
     hidePostOverlays,
     showPostOverlays,
     clearClusterer,
+    clearPostOverlay,
     getAddress,
     addEventToMap,
   };

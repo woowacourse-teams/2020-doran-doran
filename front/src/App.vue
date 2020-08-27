@@ -8,22 +8,26 @@
       <RouterView />
     </transition>
     <MemberSidebar />
+    <MemberUpdateModal v-if="isInitialMember" @close="closeMemberUpdateModal" />
   </v-app>
 </template>
 
 <script>
 import DoranAppBar from "@/components/DoranAppBar";
 import MemberSidebar from "@/components/member/MemberSidebar";
+import MemberUpdateModal from "@/components/member/MemberUpdateModal";
 
 export default {
   name: "App",
   components: {
     DoranAppBar,
     MemberSidebar,
+    MemberUpdateModal,
   },
   data() {
     return {
       showMemberSidebar: false,
+      isInitialMember: false,
     };
   },
   computed: {
@@ -44,15 +48,11 @@ export default {
       },
     },
   },
-  created() {
+  async created() {
     this.checkUrl();
-    this.checkToken();
-    this.$router.beforeEach((to, from, next) => {
-      if (to.path === "/" || to.path === "/timeline") {
-        this.$store.commit("appBar/MAP_PAGE_DEFAULT_MODE");
-      }
-      next(true);
-    });
+    await this.checkToken();
+    this.preventRoute();
+    this.isInitialMember = this.$store.getters["member/isInitialMember"];
   },
   methods: {
     checkUrl() {
@@ -67,8 +67,19 @@ export default {
       if (storageToken && storageToken !== "guest") {
         await this.$store.dispatch("member/loadMember");
       } else if (!storageToken) {
-        this.$router.push("/login");
+        await this.$router.push("/login");
       }
+    },
+    preventRoute() {
+      this.$router.beforeEach((to, from, next) => {
+        if (to.path === "/" || to.path === "/timeline") {
+          this.$store.commit("appBar/MAP_PAGE_DEFAULT_MODE");
+        }
+        next(true);
+      });
+    },
+    closeMemberUpdateModal() {
+      this.isInitialMember = false;
     },
   },
 };

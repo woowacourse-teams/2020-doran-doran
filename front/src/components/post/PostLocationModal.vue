@@ -4,7 +4,7 @@
       <v-icon
         color="grey lighten-4"
         class="my-2 mx-1 rounded-pill close-btn"
-        @click.prevent="closeModal"
+        @click="closeModal"
       >
         mdi-close
       </v-icon>
@@ -27,8 +27,8 @@ export default {
   },
   async mounted() {
     await this.$kakaoMap.drawMap(this.$refs.postMap);
-    await this.$kakaoMap.setCenterLocation(this.location);
-    await this.$kakaoMap.setMarker(this.location, MAP_MARKER_IMAGE);
+    this.$kakaoMap.setCenterLocation(this.location);
+    this.$kakaoMap.setMarker(this.location, MAP_MARKER_IMAGE);
   },
   methods: {
     closeModal() {

@@ -43,14 +43,14 @@ export default {
       newNickname: "",
     };
   },
-  mounted() {
-    this.rendered = true;
-    this.newNickname = this.member.nickname;
-  },
   computed: {
     member() {
       return this.$store.getters["member/getMember"];
     },
+  },
+  mounted() {
+    this.rendered = true;
+    this.newNickname = this.member.nickname;
   },
   methods: {
     async updateMember() {

@@ -20,7 +20,7 @@
       >
         <v-btn
           value="24hours"
-          small
+          height="30"
           class="period-btn px-3"
           @click="loadPostsWithinXhours(24)"
         >
@@ -28,7 +28,7 @@
         </v-btn>
         <v-btn
           value="7days"
-          small
+          height="30"
           class="period-btn px-3"
           @click="loadPostsWithinXdays(7)"
         >
@@ -36,7 +36,7 @@
         </v-btn>
         <v-btn
           value="30days"
-          small
+          height="30"
           class="period-btn px-3"
           @click="loadPostsWithinXdays(30)"
         >
@@ -44,17 +44,16 @@
         </v-btn>
         <v-btn
           value="all"
-          small
-          class="period-button px-3"
+          height="30"
+          class="period-btn px-3"
           @click="loadAllPosts"
         >
           전체
         </v-btn>
         <v-btn
           value="userInput"
-          small
-          depressed
-          color="period-btn px-3"
+          height="30"
+          class="period-btn px-3"
           @click="openCalendarModal"
         >
           직접 입력
@@ -132,7 +131,7 @@ export default {
       }
     },
     async inputEndDate(date) {
-      await this.$store.commit("filter/SET_END_DATE", date);
+      this.$store.commit("filter/SET_END_DATE", date);
       this.isInputEndDateFilled = true;
       if (this.isInputStartDateFilled === true) {
         await this.handleUserInputFiltering();
@@ -164,12 +163,12 @@ export default {
       this.periodFilterChoice = this.previousFilterChoice;
     },
     async filterPosts() {
+      this.$store.commit("post/CLEAR_POSTS");
       const filteredPosts = await this.$store.dispatch("filter/filterPosts");
       if (filteredPosts.length === 0) {
         this.$store.commit("snackbar/SHOW", ERROR_MESSAGE.NO_POST_MESSAGE);
       }
-      await this.$store.commit("post/CLEAR_POSTS");
-      await this.$store.commit("post/SET_POSTS", filteredPosts);
+      this.$store.commit("post/SET_POSTS", filteredPosts);
       this.previousFilterChoice = this.periodFilterChoice;
       this.previousStartDateFilter = this.$store.getters["filter/startDate"];
       this.previousEndDateFilter = this.$store.getters["filter/endDate"];
@@ -184,8 +183,8 @@ export default {
   top: 65px;
   left: 10px;
   z-index: 1;
-  width: 25px;
-  height: 25px;
+  width: 30px;
+  height: 30px;
 }
 
 .period-choices {
@@ -195,7 +194,7 @@ export default {
   z-index: 1;
   max-width: 65%;
   overflow-x: auto;
-  box-shadow: 1px 1px 8px grey;
+  box-shadow: 1px 1px 8px silver;
 }
 
 .period-choices::-webkit-scrollbar {
@@ -204,11 +203,6 @@ export default {
 
 .period-btn {
   background: white !important;
-}
-
-.period-button {
-  background: white !important;
-  color: black;
 }
 
 .user-input-modal {
