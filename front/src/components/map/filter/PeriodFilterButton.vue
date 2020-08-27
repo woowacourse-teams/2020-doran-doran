@@ -17,7 +17,7 @@
     >
       <template v-if="isSliderOpened">
         <v-btn-toggle
-          v-model="periodFilterChoice"
+          v-model="selected"
           mandatory
           rounded
           borderless
@@ -90,9 +90,9 @@ export default {
   data() {
     return {
       buttonColor: DORAN_DORAN_COLORS.POINT_COLOR,
+      selected: "24hours",
       isSliderOpened: false,
       isCalendarOpened: false,
-      periodFilterChoice: "24hours",
       startDate: "",
       endDate: "",
     };
@@ -102,7 +102,7 @@ export default {
       this.isSliderOpened = !this.isSliderOpened;
     },
     openCalendar() {
-      if (this.periodFilterChoice === "userInput") {
+      if (this.selected === "userInput") {
         this.isCalendarOpened = true;
       }
     },
@@ -157,7 +157,7 @@ export default {
     },
   },
   watch: {
-    periodFilterChoice(val) {
+    selected(val) {
       this.isCalendarOpened = val === "userInput";
     },
   },
