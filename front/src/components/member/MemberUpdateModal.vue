@@ -1,7 +1,7 @@
 <template>
-  <div class="d-flex flex-column modal-mask" @click.self="close">
+  <div class="d-flex flex-column modal-mask" @click.self="closeModal">
     <VSpacer />
-    <transition name="bounce" @after-leave="close">
+    <transition name="bounce" @after-leave="closeModal">
       <div v-if="rendered" class="pa-6 pb-1 modal-container">
         <VTextField
           label="새 닉네임을 입력하세요."
@@ -61,9 +61,9 @@ export default {
       const updatedMember = await api.updateMember(this.newNickname);
       this.$store.commit("member/SET_MEMBER", updatedMember);
       this.$store.commit("snackbar/SHOW", "🥳 성공적으로 변경되었습니다.");
-      this.close();
+      this.closeModal();
     },
-    close() {
+    closeModal() {
       this.$emit("close-modal");
     },
     nicknameNotChanged() {
