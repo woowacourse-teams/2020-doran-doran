@@ -7,6 +7,8 @@ export default {
       id: 0,
       nickname: "로그인해주세요",
       picture: "",
+      createdAt: "",
+      updatedAt: "",
     },
   },
   mutations: {
@@ -18,6 +20,8 @@ export default {
       state.member.id = 0;
       state.member.nickname = "로그인해주세요";
       state.member.picture = "";
+      state.member.createdAt = "";
+      state.member.updatedAt = "";
     },
   },
   actions: {
@@ -35,6 +39,12 @@ export default {
         !localStorage.getItem("accessToken") ||
         localStorage.getItem("accessToken") === "guest" ||
         state.member.id === 0
+      );
+    },
+    isInitialMember: (state) => {
+      return (
+        state.member.id !== 0 &&
+        state.member.createdAt === state.member.updatedAt
       );
     },
   },

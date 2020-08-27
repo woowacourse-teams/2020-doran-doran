@@ -2,11 +2,15 @@
   <v-container fill-height fluid class="pa-0">
     <KakaoMap />
     <PeriodFilterButton v-if="isDefaultMode" />
-    <MapAssistantButtons v-if="isDefaultMode"/>
+    <MapAssistantButtons v-if="isDefaultMode" />
     <PostCreateButton class="post-create-btn" />
     <PostCreateModal
-      v-if="this.isPostMode"
+      v-if="isPostMode"
       :location="this.$kakaoMap.getCenterLocation()"
+    />
+    <MemberUpdateModal
+      v-if="isInitialMember"
+      @close="closeMemberUpdateModal"
     />
   </v-container>
 </template>
@@ -17,6 +21,7 @@ import PostCreateButton from "@/components/map/PostCreateButton";
 import PostCreateModal from "@/components/map/PostCreateModal";
 import MapAssistantButtons from "@/components/map/MapAssistantButtons";
 import PeriodFilterButton from "@/components/map/filter/PeriodFilterButton";
+import MemberUpdateModal from "@/components/member/MemberUpdateModal";
 
 export default {
   name: "MapPage",
@@ -26,9 +31,12 @@ export default {
     KakaoMap,
     PostCreateButton,
     PostCreateModal,
+    MemberUpdateModal,
   },
-  created() {
-    this.$store.commit("appBar/MAP_PAGE_DEFAULT_MODE");
+  data() {
+    return {
+      isInitialMember: false,
+    };
   },
   computed: {
     isDefaultMode() {
@@ -39,6 +47,32 @@ export default {
     },
     isPostMode() {
       return this.$store.getters["mapMode/isPost"];
+    },
+  },
+  async created() {
+    this.$store.commit("appBar/MAP_PAGE_DEFAULT_MODE");
+    this.checkUrl();
+    await this.checkToken();
+    this.isInitialMember = this.$store.getters["member/isInitialMember"];
+  },
+  methods: {
+    checkUrl() {
+      const urlToken = location.href.split("token=")[1];
+      if (urlToken) {
+        localStorage.setItem("accessToken", urlToken);
+        location.href = "/";
+      }
+    },
+    async checkToken() {
+      const storageToken = localStorage.getItem("accessToken");
+      if (storageToken && storageToken !== "guest") {
+        await this.$store.dispatch("member/loadMember");
+      } else if (!storageToken) {
+        this.$router.push("/login");
+      }
+    },
+    closeMemberUpdateModal() {
+      this.isInitialMember = false;
     },
   },
 };
