@@ -68,12 +68,12 @@
     </transition>
 
     <v-sheet
-      v-if="isCalendarOpened"
+      v-show="isCalendarOpened"
       elevation="2"
       class="pa-3 rounded-lg user-input-modal"
     >
-      <DatePickerMenu :label="'시작 날짜'" @select-date="inputStartDate" />
-      <DatePickerMenu :label="'종료 날짜'" @select-date="inputEndDate" />
+      <DatePickerMenu :label="'시작 날짜'" @select="inputStartDate" />
+      <DatePickerMenu :label="'종료 날짜'" @select="inputEndDate" />
     </v-sheet>
   </div>
 </template>
@@ -106,8 +106,8 @@ export default {
       periodFilterChoice: "24hours",
       isInputStartDateFilled: false,
       isInputEndDateFilled: false,
-      previousStartDateFilter: "",
-      previousEndDateFilter: "",
+      startDate: "",
+      endDate: "",
       previousFilterChoice: "",
     };
   },
@@ -170,8 +170,8 @@ export default {
       }
     },
     rollBackPeriodFilter() {
-      this.$store.commit("filter/SET_START_DATE", this.previousStartDateFilter);
-      this.$store.commit("filter/SET_END_DATE", this.previousEndDateFilter);
+      this.$store.commit("filter/SET_START_DATE", this.startDate);
+      this.$store.commit("filter/SET_END_DATE", this.endDate);
       this.periodFilterChoice = this.previousFilterChoice;
     },
     async filterPosts() {
@@ -182,8 +182,8 @@ export default {
       }
       this.$store.commit("post/SET_POSTS", filteredPosts);
       this.previousFilterChoice = this.periodFilterChoice;
-      this.previousStartDateFilter = this.$store.getters["filter/startDate"];
-      this.previousEndDateFilter = this.$store.getters["filter/endDate"];
+      this.startDate = this.$store.getters["filter/startDate"];
+      this.endDate = this.$store.getters["filter/endDate"];
     },
   },
   watch: {

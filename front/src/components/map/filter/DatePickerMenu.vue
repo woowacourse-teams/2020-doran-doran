@@ -34,7 +34,7 @@ export default {
   methods: {
     selectDate() {
       this.menu = false;
-      this.$emit("select-date", this.date);
+      this.$emit("select", this.date);
     },
   },
 };
