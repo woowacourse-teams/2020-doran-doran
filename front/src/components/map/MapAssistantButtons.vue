@@ -41,7 +41,7 @@ export default {
   position: absolute;
   left: 15px;
   bottom: 20px;
-  z-index: 9998;
+  z-index: 1;
 }
 
 .v-btn:before {

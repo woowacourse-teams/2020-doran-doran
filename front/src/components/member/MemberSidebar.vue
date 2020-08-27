@@ -27,12 +27,9 @@
       </v-list>
     </v-navigation-drawer>
 
-    <MemberUpdateModal
-      v-if="this.isUpdating"
-      @close="closeMemberUpdateModal"
-    />
+    <MemberUpdateModal v-if="this.isUpdating" @close="closeMemberUpdateModal" />
 
-    <v-dialog v-model="isDeleting" persistent class="a">
+    <v-dialog v-model="isDeleting" persistent>
       <v-card>
         <v-card-text class="pa-5">정말 탈퇴하시겠어요?</v-card-text>
         <v-card-actions>
