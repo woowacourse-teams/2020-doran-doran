@@ -1,7 +1,7 @@
 <template>
-  <div class="d-flex flex-column modal-mask" @click.self="close">
-    <VSpacer />
-    <transition name="bounce" @after-leave="close">
+  <div class="d-flex flex-column modal-mask" @click.self="closeModal">
+    <VSpacer @click.self="closeModal" />
+    <transition name="bounce" @after-leave="closeModal">
       <div v-if="rendered" class="pa-6 pb-1 modal-container">
         <VTextField
           label="새 닉네임을 입력하세요."
@@ -28,7 +28,7 @@
         </div>
       </div>
     </transition>
-    <VSpacer />
+    <VSpacer @click.self="closeModal" />
   </div>
 </template>
 
@@ -61,10 +61,10 @@ export default {
       const updatedMember = await api.updateMember(this.newNickname);
       this.$store.commit("member/SET_MEMBER", updatedMember);
       this.$store.commit("snackbar/SHOW", "🥳 성공적으로 변경되었습니다.");
-      this.close();
+      this.closeModal();
     },
-    close() {
-      this.$emit("close-modal");
+    closeModal() {
+      this.$emit("close");
     },
     nicknameNotChanged() {
       return this.member.nickname === this.newNickname;
@@ -77,17 +77,6 @@ export default {
 </script>
 
 <style scoped>
-.modal-mask {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 9998;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  text-align: center;
-}
-
 .modal-container {
   width: 90%;
   bottom: 50%;
