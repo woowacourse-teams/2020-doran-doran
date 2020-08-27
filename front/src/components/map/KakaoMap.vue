@@ -79,7 +79,7 @@ export default {
 <style scoped>
 .center-marker {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   left: 50%;
   margin-left: -20px;
   margin-top: -35px;

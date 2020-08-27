@@ -1,19 +1,29 @@
 <template>
   <v-container fill-height fluid class="pa-0">
     <KakaoMap @render="renderMap" />
-    <PeriodFilterButton v-if="isDefaultMode" />
-    <router-link to="/timeline" class="px-3 font-size-x-small timeline-btn">
-      <v-icon color="black" class="mb-1" small>mdi-format-list-bulleted</v-icon>
-      목록
-    </router-link>
-    <MapAssistantButtons v-if="isDefaultMode" />
-    <PostCreateButton class="post-create-btn" />
-    <PostCreateModal v-if="isPostMode" />
+
     <template v-if="isMapRendered">
+      <PeriodFilterButton v-show="isDefaultMode" />
+      <router-link
+        v-show="isDefaultMode"
+        to="/timeline"
+        class="px-3 font-size-x-small timeline-btn"
+      >
+        <v-icon color="black" class="mb-1" small>
+          mdi-format-list-bulleted
+        </v-icon>
+        목록
+      </router-link>
+      <MapAssistantButtons v-show="isDefaultMode" />
+      <PostCreateButton class="post-create-btn" />
+      <PostCreateModal v-if="isPostMode" />
       <TimelineModal v-if="timeline" />
+      <PostModal v-if="post" />
+      <MemberUpdateModal
+        v-if="isInitialMember"
+        @close="closeMemberUpdateModal"
+      />
     </template>
-    <PostModal v-if="post" />
-    <MemberUpdateModal v-if="isInitialMember" @close="closeMemberUpdateModal" />
   </v-container>
 </template>
 
