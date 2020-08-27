@@ -18,8 +18,8 @@
       <PostCreateButton class="post-create-btn" />
       <PostCreateModal v-if="isPostMode" />
       <TimelineModal v-if="timeline" />
-      <PostModal v-if="post" />
     </template>
+    <PostModal v-if="post" />
   </v-container>
 </template>
 
