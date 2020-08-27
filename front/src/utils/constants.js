@@ -9,7 +9,7 @@ const ERROR_MESSAGE = {
 };
 
 const API_BASE_URL = {
-  EC2: "//localhost:8080",
+  EC2: "//dorandoran.io:8080",
 };
 
 const EVENT_TYPE = {
