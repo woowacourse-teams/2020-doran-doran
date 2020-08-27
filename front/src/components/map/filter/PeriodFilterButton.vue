@@ -4,11 +4,11 @@
       small
       fab
       dark
-      :color="buttonType.color"
+      :color="buttonColor"
       class="filter-btn"
       @click="toggleSlider"
     >
-      <v-icon small>{{ buttonType.icon }}</v-icon>
+      <v-icon small>mdi-camera-timer</v-icon>
     </v-btn>
     <transition
       name="slide-right"
@@ -82,17 +82,6 @@
 import { DORAN_DORAN_COLORS, ERROR_MESSAGE } from "@/utils/constants";
 import DatePickerMenu from "@/components/map/filter/DatePickerMenu";
 
-const BUTTON_TYPE = {
-  DEFAULT: {
-    color: DORAN_DORAN_COLORS.POINT_COLOR,
-    icon: "mdi-camera-timer",
-  },
-  MARKER: {
-    color: "red",
-    icon: "mdi-check",
-  },
-};
-
 export default {
   name: "PeriodFilterButton",
   components: {
@@ -100,7 +89,7 @@ export default {
   },
   data() {
     return {
-      buttonType: BUTTON_TYPE.DEFAULT,
+      buttonColor: DORAN_DORAN_COLORS.POINT_COLOR,
       isSliderOpened: false,
       isCalendarOpened: false,
       periodFilterChoice: "24hours",
