@@ -1,12 +1,12 @@
 <template>
-  <div @click.self="close">
+  <div @click.self="closeConfirmModal">
     <div class="pa-0 modal-container">
       <div class="button-box ma-0 pa-0">
         <v-card-text>정말 삭제하시겠어요?</v-card-text>
         <v-card-actions>
           <VSpacer />
           <v-btn color="red" text @click="deleteObject">삭제</v-btn>
-          <v-btn text @click="closeModal">취소</v-btn>
+          <v-btn text @click="closeConfirmModal">취소</v-btn>
         </v-card-actions>
       </div>
     </div>
@@ -30,7 +30,7 @@ export default {
         this.$emit("delete-comment");
       }
     },
-    closeModal() {
+    closeConfirmModal() {
       this.$emit("close");
     },
   },

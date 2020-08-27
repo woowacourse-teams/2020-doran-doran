@@ -1,10 +1,10 @@
 <template>
-  <div class="modal-mask" @click.self="closeModal">
+  <div class="modal-mask" @click.self="closeModals">
     <div class="pa-0 modal-container">
       <div class="button-box ma-0 pa-0">
-        <v-btn v-if="isMine" block text @click="openModal">삭제</v-btn>
+        <v-btn v-if="isMine" block text @click="openConfirmModal">삭제</v-btn>
         <v-btn v-if="!isMine" block text @click="report">신고</v-btn>
-        <v-btn block text @click="closeModal">취소</v-btn>
+        <v-btn block text @click="closeModals">취소</v-btn>
       </div>
     </div>
     <ConfirmModal
@@ -12,7 +12,7 @@
       :type="type"
       @delete-post="deletePost"
       @delete-comment="deleteComment"
-      @close="closeModal"
+      @close="closeModals"
     />
   </div>
 </template>
@@ -47,16 +47,16 @@ export default {
     deleteComment() {
       this.$emit("delete-comment");
     },
-    openModal() {
+    openConfirmModal() {
       this.isConfirmModalVisible = true;
     },
-    closeModal() {
+    closeModals() {
       this.isConfirmModalVisible = false;
       this.$emit("close");
     },
     report() {
       this.$store.commit("snackbar/SHOW", "👩🏻‍💻아직 신고 기능이 구현되지 않았어요.")
-      this.closeModal();
+      this.closeModals();
     },
   },
 };

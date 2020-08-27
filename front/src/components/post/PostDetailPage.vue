@@ -40,7 +40,7 @@
     <PostDetailPageLocationMapModal
       v-if="isMapModalVisible"
       :location="post.location"
-      @close-modal="closeMapModal"
+      @close="closeMapModal"
     />
     <OptionsModal
       v-if="isOptionsModalVisible"
