@@ -5,7 +5,17 @@
       <div class="mb-3">
         <v-icon x-large class="mr-3">mdi-account-circle</v-icon>
         <span class="font-weight-bold">{{ post.memberResponse.nickname }}</span>
-        <div class="float-right mt-2">{{ postDate }}</div>
+        <div class="float-right mt-2">
+          {{ postDate }}
+          <v-icon
+            color="black"
+            size="large"
+            class="mb-1"
+            @click="openOptionsModal"
+          >
+            mdi-dots-vertical
+          </v-icon>
+        </div>
       </div>
       <div class="text--disabled font-size-small">
         <span class="post-address" @click="openMapModal">
@@ -30,9 +40,15 @@
       <VSpacer class="bottom-spacer" />
       <CommentInput :post-id="post.id" />
       <PostLocationModal
-        v-if="this.isMapModalVisible"
+        v-if="isMapModalVisible"
         :location="post.location"
         @close-modal="closeMapModal"
+      />
+      <OptionsModal
+        v-if="isOptionsModalVisible"
+        :is-mine="isMine"
+        :remove="remove"
+        @close="closeOptionsModal"
       />
     </div>
   </div>
@@ -94,12 +110,6 @@ export default {
     },
     authorAddress() {
       return Object.values(this.post.authorAddress).join(" ");
-    },
-    isMyPost() {
-      return (
-        this.post.memberResponse.id ===
-        this.$store.getters["member/getMember"].id
-      );
     },
   },
   async created() {

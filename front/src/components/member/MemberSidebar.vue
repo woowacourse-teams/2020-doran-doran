@@ -50,7 +50,8 @@ import MemberUpdateModal from "@/components/member/MemberUpdateModal";
 import api from "@/api/member";
 
 const LOGOUT_SUCCESS_MESSAGE = "성공적으로 로그아웃 되었습니다.";
-const FAILED_TO_DELETE_MEMBER_MESSAGE = "탈퇴에 실패했습니다. 다시 요청해주세요.";
+const FAILED_TO_DELETE_MEMBER_MESSAGE =
+  "탈퇴에 실패했습니다. 다시 요청해주세요.";
 const DELETE_MEMBER_SUCCESS = "성공적으로 탈퇴를 완료했습니다.";
 
 export default {

@@ -23,6 +23,7 @@ body {
 
 a {
   text-decoration: none;
+  color: black !important;
 }
 
 .font-size-x-large {
@@ -39,10 +40,6 @@ a {
 
 .font-size-x-small {
   font-size: 0.8rem;
-}
-
-.snackbar {
-  z-index: 9999 !important;
 }
 
 .modal-mask {

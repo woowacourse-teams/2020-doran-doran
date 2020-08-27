@@ -124,7 +124,7 @@ export default {
     async openCalendarModal() {
       this.isCalendarOpen = true;
     },
-     async inputStartDate(date) {
+    async inputStartDate(date) {
       await this.$store.commit("filter/SET_START_DATE", date);
       this.isInputStartDateFilled = true;
       if (this.isInputEndDateFilled === true) {
@@ -139,8 +139,14 @@ export default {
       }
     },
     async handleUserInputFiltering() {
-      if (this.$store.getters["filter/startDate"] > this.$store.getters["filter/endDate"]) {
-        this.$store.commit("snackbar/SHOW", ERROR_MESSAGE.INVALID_USER_DATE_INPUT);
+      if (
+        this.$store.getters["filter/startDate"] >
+        this.$store.getters["filter/endDate"]
+      ) {
+        this.$store.commit(
+          "snackbar/SHOW",
+          ERROR_MESSAGE.INVALID_USER_DATE_INPUT,
+        );
         this.rollBackPeriodFilter();
         this.isInputStartDateFilled = false;
         this.isInputEndDateFilled = false;
@@ -186,7 +192,7 @@ export default {
   position: absolute;
   top: 66px;
   left: 45px;
-  z-index: 999;
+  z-index: 1;
   max-width: 65%;
   overflow-x: auto;
   box-shadow: 1px 1px 8px grey;
@@ -209,7 +215,7 @@ export default {
   position: absolute;
   top: 105px;
   left: 190px;
-  z-index: 9998;
+  z-index: 1;
   max-width: 60%;
   padding-top: 15px;
   padding-left: 10px;

@@ -1,11 +1,6 @@
 <template>
   <v-container ref="map" fill-height fluid>
-    <v-icon
-      v-if="isMarkerMode"
-      size="40"
-      color="red"
-      class="center-marker"
-    >
+    <v-icon v-if="isMarkerMode" size="40" color="red" class="center-marker">
       mdi-map-marker
     </v-icon>
     <template v-if="isMapRendered" class="d-none">
@@ -84,7 +79,7 @@ export default {
 <style scoped>
 .center-marker {
   position: relative;
-  z-index: 2;
+  z-index: 1;
   left: 50%;
   margin-left: -20px;
   margin-top: -35px;

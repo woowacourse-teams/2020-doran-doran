@@ -47,7 +47,10 @@ export default {
       this.$emit("close");
     },
     report() {
-      this.$store.commit("snackbar/SHOW", "👩🏻‍💻아직 신고 기능이 구현되지 않았어요.")
+      this.$store.commit(
+        "snackbar/SHOW",
+        "👩🏻‍💻아직 신고 기능이 구현되지 않았어요.",
+      );
       this.closeModals();
     },
   },

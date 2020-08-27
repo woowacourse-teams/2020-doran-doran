@@ -13,10 +13,7 @@
       <TimelineModal v-if="timeline" />
     </template>
     <PostModal v-if="post" />
-    <MemberUpdateModal
-      v-if="isInitialMember"
-      @close="closeMemberUpdateModal"
-    />
+    <MemberUpdateModal v-if="isInitialMember" @close="closeMemberUpdateModal" />
   </v-container>
 </template>
 
@@ -68,6 +65,9 @@ export default {
   methods: {
     renderMap() {
       this.isMapRendered = true;
+    },
+    closeMemberUpdateModal() {
+      this.isInitialMember = false;
     },
   },
   watch: {

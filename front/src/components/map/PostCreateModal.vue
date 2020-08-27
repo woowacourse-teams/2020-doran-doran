@@ -92,7 +92,6 @@ export default {
       this.bounceOut();
     },
     bounceOut() {
-      console.log("e");
       this.content = "";
       this.rendered = false;
     },
