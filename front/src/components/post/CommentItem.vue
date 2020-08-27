@@ -7,9 +7,19 @@
         <span class="font-weight-bold">{{ comment.author.nickname }}</span>
         <div class="float-right text--disabled font-size-x-small">
           {{ comment.distance.toFixed(2) }} km 밖에서
+          <v-icon
+            color="black"
+            size="large"
+            class="mb-1"
+            @click="openOptionsModal"
+          >
+            mdi-dots-vertical
+          </v-icon>
         </div>
       </div>
-      <div>{{ comment.content }}</div>
+      <div>
+        {{ comment.content }}
+      </div>
       <div>
         <span class="text--disabled font-size-x-small">{{ commentDate }}</span>
         <span class="float-right">
@@ -20,14 +30,32 @@
         </span>
       </div>
     </div>
+    <OptionsModal
+      v-if="isOptionsModalVisible"
+      :is-mine="isMine"
+      :remove="remove"
+      @close="closeOptionsModal"
+    />
   </div>
 </template>
 
 <script>
 import { ERROR_MESSAGE, LIKE_BUTTON_TYPE } from "@/utils/constants";
+import OptionsModal from "@/components/post/OptionsModal";
+
+const DELETE_COMMENT_SUCCESS_MESSAGE = "👻 댓글이 삭제되었습니다.";
+const DELETE_COMMENT_FAIL_MESSAGE = "😭 댓글 삭제에 실패했습니다.";
 
 export default {
   name: "CommentItem",
+  components: {
+    OptionsModal,
+  },
+  data() {
+    return {
+      isOptionsModalVisible: false,
+    };
+  },
   props: {
     comment: {
       type: Object,
@@ -35,6 +63,12 @@ export default {
     },
   },
   computed: {
+    isMine() {
+      return (
+        this.comment.author.id ===
+        this.$store.getters["member/getMember"].id
+      );
+    },
     commentDate() {
       return this.$moment(this.comment.createdAt).fromNow();
     },
@@ -45,7 +79,21 @@ export default {
       return this.liked ? LIKE_BUTTON_TYPE.LIKED : LIKE_BUTTON_TYPE.DEFAULT;
     },
   },
+  async created() {
+    this.isMyComment =
+      this.comment.author.id === this.$store.getters["member/getMember"].id;
+  },
   methods: {
+    async remove() {
+      await this.$store
+        .dispatch("comment/deleteComment", this.comment.id)
+        .catch((e) => {
+          this.$store.commit("snackbar/SHOW", DELETE_COMMENT_FAIL_MESSAGE);
+          throw e;
+        });
+      this.$store.commit("snackbar/SHOW", DELETE_COMMENT_SUCCESS_MESSAGE);
+      this.$store.dispatch("post/loadPost", this.$route.params.id);
+    },
     hasLike(like) {
       return (
         like.memberId === this.$store.getters["member/getMember"].id &&
@@ -78,6 +126,16 @@ export default {
           throw e;
         });
       this.$store.dispatch("post/loadPost", this.comment.postId);
+    },
+    deleteComment() {
+      console.log("delete");
+      this.$emit("delete", this.comment.id);
+    },
+    openOptionsModal() {
+      this.isOptionsModalVisible = true;
+    },
+    closeOptionsModal() {
+      this.isOptionsModalVisible = false;
     },
   },
 };

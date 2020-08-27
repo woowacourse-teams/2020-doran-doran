@@ -10,6 +10,7 @@
 
 <script>
 import CommentItem from "@/components/post/CommentItem";
+
 export default {
   name: "CommentList",
   components: {

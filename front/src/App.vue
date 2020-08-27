@@ -21,6 +21,11 @@ export default {
     DoranAppBar,
     MemberSidebar,
   },
+  data() {
+    return {
+      showMemberSidebar: false,
+    };
+  },
   computed: {
     snackbarMessage: {
       get() {
@@ -39,10 +44,26 @@ export default {
       },
     },
   },
-  data() {
-    return {
-      showMemberSidebar: false,
-    };
+  created() {
+    this.checkUrl();
+    this.checkToken();
+  },
+  methods: {
+    checkUrl() {
+      const urlToken = location.href.split("token=")[1];
+      if (urlToken) {
+        localStorage.setItem("accessToken", urlToken);
+        location.href = "/";
+      }
+    },
+    async checkToken() {
+      const storageToken = localStorage.getItem("accessToken");
+      if (storageToken && storageToken !== "guest") {
+        await this.$store.dispatch("member/loadMember");
+      } else if (!storageToken) {
+        this.$router.push("/login");
+      }
+    },
   },
 };
 </script>

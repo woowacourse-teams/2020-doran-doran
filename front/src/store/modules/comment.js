@@ -6,6 +6,9 @@ export default {
     async createComment(context, newComment) {
       await api.createComment(newComment);
     },
+    async deleteComment(context, commentId) {
+      await api.deleteComment(commentId);
+    },
     async createCommentLike(context, newCommentLike) {
       return await api.createCommentLike(newCommentLike);
     },

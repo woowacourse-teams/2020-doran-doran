@@ -1,9 +1,19 @@
 <template>
-  <div class="pa-4">
+  <div v-if="existMember" class="pa-4">
     <div class="mb-3">
       <v-icon x-large class="mr-3">mdi-account-circle</v-icon>
       <span class="font-weight-bold">{{ post.memberResponse.nickname }}</span>
-      <div class="float-right mt-2">{{ postDate }}</div>
+      <span class="float-right mt-2">
+        {{ postDate }}
+        <v-icon
+          color="black"
+          size="large"
+          class="mb-1"
+          @click="openOptionsModal"
+        >
+          mdi-dots-vertical
+        </v-icon>
+      </span>
     </div>
     <div class="text--disabled font-size-small">
       <span style="color: #659fec;" @click="openMapModal">
@@ -28,9 +38,15 @@
     <div class="bottom-spacer" />
     <CommentInput :post-id="post.id" />
     <PostDetailPageLocationMapModal
-      v-if="this.isMapModalVisible"
+      v-if="isMapModalVisible"
       :location="post.location"
-      @close-modal="closeMapModal"
+      @close="closeMapModal"
+    />
+    <OptionsModal
+      v-if="isOptionsModalVisible"
+      :is-mine="isMine"
+      :remove="remove"
+      @close="closeOptionsModal"
     />
   </div>
 </template>
@@ -39,7 +55,11 @@
 import CommentInput from "@/components/post/CommentInput";
 import CommentList from "@/components/post/CommentList";
 import PostDetailPageLocationMapModal from "@/components/post/PostDetailPageLocationMapModal";
+import OptionsModal from "@/components/post/OptionsModal";
 import { ERROR_MESSAGE, LIKE_BUTTON_TYPE } from "@/utils/constants";
+
+const DELETE_POST_SUCCESS_MESSAGE = "👻 글이 삭제되었습니다.";
+const DELETE_POST_FAIL_MESSAGE = "😭 글 삭제에 실패했습니다.";
 
 export default {
   name: "PostDetailPage",
@@ -47,13 +67,24 @@ export default {
     CommentList,
     CommentInput,
     PostDetailPageLocationMapModal,
+    OptionsModal,
   },
   data() {
     return {
       isMapModalVisible: false,
+      isOptionsModalVisible: false,
     };
   },
   computed: {
+    existMember() {
+      return localStorage.getItem("accessToken");
+    },
+    isMine() {
+      return (
+        this.post.memberResponse.id ===
+        this.$store.getters["member/getMember"].id
+      );
+    },
     post: {
       get() {
         return this.$store.getters["post/getPost"];
@@ -75,6 +106,12 @@ export default {
     authorAddress() {
       return Object.values(this.post.authorAddress).join(" ");
     },
+    isMyPost() {
+      return (
+        this.post.memberResponse.id ===
+        this.$store.getters["member/getMember"].id
+      );
+    },
   },
   async created() {
     this.post = await this.$store.dispatch(
@@ -84,6 +121,14 @@ export default {
     this.$store.commit("appBar/POST_DETAIL_PAGE");
   },
   methods: {
+    async remove() {
+      await this.$store.dispatch("post/deletePost", this.post.id).catch((e) => {
+        this.$store.commit("snackbar/SHOW", DELETE_POST_FAIL_MESSAGE);
+        throw e;
+      });
+      this.$store.commit("snackbar/SHOW", DELETE_POST_SUCCESS_MESSAGE);
+      this.$router.go(-1);
+    },
     hasLike(like) {
       return (
         like.memberId === this.$store.getters["member/getMember"].id &&
@@ -122,6 +167,12 @@ export default {
     },
     closeMapModal() {
       this.isMapModalVisible = false;
+    },
+    openOptionsModal() {
+      this.isOptionsModalVisible = true;
+    },
+    closeOptionsModal() {
+      this.isOptionsModalVisible = false;
     },
   },
 };

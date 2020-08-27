@@ -13,12 +13,14 @@ const options = {
 
 const api = (() => {
   const createComment = (newComment) => client.post("", newComment, options);
+  const deleteComment = (commentId) => client.delete(`/${commentId}`, options);
   const createCommentLike = (newCommentLike) =>
     client.post(`/likes`, newCommentLike, options);
   const deleteCommentLike = (commentLikeId) =>
     client.delete(`/likes/${commentLikeId}`, options);
   return {
     createComment,
+    deleteComment,
     createCommentLike,
     deleteCommentLike,
   };
