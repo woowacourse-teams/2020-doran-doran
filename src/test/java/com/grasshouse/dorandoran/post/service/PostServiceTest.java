@@ -9,6 +9,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.grasshouse.dorandoran.comment.domain.Comment;
 import com.grasshouse.dorandoran.comment.repository.CommentRepository;
+import com.grasshouse.dorandoran.common.baseentity.EntityStatus;
 import com.grasshouse.dorandoran.common.exception.PostNotFoundException;
 import com.grasshouse.dorandoran.member.domain.Member;
 import com.grasshouse.dorandoran.member.repository.MemberRepository;
@@ -19,6 +20,7 @@ import com.grasshouse.dorandoran.post.dto.PostCreateResponse;
 import com.grasshouse.dorandoran.post.dto.PostResponse;
 import com.grasshouse.dorandoran.post.repository.PostRepository;
 import java.util.List;
+import javax.swing.text.html.parser.Entity;
 import javax.validation.ConstraintViolationException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -115,7 +117,9 @@ class PostServiceTest {
         assertThat(postRepository.findAll()).hasSize(1);
 
         postService.deletePost(persistPost.getId(), member);
-        assertThat(postRepository.findAll()).hasSize(0);
+
+        Post savedPost = postRepository.findAll().get(0);
+        assertThat(savedPost.getStatus()).isEqualTo(EntityStatus.DELETED);
     }
 
     @DisplayName("글을 삭제 시 댓글도 삭제된다.")
@@ -135,7 +139,12 @@ class PostServiceTest {
         assertThat(commentRepository.findAll()).hasSize(1);
 
         postService.deletePost(persistPost.getId(), member);
-        assertThat(commentRepository.findAll()).hasSize(0);
+
+        Post savedPost = postRepository.findAll().get(0);
+        Comment savedComment = commentRepository.findAll().get(0);
+        assertThat(savedPost.getStatus()).isEqualTo(EntityStatus.DELETED);
+        assertThat(savedComment.getPost().getId()).isEqualTo(savedPost.getId());
+        assertThat(savedComment.getStatus()).isEqualTo(EntityStatus.DELETED);
     }
 
     @DisplayName("[예외] 글 내용이 200자를 넘는다.")

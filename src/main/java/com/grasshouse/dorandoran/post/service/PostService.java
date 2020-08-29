@@ -58,7 +58,7 @@ public class PostService {
         if (!post.isSameAuthor(member)) {
             throw new MemberMismatchException(POST_AUTHOR_MISMATCH_MESSAGE);
         }
-        postRepository.delete(post);
+        post.delete();
     }
 
     private Post findPostById(Long id) {

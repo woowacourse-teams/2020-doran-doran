@@ -1,6 +1,7 @@
 package com.grasshouse.dorandoran.post.domain;
 
 import com.grasshouse.dorandoran.comment.domain.Comment;
+import com.grasshouse.dorandoran.common.baseentity.EntityStatus;
 import com.grasshouse.dorandoran.member.domain.Member;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -15,6 +16,8 @@ import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -82,6 +85,9 @@ public class Post {
     })
     private Address authorAddress;
 
+    @Enumerated(value = EnumType.STRING)
+    private EntityStatus status = EntityStatus.ALIVE;
+
     @Builder
     public Post(Long id, Member author, String content, Location location, Address address, Address authorAddress) {
         this.id = id;
@@ -105,6 +111,13 @@ public class Post {
 
     public void removeComment(Comment comment) {
         comments.remove(comment);
+    }
+
+    public void delete() {
+        this.status = EntityStatus.DELETED;
+        this.comments
+            .forEach(Comment::delete);
+        this.likes.forEach(PostLike::delete);
     }
 
     public boolean isSameAuthor(Member member) {

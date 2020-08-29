@@ -6,6 +6,7 @@ import static com.grasshouse.dorandoran.fixture.LocationFixture.JAMSIL_STATION;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import com.grasshouse.dorandoran.common.baseentity.EntityStatus;
 import com.grasshouse.dorandoran.common.exception.PostLikeAlreadyExistsException;
 import com.grasshouse.dorandoran.member.domain.Member;
 import com.grasshouse.dorandoran.member.repository.MemberRepository;
@@ -127,8 +128,15 @@ public class PostLikeServiceTest {
         assertThat(persistPost.getLikes()).hasSize(1);
 
         postService.deletePost(persistPost.getId(), author);
-        assertThat(postRepository.findAll()).hasSize(0);
-        assertThat(postLikeRepository.findAll()).hasSize(0);
+
+        Post savedPost = postRepository.findAll().get(0);
+        PostLike savedPostLike = postLikeRepository.findAll().get(0);
+
+        assertThat(savedPost.getStatus()).isEqualTo(EntityStatus.DELETED);
+        assertThat(savedPostLike.getPost().getId()).isEqualTo(savedPost.getId());
+        assertThat(savedPostLike.getStatus()).isEqualTo(EntityStatus.DELETED);
+
+
     }
 
     @AfterEach
