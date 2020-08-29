@@ -75,7 +75,7 @@ public class Comment {
     }
 
     private void setAuthor(Member author) {
-        if (Objects.isNull(author)) {
+        if (Objects.isNull(this.author)) {
             this.author = author;
             this.author.addComment(this);
         }
