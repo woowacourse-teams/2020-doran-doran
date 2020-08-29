@@ -113,7 +113,9 @@ public class PostLikeServiceTest {
         assertThat(postLikeRepository.findAll()).hasSize(1);
 
         postLikeService.deletePostLike(persistPostLike.getId(), postLiker);
-        assertThat(postLikeRepository.findAll()).hasSize(0);
+
+        PostLike savedPostLike = postLikeRepository.findAll().get(0);
+        assertThat(savedPostLike.getStatus()).isEqualTo(EntityStatus.DELETED);
     }
 
     @DisplayName("게시글을 삭제할 때 좋아요도 같이 삭제된다.")
