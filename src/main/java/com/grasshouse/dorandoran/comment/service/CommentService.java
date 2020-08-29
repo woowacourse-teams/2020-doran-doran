@@ -47,12 +47,11 @@ public class CommentService {
     public void deleteComment(Long commentId, Member member) {
         Comment comment = commentRepository.findById(commentId)
             .orElseThrow(CommentNotFoundException::new);
-
         if (!comment.isSameAuthor(member)) {
             throw new MemberMismatchException(COMMENT_AUTHOR_MISMATCH_MESSAGE);
         }
-
         Post post = comment.getPost();
         post.removeComment(comment);
+        comment.delete();
     }
 }

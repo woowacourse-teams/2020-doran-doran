@@ -52,6 +52,6 @@ public class CommentLikeService {
         if (!commentLike.isSameLiker(member)) {
             throw new MemberMismatchException(COMMENT_LIKER_MISMATCH_MESSAGE);
         }
-        commentLikeRepository.delete(commentLike);
+        commentLike.delete();
     }
 }

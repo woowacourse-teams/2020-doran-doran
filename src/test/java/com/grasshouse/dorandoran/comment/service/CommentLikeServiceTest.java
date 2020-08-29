@@ -12,6 +12,7 @@ import com.grasshouse.dorandoran.comment.dto.CommentLikeCreateRequest;
 import com.grasshouse.dorandoran.comment.repository.CommentLikeRepository;
 import com.grasshouse.dorandoran.comment.repository.CommentRepository;
 import com.grasshouse.dorandoran.comment.repository.CommentRepositorySupport;
+import com.grasshouse.dorandoran.common.baseentity.EntityStatus;
 import com.grasshouse.dorandoran.common.exception.CommentLikeAlreadyExistsException;
 import com.grasshouse.dorandoran.member.domain.Member;
 import com.grasshouse.dorandoran.member.repository.MemberRepository;
@@ -129,7 +130,9 @@ class CommentLikeServiceTest {
         assertThat(commentLikeRepository.findAll()).hasSize(1);
 
         commentLikeService.deleteCommentLike(persistCommentLike.getId(), commentLiker);
-        assertThat(commentLikeRepository.findAll()).hasSize(0);
+
+        CommentLike savedCommentLike = commentLikeRepository.findAll().get(0);
+        assertThat(savedCommentLike.getStatus()).isEqualTo(EntityStatus.DELETED);
     }
 
     @DisplayName("댓글을 삭제할 때 좋아요도 같이 삭제된다.")
