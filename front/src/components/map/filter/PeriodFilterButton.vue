@@ -4,8 +4,7 @@
       small
       fab
       dark
-      :color="buttonColor"
-      class="filter-btn"
+      class="filter-btn doran-doran-color"
       @click="toggleSlider"
     >
       <v-icon small>mdi-camera-timer</v-icon>
@@ -28,7 +27,7 @@
             :key="option.order"
             :value="option"
             height="30"
-            class="period-btn px-3"
+            class="px-3 period-btn"
           >
             {{ option.title }}
           </v-btn>
@@ -48,7 +47,7 @@
 </template>
 
 <script>
-import { DORAN_DORAN_COLORS, ERROR_MESSAGE } from "@/utils/constants";
+import { ERROR_MESSAGE } from "@/utils/constants";
 import { PERIOD_OPTIONS } from "@/utils/periodOptions";
 import DatePickerMenu from "@/components/map/filter/DatePickerMenu";
 
@@ -60,7 +59,6 @@ export default {
   data() {
     return {
       periodOptions: PERIOD_OPTIONS,
-      buttonColor: DORAN_DORAN_COLORS.POINT_COLOR,
       selected: "24hours",
       isSliderOpened: false,
       isCalendarOpened: false,
