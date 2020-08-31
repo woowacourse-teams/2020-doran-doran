@@ -81,7 +81,7 @@ export default {
     loadPosts() {
       const startDate = this.selected.startDate();
       this.$store.commit("filter/SET_START_DATE", startDate);
-      this.$store.commit("filter/RESET_END_DATE");
+      this.$store.commit("filter/SET_END_DATE_TO_NOW");
       this.filterPosts();
     },
     inputStartDate(date) {
