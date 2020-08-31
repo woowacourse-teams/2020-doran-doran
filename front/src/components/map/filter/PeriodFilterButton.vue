@@ -47,8 +47,9 @@
 </template>
 
 <script>
-import { ERROR_MESSAGE } from "@/utils/constants";
+import { DATE_FORMAT, ERROR_MESSAGE } from "@/utils/constants";
 import { PERIOD_OPTIONS } from "@/utils/periodOptions";
+import moment from "moment";
 import DatePickerMenu from "@/components/map/filter/DatePickerMenu";
 
 export default {
@@ -78,20 +79,24 @@ export default {
     closeCalender() {
       this.isCalendarOpened = false;
     },
-    loadPosts(action) {
-      action();
+    loadPosts() {
+      const startDate = this.selected.startDate();
+      this.$store.commit("filter/SET_START_DATE", startDate);
+      this.$store.commit("filter/RESET_END_DATE");
       this.filterPosts();
     },
     inputStartDate(date) {
       this.startDate = date;
-      this.$store.commit("filter/SET_START_DATE", date);
+      const startDate = moment(date).format(DATE_FORMAT.DEFAULT);
+      this.$store.commit("filter/SET_START_DATE", startDate);
       if (this.endDate) {
         this.handleUserInputFiltering();
       }
     },
     inputEndDate(date) {
       this.endDate = date;
-      this.$store.commit("filter/SET_END_DATE", date);
+      const endDate = moment(date).format(DATE_FORMAT.DEFAULT);
+      this.$store.commit("filter/SET_END_DATE", endDate);
       if (this.startDate) {
         this.handleUserInputFiltering();
       }
@@ -124,7 +129,7 @@ export default {
         return;
       }
       this.closeCalender();
-      this.loadPosts(val.action);
+      this.loadPosts();
     },
   },
 };

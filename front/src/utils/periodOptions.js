@@ -1,25 +1,26 @@
-import store from "../store/index";
+import { DATE_FORMAT } from "@/utils/constants";
+import moment from "moment";
 
 export const PERIOD_OPTIONS = {
   DAY: {
     order: 1,
     title: "24시간 이내",
-    action: () => store.commit("filter/SET_FILTER_FROM_X_HOURS_AGO_TO_NOW", 24),
+    startDate: () => moment().subtract(24, "hours").format(DATE_FORMAT.DEFAULT),
   },
   WEEK: {
     order: 2,
     title: "7일 이내",
-    action: () => store.commit("filter/SET_FILTER_FROM_X_DAYS_AGO_TO_NOW", 7),
+    startDate: () => moment().subtract(7, "days").format(DATE_FORMAT.DEFAULT),
   },
   MONTH: {
     order: 3,
     title: "30일 이내",
-    action: () => store.commit("filter/SET_FILTER_FROM_X_DAYS_AGO_TO_NOW", 30),
+    startDate: () => moment().subtract(30, "days").format(DATE_FORMAT.DEFAULT),
   },
   ALL: {
     order: 4,
     title: "전체",
-    action: () => store.commit("filter/INITIALIZE_PERIOD_FILTER"),
+    startDate: () => "",
   },
   CUSTOM: {
     order: 5,
