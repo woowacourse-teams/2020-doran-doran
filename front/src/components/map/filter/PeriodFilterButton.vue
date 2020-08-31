@@ -47,9 +47,8 @@
 </template>
 
 <script>
-import { DATE_FORMAT, ERROR_MESSAGE } from "@/utils/constants";
-import { PERIOD_OPTIONS } from "@/utils/periodOptions";
-import moment from "moment";
+import { ERROR_MESSAGE } from "@/utils/constants";
+import { PERIOD_OPTIONS, PERIOD } from "@/utils/period";
 import DatePickerMenu from "@/components/map/filter/DatePickerMenu";
 
 export default {
@@ -87,16 +86,14 @@ export default {
     },
     inputStartDate(date) {
       this.startDate = date;
-      const startDate = moment(date).format(DATE_FORMAT);
-      this.$store.commit("filter/SET_START_DATE", startDate);
+      this.$store.commit("filter/SET_START_DATE", PERIOD.format(date));
       if (this.endDate) {
         this.handleUserInputFiltering();
       }
     },
     inputEndDate(date) {
       this.endDate = date;
-      const endDate = moment(date).format(DATE_FORMAT);
-      this.$store.commit("filter/SET_END_DATE", endDate);
+      this.$store.commit("filter/SET_END_DATE", PERIOD.format(date));
       if (this.startDate) {
         this.handleUserInputFiltering();
       }

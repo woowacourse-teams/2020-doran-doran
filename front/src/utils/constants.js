@@ -38,8 +38,6 @@ const LIKE_BUTTON_TYPE = {
   },
 };
 
-const DATE_FORMAT = "YYYY-MM-DD HH:mm:ss";
-
 export {
   ERROR_MESSAGE,
   API_BASE_URL,
@@ -47,5 +45,4 @@ export {
   MAP_MODE,
   DORAN_DORAN_COLORS,
   LIKE_BUTTON_TYPE,
-  DATE_FORMAT,
 };
