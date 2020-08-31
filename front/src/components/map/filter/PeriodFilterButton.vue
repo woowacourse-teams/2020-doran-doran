@@ -24,13 +24,13 @@
           class="period-choices"
         >
           <v-btn
-            v-for="period in periodFilters"
-            :key="period.order"
-            :value="period"
+            v-for="option in periodOptions"
+            :key="option.order"
+            :value="option"
             height="30"
             class="period-btn px-3"
           >
-            {{ period.title }}
+            {{ option.title }}
           </v-btn>
         </v-btn-toggle>
       </template>
@@ -49,7 +49,7 @@
 
 <script>
 import { DORAN_DORAN_COLORS, ERROR_MESSAGE } from "@/utils/constants";
-import { PERIOD_FILTERS } from "@/utils/periodFilter";
+import { PERIOD_OPTIONS } from "@/utils/periodOptions";
 import DatePickerMenu from "@/components/map/filter/DatePickerMenu";
 
 export default {
@@ -59,7 +59,7 @@ export default {
   },
   data() {
     return {
-      periodFilters: PERIOD_FILTERS,
+      periodOptions: PERIOD_OPTIONS,
       buttonColor: DORAN_DORAN_COLORS.POINT_COLOR,
       selected: "24hours",
       isSliderOpened: false,
@@ -73,7 +73,7 @@ export default {
       this.isSliderOpened = !this.isSliderOpened;
     },
     openCalendar() {
-      if (this.selected === this.periodFilters.CUSTOM) {
+      if (this.selected === this.periodOptions.CUSTOM) {
         this.isCalendarOpened = true;
       }
     },
@@ -81,7 +81,7 @@ export default {
       this.isCalendarOpened = false;
     },
     loadPosts(action) {
-      if (this.selected === this.periodFilters.CUSTOM) {
+      if (this.selected === this.periodOptions.CUSTOM) {
         this.openCalendar();
         return;
       }

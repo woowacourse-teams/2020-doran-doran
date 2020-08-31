@@ -1,6 +1,6 @@
 import store from "../store/index";
 
-export const PERIOD_FILTERS = {
+export const PERIOD_OPTIONS = {
   DAY: {
     order: 1,
     title: "24시간 이내",
