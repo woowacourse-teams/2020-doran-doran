@@ -81,10 +81,6 @@ export default {
       this.isCalendarOpened = false;
     },
     loadPosts(action) {
-      if (this.selected === this.periodOptions.CUSTOM) {
-        this.openCalendar();
-        return;
-      }
       action();
       this.filterPosts();
     },
@@ -125,6 +121,11 @@ export default {
   },
   watch: {
     selected(val) {
+      if (val === this.periodOptions.CUSTOM) {
+        this.openCalendar();
+        return;
+      }
+      this.closeCalender();
       this.loadPosts(val.action);
     },
   },
