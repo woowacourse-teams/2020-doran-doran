@@ -87,7 +87,7 @@ export default {
     },
     inputStartDate(date) {
       this.startDate = date;
-      const startDate = moment(date).format(DATE_FORMAT.DEFAULT);
+      const startDate = moment(date).format(DATE_FORMAT);
       this.$store.commit("filter/SET_START_DATE", startDate);
       if (this.endDate) {
         this.handleUserInputFiltering();
@@ -95,7 +95,7 @@ export default {
     },
     inputEndDate(date) {
       this.endDate = date;
-      const endDate = moment(date).format(DATE_FORMAT.DEFAULT);
+      const endDate = moment(date).format(DATE_FORMAT);
       this.$store.commit("filter/SET_END_DATE", endDate);
       if (this.startDate) {
         this.handleUserInputFiltering();

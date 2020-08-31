@@ -6,7 +6,7 @@ export default {
   namespaced: true,
   state: {
     keyword: "",
-    startDate: moment().subtract(24, "hours").format(DATE_FORMAT.DEFAULT),
+    startDate: moment().subtract(24, "hours").format(DATE_FORMAT),
     endDate: "",
   },
   mutations: {
@@ -30,7 +30,7 @@ export default {
         startDate: state.startDate,
         endDate: state.endDate
           ? state.endDate
-          : moment().add(1, "seconds").format(DATE_FORMAT.DEFAULT),
+          : moment().add(1, "seconds").format(DATE_FORMAT),
       };
       return await api.filterPosts(data);
     },

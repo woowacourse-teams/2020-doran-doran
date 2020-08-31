@@ -38,9 +38,7 @@ const LIKE_BUTTON_TYPE = {
   },
 };
 
-const DATE_FORMAT = {
-  DEFAULT: "YYYY-MM-DD HH:mm:ss",
-};
+const DATE_FORMAT = "YYYY-MM-DD HH:mm:ss";
 
 export {
   ERROR_MESSAGE,
