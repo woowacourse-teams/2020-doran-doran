@@ -9,9 +9,7 @@ const TYPE = {
 };
 
 const PERIOD = (() => {
-  const format = (date) => {
-    moment(date).format(FORMAT);
-  };
+  const format = (date) => moment(date).format(FORMAT);
 
   const now = () => moment().add(1, TYPE.SECOND).format(FORMAT);
 
