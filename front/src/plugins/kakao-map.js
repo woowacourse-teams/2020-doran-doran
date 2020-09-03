@@ -105,6 +105,8 @@ export const KakaoMap = (() => {
     map = new kakao.maps.Map(mapContainer, options);
     postOverlays = [];
     clusterer = _createClusterer();
+
+    return map;
   };
 
   const _getGeolocation = () => {
@@ -267,6 +269,10 @@ export const KakaoMap = (() => {
     map.addListener(eventType, func);
   };
 
+  const setMap = (newMap) => {
+    map = newMap;
+  };
+
   return {
     drawMap,
     getCurrentLocation,
@@ -282,6 +288,7 @@ export const KakaoMap = (() => {
     clearPostOverlay,
     getAddress,
     addEventToMap,
+    setMap,
   };
 })();
 

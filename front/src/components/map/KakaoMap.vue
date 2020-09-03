@@ -35,7 +35,8 @@ export default {
     },
   },
   async mounted() {
-    await this.$kakaoMap.drawMap(this.$refs.map);
+    const map = await this.$kakaoMap.drawMap(this.$refs.map);
+    this.$store.commit("mapMode/SET_MAP", map);
     await this.$kakaoMap
       .setCenterByCurrentLocation()
       .catch(() =>

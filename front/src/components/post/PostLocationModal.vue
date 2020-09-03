@@ -29,6 +29,8 @@ export default {
     await this.$kakaoMap.drawMap(this.$refs.postMap);
     this.$kakaoMap.setCenterLocation(this.location);
     this.$kakaoMap.setMarker(this.location, MAP_MARKER_IMAGE);
+    const mainMap = this.$store.getters["mapMode/map"];
+    this.$kakaoMap.setMap(mainMap);
   },
   methods: {
     closeModal() {
