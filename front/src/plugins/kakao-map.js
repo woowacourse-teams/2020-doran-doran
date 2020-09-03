@@ -252,7 +252,6 @@ export const KakaoMap = (() => {
     if (!map || !location) {
       return;
     }
-
     const address = await _getAdministrativeAddress(location);
     return {
       depth1: address[1].region_1depth_name,
@@ -265,7 +264,6 @@ export const KakaoMap = (() => {
     if (!map) {
       return;
     }
-
     map.addListener(eventType, func);
   };
 
