@@ -4,14 +4,14 @@ export default {
   namespaced: true,
   state: {
     map: null,
-    mapMode: MAP_MODE.DEFAULT,
+    mode: MAP_MODE.DEFAULT,
   },
   mutations: {
     SET_MAP(state, map) {
       state.map = map;
     },
     CHANGE_STATE(state, target) {
-      state.mapMode = target;
+      state.mode = target;
     },
   },
   getters: {
@@ -19,13 +19,13 @@ export default {
       return state.map;
     },
     isDefault(state) {
-      return state.mapMode === MAP_MODE.DEFAULT;
+      return state.mode === MAP_MODE.DEFAULT;
     },
     isMarker(state) {
-      return state.mapMode === MAP_MODE.MARKER;
+      return state.mode === MAP_MODE.MARKER;
     },
     isPost(state) {
-      return state.mapMode === MAP_MODE.POST;
+      return state.mode === MAP_MODE.POST;
     },
   },
 };
