@@ -35,7 +35,7 @@ export default {
         .trim();
     },
     contentTail() {
-      return this.post.content.length > CONTENT_LENGTH ? "..." : "";
+      return Array.from(this.post.content).length > CONTENT_LENGTH ? "..." : "";
     },
   },
   mounted() {
