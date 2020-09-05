@@ -29,7 +29,10 @@ export default {
       return halfAnHourAgo < postCreatedAt;
     },
     shortContent() {
-      return this.post.content.substring(0, CONTENT_LENGTH).trim();
+      return Array.from(this.post.content)
+        .slice(0, CONTENT_LENGTH)
+        .join("")
+        .trim();
     },
     contentTail() {
       return this.post.content.length > CONTENT_LENGTH ? "..." : "";
