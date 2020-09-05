@@ -48,7 +48,7 @@
 
 <script>
 import { ERROR_MESSAGE } from "@/utils/constants";
-import { PERIOD_OPTIONS, PERIOD } from "@/utils/period";
+import { PERIOD_OPTIONS, period } from "@/utils/period";
 import DatePickerMenu from "@/components/map/filter/DatePickerMenu";
 
 export default {
@@ -86,14 +86,14 @@ export default {
     },
     inputStartDate(date) {
       this.startDate = date;
-      this.$store.commit("filter/SET_START_DATE", PERIOD.format(date));
+      this.$store.commit("filter/SET_START_DATE", period.format(date));
       if (this.endDate) {
         this.handleUserInputFiltering();
       }
     },
     inputEndDate(date) {
       this.endDate = date;
-      this.$store.commit("filter/SET_END_DATE", PERIOD.format(date));
+      this.$store.commit("filter/SET_END_DATE", period.format(date));
       if (this.startDate) {
         this.handleUserInputFiltering();
       }

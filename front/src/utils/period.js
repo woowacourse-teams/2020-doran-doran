@@ -8,7 +8,7 @@ const TYPE = {
   DAY: "days",
 };
 
-const PERIOD = (() => {
+const period = (() => {
   const format = (date) => moment(date).format(FORMAT);
 
   const now = () => moment().add(1, TYPE.SECOND).format(FORMAT);
@@ -26,17 +26,17 @@ const PERIOD_OPTIONS = {
   DAY: {
     order: 1,
     title: "24시간 이내",
-    startDate: () => PERIOD.ago(24, TYPE.HOUR),
+    startDate: () => period.ago(24, TYPE.HOUR),
   },
   WEEK: {
     order: 2,
     title: "7일 이내",
-    startDate: () => PERIOD.ago(7, TYPE.DAY),
+    startDate: () => period.ago(7, TYPE.DAY),
   },
   MONTH: {
     order: 3,
     title: "30일 이내",
-    startDate: () => PERIOD.ago(30, TYPE.DAY),
+    startDate: () => period.ago(30, TYPE.DAY),
   },
   ALL: {
     order: 4,
@@ -49,4 +49,4 @@ const PERIOD_OPTIONS = {
   },
 };
 
-export { PERIOD, PERIOD_OPTIONS };
+export { period, PERIOD_OPTIONS };

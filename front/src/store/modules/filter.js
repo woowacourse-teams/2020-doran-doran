@@ -1,11 +1,11 @@
 import api from "@/api/posts";
-import { PERIOD } from "@/utils/period";
+import { period } from "@/utils/period";
 
 export default {
   namespaced: true,
   state: {
     keyword: "",
-    startDate: PERIOD.ago(24, "hours"),
+    startDate: period.ago(24, "hours"),
     endDate: "",
   },
   mutations: {
@@ -19,7 +19,7 @@ export default {
       state.endDate = endDate;
     },
     SET_END_DATE_TO_NOW(state) {
-      state.endDate = PERIOD.now();
+      state.endDate = period.now();
     },
   },
   actions: {
