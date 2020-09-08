@@ -33,10 +33,12 @@ export default {
       return Array.from(firstLine).slice(0, CONTENT_LENGTH).join("").trim();
     },
     contentTail() {
-      return this.post.content.includes("\n") ||
-        Array.from(this.post.content).length > CONTENT_LENGTH
-        ? "..."
-        : "";
+      if (this.post.content.includes("\n")) {
+        return "...";
+      } else if (Array.from(this.post.content).length > CONTENT_LENGTH) {
+        return "...";
+      }
+      return "";
     },
   },
   mounted() {
