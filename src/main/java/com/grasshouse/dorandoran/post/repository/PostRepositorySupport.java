@@ -2,6 +2,7 @@ package com.grasshouse.dorandoran.post.repository;
 
 import static com.grasshouse.dorandoran.post.domain.QPost.post;
 
+import com.grasshouse.dorandoran.common.baseentity.EntityStatus;
 import com.grasshouse.dorandoran.post.domain.Post;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -15,7 +16,7 @@ import org.springframework.util.StringUtils;
 @Repository
 public class PostRepositorySupport extends QuerydslRepositorySupport {
 
-    private JPAQueryFactory jpaQueryFactory;
+    private final JPAQueryFactory jpaQueryFactory;
 
     public PostRepositorySupport(JPAQueryFactory jpaQueryFactory) {
         super(Post.class);
@@ -33,6 +34,7 @@ public class PostRepositorySupport extends QuerydslRepositorySupport {
     public List<Post> findPostsInBounds(Double leftBound, Double rightBound, Double lowerBound,
         Double upperBound) {
         return jpaQueryFactory.selectFrom(post)
+            .where(isAlive())
             .where(betweenLatitude(lowerBound, upperBound), betweenLongitude(leftBound, rightBound))
             .fetch();
     }
@@ -41,8 +43,13 @@ public class PostRepositorySupport extends QuerydslRepositorySupport {
         LocalDateTime endDate) {
         return jpaQueryFactory
             .selectFrom(post)
+            .where(isAlive())
             .where(containsKeyword(keyword), betweenDate(startDate, endDate))
             .fetch();
+    }
+
+    private BooleanExpression isAlive() {
+        return post.status.eq(EntityStatus.ALIVE);
     }
 
     private BooleanExpression betweenLatitude(Double lowerBound, Double upperBound) {
