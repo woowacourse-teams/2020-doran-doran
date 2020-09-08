@@ -1,11 +1,8 @@
 package com.grasshouse.dorandoran.comment.domain;
 
-import com.grasshouse.dorandoran.common.baseentity.EntityStatus;
 import com.grasshouse.dorandoran.member.domain.Member;
 import java.util.Objects;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -34,9 +31,6 @@ public class CommentLike {
     @JoinColumn(name = "comment_id")
     private Comment comment;
 
-    @Enumerated(value = EnumType.STRING)
-    private EntityStatus status = EntityStatus.ALIVE;
-
     @Builder
     public CommentLike(Long id, Long memberId, Comment comment) {
         this.id = id;
@@ -49,10 +43,6 @@ public class CommentLike {
             this.comment = comment;
             this.comment.getLikes().add(this);
         }
-    }
-
-    public void delete() {
-        this.status = EntityStatus.DELETED;
     }
 
     public boolean isSameLiker(Member member) {

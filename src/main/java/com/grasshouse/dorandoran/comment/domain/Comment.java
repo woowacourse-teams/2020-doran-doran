@@ -90,7 +90,6 @@ public class Comment {
 
     public void delete() {
         this.status = EntityStatus.DELETED;
-        this.likes.forEach(CommentLike::delete);
     }
 
     public boolean isSameAuthor(Member member) {
