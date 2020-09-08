@@ -14,7 +14,7 @@
       @after-enter="openCalendar"
       @before-leave="closeCalender"
     >
-      <template v-if="isSliderOpened">
+      <template v-if="isSliderOpen">
         <v-btn-toggle
           v-model="selected"
           mandatory
@@ -36,7 +36,7 @@
     </transition>
 
     <v-sheet
-      v-show="isCalendarOpened"
+      v-show="isCalendarOpen"
       elevation="2"
       class="pa-3 rounded-lg user-input-modal"
     >
@@ -60,23 +60,23 @@ export default {
     return {
       periodOptions: PERIOD_OPTIONS,
       selected: "24hours",
-      isSliderOpened: false,
-      isCalendarOpened: false,
+      isSliderOpen: false,
+      isCalendarOpen: false,
       startDate: "",
       endDate: "",
     };
   },
   methods: {
     toggleSlider() {
-      this.isSliderOpened = !this.isSliderOpened;
+      this.isSliderOpen = !this.isSliderOpen;
     },
     openCalendar() {
       if (this.selected === this.periodOptions.CUSTOM) {
-        this.isCalendarOpened = true;
+        this.isCalendarOpen = true;
       }
     },
     closeCalender() {
-      this.isCalendarOpened = false;
+      this.isCalendarOpen = false;
     },
     loadPosts() {
       const startDate = this.selected.startDate();
@@ -116,7 +116,7 @@ export default {
         this.$store.commit("snackbar/SHOW", ERROR_MESSAGE.NO_POST_MESSAGE);
         return;
       }
-      this.isCalendarOpened = false;
+      this.isCalendarOpen = false;
     },
   },
   watch: {
