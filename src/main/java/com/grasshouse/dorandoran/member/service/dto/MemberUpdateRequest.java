@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MemberUpdateRequest {
+
     @NotBlank(message = "변경할 닉네임 값은 비어있을 수 없습니다.")
     private String nickname;
 }

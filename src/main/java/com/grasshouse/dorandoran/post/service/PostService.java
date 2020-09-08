@@ -13,19 +13,16 @@ import com.grasshouse.dorandoran.post.service.dto.PostCreateRequest;
 import com.grasshouse.dorandoran.post.service.dto.PostCreateResponse;
 import com.grasshouse.dorandoran.post.service.dto.PostResponse;
 import java.util.List;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@RequiredArgsConstructor
 @Service
 public class PostService {
 
-    private PostRepository postRepository;
-    private PostRepositorySupport postRepositorySupport;
-
-    public PostService(PostRepository postRepository, PostRepositorySupport postRepositorySupport) {
-        this.postRepository = postRepository;
-        this.postRepositorySupport = postRepositorySupport;
-    }
+    private final PostRepository postRepository;
+    private final PostRepositorySupport postRepositorySupport;
 
     @Transactional
     public PostCreateResponse createPost(PostCreateRequest request, Member member) {

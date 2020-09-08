@@ -4,23 +4,19 @@ import com.grasshouse.dorandoran.common.exception.InvalidAuthenticationException
 import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+@RequiredArgsConstructor
 @Component
 public class BearerAuthInterceptor implements HandlerInterceptor {
 
     private static final String ALLOW_HTTP_METHOD = "GET";
 
-    private AuthorizationExtractor authExtractor;
-    private JwtTokenProvider jwtTokenProvider;
-
-    public BearerAuthInterceptor(AuthorizationExtractor authExtractor,
-        JwtTokenProvider jwtTokenProvider) {
-        this.authExtractor = authExtractor;
-        this.jwtTokenProvider = jwtTokenProvider;
-    }
+    private final AuthorizationExtractor authExtractor;
+    private final JwtTokenProvider jwtTokenProvider;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response,

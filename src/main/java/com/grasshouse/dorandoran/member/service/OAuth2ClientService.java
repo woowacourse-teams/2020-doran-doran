@@ -4,20 +4,18 @@ import com.grasshouse.dorandoran.common.exception.UnsupportedOperationException;
 import com.grasshouse.dorandoran.member.domain.Member;
 import com.grasshouse.dorandoran.member.repository.MemberRepository;
 import java.util.LinkedHashMap;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
+@RequiredArgsConstructor
 @Service
 public class OAuth2ClientService implements OAuth2AuthorizedClientService {
 
-    private MemberRepository memberRepository;
-
-    public OAuth2ClientService(MemberRepository memberRepository) {
-        this.memberRepository = memberRepository;
-    }
+    private final MemberRepository memberRepository;
 
     @Override
     public void saveAuthorizedClient(OAuth2AuthorizedClient oAuth2AuthorizedClient,
