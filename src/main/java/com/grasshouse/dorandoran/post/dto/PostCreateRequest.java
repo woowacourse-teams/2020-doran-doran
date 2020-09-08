@@ -1,4 +1,4 @@
-package com.grasshouse.dorandoran.post.service.dto;
+package com.grasshouse.dorandoran.post.dto;
 
 import com.grasshouse.dorandoran.member.domain.Member;
 import com.grasshouse.dorandoran.post.domain.Address;

@@ -1,7 +1,7 @@
-package com.grasshouse.dorandoran.post.service.dto;
+package com.grasshouse.dorandoran.post.dto;
 
-import com.grasshouse.dorandoran.comment.service.dto.CommentResponse;
-import com.grasshouse.dorandoran.member.service.dto.MemberResponse;
+import com.grasshouse.dorandoran.comment.dto.CommentResponse;
+import com.grasshouse.dorandoran.member.dto.MemberResponse;
 import com.grasshouse.dorandoran.post.domain.Address;
 import com.grasshouse.dorandoran.post.domain.Location;
 import com.grasshouse.dorandoran.post.domain.Post;

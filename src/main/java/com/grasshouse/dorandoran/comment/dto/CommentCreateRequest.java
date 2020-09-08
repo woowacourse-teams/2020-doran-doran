@@ -1,4 +1,4 @@
-package com.grasshouse.dorandoran.comment.service.dto;
+package com.grasshouse.dorandoran.comment.dto;
 
 import com.grasshouse.dorandoran.post.domain.Location;
 import javax.validation.constraints.NotBlank;

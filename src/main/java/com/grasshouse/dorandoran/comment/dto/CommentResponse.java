@@ -1,7 +1,7 @@
-package com.grasshouse.dorandoran.comment.service.dto;
+package com.grasshouse.dorandoran.comment.dto;
 
 import com.grasshouse.dorandoran.comment.domain.Comment;
-import com.grasshouse.dorandoran.member.service.dto.MemberResponse;
+import com.grasshouse.dorandoran.member.dto.MemberResponse;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;

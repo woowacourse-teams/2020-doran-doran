@@ -2,8 +2,8 @@ package com.grasshouse.dorandoran.post.service;
 
 import com.grasshouse.dorandoran.post.domain.Post;
 import com.grasshouse.dorandoran.post.repository.PostRepositorySupport;
-import com.grasshouse.dorandoran.post.service.dto.PostFilterRequest;
-import com.grasshouse.dorandoran.post.service.dto.PostResponse;
+import com.grasshouse.dorandoran.post.dto.PostFilterRequest;
+import com.grasshouse.dorandoran.post.dto.PostResponse;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;

@@ -1,4 +1,4 @@
-package com.grasshouse.dorandoran.member.service.dto;
+package com.grasshouse.dorandoran.member.dto;
 
 import com.grasshouse.dorandoran.member.domain.Member;
 import java.time.LocalDateTime;

@@ -1,7 +1,7 @@
 package com.grasshouse.dorandoran.comment.controller;
 
 import com.grasshouse.dorandoran.comment.service.CommentLikeService;
-import com.grasshouse.dorandoran.comment.service.dto.CommentLikeCreateRequest;
+import com.grasshouse.dorandoran.comment.dto.CommentLikeCreateRequest;
 import com.grasshouse.dorandoran.config.jwt.LoginMember;
 import com.grasshouse.dorandoran.member.domain.Member;
 import java.net.URI;

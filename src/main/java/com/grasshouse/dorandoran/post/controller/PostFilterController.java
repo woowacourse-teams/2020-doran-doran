@@ -1,8 +1,8 @@
 package com.grasshouse.dorandoran.post.controller;
 
 import com.grasshouse.dorandoran.post.service.PostFilterService;
-import com.grasshouse.dorandoran.post.service.dto.PostFilterRequest;
-import com.grasshouse.dorandoran.post.service.dto.PostResponse;
+import com.grasshouse.dorandoran.post.dto.PostFilterRequest;
+import com.grasshouse.dorandoran.post.dto.PostResponse;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

@@ -2,7 +2,7 @@ package com.grasshouse.dorandoran.post.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.grasshouse.dorandoran.post.service.dto.PostFilterRequest;
+import com.grasshouse.dorandoran.post.dto.PostFilterRequest;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.stream.Stream;

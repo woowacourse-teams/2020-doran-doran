@@ -4,7 +4,7 @@ import static com.grasshouse.dorandoran.common.exception.DateNotValidException.N
 import static com.grasshouse.dorandoran.common.exception.DateNotValidException.NOT_VALID_DATE_FORMAT_MESSAGE;
 
 import com.grasshouse.dorandoran.common.exception.DateNotValidException;
-import com.grasshouse.dorandoran.post.service.dto.PostFilterRequest;
+import com.grasshouse.dorandoran.post.dto.PostFilterRequest;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import org.springframework.core.MethodParameter;

@@ -1,4 +1,4 @@
-package com.grasshouse.dorandoran.post.service.dto;
+package com.grasshouse.dorandoran.post.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

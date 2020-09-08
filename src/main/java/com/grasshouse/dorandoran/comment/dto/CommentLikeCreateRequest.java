@@ -1,4 +1,4 @@
-package com.grasshouse.dorandoran.post.service.dto;
+package com.grasshouse.dorandoran.comment.dto;
 
 import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -10,8 +10,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class PostLikeCreateRequest {
+public class CommentLikeCreateRequest {
 
     @NotNull
-    Long postId;
+    Long commentId;
 }

@@ -1,4 +1,4 @@
-package com.grasshouse.dorandoran.member.service.dto;
+package com.grasshouse.dorandoran.member.dto;
 
 import javax.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
