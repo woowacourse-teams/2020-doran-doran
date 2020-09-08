@@ -29,10 +29,13 @@ export default {
       return halfAnHourAgo < postCreatedAt;
     },
     shortContent() {
-      return this.post.content.substring(0, CONTENT_LENGTH).trim();
+      return Array.from(this.post.content)
+        .slice(0, CONTENT_LENGTH)
+        .join("")
+        .trim();
     },
     contentTail() {
-      return this.post.content.length > CONTENT_LENGTH ? "..." : "";
+      return Array.from(this.post.content).length > CONTENT_LENGTH ? "..." : "";
     },
   },
   mounted() {
@@ -86,6 +89,6 @@ export default {
   transform: rotate(45deg);
   background-color: white;
   box-shadow: -5px 0 0 white, 0 -5px 0 white, -5px -5px 0 white,
-    1px 1px 5px grey;
+    1px 1px 5px silver;
 }
 </style>
