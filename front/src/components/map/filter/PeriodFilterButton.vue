@@ -12,7 +12,7 @@
     <transition
       name="slide-right"
       @after-enter="openCalendar"
-      @before-leave="closeCalender"
+      @before-leave="closeCalendar"
     >
       <template v-if="isSliderOpen">
         <v-btn-toggle
@@ -75,7 +75,7 @@ export default {
         this.isCalendarOpen = true;
       }
     },
-    closeCalender() {
+    closeCalendar() {
       this.isCalendarOpen = false;
     },
     loadPosts() {
@@ -125,7 +125,7 @@ export default {
         this.openCalendar();
         return;
       }
-      this.closeCalender();
+      this.closeCalendar();
       this.loadPosts();
     },
   },
