@@ -10,7 +10,7 @@ export default {
     SET_MAP(state, map) {
       state.map = map;
     },
-    CHANGE_STATE(state, target) {
+    CHANGE_MODE(state, target) {
       state.mode = target;
     },
   },

@@ -48,11 +48,11 @@ export default {
   methods: {
     changeMode() {
       if (this.isDefaultMode) {
-        this.$store.commit("map/CHANGE_STATE", MAP_MODE.MARKER);
+        this.$store.commit("map/CHANGE_MODE", MAP_MODE.MARKER);
         this.$store.commit("snackbar/SHOW", MARKER_MODE_MESSAGE);
         this.$store.commit("appBar/MAP_PAGE_MARKER_MODE");
       } else if (this.isMarkerMode) {
-        this.$store.commit("map/CHANGE_STATE", MAP_MODE.POST);
+        this.$store.commit("map/CHANGE_MODE", MAP_MODE.POST);
       }
     },
   },
