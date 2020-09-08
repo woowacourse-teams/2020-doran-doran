@@ -24,7 +24,7 @@
         </span>
         에 외침
       </div>
-      <div class="my-5 text-break">{{ post.content }}</div>
+      <div class="my-5 text-break" v-html="postContent"></div>
       <div>
         <v-icon small>mdi-comment-processing-outline</v-icon>
         <span class="mx-1">{{ post.comments.length }}</span>
@@ -95,6 +95,9 @@ export default {
         return this.$store.getters["post/post"];
       },
       set() {},
+    },
+    postContent() {
+      return this.post.content.replace(/\n/g, "<br />");
     },
     postDate() {
       return this.$moment(this.post.createdAt).fromNow();
