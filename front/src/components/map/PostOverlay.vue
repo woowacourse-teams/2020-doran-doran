@@ -89,6 +89,6 @@ export default {
   transform: rotate(45deg);
   background-color: white;
   box-shadow: -5px 0 0 white, 0 -5px 0 white, -5px -5px 0 white,
-    1px 1px 5px grey;
+    1px 1px 5px silver;
 }
 </style>
