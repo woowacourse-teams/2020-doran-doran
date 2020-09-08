@@ -62,6 +62,7 @@ public class Comment {
     @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<CommentLike> likes = new HashSet<>();
 
+    @Builder.Default
     @Enumerated(value = EnumType.STRING)
     private EntityStatus status = EntityStatus.ALIVE;
 

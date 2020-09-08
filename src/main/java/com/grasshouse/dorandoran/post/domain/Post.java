@@ -58,7 +58,7 @@ public class Post {
     private LocalDateTime createdAt;
 
     @Builder.Default
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<Comment> comments = new ArrayList<>();
 
     @Builder.Default
@@ -85,6 +85,7 @@ public class Post {
     })
     private Address authorAddress;
 
+    @Builder.Default
     @Enumerated(value = EnumType.STRING)
     private EntityStatus status = EntityStatus.ALIVE;
 
@@ -121,5 +122,9 @@ public class Post {
 
     public boolean isSameAuthor(Member member) {
         return author.isSameMember(member);
+    }
+
+    public boolean isAlive() {
+        return this.status == EntityStatus.ALIVE;
     }
 }
