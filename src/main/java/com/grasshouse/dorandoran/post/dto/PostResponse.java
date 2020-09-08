@@ -26,7 +26,7 @@ public class PostResponse {
     private Long id;
 
     @NotNull
-    private MemberResponse memberResponse;
+    private MemberResponse author;
 
     @NotNull
     private Address authorAddress;
@@ -52,7 +52,7 @@ public class PostResponse {
     public static PostResponse from(Post post) {
         return PostResponse.builder()
             .id(post.getId())
-            .memberResponse(MemberResponse.from(post.getAuthor()))
+            .author(MemberResponse.from(post.getAuthor()))
             .authorAddress(post.getAuthorAddress())
             .content(post.getContent())
             .location(post.getLocation())
