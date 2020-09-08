@@ -1,8 +1,9 @@
-package com.grasshouse.dorandoran.config.jwt;
+package com.grasshouse.dorandoran.member.controller;
 
 import static org.springframework.web.context.request.RequestAttributes.SCOPE_REQUEST;
 
 import com.grasshouse.dorandoran.common.exception.MemberNotFoundException;
+import com.grasshouse.dorandoran.config.jwt.LoginMember;
 import com.grasshouse.dorandoran.member.repository.MemberRepository;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;

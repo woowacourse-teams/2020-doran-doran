@@ -1,5 +1,6 @@
 package com.grasshouse.dorandoran.config.jwt;
 
+import com.grasshouse.dorandoran.member.controller.LoginMemberMethodArgumentResolver;
 import java.util.List;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;

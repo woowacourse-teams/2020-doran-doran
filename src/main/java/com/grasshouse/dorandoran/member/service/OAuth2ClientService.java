@@ -1,4 +1,4 @@
-package com.grasshouse.dorandoran.config.security;
+package com.grasshouse.dorandoran.member.service;
 
 import com.grasshouse.dorandoran.common.exception.UnsupportedOperationException;
 import com.grasshouse.dorandoran.member.domain.Member;
