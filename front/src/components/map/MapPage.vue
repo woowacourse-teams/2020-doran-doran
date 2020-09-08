@@ -53,13 +53,13 @@ export default {
   },
   computed: {
     isDefaultMode() {
-      return this.$store.getters["mapMode/isDefault"];
+      return this.$store.getters["map/isDefault"];
     },
     isMarkerMode() {
-      return this.$store.getters["mapMode/isMarker"];
+      return this.$store.getters["map/isMarker"];
     },
     isPostMode() {
-      return this.$store.getters["mapMode/isPost"];
+      return this.$store.getters["map/isPost"];
     },
   },
   created() {

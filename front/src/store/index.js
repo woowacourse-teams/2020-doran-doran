@@ -7,7 +7,7 @@ import memberSidebar from "@/store/modules/memberSidebar";
 import appBar from "@/store/modules/appBar";
 import filter from "@/store/modules/filter";
 import snackbar from "@/store/modules/snackbar";
-import mapMode from "@/store/modules/mapMode";
+import map from "@/store/modules/map";
 
 Vue.use(Vuex);
 
@@ -20,6 +20,6 @@ export default new Vuex.Store({
     appBar,
     filter,
     snackbar,
-    mapMode,
+    map,
   },
 });

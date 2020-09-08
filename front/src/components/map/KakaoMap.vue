@@ -25,17 +25,18 @@ export default {
   },
   computed: {
     isDefaultMode() {
-      return this.$store.getters["mapMode/isDefault"];
+      return this.$store.getters["map/isDefault"];
     },
     isMarkerMode() {
-      return this.$store.getters["mapMode/isMarker"];
+      return this.$store.getters["map/isMarker"];
     },
     posts() {
       return this.$store.getters["post/posts"];
     },
   },
   async mounted() {
-    await this.$kakaoMap.drawMap(this.$refs.map);
+    const map = await this.$kakaoMap.drawMap(this.$refs.map);
+    this.$store.commit("map/SET_MAP", map);
     await this.$kakaoMap
       .setCenterByCurrentLocation()
       .catch(() =>
