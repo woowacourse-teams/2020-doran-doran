@@ -52,5 +52,6 @@ public class PostLikeService {
         if (!postLike.isSameLiker(member)) {
             throw new MemberMismatchException(POST_LIKER_MISMATCH_MESSAGE);
         }
+        postLikeRepository.delete(postLike);
     }
 }

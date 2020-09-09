@@ -91,6 +91,7 @@ public class Comment {
 
     public void delete() {
         this.status = EntityStatus.DELETED;
+        this.likes.clear();
     }
 
     public boolean isSameAuthor(Member member) {

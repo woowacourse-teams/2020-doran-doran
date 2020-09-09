@@ -114,11 +114,10 @@ public class PostLikeServiceTest {
 
         postLikeService.deletePostLike(persistPostLike.getId(), postLiker);
 
-        PostLike savedPostLike = postLikeRepository.findAll().get(0);
-        assertThat(savedPostLike.getStatus()).isEqualTo(EntityStatus.DELETED);
+        assertThat(postLikeRepository.findAll()).hasSize(0);
     }
 
-    @DisplayName("게시글을 삭제할 때 좋아요도 같이 삭제된다.")
+    @DisplayName("게시글이 삭제 상태로 변경되면 좋아요가 삭제된다.")
     @Test
     void deleteCommentWithCommentLike() {
         PostLikeCreateRequest request = PostLikeCreateRequest.builder()
@@ -132,13 +131,9 @@ public class PostLikeServiceTest {
         postService.deletePost(persistPost.getId(), author);
 
         Post savedPost = postRepository.findAll().get(0);
-        PostLike savedPostLike = postLikeRepository.findAll().get(0);
 
         assertThat(savedPost.getStatus()).isEqualTo(EntityStatus.DELETED);
-        assertThat(savedPostLike.getPost().getId()).isEqualTo(savedPost.getId());
-        assertThat(savedPostLike.getStatus()).isEqualTo(EntityStatus.DELETED);
-
-
+        assertThat(postLikeRepository.findAll()).hasSize(0);
     }
 
     @AfterEach

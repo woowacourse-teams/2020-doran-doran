@@ -116,8 +116,8 @@ public class Post {
 
     public void delete() {
         this.status = EntityStatus.DELETED;
-        this.comments
-            .forEach(Comment::delete);
+        this.comments.forEach(Comment::delete);
+        this.likes.clear();
     }
 
     public boolean isSameAuthor(Member member) {

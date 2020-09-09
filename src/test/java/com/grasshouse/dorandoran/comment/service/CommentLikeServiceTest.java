@@ -118,7 +118,7 @@ class CommentLikeServiceTest {
             .isInstanceOf(CommentLikeAlreadyExistsException.class);
     }
 
-    @DisplayName("댓글에 추가한 좋아요를 취소(삭제)한다.")
+    @DisplayName("댓글에 좋아요를 삭제한다.")
     @Test
     void deleteCommentLike() {
         CommentLike commentLike = CommentLike.builder()
@@ -131,11 +131,10 @@ class CommentLikeServiceTest {
 
         commentLikeService.deleteCommentLike(persistCommentLike.getId(), commentLiker);
 
-        CommentLike savedCommentLike = commentLikeRepository.findAll().get(0);
-        assertThat(savedCommentLike.getStatus()).isEqualTo(EntityStatus.DELETED);
+        assertThat(commentLikeRepository.findAll()).hasSize(0);
     }
 
-    @DisplayName("댓글을 삭제할 때 좋아요도 같이 삭제된다.")
+    @DisplayName("댓글이 삭제 상태로 변경되면 좋아요가 삭제된다.")
     @Test
     void deleteCommentWithCommentLike() {
         CommentLikeCreateRequest request = CommentLikeCreateRequest.builder()
@@ -148,7 +147,9 @@ class CommentLikeServiceTest {
         assertThat(persistComment.getLikes()).hasSize(1);
 
         commentService.deleteComment(persistComment.getId(), author);
-        assertThat(commentRepository.findAll()).hasSize(0);
+
+        Comment deletedComment = commentRepository.findAll().get(0);
+        assertThat(deletedComment.getStatus()).isEqualTo(EntityStatus.DELETED);
         assertThat(commentLikeRepository.findAll()).hasSize(0);
     }
 
