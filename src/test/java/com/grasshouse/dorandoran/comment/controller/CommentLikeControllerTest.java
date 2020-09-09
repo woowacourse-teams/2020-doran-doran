@@ -12,8 +12,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.grasshouse.dorandoran.comment.service.CommentLikeService;
 import com.grasshouse.dorandoran.comment.dto.CommentLikeCreateRequest;
+import com.grasshouse.dorandoran.comment.service.CommentLikeService;
 import com.grasshouse.dorandoran.common.CommonControllerTest;
 import com.grasshouse.dorandoran.config.jwt.JwtTokenProvider;
 import com.grasshouse.dorandoran.member.repository.MemberRepository;
