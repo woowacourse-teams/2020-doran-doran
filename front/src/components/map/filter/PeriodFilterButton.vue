@@ -92,6 +92,7 @@ export default {
         period.format(this.startDate),
       );
       if (this.endDate) {
+        this.$store.commit("filter/SET_END_DATE", period.format(this.endDate));
         this.handleUserInputFiltering();
       }
     },
@@ -99,6 +100,10 @@ export default {
       this.endDate = date + " 23:59:59";
       this.$store.commit("filter/SET_END_DATE", period.format(this.endDate));
       if (this.startDate) {
+        this.$store.commit(
+          "filter/SET_START_DATE",
+          period.format(this.startDate),
+        );
         this.handleUserInputFiltering();
       }
     },
