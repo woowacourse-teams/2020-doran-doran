@@ -2,6 +2,7 @@ package com.grasshouse.dorandoran.post.repository;
 
 import static com.grasshouse.dorandoran.comment.domain.QComment.comment;
 import static com.grasshouse.dorandoran.post.domain.QPost.post;
+import static com.grasshouse.dorandoran.post.domain.QPostLike.postLike;
 
 import com.grasshouse.dorandoran.common.baseentity.EntityStatus;
 import com.grasshouse.dorandoran.post.domain.Post;
@@ -26,12 +27,34 @@ public class PostRepositorySupport extends QuerydslRepositorySupport {
 
     public Post findPostById(Long postId) {
         return jpaQueryFactory.selectFrom(post)
-            .leftJoin(post.comments, comment)
-            .where(comment.status.eq(EntityStatus.ALIVE))
-            .fetchJoin()
+            .distinct()
+            .leftJoin(post.likes, postLike).fetchJoin()
+            .leftJoin(post.comments, comment).fetchJoin()
             .where(post.id.eq(postId))
-            .where(post.status.eq(EntityStatus.ALIVE))
+            .where(postIsAlive())
+            .where(comment.isNull().or(commentIsAlive()))
             .fetchFirst();
+    }
+
+    public List<Post> findPostsInBounds(Double leftBound, Double rightBound, Double lowerBound, Double upperBound) {
+        return jpaQueryFactory.selectFrom(post)
+            .leftJoin(post.likes, postLike).fetchJoin()
+            .leftJoin(post.comments, comment).fetchJoin()
+            .where(postIsAlive())
+            .where(betweenLatitude(lowerBound, upperBound), betweenLongitude(leftBound, rightBound))
+            .where(comment.isNull().or(commentIsAlive()))
+            .fetch();
+    }
+
+    //TODO: 안 쓰이고 있어요
+    public List<Post> findPostWithKeywordAndDate(String keyword, LocalDateTime startDate, LocalDateTime endDate) {
+        return jpaQueryFactory.selectFrom(post)
+            .leftJoin(post.likes, postLike).fetchJoin()
+            .leftJoin(post.comments, comment).fetchJoin()
+            .where(postIsAlive())
+            .where(containsKeyword(keyword), betweenDate(startDate, endDate))
+            .where(comment.isNull().or(commentIsAlive()))
+            .fetch();
     }
 
     public Post findPostContainingComments(Long postId) {
@@ -42,21 +65,6 @@ public class PostRepositorySupport extends QuerydslRepositorySupport {
             .fetchFirst();
     }
 
-    public List<Post> findPostsInBounds(Double leftBound, Double rightBound, Double lowerBound,
-        Double upperBound) {
-        return jpaQueryFactory.selectFrom(post)
-            .where(isAlive())
-            .where(betweenLatitude(lowerBound, upperBound), betweenLongitude(leftBound, rightBound))
-            .fetch();
-    }
-
-    public List<Post> findPostWithKeywordAndDate(String keyword, LocalDateTime startDate, LocalDateTime endDate) {
-        return jpaQueryFactory.selectFrom(post)
-            .where(isAlive())
-            .where(containsKeyword(keyword), betweenDate(startDate, endDate))
-            .fetch();
-    }
-
     public Post findPostContainingLikes(Long postId) {
         return jpaQueryFactory.selectFrom(post)
             .leftJoin(post.likes)
@@ -65,8 +73,12 @@ public class PostRepositorySupport extends QuerydslRepositorySupport {
             .fetchFirst();
     }
 
-    private BooleanExpression isAlive() {
+    private BooleanExpression postIsAlive() {
         return post.status.eq(EntityStatus.ALIVE);
+    }
+
+    private BooleanExpression commentIsAlive() {
+        return comment.status.eq(EntityStatus.ALIVE);
     }
 
     private BooleanExpression betweenLatitude(Double lowerBound, Double upperBound) {
