@@ -97,4 +97,8 @@ public class Comment {
     public boolean isSameAuthor(Member member) {
         return author.isSameMember(member);
     }
+
+    public boolean isAlive() {
+        return this.status == EntityStatus.ALIVE;
+    }
 }

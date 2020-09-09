@@ -1,5 +1,6 @@
 package com.grasshouse.dorandoran.post.repository;
 
+import static com.grasshouse.dorandoran.comment.domain.QComment.comment;
 import static com.grasshouse.dorandoran.post.domain.QPost.post;
 
 import com.grasshouse.dorandoran.common.baseentity.EntityStatus;
@@ -23,6 +24,17 @@ public class PostRepositorySupport extends QuerydslRepositorySupport {
         this.jpaQueryFactory = jpaQueryFactory;
     }
 
+    //TODO: postlikes, commentlikes도
+
+    public Post findPostById(Long postId) {
+        return jpaQueryFactory.selectFrom(post)
+            .leftJoin(post.comments, comment)
+            .on(comment.status.eq(EntityStatus.ALIVE))
+            .where(post.id.eq(postId))
+            .where(post.status.eq(EntityStatus.ALIVE))
+            .fetchFirst();
+    }
+
     public Post findPostContainingComments(Long postId) {
         return jpaQueryFactory.selectFrom(post)
             .innerJoin(post.comments)
@@ -39,13 +51,19 @@ public class PostRepositorySupport extends QuerydslRepositorySupport {
             .fetch();
     }
 
-    public List<Post> findPostWithKeywordAndDate(String keyword, LocalDateTime startDate,
-        LocalDateTime endDate) {
-        return jpaQueryFactory
-            .selectFrom(post)
+    public List<Post> findPostWithKeywordAndDate(String keyword, LocalDateTime startDate, LocalDateTime endDate) {
+        return jpaQueryFactory.selectFrom(post)
             .where(isAlive())
             .where(containsKeyword(keyword), betweenDate(startDate, endDate))
             .fetch();
+    }
+
+    public Post findPostContainingLikes(Long postId) {
+        return jpaQueryFactory.selectFrom(post)
+            .leftJoin(post.likes)
+            .fetchJoin()
+            .where(post.id.eq(postId))
+            .fetchFirst();
     }
 
     private BooleanExpression isAlive() {
@@ -78,13 +96,5 @@ public class PostRepositorySupport extends QuerydslRepositorySupport {
             return null;
         }
         return post.createdAt.between(startDate, endDate);
-    }
-
-    public Post findPostContainingLikes(Long postId) {
-        return jpaQueryFactory.selectFrom(post)
-            .innerJoin(post.likes)
-            .fetchJoin()
-            .where(post.id.eq(postId))
-            .fetchFirst();
     }
 }

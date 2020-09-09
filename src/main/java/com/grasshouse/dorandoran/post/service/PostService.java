@@ -34,7 +34,7 @@ public class PostService {
 
     @Transactional
     public PostResponse showPost(Long id) {
-        Post post = findPostById(id);
+        Post post = postRepositorySupport.findPostById(id);
         return PostResponse.from(post);
     }
 
@@ -46,23 +46,18 @@ public class PostService {
 
     @Transactional
     public List<PostResponse> showPostsInBounds(PostBoundsRequest request) {
-        List<Post> posts = postRepositorySupport
-            .findPostsInBounds(request.getLeftBound(), request.getRightBound(),
-                request.getLowerBound(), request.getUpperBound());
+        List<Post> posts = postRepositorySupport.findPostsInBounds(request.getLeftBound(), request.getRightBound(),
+            request.getLowerBound(), request.getUpperBound());
         return PostResponse.listFrom(posts);
     }
 
     @Transactional
     public void deletePost(Long id, Member member) {
-        Post post = findPostById(id);
+        Post post = postRepository.findById(id)
+            .orElseThrow(PostNotFoundException::new);
         if (!post.isSameAuthor(member)) {
             throw new MemberMismatchException(POST_AUTHOR_MISMATCH_MESSAGE);
         }
         post.delete();
-    }
-
-    private Post findPostById(Long id) {
-        return postRepository.findById(id)
-            .orElseThrow(PostNotFoundException::new);
     }
 }
