@@ -16,6 +16,7 @@ const period = (() => {
   const ago = (x, type) => moment().subtract(x, type).format(FORMAT);
 
   return {
+    TYPE,
     format,
     now,
     ago,

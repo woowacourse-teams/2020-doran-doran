@@ -5,7 +5,7 @@ export default {
   namespaced: true,
   state: {
     keyword: "",
-    startDate: period.ago(24, "hours"),
+    startDate: period.ago(24, period.TYPE.HOUR),
     endDate: "",
   },
   mutations: {
