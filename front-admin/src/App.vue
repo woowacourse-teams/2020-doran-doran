@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-app-bar app clipped-left height="60px">
-      <VApp-bar-nav-icon @click.stop="drawer = !drawer" />
+      <VAppBarNavIcon @click.stop="drawer = !drawer" />
       <v-toolbar-title> 도란도란 </v-toolbar-title>
       <VSpacer />
     </v-app-bar>
