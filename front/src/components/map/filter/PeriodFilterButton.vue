@@ -59,7 +59,7 @@ export default {
   data() {
     return {
       periodOptions: PERIOD_OPTIONS,
-      selected: "24hours",
+      selected: PERIOD_OPTIONS.DAY,
       isSliderOpen: false,
       isCalendarOpen: false,
       startDate: "",
