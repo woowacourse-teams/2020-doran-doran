@@ -86,15 +86,18 @@ export default {
       this.filterPosts();
     },
     inputStartDate(date) {
-      this.startDate = date;
-      this.$store.commit("filter/SET_START_DATE", period.format(date));
+      this.startDate = date + " 00:00:00";
+      this.$store.commit(
+        "filter/SET_START_DATE",
+        period.format(this.startDate),
+      );
       if (this.endDate) {
         this.handleUserInputFiltering();
       }
     },
     inputEndDate(date) {
-      this.endDate = date;
-      this.$store.commit("filter/SET_END_DATE", period.format(date));
+      this.endDate = date + " 23:59:59";
+      this.$store.commit("filter/SET_END_DATE", period.format(this.endDate));
       if (this.startDate) {
         this.handleUserInputFiltering();
       }
