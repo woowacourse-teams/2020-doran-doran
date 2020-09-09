@@ -1,60 +1,40 @@
 <template>
   <v-app>
-    <v-app-bar
-      app
-      color="primary"
-      dark
-    >
-      <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
+    <v-navigation-drawer class="doran-doran-color" v-model="drawer" app clipped>
+      <v-list>
+        <v-list-item
+          v-for="navigator in navigators"
+          :key="navigator.title"
+          :to="navigator.to"
+        >
+          <v-list-item-action>
+            <v-icon> {{ navigator.icon }}</v-icon>
+          </v-list-item-action>
+          <v-list-item-title> {{ navigator.title }}</v-list-item-title>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
 
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
-      </div>
-
+    <v-app-bar class="doran-doran-color" app clipped-left height="60px">
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+      <v-toolbar-title>도란도란</v-toolbar-title>
       <v-spacer></v-spacer>
-
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
     </v-app-bar>
-
-    <v-main>
-      <HelloWorld/>
-    </v-main>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
-
 export default {
-  name: 'App',
-
-  components: {
-    HelloWorld,
+  name: "App",
+  data: () => {
+    return {
+      drawer: null,
+      navigators: [
+        { to: "/", title: "Home", icon: "mdi-account-box" },
+        { to: "/manage-report", title: "신고 관리", icon: "mdi-bell" },
+      ],
+      isLogin: false,
+    };
   },
-
-  data: () => ({
-    //
-  }),
 };
 </script>
