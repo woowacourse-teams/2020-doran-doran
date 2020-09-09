@@ -28,7 +28,7 @@ export default {
   name: "App",
   data: () => {
     return {
-      drawer: false,
+      drawer: true,
       navigators: [
         {
           to: "/",
