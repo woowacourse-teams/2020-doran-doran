@@ -46,6 +46,7 @@ export default {
         ),
       );
     await this.changeAppBarByCenterAddress();
+    this.$store.commit("filter/SET_END_DATE_TO_NOW");
     const filteredPosts = await this.$store.dispatch("filter/filterPosts");
     this.$store.commit("post/SET_POSTS", filteredPosts);
     this.$kakaoMap.addEventToMap(
