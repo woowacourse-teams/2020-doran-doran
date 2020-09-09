@@ -1,14 +1,11 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <v-container>
+    this is home
+  </v-container>
 </template>
 
 <script>
-// @ is an alias to /src
-
 export default {
-  name: 'Home',
-}
+  name: "Home",
+};
 </script>
