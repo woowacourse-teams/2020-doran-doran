@@ -30,7 +30,7 @@ export default {
     return {
       drawer: null,
       navigators: [
-        { to: "/", title: "Home", icon: "mdi-account-box" },
+        { to: "/", title: "Home", icon: "mdi-home" },
         { to: "/manage-report", title: "신고 관리", icon: "mdi-bell" },
       ],
       isLogin: false,
