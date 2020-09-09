@@ -27,6 +27,7 @@ export default {
       likes: [],
       createdAt: "",
       comments: [],
+      entityStatus: "",
     },
     posts: [],
   },

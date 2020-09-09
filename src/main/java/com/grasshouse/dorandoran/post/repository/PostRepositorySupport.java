@@ -46,9 +46,9 @@ public class PostRepositorySupport extends QuerydslRepositorySupport {
             .fetch();
     }
 
-    //TODO: 안 쓰이고 있어요
     public List<Post> findPostWithKeywordAndDate(String keyword, LocalDateTime startDate, LocalDateTime endDate) {
         return jpaQueryFactory.selectFrom(post)
+            .distinct()
             .leftJoin(post.likes, postLike).fetchJoin()
             .leftJoin(post.comments, comment).fetchJoin()
             .where(postIsAlive())
