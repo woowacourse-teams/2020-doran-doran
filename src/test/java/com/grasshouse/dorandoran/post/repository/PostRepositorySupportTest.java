@@ -9,6 +9,7 @@ import com.grasshouse.dorandoran.fixture.LocationFixture;
 import com.grasshouse.dorandoran.member.domain.Member;
 import com.grasshouse.dorandoran.member.repository.MemberRepository;
 import com.grasshouse.dorandoran.post.domain.Post;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,9 +31,22 @@ class PostRepositorySupportTest {
     @Autowired
     private PostRepositorySupport postRepositorySupport;
 
-    @DisplayName("삭제되지 않은 댓글만 가져온다.")
+    @DisplayName("댓글이 없는 글을 조회한다.")
     @Test
-    void findPostById() {
+    void findPostByIdWithoutComments() {
+        Member member = SAVE_MEMBER();
+
+        Post post = SAVE_POST(member);
+
+        assertThat(post.getComments()).hasSize(0);
+
+        Post postById = postRepositorySupport.findPostById(post.getId());
+        assertThat(postById.getComments()).hasSize(0);
+    }
+
+    @DisplayName("삭제되지 않은 댓글과 함께 글을 조회한다.")
+    @Test
+    void findPostByIdWithComments() {
         Member member = SAVE_MEMBER();
 
         Post post = SAVE_POST(member);
@@ -46,9 +60,19 @@ class PostRepositorySupportTest {
         //댓글을 삭제한다.
         post.removeComment(comment1);
         comment1.delete();
+        postRepository.save(post);
+        commentRepository.save(comment1);
 
         Post postById = postRepositorySupport.findPostById(post.getId());
+
         assertThat(postById.getComments()).hasSize(1);
+    }
+
+    @AfterEach
+    void tearDown() {
+        commentRepository.deleteAll();
+        postRepository.deleteAll();
+        memberRepository.deleteAll();
     }
 
     private Member SAVE_MEMBER() {

@@ -24,12 +24,11 @@ public class PostRepositorySupport extends QuerydslRepositorySupport {
         this.jpaQueryFactory = jpaQueryFactory;
     }
 
-    //TODO: postlikes, commentlikes도
-
     public Post findPostById(Long postId) {
         return jpaQueryFactory.selectFrom(post)
             .leftJoin(post.comments, comment)
-            .on(comment.status.eq(EntityStatus.ALIVE))
+            .where(comment.status.eq(EntityStatus.ALIVE))
+            .fetchJoin()
             .where(post.id.eq(postId))
             .where(post.status.eq(EntityStatus.ALIVE))
             .fetchFirst();
