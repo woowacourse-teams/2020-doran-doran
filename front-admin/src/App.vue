@@ -1,9 +1,9 @@
 <template>
   <v-app>
     <v-app-bar app clipped-left height="60px">
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+      <VApp-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-toolbar-title> 도란도란 </v-toolbar-title>
-      <v-spacer></v-spacer>
+      <VSpacer />
     </v-app-bar>
 
     <v-navigation-drawer v-model="drawer" app clipped>
@@ -28,10 +28,18 @@ export default {
   name: "App",
   data: () => {
     return {
-      drawer: null,
+      drawer: false,
       navigators: [
-        { to: "/", title: "Home", icon: "mdi-home" },
-        { to: "/manage-report", title: "신고 관리", icon: "mdi-bell" },
+        {
+          to: "/",
+          title: "Home",
+          icon: "mdi-home",
+        },
+        {
+          to: "/manage-report",
+          title: "신고 관리",
+          icon: "mdi-bell",
+        },
       ],
     };
   },
