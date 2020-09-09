@@ -2,7 +2,7 @@
   <v-app>
     <v-app-bar app clipped-left height="60px">
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-toolbar-title>도란도란</v-toolbar-title>
+      <v-toolbar-title> 도란도란 </v-toolbar-title>
       <v-spacer></v-spacer>
     </v-app-bar>
 
@@ -14,9 +14,9 @@
           :to="navigator.to"
         >
           <v-list-item-action>
-            <v-icon> {{ navigator.icon }}</v-icon>
+            <v-icon> {{ navigator.icon }} </v-icon>
           </v-list-item-action>
-          <v-list-item-title> {{ navigator.title }}</v-list-item-title>
+          <v-list-item-title> {{ navigator.title }} </v-list-item-title>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
