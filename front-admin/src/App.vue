@@ -36,7 +36,7 @@ export default {
           icon: "mdi-home",
         },
         {
-          to: "/manage-report",
+          to: "/reports",
           title: "신고 관리",
           icon: "mdi-bell",
         },
