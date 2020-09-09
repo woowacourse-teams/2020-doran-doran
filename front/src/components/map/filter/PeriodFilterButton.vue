@@ -38,9 +38,10 @@
     <v-sheet
       v-show="isCalendarOpen"
       elevation="2"
-      class="pa-3 rounded-lg user-input-modal"
+      class="px-3 filter-calendar"
     >
       <DatePickerMenu :label="'시작 날짜'" @select="inputStartDate" />
+      <span class="mx-3 pt-2">~</span>
       <DatePickerMenu :label="'종료 날짜'" @select="inputEndDate" />
     </v-sheet>
   </div>
@@ -168,14 +169,16 @@ export default {
   background: white !important;
 }
 
-.user-input-modal {
+.filter-calendar {
+  display: flex;
   position: absolute;
   top: 105px;
-  left: 190px;
+  left: 10px;
   z-index: 1;
-  max-width: 60%;
-  padding-top: 15px;
+  max-width: calc(65% + 40px);
+  padding-top: 5px;
   padding-left: 10px;
+  border-radius: 24px;
   background-color: white;
 }
 

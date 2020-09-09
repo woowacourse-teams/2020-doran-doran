@@ -8,6 +8,7 @@
         :label="label"
         prepend-icon="mdi-calendar"
         readonly
+        single-line
         dense
         color="black"
       />
