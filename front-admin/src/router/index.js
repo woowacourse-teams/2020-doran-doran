@@ -1,7 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "@/views/Home.vue";
-import ManageReport from "@/views/ManageReport.vue";
+import Report from "@/views/Report.vue";
 
 Vue.use(VueRouter);
 
@@ -12,9 +12,9 @@ const routes = [
     component: Home,
   },
   {
-    path: "/manage-report",
-    name: "ManageReport",
-    component: ManageReport,
+    path: "/reports",
+    name: "Report",
+    component: Report,
   },
 ];
 
