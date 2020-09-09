@@ -20,6 +20,10 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
+
+    <v-main>
+      <RouterView />
+    </v-main>
   </v-app>
 </template>
 
