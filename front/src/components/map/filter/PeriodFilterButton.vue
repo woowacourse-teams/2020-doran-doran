@@ -28,6 +28,7 @@
             :value="option"
             height="30"
             class="px-3 period-btn"
+            @click="openCalendar"
           >
             {{ option.title }}
           </v-btn>
