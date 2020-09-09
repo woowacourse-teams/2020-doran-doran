@@ -26,12 +26,12 @@
       </div>
       <div class="my-5 text-break" v-html="postContent"></div>
       <div>
-        <v-icon small>mdi-comment-processing-outline</v-icon>
-        <span class="mx-1">{{ post.comments.length }}</span>
         <v-icon small @click="toggleLike" :color="likeButtonType.color">
           {{ likeButtonType.icon }}
         </v-icon>
         <span class="mx-1">{{ post.likes.length }}</span>
+        <v-icon small>mdi-comment-processing-outline</v-icon>
+        <span class="mx-1">{{ post.comments.length }}</span>
         <div class="float-right text--disabled font-size-small">
           {{ authorAddress }}에서
         </div>
