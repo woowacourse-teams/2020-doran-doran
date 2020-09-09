@@ -14,26 +14,25 @@
       @after-enter="openCalendar"
       @before-leave="closeCalendar"
     >
-      <template v-if="isSliderOpen">
-        <v-btn-toggle
-          v-model="selected"
-          mandatory
-          rounded
-          borderless
-          class="period-choices"
+      <v-btn-toggle
+        v-show="isSliderOpen"
+        v-model="selected"
+        mandatory
+        rounded
+        borderless
+        class="period-choices"
+      >
+        <v-btn
+          v-for="option in periodOptions"
+          :key="option.order"
+          :value="option"
+          height="30"
+          class="px-3 period-btn"
+          @click="openCalendar"
         >
-          <v-btn
-            v-for="option in periodOptions"
-            :key="option.order"
-            :value="option"
-            height="30"
-            class="px-3 period-btn"
-            @click="openCalendar"
-          >
-            {{ option.title }}
-          </v-btn>
-        </v-btn-toggle>
-      </template>
+          {{ option.title }}
+        </v-btn>
+      </v-btn-toggle>
     </transition>
 
     <v-sheet
