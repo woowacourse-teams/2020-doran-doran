@@ -57,7 +57,7 @@ export default {
   },
   methods: {
     async createPost() {
-      if (this.content === "") {
+      if (this.content.trim() === "") {
         this.$store.commit("snackbar/SHOW", ERROR_MESSAGE.NO_CONTENT_MESSAGE);
         return;
       }
