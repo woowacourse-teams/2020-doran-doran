@@ -29,13 +29,16 @@ export default {
       return halfAnHourAgo < postCreatedAt;
     },
     shortContent() {
-      return Array.from(this.post.content)
-        .slice(0, CONTENT_LENGTH)
-        .join("")
-        .trim();
+      const firstLine = this.post.content.split("\n")[0];
+      return Array.from(firstLine).slice(0, CONTENT_LENGTH).join("").trim();
     },
     contentTail() {
-      return Array.from(this.post.content).length > CONTENT_LENGTH ? "..." : "";
+      if (this.post.content.includes("\n")) {
+        return "...";
+      } else if (Array.from(this.post.content).length > CONTENT_LENGTH) {
+        return "...";
+      }
+      return "";
     },
   },
   mounted() {
