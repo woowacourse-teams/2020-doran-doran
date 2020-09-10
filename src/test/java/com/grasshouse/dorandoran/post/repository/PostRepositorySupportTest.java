@@ -52,12 +52,10 @@ class PostRepositorySupportTest {
 
         Post post = SAVE_POST(member);
 
-        //댓글 1개를 추가한다.
         Comment comment1 = SAVE_COMMENT(member, post, "댓글1");
 
         assertThat(post.getComments()).hasSize(1);
 
-        //댓글을 삭제한다.
         post.removeComment(comment1);
         postRepository.save(post);
         commentRepository.save(comment1);
@@ -74,13 +72,11 @@ class PostRepositorySupportTest {
 
         Post post = SAVE_POST(member);
 
-        //댓글 2개를 추가한다.
         Comment comment1 = SAVE_COMMENT(member, post, "댓글1");
         Comment comment2 = SAVE_COMMENT(member, post, "댓글2");
 
         assertThat(post.getComments()).hasSize(2);
 
-        //댓글을 삭제한다.
         post.removeComment(comment1);
         postRepository.save(post);
         commentRepository.save(comment1);
