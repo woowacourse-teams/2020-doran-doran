@@ -33,7 +33,7 @@ public class PostRepositorySupport extends QuerydslRepositorySupport {
             .leftJoin(post.comments, comment).fetchJoin()
             .leftJoin(post.likes, postLike).fetchJoin()
             .where(post.id.eq(postId))
-            .where(postIsAlive())
+            .where(isPostAlive())
             .fetchFirst();
 
         if (persistPost == null) {
@@ -47,7 +47,7 @@ public class PostRepositorySupport extends QuerydslRepositorySupport {
             .distinct()
             .leftJoin(post.comments, comment).fetchJoin()
             .leftJoin(post.likes, postLike).fetchJoin()
-            .where(postIsAlive())
+            .where(isPostAlive())
             .where(containsKeyword(keyword), betweenDate(startDate, endDate))
             .fetch();
 
@@ -58,7 +58,7 @@ public class PostRepositorySupport extends QuerydslRepositorySupport {
 
     public Post findPostContainingComments(Long postId) {
         return jpaQueryFactory.selectFrom(post)
-            .leftJoin(post.comments)
+            .innerJoin(post.comments)
             .fetchJoin()
             .where(post.id.eq(postId))
             .fetchFirst();
@@ -66,13 +66,13 @@ public class PostRepositorySupport extends QuerydslRepositorySupport {
 
     public Post findPostContainingLikes(Long postId) {
         return jpaQueryFactory.selectFrom(post)
-            .leftJoin(post.likes)
+            .innerJoin(post.likes)
             .fetchJoin()
             .where(post.id.eq(postId))
             .fetchFirst();
     }
 
-    private BooleanExpression postIsAlive() {
+    private BooleanExpression isPostAlive() {
         return post.status.eq(EntityStatus.ALIVE);
     }
 
