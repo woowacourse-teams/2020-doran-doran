@@ -5,12 +5,14 @@ import static com.grasshouse.dorandoran.post.domain.QPost.post;
 import static com.grasshouse.dorandoran.post.domain.QPostLike.postLike;
 
 import com.grasshouse.dorandoran.common.baseentity.EntityStatus;
+import com.grasshouse.dorandoran.common.exception.PostNotFoundException;
 import com.grasshouse.dorandoran.post.domain.Post;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
@@ -26,30 +28,37 @@ public class PostRepositorySupport extends QuerydslRepositorySupport {
     }
 
     public Post findPostById(Long postId) {
-        return jpaQueryFactory.selectFrom(post)
+        Post persistPost = jpaQueryFactory.selectFrom(post)
             .distinct()
-            .leftJoin(post.likes, postLike).fetchJoin()
             .leftJoin(post.comments, comment).fetchJoin()
+            .leftJoin(post.likes, postLike).fetchJoin()
             .where(post.id.eq(postId))
             .where(postIsAlive())
-            .where(comment.isNull().or(commentIsAlive()))
             .fetchFirst();
+
+        if (persistPost == null) {
+            throw new PostNotFoundException();
+        }
+        return persistPost.filterAliveComments();
     }
 
     public List<Post> findPostWithKeywordAndDate(String keyword, LocalDateTime startDate, LocalDateTime endDate) {
-        return jpaQueryFactory.selectFrom(post)
+        List<Post> persistPosts = jpaQueryFactory.selectFrom(post)
             .distinct()
-            .leftJoin(post.likes, postLike).fetchJoin()
             .leftJoin(post.comments, comment).fetchJoin()
+            .leftJoin(post.likes, postLike).fetchJoin()
             .where(postIsAlive())
             .where(containsKeyword(keyword), betweenDate(startDate, endDate))
-            .where(comment.isNull().or(commentIsAlive()))
             .fetch();
+
+        return persistPosts.stream()
+            .map(Post::filterAliveComments)
+            .collect(Collectors.toList());
     }
 
     public Post findPostContainingComments(Long postId) {
         return jpaQueryFactory.selectFrom(post)
-            .innerJoin(post.comments)
+            .leftJoin(post.comments)
             .fetchJoin()
             .where(post.id.eq(postId))
             .fetchFirst();
@@ -65,24 +74,6 @@ public class PostRepositorySupport extends QuerydslRepositorySupport {
 
     private BooleanExpression postIsAlive() {
         return post.status.eq(EntityStatus.ALIVE);
-    }
-
-    private BooleanExpression commentIsAlive() {
-        return comment.status.eq(EntityStatus.ALIVE);
-    }
-
-    private BooleanExpression betweenLatitude(Double lowerBound, Double upperBound) {
-        if (Objects.isNull(lowerBound) || Objects.isNull(upperBound)) {
-            return null;
-        }
-        return post.location.latitude.between(lowerBound, upperBound);
-    }
-
-    private BooleanExpression betweenLongitude(Double leftBound, Double rightBound) {
-        if (Objects.isNull(leftBound) || Objects.isNull(rightBound)) {
-            return null;
-        }
-        return post.location.longitude.between(leftBound, rightBound);
     }
 
     private BooleanExpression containsKeyword(String keyword) {

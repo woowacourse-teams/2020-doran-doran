@@ -14,7 +14,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
 class PostRepositorySupportTest {
@@ -40,13 +39,37 @@ class PostRepositorySupportTest {
 
         assertThat(post.getComments()).hasSize(0);
 
+        Post persistPost = postRepository.findById(post.getId()).get();
+
+        Post postById = postRepositorySupport.findPostById(persistPost.getId());
+        assertThat(postById.getComments()).hasSize(0);
+    }
+
+    @DisplayName("삭제된 댓글만 있는 글을 조회한다.")
+    @Test
+    void findPostByIdWithComments1() {
+        Member member = SAVE_MEMBER();
+
+        Post post = SAVE_POST(member);
+
+        //댓글 1개를 추가한다.
+        Comment comment1 = SAVE_COMMENT(member, post, "댓글1");
+
+        assertThat(post.getComments()).hasSize(1);
+
+        //댓글을 삭제한다.
+        post.removeComment(comment1);
+        postRepository.save(post);
+        commentRepository.save(comment1);
+
         Post postById = postRepositorySupport.findPostById(post.getId());
+
         assertThat(postById.getComments()).hasSize(0);
     }
 
     @DisplayName("삭제되지 않은 댓글과 함께 글을 조회한다.")
     @Test
-    void findPostByIdWithComments() {
+    void findPostByIdWithComments2() {
         Member member = SAVE_MEMBER();
 
         Post post = SAVE_POST(member);
@@ -59,7 +82,6 @@ class PostRepositorySupportTest {
 
         //댓글을 삭제한다.
         post.removeComment(comment1);
-        comment1.delete();
         postRepository.save(post);
         commentRepository.save(comment1);
 

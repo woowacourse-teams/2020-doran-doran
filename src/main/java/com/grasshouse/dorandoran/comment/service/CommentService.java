@@ -52,7 +52,5 @@ public class CommentService {
         }
         Post post = comment.getPost();
         post.removeComment(comment);
-        comment.delete();
-        System.err.println("====transactinal끝, post delete시작");
     }
 }

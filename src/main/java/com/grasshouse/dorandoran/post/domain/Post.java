@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.CascadeType;
@@ -112,6 +113,7 @@ public class Post {
 
     public void removeComment(Comment comment) {
         comments.remove(comment);
+        comment.delete();
     }
 
     public void delete() {
@@ -122,5 +124,12 @@ public class Post {
 
     public boolean isSameAuthor(Member member) {
         return author.isSameMember(member);
+    }
+
+    public Post filterAliveComments() {
+        this.comments = this.comments.stream()
+            .filter(Comment::isAlive)
+            .collect(Collectors.toList());
+        return this;
     }
 }
