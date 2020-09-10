@@ -82,24 +82,18 @@ export default {
       this.filterPosts();
     },
     inputStartDate(date) {
-      this.startDate = date + " 00:00:00";
-      this.$store.commit(
-        "filter/SET_START_DATE",
-        period.format(this.startDate),
-      );
+      this.startDate = period.format(date + " 00:00:00");
+      this.$store.commit("filter/SET_START_DATE", this.startDate);
       if (this.endDate) {
-        this.$store.commit("filter/SET_END_DATE", period.format(this.endDate));
+        this.$store.commit("filter/SET_END_DATE", this.endDate);
         this.handleUserInputFiltering();
       }
     },
     inputEndDate(date) {
-      this.endDate = date + " 23:59:59";
-      this.$store.commit("filter/SET_END_DATE", period.format(this.endDate));
+      this.endDate = period.format(date + " 23:59:59");
+      this.$store.commit("filter/SET_END_DATE", this.endDate);
       if (this.startDate) {
-        this.$store.commit(
-          "filter/SET_START_DATE",
-          period.format(this.startDate),
-        );
+        this.$store.commit("filter/SET_START_DATE", this.startDate);
         this.handleUserInputFiltering();
       }
     },
