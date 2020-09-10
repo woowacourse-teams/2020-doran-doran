@@ -19,8 +19,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.grasshouse.dorandoran.comment.dto.CommentCreateRequest;
 import com.grasshouse.dorandoran.comment.service.CommentService;
 import com.grasshouse.dorandoran.common.CommonControllerTest;
+import com.grasshouse.dorandoran.common.config.jwt.JwtTokenProvider;
 import com.grasshouse.dorandoran.common.exception.MemberMismatchException;
-import com.grasshouse.dorandoran.config.jwt.JwtTokenProvider;
 import com.grasshouse.dorandoran.member.domain.Member;
 import com.grasshouse.dorandoran.member.repository.MemberRepository;
 import org.junit.jupiter.api.DisplayName;

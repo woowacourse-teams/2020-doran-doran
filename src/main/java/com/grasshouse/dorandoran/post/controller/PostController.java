@@ -1,6 +1,6 @@
 package com.grasshouse.dorandoran.post.controller;
 
-import com.grasshouse.dorandoran.config.jwt.LoginMember;
+import com.grasshouse.dorandoran.common.config.jwt.LoginMember;
 import com.grasshouse.dorandoran.member.domain.Member;
 import com.grasshouse.dorandoran.post.dto.PostBoundsRequest;
 import com.grasshouse.dorandoran.post.dto.PostCreateRequest;

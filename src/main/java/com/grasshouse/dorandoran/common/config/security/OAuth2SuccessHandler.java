@@ -1,6 +1,6 @@
-package com.grasshouse.dorandoran.config.security;
+package com.grasshouse.dorandoran.common.config.security;
 
-import com.grasshouse.dorandoran.config.jwt.JwtTokenProvider;
+import com.grasshouse.dorandoran.common.config.jwt.JwtTokenProvider;
 import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

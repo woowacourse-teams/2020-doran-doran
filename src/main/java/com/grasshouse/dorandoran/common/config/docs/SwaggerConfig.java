@@ -1,4 +1,4 @@
-package com.grasshouse.dorandoran.config.docs;
+package com.grasshouse.dorandoran.common.config.docs;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

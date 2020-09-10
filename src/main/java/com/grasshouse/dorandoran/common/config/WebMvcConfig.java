@@ -1,4 +1,4 @@
-package com.grasshouse.dorandoran.config;
+package com.grasshouse.dorandoran.common.config;
 
 import com.grasshouse.dorandoran.post.controller.PostFilterArgumentResolver;
 import java.util.List;

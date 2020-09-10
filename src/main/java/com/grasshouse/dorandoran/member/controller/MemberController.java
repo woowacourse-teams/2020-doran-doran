@@ -1,6 +1,6 @@
 package com.grasshouse.dorandoran.member.controller;
 
-import com.grasshouse.dorandoran.config.jwt.LoginMember;
+import com.grasshouse.dorandoran.common.config.jwt.LoginMember;
 import com.grasshouse.dorandoran.member.domain.Member;
 import com.grasshouse.dorandoran.member.dto.MemberResponse;
 import com.grasshouse.dorandoran.member.dto.MemberUpdateRequest;

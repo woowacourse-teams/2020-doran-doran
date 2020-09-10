@@ -21,8 +21,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.grasshouse.dorandoran.common.CommonControllerTest;
+import com.grasshouse.dorandoran.common.config.jwt.JwtTokenProvider;
 import com.grasshouse.dorandoran.common.exception.MemberMismatchException;
-import com.grasshouse.dorandoran.config.jwt.JwtTokenProvider;
 import com.grasshouse.dorandoran.member.domain.Member;
 import com.grasshouse.dorandoran.member.repository.MemberRepository;
 import com.grasshouse.dorandoran.post.dto.PostCreateRequest;

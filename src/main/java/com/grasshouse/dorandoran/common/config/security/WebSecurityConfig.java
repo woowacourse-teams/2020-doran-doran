@@ -1,4 +1,4 @@
-package com.grasshouse.dorandoran.config.security;
+package com.grasshouse.dorandoran.common.config.security;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;

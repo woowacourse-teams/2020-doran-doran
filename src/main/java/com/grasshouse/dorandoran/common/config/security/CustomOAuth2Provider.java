@@ -1,4 +1,4 @@
-package com.grasshouse.dorandoran.config.security;
+package com.grasshouse.dorandoran.common.config.security;
 
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;

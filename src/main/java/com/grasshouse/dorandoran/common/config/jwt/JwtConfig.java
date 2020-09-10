@@ -1,4 +1,4 @@
-package com.grasshouse.dorandoran.config.jwt;
+package com.grasshouse.dorandoran.common.config.jwt;
 
 import com.grasshouse.dorandoran.member.controller.LoginMemberMethodArgumentResolver;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.grasshouse.dorandoran.config.security;
+package com.grasshouse.dorandoran.common.config.security;
 
 import java.util.Collections;
 import org.springframework.beans.factory.annotation.Value;

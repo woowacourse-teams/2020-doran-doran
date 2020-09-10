@@ -1,4 +1,4 @@
-package com.grasshouse.dorandoran.config.querydsl;
+package com.grasshouse.dorandoran.common.config.querydsl;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import javax.persistence.EntityManager;

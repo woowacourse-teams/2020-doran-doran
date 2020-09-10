@@ -1,4 +1,4 @@
-package com.grasshouse.dorandoran.config.jwt;
+package com.grasshouse.dorandoran.common.config.jwt;
 
 import com.grasshouse.dorandoran.common.exception.InvalidAuthenticationException;
 import java.util.Optional;
