@@ -9,8 +9,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.grasshouse.dorandoran.common.CommonControllerTest;
+import com.grasshouse.dorandoran.post.dto.PostResponse;
 import com.grasshouse.dorandoran.post.service.PostFilterService;
-import com.grasshouse.dorandoran.post.service.dto.PostResponse;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;

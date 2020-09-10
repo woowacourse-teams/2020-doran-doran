@@ -1,11 +1,11 @@
 package com.grasshouse.dorandoran.member.controller;
 
-import com.grasshouse.dorandoran.config.jwt.LoginMember;
+import com.grasshouse.dorandoran.common.config.jwt.LoginMember;
 import com.grasshouse.dorandoran.member.domain.Member;
+import com.grasshouse.dorandoran.member.dto.MemberResponse;
+import com.grasshouse.dorandoran.member.dto.MemberUpdateRequest;
+import com.grasshouse.dorandoran.member.dto.MemberUpdateResponse;
 import com.grasshouse.dorandoran.member.service.MemberService;
-import com.grasshouse.dorandoran.member.service.dto.MemberResponse;
-import com.grasshouse.dorandoran.member.service.dto.MemberUpdateRequest;
-import com.grasshouse.dorandoran.member.service.dto.MemberUpdateResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -28,7 +28,8 @@ public class MemberController {
     }
 
     @PutMapping
-    public ResponseEntity<MemberUpdateResponse> updateMember(@LoginMember Member member, @RequestBody MemberUpdateRequest request) {
+    public ResponseEntity<MemberUpdateResponse> updateMember(@LoginMember Member member,
+        @RequestBody MemberUpdateRequest request) {
         MemberUpdateResponse response = memberService.update(member, request);
         return ResponseEntity.ok(response);
     }

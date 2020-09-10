@@ -5,7 +5,7 @@ export default {
   state: {
     post: {
       id: 0,
-      memberResponse: {
+      author: {
         id: 0,
         nickname: "",
       },

@@ -3,8 +3,8 @@ package com.grasshouse.dorandoran.comment.service;
 import static com.grasshouse.dorandoran.common.exception.MemberMismatchException.COMMENT_AUTHOR_MISMATCH_MESSAGE;
 
 import com.grasshouse.dorandoran.comment.domain.Comment;
+import com.grasshouse.dorandoran.comment.dto.CommentCreateRequest;
 import com.grasshouse.dorandoran.comment.repository.CommentRepository;
-import com.grasshouse.dorandoran.comment.service.dto.CommentCreateRequest;
 import com.grasshouse.dorandoran.common.exception.CommentNotFoundException;
 import com.grasshouse.dorandoran.common.exception.MemberMismatchException;
 import com.grasshouse.dorandoran.common.exception.PostNotFoundException;
@@ -15,8 +15,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Service
 @RequiredArgsConstructor
+@Service
 public class CommentService {
 
     private final CommentRepository commentRepository;

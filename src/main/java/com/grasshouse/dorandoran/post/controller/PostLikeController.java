@@ -1,11 +1,12 @@
 package com.grasshouse.dorandoran.post.controller;
 
-import com.grasshouse.dorandoran.config.jwt.LoginMember;
+import com.grasshouse.dorandoran.common.config.jwt.LoginMember;
 import com.grasshouse.dorandoran.member.domain.Member;
+import com.grasshouse.dorandoran.post.dto.PostLikeCreateRequest;
 import com.grasshouse.dorandoran.post.service.PostLikeService;
-import com.grasshouse.dorandoran.post.service.dto.PostLikeCreateRequest;
 import java.net.URI;
 import javax.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,15 +15,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/posts/likes")
 public class PostLikeController {
 
-    private PostLikeService postLikeService;
-
-    public PostLikeController(PostLikeService postLikeService) {
-        this.postLikeService = postLikeService;
-    }
+    private final PostLikeService postLikeService;
 
     @PostMapping
     public ResponseEntity<Void> createPostLike(@RequestBody @Valid PostLikeCreateRequest request,

@@ -14,10 +14,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.grasshouse.dorandoran.common.CommonControllerTest;
-import com.grasshouse.dorandoran.config.jwt.JwtTokenProvider;
+import com.grasshouse.dorandoran.common.config.jwt.JwtTokenProvider;
 import com.grasshouse.dorandoran.member.repository.MemberRepository;
+import com.grasshouse.dorandoran.post.dto.PostLikeCreateRequest;
 import com.grasshouse.dorandoran.post.service.PostLikeService;
-import com.grasshouse.dorandoran.post.service.dto.PostLikeCreateRequest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
