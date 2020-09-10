@@ -1,11 +1,11 @@
 import api from "@/api/posts";
-import { period } from "@/utils/period";
+import { period, PERIOD_TYPE } from "@/utils/period";
 
 export default {
   namespaced: true,
   state: {
     keyword: "",
-    startDate: period.ago(24, period.TYPE.HOUR),
+    startDate: period.ago(24, PERIOD_TYPE.HOUR),
     endDate: "",
   },
   mutations: {

@@ -2,7 +2,7 @@ import moment from "moment";
 
 const FORMAT = "YYYY-MM-DD HH:mm:ss";
 
-const TYPE = {
+const PERIOD_TYPE = {
   SECOND: "seconds",
   HOUR: "hours",
   DAY: "days",
@@ -11,12 +11,11 @@ const TYPE = {
 const period = (() => {
   const format = (date) => moment(date).format(FORMAT);
 
-  const now = () => moment().add(1, TYPE.SECOND).format(FORMAT);
+  const now = () => moment().add(1, PERIOD_TYPE.SECOND).format(FORMAT);
 
   const ago = (x, type) => moment().subtract(x, type).format(FORMAT);
 
   return {
-    TYPE,
     format,
     now,
     ago,
@@ -27,17 +26,17 @@ const PERIOD_OPTIONS = {
   DAY: {
     order: 1,
     title: "24시간 이내",
-    startDate: () => period.ago(24, TYPE.HOUR),
+    startDate: () => period.ago(24, PERIOD_TYPE.HOUR),
   },
   WEEK: {
     order: 2,
     title: "7일 이내",
-    startDate: () => period.ago(7, TYPE.DAY),
+    startDate: () => period.ago(7, PERIOD_TYPE.DAY),
   },
   MONTH: {
     order: 3,
     title: "30일 이내",
-    startDate: () => period.ago(30, TYPE.DAY),
+    startDate: () => period.ago(30, PERIOD_TYPE.DAY),
   },
   ALL: {
     order: 4,
@@ -50,4 +49,4 @@ const PERIOD_OPTIONS = {
   },
 };
 
-export { period, PERIOD_OPTIONS };
+export { period, PERIOD_OPTIONS, PERIOD_TYPE };
