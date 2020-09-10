@@ -115,7 +115,7 @@ export default {
         this.$store.commit("snackbar/SHOW", ERROR_MESSAGE.NO_POST_MESSAGE);
         return;
       }
-      this.isCalendarOpen = false;
+      this.closeCalendar();
     },
   },
   watch: {
