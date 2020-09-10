@@ -38,7 +38,7 @@ class PostFilterServiceTest {
     void showSearchResultsByKeyword() {
         PostFilterRequest request = new PostFilterRequest("오늘", null, null);
 
-        assertThat(PostFilterService.showFilteredResults(request)).hasSize(2);
+        assertThat(PostFilterService.showFilteredPosts(request)).hasSize(2);
     }
 
     @Sql(value = "/dateTimePost.sql", executionPhase = ExecutionPhase.BEFORE_TEST_METHOD)
@@ -48,7 +48,7 @@ class PostFilterServiceTest {
     @MethodSource("generateDays")
     void showSearchResultsByDate(LocalDateTime startDate, LocalDateTime endDate, int searchResult) {
         PostFilterRequest request = new PostFilterRequest(null, startDate, endDate);
-        assertThat(PostFilterService.showFilteredResults(request))
+        assertThat(PostFilterService.showFilteredPosts(request))
             .hasSize(searchResult);
     }
 

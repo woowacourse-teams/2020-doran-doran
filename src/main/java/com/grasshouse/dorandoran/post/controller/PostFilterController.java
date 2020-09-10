@@ -18,8 +18,8 @@ public class PostFilterController {
     private final PostFilterService PostFilterService;
 
     @GetMapping
-    public ResponseEntity<List<PostResponse>> showFilteredResults(@PostFilter PostFilterRequest request) {
-        List<PostResponse> responses = PostFilterService.showFilteredResults(request);
+    public ResponseEntity<List<PostResponse>> showFilteredPosts(@PostFilter PostFilterRequest request) {
+        List<PostResponse> responses = PostFilterService.showFilteredPosts(request);
         return ResponseEntity.ok(responses);
     }
 }
