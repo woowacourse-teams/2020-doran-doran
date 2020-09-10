@@ -37,7 +37,6 @@
 
     <v-sheet
       v-show="isCalendarOpen"
-      elevation="2"
       class="px-3 filter-calendar"
     >
       <DatePickerMenu :label="'시작 날짜'" @select="inputStartDate" />
@@ -175,10 +174,11 @@ export default {
   top: 105px;
   left: 10px;
   z-index: 1;
-  max-width: calc(65% + 40px);
+  max-width: calc(65% + 35px);
   padding-top: 5px;
   padding-left: 10px;
   border-radius: 24px;
+  box-shadow: 1px 1px 8px silver;
   background-color: white;
 }
 
