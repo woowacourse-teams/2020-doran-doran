@@ -35,10 +35,7 @@
       </v-btn-toggle>
     </transition>
 
-    <v-sheet
-      v-show="isCalendarOpen"
-      class="px-3 filter-calendar"
-    >
+    <v-sheet v-show="isCalendarOpen" class="px-4 pb-1 filter-calendar">
       <DatePickerMenu :label="'시작 날짜'" @select="inputStartDate" />
       <span class="mx-3 pt-2">~</span>
       <DatePickerMenu :label="'종료 날짜'" @select="inputEndDate" />

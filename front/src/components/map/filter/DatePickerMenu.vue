@@ -9,6 +9,7 @@
         prepend-icon="mdi-calendar"
         readonly
         single-line
+        hide-details="false"
         dense
         color="black"
       />
