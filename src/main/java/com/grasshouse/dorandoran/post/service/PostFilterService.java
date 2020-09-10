@@ -17,7 +17,7 @@ public class PostFilterService {
     private final PostRepositorySupport postRepositorySupport;
 
     @Transactional
-    public List<PostResponse> showSearchResults(PostFilterRequest request) {
+    public List<PostResponse> showFilteredResults(PostFilterRequest request) {
         List<Post> searchResults = postRepositorySupport
             .findPostWithKeywordAndDate(request.getKeyword(), request.getStartDate(),
                 request.getEndDate());

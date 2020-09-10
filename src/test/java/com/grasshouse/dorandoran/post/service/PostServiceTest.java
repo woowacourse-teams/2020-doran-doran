@@ -94,19 +94,6 @@ class PostServiceTest {
         assertThat(postResponses.get(0).getContent()).isEqualTo(persistPost.getContent());
     }
 
-    @DisplayName("위치 범위값 내의 글을 조회한다.")
-    @Test
-    void showPostsInBoundsTest() {
-        Post jamsilPost = dummyPost();
-        Post gangnamPost = dummyPost2();
-        Post persistJamsilPost = postRepository.save(jamsilPost);
-        Post persistGangnamPost = postRepository.save(gangnamPost);
-        PostBoundsRequest request = new PostBoundsRequest(37.6, 37.5, 127.1, 127.2);
-        List<PostResponse> postResponses = postService.showPostsInBounds(request);
-        assertThat(postResponses).hasSize(1);
-        assertThat(postResponses.get(0).getContent()).isEqualTo(persistJamsilPost.getContent());
-    }
-
     @DisplayName("글을 삭제한다.")
     @Test
     void deletePostTest() {

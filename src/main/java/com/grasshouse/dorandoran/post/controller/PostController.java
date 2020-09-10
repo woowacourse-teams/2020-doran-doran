@@ -41,13 +41,6 @@ public class PostController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/bounds")
-    public ResponseEntity<List<PostResponse>> showPostsInBounds(
-        @ModelAttribute PostBoundsRequest request) {
-        List<PostResponse> responses = postService.showPostsInBounds(request);
-        return ResponseEntity.ok(responses);
-    }
-
     @DeleteMapping("/{postId}")
     public ResponseEntity<Void> deletePost(@PathVariable Long postId, @LoginMember Member member) {
         postService.deletePost(postId, member);

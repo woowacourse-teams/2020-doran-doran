@@ -36,16 +36,6 @@ public class PostRepositorySupport extends QuerydslRepositorySupport {
             .fetchFirst();
     }
 
-    public List<Post> findPostsInBounds(Double leftBound, Double rightBound, Double lowerBound, Double upperBound) {
-        return jpaQueryFactory.selectFrom(post)
-            .leftJoin(post.likes, postLike).fetchJoin()
-            .leftJoin(post.comments, comment).fetchJoin()
-            .where(postIsAlive())
-            .where(betweenLatitude(lowerBound, upperBound), betweenLongitude(leftBound, rightBound))
-            .where(comment.isNull().or(commentIsAlive()))
-            .fetch();
-    }
-
     public List<Post> findPostWithKeywordAndDate(String keyword, LocalDateTime startDate, LocalDateTime endDate) {
         return jpaQueryFactory.selectFrom(post)
             .distinct()

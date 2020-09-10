@@ -45,13 +45,6 @@ public class PostService {
     }
 
     @Transactional
-    public List<PostResponse> showPostsInBounds(PostBoundsRequest request) {
-        List<Post> posts = postRepositorySupport.findPostsInBounds(request.getLeftBound(), request.getRightBound(),
-            request.getLowerBound(), request.getUpperBound());
-        return PostResponse.listFrom(posts);
-    }
-
-    @Transactional
     public void deletePost(Long id, Member member) {
         Post post = postRepository.findById(id)
             .orElseThrow(PostNotFoundException::new);

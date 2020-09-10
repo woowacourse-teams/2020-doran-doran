@@ -57,10 +57,6 @@ export default {
       const data = await api.loadPost(postId);
       commit("SET_POST", data);
     },
-    async loadPostsInBounds({ commit }, bounds) {
-      const postsInBounds = await api.loadPostsInBounds(bounds);
-      commit("SET_TIMELINE_POSTS", postsInBounds);
-    },
     async deletePost({ commit }, postId) {
       await api.deletePost(postId);
       commit("REMOVE_POST", postId);
