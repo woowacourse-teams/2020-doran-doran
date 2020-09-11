@@ -5,9 +5,10 @@ import store from "@/store";
 import vuetify from "@/plugins/vuetify";
 import KakaoMap from "@/plugins/kakao-map";
 import VueAnalytics from "vue-analytics";
+import { GOOGLE_ANALYTICS_TRACKING_ID } from "./secure/trackingid";
 
 Vue.use(VueAnalytics, {
-  id: "UA-176070170-1",
+  id: GOOGLE_ANALYTICS_TRACKING_ID,
   router,
 });
 
