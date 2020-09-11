@@ -6,6 +6,8 @@
         <VTextField
           label="새 닉네임을 입력하세요."
           color="grey darken-2"
+          maxlength="15"
+          :counter="15"
           v-model="newNickname"
           @keypress.enter="updateMember"
         />
