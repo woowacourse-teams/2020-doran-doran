@@ -64,6 +64,10 @@ export default {
     },
   },
   created() {
+    const currentPath = this.$router.history.current.path;
+    if (currentPath === "/post-create") {
+      this.$router.push("/");
+    }
     this.preventRoute();
     this.$store.commit("appBar/MAP_PAGE_DEFAULT_MODE");
   },
