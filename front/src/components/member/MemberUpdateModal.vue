@@ -9,6 +9,7 @@
           maxlength="15"
           :counter="15"
           v-model="newNickname"
+          :rules="[rules.violated, rules.unchanged]"
           @keypress.enter="updateMember"
         />
         <div class="button-box">
@@ -21,7 +22,7 @@
           </v-btn>
           <v-btn
             text
-            :disabled="nicknameNotChanged()"
+            :disabled="nicknameUpdateDisabled()"
             class="mb-2 text-subtitle-1 font-weight-bold amber--text text--accent-4"
             @click="updateMember"
           >
@@ -37,12 +38,18 @@
 <script>
 import api from "@/api/member";
 
+const NICKNAME_REGEX = "^[a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣0-9]+$";
+
 export default {
   name: "PostCreateModal",
   data() {
     return {
       rendered: false,
       newNickname: "",
+      rules: {
+        violated: (newVal) => !!newVal.match(NICKNAME_REGEX) || '닉네임은 숫자/한글/영어로 이루어져야 합니다.',
+        unchanged: (newNickname) => this.member.nickname !== newNickname || '새로운 닉네임을 입력해주세요.',
+      },
     };
   },
   computed: {
@@ -68,8 +75,8 @@ export default {
     closeModal() {
       this.$emit("close");
     },
-    nicknameNotChanged() {
-      return this.member.nickname === this.newNickname;
+    nicknameUpdateDisabled() {
+      return  this.member.nickname === this.newNickname || !this.newNickname.match(NICKNAME_REGEX);
     },
     bounceOut() {
       this.rendered = false;
