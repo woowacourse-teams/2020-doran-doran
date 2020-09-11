@@ -31,6 +31,7 @@ import MapAssistantButtons from "@/components/map/MapAssistantButtons";
 import PeriodFilterButton from "@/components/map/filter/PeriodFilterButton";
 import TimelineModal from "@/components/timeline/TimelineModal";
 import PostModal from "@/components/post/PostModal";
+import { MAP_MODE } from "@/utils/constants";
 
 export default {
   name: "MapPage",
@@ -63,11 +64,21 @@ export default {
     },
   },
   created() {
+    this.preventRoute();
     this.$store.commit("appBar/MAP_PAGE_DEFAULT_MODE");
   },
   methods: {
     renderMap() {
       this.isMapRendered = true;
+    },
+    preventRoute() {
+      this.$router.beforeEach((to, from, next) => {
+        if (to.path === "/" || to.path === "/timeline") {
+          this.$store.commit("appBar/MAP_PAGE_DEFAULT_MODE");
+          this.$store.commit("map/CHANGE_MODE", MAP_MODE.DEFAULT);
+        }
+        next(true);
+      });
     },
   },
   watch: {
