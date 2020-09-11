@@ -4,6 +4,12 @@ import router from "@/router";
 import store from "@/store";
 import vuetify from "@/plugins/vuetify";
 import KakaoMap from "@/plugins/kakao-map";
+import VueAnalytics from "vue-analytics";
+
+Vue.use(VueAnalytics, {
+  id: "UA-176070170-1",
+  router,
+});
 
 Vue.config.productionTip = false;
 Vue.use(KakaoMap);
