@@ -98,6 +98,7 @@ export default {
     closeModal() {
       this.$store.commit("map/CHANGE_MODE", MAP_MODE.DEFAULT);
       this.$store.commit("appBar/MAP_PAGE_DEFAULT_MODE");
+      this.$router.push("/");
     },
   },
 };
