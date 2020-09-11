@@ -4,6 +4,13 @@ import router from "@/router";
 import store from "@/store";
 import vuetify from "@/plugins/vuetify";
 import KakaoMap from "@/plugins/kakao-map";
+import VueAnalytics from "vue-analytics";
+import { GOOGLE_ANALYTICS_TRACKING_ID } from "./secure/trackingid";
+
+Vue.use(VueAnalytics, {
+  id: GOOGLE_ANALYTICS_TRACKING_ID,
+  router,
+});
 
 Vue.config.productionTip = false;
 Vue.use(KakaoMap);
