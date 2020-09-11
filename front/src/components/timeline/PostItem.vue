@@ -1,7 +1,7 @@
 <template>
   <div class="mx-4 my-3" @click="openPostModal">
     <div class="my-2">
-      <v-icon large class="mr-3">mdi-account-circle</v-icon>
+      <v-icon large class="mr-2">mdi-account-circle</v-icon>
       <span class="font-weight-bold">{{ post.author.nickname }}</span>
       <div class="float-right mt-1">{{ postDate }}</div>
     </div>
