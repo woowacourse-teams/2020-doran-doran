@@ -18,6 +18,10 @@ const routes = [
     },
     children: [
       {
+        path: "post-create",
+        name: "PostCreate",
+      },
+      {
         path: "timeline",
         name: "TimelineModal",
         components: {
