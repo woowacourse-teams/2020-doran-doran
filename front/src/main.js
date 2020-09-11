@@ -6,7 +6,10 @@ import vuetify from "@/plugins/vuetify";
 import KakaoMap from "@/plugins/kakao-map";
 import VueAnalytics from "vue-analytics";
 import LogRocket from "logrocket";
-import { LOGROCKET_APP_ID, GOOGLE_ANALYTICS_TRACKING_ID } from "./secure/trackingid";
+import {
+  LOGROCKET_APP_ID,
+  GOOGLE_ANALYTICS_TRACKING_ID,
+} from "@/secure/trackingid";
 
 Vue.use(VueAnalytics, {
   id: GOOGLE_ANALYTICS_TRACKING_ID,
