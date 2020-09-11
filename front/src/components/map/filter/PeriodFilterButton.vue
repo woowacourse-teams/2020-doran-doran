@@ -35,7 +35,7 @@
       </v-btn-toggle>
     </transition>
 
-    <v-sheet v-show="isCalendarOpen" class="px-4 pb-1 filter-calendar">
+    <v-sheet v-show="isCalendarOpen" class="px-3 py-0 filter-calendar">
       <DatePickerMenu :label="'시작 날짜'" @select="inputStartDate" />
       <span class="mx-3 pt-2">~</span>
       <DatePickerMenu :label="'종료 날짜'" @select="inputEndDate" />
@@ -147,7 +147,7 @@ export default {
   top: 66px;
   left: 45px;
   z-index: 1;
-  max-width: 65%;
+  max-width: 60%;
   overflow-x: auto;
   box-shadow: 1px 1px 8px silver;
 }
@@ -164,9 +164,9 @@ export default {
   display: flex;
   position: absolute;
   top: 105px;
-  left: 10px;
+  left: 45px;
   z-index: 1;
-  max-width: calc(65% + 35px);
+  max-width: 60%;
   padding-top: 5px;
   padding-left: 10px;
   border-radius: 24px;

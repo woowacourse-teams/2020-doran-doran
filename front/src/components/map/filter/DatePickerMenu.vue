@@ -5,13 +5,14 @@
         v-on="on"
         v-bind="attrs"
         v-model="date"
-        :label="label"
+        :placeholder="label"
         prepend-icon="mdi-calendar"
         readonly
         single-line
         hide-details="false"
         dense
         color="black"
+        class="font-size-x-small"
       />
     </template>
     <VDatePicker v-model="date" no-title scrollable @input="selectDate" />
