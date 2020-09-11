@@ -85,10 +85,7 @@ export default {
       return localStorage.getItem("accessToken");
     },
     isMine() {
-      return (
-        this.post.author.id ===
-        this.$store.getters["member/getMember"].id
-      );
+      return this.post.author.id === this.$store.getters["member/getMember"].id;
     },
     post: {
       get() {
