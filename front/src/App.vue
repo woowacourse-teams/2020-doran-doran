@@ -16,6 +16,7 @@
 import DoranAppBar from "@/components/DoranAppBar";
 import MemberSidebar from "@/components/member/MemberSidebar";
 import MemberUpdateModal from "@/components/member/MemberUpdateModal";
+import { MAP_MODE } from "@/utils/constants";
 
 export default {
   name: "App",
@@ -74,6 +75,7 @@ export default {
       this.$router.beforeEach((to, from, next) => {
         if (to.path === "/" || to.path === "/timeline") {
           this.$store.commit("appBar/MAP_PAGE_DEFAULT_MODE");
+          this.$store.commit("map/CHANGE_MODE", MAP_MODE.DEFAULT);
         }
         next(true);
       });
