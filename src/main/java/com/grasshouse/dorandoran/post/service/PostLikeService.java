@@ -49,7 +49,6 @@ public class PostLikeService {
     public void deletePostLike(Long postLikeId, Member member) {
         PostLike postLike = postLikeRepository.findById(postLikeId)
             .orElseThrow(PostLikeNotFoundException::new);
-
         if (!postLike.isSameLiker(member)) {
             throw new MemberMismatchException(POST_LIKER_MISMATCH_MESSAGE);
         }

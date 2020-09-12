@@ -113,29 +113,6 @@ class PostControllerTest extends CommonControllerTest {
         verify(postService).showPost(any());
     }
 
-    @DisplayName("위치 범위값 내의 글 목록을 조회한다.")
-    @Test
-    void showPostsInBoundsTest() throws Exception {
-        when(postService.showPostsInBounds(any())).thenReturn(postResponses());
-        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-        params.add("upperBound", "37.6");
-        params.add("lowerBound", "37.5");
-        params.add("leftBound", "127.2");
-        params.add("rightBound", "127.3");
-
-        this.mockMvc.perform(
-            get("/posts/bounds")
-                .params(params)
-                .accept(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("$[*].id").isNotEmpty())
-            .andExpect(jsonPath("$[*].content").isNotEmpty())
-            .andExpect(jsonPath("$[*].location").isNotEmpty())
-            .andDo(print());
-
-        verify(postService).showPostsInBounds(any());
-    }
-
     @DisplayName("로그인한 사용자가 자신의 글을 삭제한다.")
     @Test
     void deletePostWithLoginUser() throws Exception {

@@ -1,5 +1,6 @@
 package com.grasshouse.dorandoran.comment.domain;
 
+import com.grasshouse.dorandoran.common.baseentity.EntityStatus;
 import com.grasshouse.dorandoran.member.domain.Member;
 import com.grasshouse.dorandoran.post.domain.Post;
 import java.time.LocalDateTime;
@@ -9,6 +10,8 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -59,6 +62,10 @@ public class Comment {
     @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<CommentLike> likes = new HashSet<>();
 
+    @Builder.Default
+    @Enumerated(value = EnumType.STRING)
+    private EntityStatus status = EntityStatus.ALIVE;
+
     @Builder
     public Comment(Long id, Member author, Post post, String content, Double distance) {
         this.id = id;
@@ -69,7 +76,7 @@ public class Comment {
     }
 
     private void setAuthor(Member author) {
-        if (Objects.isNull(author)) {
+        if (Objects.isNull(this.author)) {
             this.author = author;
             this.author.addComment(this);
         }
@@ -82,7 +89,16 @@ public class Comment {
         }
     }
 
+    public void delete() {
+        this.status = EntityStatus.DELETED;
+        this.likes.clear();
+    }
+
     public boolean isSameAuthor(Member member) {
         return author.isSameMember(member);
+    }
+
+    public boolean isAlive() {
+        return this.status == EntityStatus.ALIVE;
     }
 }

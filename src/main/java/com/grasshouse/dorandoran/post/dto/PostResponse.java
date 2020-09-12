@@ -2,6 +2,7 @@ package com.grasshouse.dorandoran.post.dto;
 
 import com.grasshouse.dorandoran.comment.dto.CommentResponse;
 import com.grasshouse.dorandoran.member.dto.MemberResponse;
+import com.grasshouse.dorandoran.common.baseentity.EntityStatus;
 import com.grasshouse.dorandoran.post.domain.Address;
 import com.grasshouse.dorandoran.post.domain.Location;
 import com.grasshouse.dorandoran.post.domain.Post;
@@ -49,6 +50,8 @@ public class PostResponse {
     @NotNull
     private List<PostLikeResponse> likes;
 
+    private EntityStatus entityStatus;
+
     public static PostResponse from(Post post) {
         return PostResponse.builder()
             .id(post.getId())
@@ -60,6 +63,7 @@ public class PostResponse {
             .createdAt(post.getCreatedAt())
             .comments(CommentResponse.listFrom(post.getComments()))
             .likes(PostLikeResponse.listFrom(post.getLikes()))
+            .entityStatus(post.getStatus())
             .build();
     }
 

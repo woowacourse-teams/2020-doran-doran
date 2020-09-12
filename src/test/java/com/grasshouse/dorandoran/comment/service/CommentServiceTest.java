@@ -10,12 +10,14 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import com.grasshouse.dorandoran.comment.domain.Comment;
 import com.grasshouse.dorandoran.comment.dto.CommentCreateRequest;
 import com.grasshouse.dorandoran.comment.repository.CommentRepository;
+import com.grasshouse.dorandoran.common.baseentity.EntityStatus;
 import com.grasshouse.dorandoran.common.exception.CommentNotFoundException;
 import com.grasshouse.dorandoran.member.domain.Member;
 import com.grasshouse.dorandoran.member.repository.MemberRepository;
 import com.grasshouse.dorandoran.post.domain.Post;
 import com.grasshouse.dorandoran.post.repository.PostRepository;
 import com.grasshouse.dorandoran.post.repository.PostRepositorySupport;
+import java.util.List;
 import javax.validation.ConstraintViolationException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -94,7 +96,10 @@ class CommentServiceTest {
         assertThat(commentRepository.findAll()).hasSize(1);
 
         commentService.deleteComment(persistComment.getId(), member);
-        assertThat(commentRepository.findAll()).hasSize(0);
+
+        List<Comment> commentList = commentRepository.findAll();
+        assertThat(commentList).hasSize(1);
+        assertThat(commentList.get(0).getStatus()).isEqualTo(EntityStatus.DELETED);
     }
 
     @DisplayName("[예외] 댓글 내용이 120자를 넘는다.")

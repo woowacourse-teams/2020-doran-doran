@@ -12,6 +12,7 @@ import com.grasshouse.dorandoran.comment.dto.CommentLikeCreateRequest;
 import com.grasshouse.dorandoran.comment.repository.CommentLikeRepository;
 import com.grasshouse.dorandoran.comment.repository.CommentRepository;
 import com.grasshouse.dorandoran.comment.repository.CommentRepositorySupport;
+import com.grasshouse.dorandoran.common.baseentity.EntityStatus;
 import com.grasshouse.dorandoran.common.exception.CommentLikeAlreadyExistsException;
 import com.grasshouse.dorandoran.member.domain.Member;
 import com.grasshouse.dorandoran.member.repository.MemberRepository;
@@ -117,7 +118,7 @@ class CommentLikeServiceTest {
             .isInstanceOf(CommentLikeAlreadyExistsException.class);
     }
 
-    @DisplayName("댓글에 추가한 좋아요를 취소(삭제)한다.")
+    @DisplayName("댓글에 좋아요를 삭제한다.")
     @Test
     void deleteCommentLike() {
         CommentLike commentLike = CommentLike.builder()
@@ -129,10 +130,11 @@ class CommentLikeServiceTest {
         assertThat(commentLikeRepository.findAll()).hasSize(1);
 
         commentLikeService.deleteCommentLike(persistCommentLike.getId(), commentLiker);
+
         assertThat(commentLikeRepository.findAll()).hasSize(0);
     }
 
-    @DisplayName("댓글을 삭제할 때 좋아요도 같이 삭제된다.")
+    @DisplayName("댓글이 삭제 상태로 변경되면 좋아요가 삭제된다.")
     @Test
     void deleteCommentWithCommentLike() {
         CommentLikeCreateRequest request = CommentLikeCreateRequest.builder()
@@ -145,7 +147,9 @@ class CommentLikeServiceTest {
         assertThat(persistComment.getLikes()).hasSize(1);
 
         commentService.deleteComment(persistComment.getId(), author);
-        assertThat(commentRepository.findAll()).hasSize(0);
+
+        Comment deletedComment = commentRepository.findAll().get(0);
+        assertThat(deletedComment.getStatus()).isEqualTo(EntityStatus.DELETED);
         assertThat(commentLikeRepository.findAll()).hasSize(0);
     }
 

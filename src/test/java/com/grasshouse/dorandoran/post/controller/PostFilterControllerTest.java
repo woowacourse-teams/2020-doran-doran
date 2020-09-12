@@ -27,7 +27,7 @@ class PostFilterControllerTest extends CommonControllerTest {
     @Test
     void getSearchResultsPosts() throws Exception {
         String url = "/posts/filter";
-        when(PostFilterService.showSearchResults(any())).thenReturn(postResponses());
+        when(PostFilterService.showFilteredPosts(any())).thenReturn(postResponses());
 
         this.mockMvc.perform(get(url)
             .queryParam("keyword", "내용")
@@ -38,14 +38,14 @@ class PostFilterControllerTest extends CommonControllerTest {
             .andExpect(status().isOk())
             .andDo(print());
 
-        verify(PostFilterService).showSearchResults(any());
+        verify(PostFilterService).showFilteredPosts(any());
     }
 
     @DisplayName("날짜 필터링이 없는 경우")
     @Test
     void getSearchResultsPosts2() throws Exception {
         String url = "/posts/filter";
-        when(PostFilterService.showSearchResults(any())).thenReturn(postResponses());
+        when(PostFilterService.showFilteredPosts(any())).thenReturn(postResponses());
 
         this.mockMvc.perform(get(url)
             .queryParam("keyword", "내용")
@@ -54,14 +54,14 @@ class PostFilterControllerTest extends CommonControllerTest {
             .andExpect(status().isOk())
             .andDo(print()).andReturn();
 
-        verify(PostFilterService).showSearchResults(any());
+        verify(PostFilterService).showFilteredPosts(any());
     }
 
     @DisplayName("[예외] 시작 날짜가 마감 날짜보다 뒤에 있는 경우")
     @Test
     void getSearchResultsPosts3() throws Exception {
         String url = "/posts/filter";
-        when(PostFilterService.showSearchResults(any())).thenReturn(postResponses());
+        when(PostFilterService.showFilteredPosts(any())).thenReturn(postResponses());
 
         this.mockMvc.perform(get(url)
             .queryParam("keyword", "내용")
@@ -77,7 +77,7 @@ class PostFilterControllerTest extends CommonControllerTest {
     @Test
     void getSearchResultsPosts4() throws Exception {
         String url = "/posts/filter";
-        when(PostFilterService.showSearchResults(any())).thenReturn(postResponses());
+        when(PostFilterService.showFilteredPosts(any())).thenReturn(postResponses());
 
         this.mockMvc.perform(get(url)
             .queryParam("keyword", "내용")

@@ -1,6 +1,7 @@
 package com.grasshouse.dorandoran.comment.dto;
 
 import com.grasshouse.dorandoran.comment.domain.Comment;
+import com.grasshouse.dorandoran.common.baseentity.EntityStatus;
 import com.grasshouse.dorandoran.member.dto.MemberResponse;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -38,6 +39,8 @@ public class CommentResponse {
 
     private List<CommentLikeResponse> likes;
 
+    private EntityStatus entityStatus;
+
     public static CommentResponse from(Comment comment) {
         return CommentResponse.builder()
             .id(comment.getId())
@@ -47,6 +50,7 @@ public class CommentResponse {
             .distance(comment.getDistance())
             .createdAt(comment.getCreatedAt())
             .likes(CommentLikeResponse.listFrom(comment.getLikes()))
+            .entityStatus(comment.getStatus())
             .build();
     }
 
