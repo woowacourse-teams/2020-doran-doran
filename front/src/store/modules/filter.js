@@ -18,8 +18,8 @@ export default {
     SET_END_DATE(state, endDate) {
       state.endDate = endDate;
     },
-    SET_END_DATE_TO_NOW(state) {
-      state.endDate = period.now();
+    RESET_END_DATE(state) {
+      state.endDate = "";
     },
   },
   actions: {
@@ -27,7 +27,7 @@ export default {
       const data = {
         keyword: state.keyword,
         startDate: state.startDate,
-        endDate: state.endDate,
+        endDate: state.endDate ? state.endDate : period.now(),
       };
       return await api.filterPosts(data);
     },
