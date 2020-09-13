@@ -58,6 +58,11 @@ export default {
       const data = await api.loadPost(postId);
       commit("SET_POST", data);
     },
+    async loadPosts({ commit, dispatch }) {
+      commit("CLEAR_POSTS");
+      const posts = await dispatch("filter/filterPosts");
+      commit("SET_POSTS", posts);
+    },
     async deletePost({ commit }, postId) {
       await api.deletePost(postId);
       commit("REMOVE_POST", postId);

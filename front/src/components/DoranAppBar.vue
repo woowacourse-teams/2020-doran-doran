@@ -92,10 +92,8 @@ export default {
         return;
       }
       this.$store.commit("post/filter/SET_KEYWORD", this.keyword);
-      this.$store.commit("post/CLEAR_POSTS");
-      const filteredPosts = await this.$store.dispatch("post/filter/filterPosts");
-      this.$store.commit("post/SET_POSTS", filteredPosts);
-      if (filteredPosts.length === 0) {
+      await this.$store.dispatch("post/loadPosts");
+      if (this.$store.getters["post/posts"].length === 0) {
         this.$store.commit(
           "snackbar/SHOW",
           ERROR_MESSAGE.NO_SEARCH_RESULT_MESSAGE,
@@ -106,8 +104,7 @@ export default {
       this.toggleSearchInput();
       this.keyword = "";
       this.$store.commit("post/filter/SET_KEYWORD", "");
-      const filteredPosts = await this.$store.dispatch("post/filter/filterPosts");
-      this.$store.commit("post/SET_POSTS", filteredPosts);
+      await this.$store.dispatch("post/loadPosts");
     },
   },
 };

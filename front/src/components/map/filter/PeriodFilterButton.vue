@@ -106,10 +106,8 @@ export default {
       this.filterPosts();
     },
     async filterPosts() {
-      this.$store.commit("post/CLEAR_POSTS");
-      const filteredPosts = await this.$store.dispatch("post/filter/filterPosts");
-      this.$store.commit("post/SET_POSTS", filteredPosts);
-      if (filteredPosts.length === 0) {
+      await this.$store.dispatch("post/loadPosts");
+      if (this.$store.getters["post/posts"].length === 0) {
         this.$store.commit("snackbar/SHOW", ERROR_MESSAGE.NO_POST_MESSAGE);
         return;
       }
