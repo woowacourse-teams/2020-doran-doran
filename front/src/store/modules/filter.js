@@ -1,12 +1,11 @@
 import api from "@/api/posts";
-import { DATE_FORMAT } from "@/utils/constants";
-import moment from "moment";
+import { period, PERIOD_TYPE } from "@/utils/period";
 
 export default {
   namespaced: true,
   state: {
     keyword: "",
-    startDate: "",
+    startDate: period.ago(24, PERIOD_TYPE.HOUR),
     endDate: "",
   },
   mutations: {
@@ -14,27 +13,12 @@ export default {
       state.keyword = keyword;
     },
     SET_START_DATE(state, startDate) {
-      state.startDate = startDate + " 00:00:00";
+      state.startDate = startDate;
     },
     SET_END_DATE(state, endDate) {
-      state.endDate = endDate + " 23:59:59";
+      state.endDate = endDate;
     },
-    SET_END_DATE_TO_NOW(state) {
-      state.endDate = moment().add(1, "seconds").format(DATE_FORMAT.DEFAULT);
-    },
-    SET_FILTER_FROM_X_HOURS_AGO_TO_NOW(state, x) {
-      state.startDate = moment()
-        .subtract(x, "hours")
-        .format(DATE_FORMAT.DEFAULT);
-      state.endDate = moment().add(1, "seconds").format(DATE_FORMAT.DEFAULT);
-    },
-    SET_FILTER_FROM_X_DAYS_AGO_TO_NOW(state, x) {
-      state.startDate =
-        moment().subtract(x, "days").format("YYYY-MM-DD") + " 00:00:00";
-      state.endDate = moment().add(1, "seconds").format(DATE_FORMAT.DEFAULT);
-    },
-    INITIALIZE_PERIOD_FILTER(state) {
-      state.startDate = "";
+    RESET_END_DATE(state) {
       state.endDate = "";
     },
   },
@@ -43,7 +27,7 @@ export default {
       const data = {
         keyword: state.keyword,
         startDate: state.startDate,
-        endDate: state.endDate,
+        endDate: state.endDate ? state.endDate : period.now(),
       };
       return await api.filterPosts(data);
     },
