@@ -45,9 +45,6 @@ export default {
     CLEAR_POSTS(state) {
       state.posts = null;
     },
-    SET_TIMELINE_POSTS(state, timelinePosts) {
-      state.timelinePosts = timelinePosts;
-    },
     REMOVE_POST(state, postId) {
       const deleteIndex = state.posts.findIndex((post) => post.id === postId);
       state.posts.splice(deleteIndex, 1);
