@@ -91,9 +91,9 @@ export default {
         this.$store.commit("snackbar/SHOW", ERROR_MESSAGE.NO_KEYWORD_INPUT);
         return;
       }
-      this.$store.commit("filter/SET_KEYWORD", this.keyword);
+      this.$store.commit("post/filter/SET_KEYWORD", this.keyword);
       this.$store.commit("post/CLEAR_POSTS");
-      const filteredPosts = await this.$store.dispatch("filter/filterPosts");
+      const filteredPosts = await this.$store.dispatch("post/filter/filterPosts");
       this.$store.commit("post/SET_POSTS", filteredPosts);
       if (filteredPosts.length === 0) {
         this.$store.commit(
@@ -105,8 +105,8 @@ export default {
     async initializeMapPage() {
       this.toggleSearchInput();
       this.keyword = "";
-      this.$store.commit("filter/SET_KEYWORD", "");
-      const filteredPosts = await this.$store.dispatch("filter/filterPosts");
+      this.$store.commit("post/filter/SET_KEYWORD", "");
+      const filteredPosts = await this.$store.dispatch("post/filter/filterPosts");
       this.$store.commit("post/SET_POSTS", filteredPosts);
     },
   },

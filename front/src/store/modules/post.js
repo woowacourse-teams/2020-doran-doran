@@ -1,7 +1,11 @@
 import api from "@/api/posts";
+import filter from "@/store/modules/filter";
 
 export default {
   namespaced: true,
+  modules: {
+    filter,
+  },
   state: {
     post: {
       id: 0,

@@ -46,7 +46,7 @@ export default {
         ),
       );
     await this.changeAppBarByCenterAddress();
-    const filteredPosts = await this.$store.dispatch("filter/filterPosts");
+    const filteredPosts = await this.$store.dispatch("post/filter/filterPosts");
     this.$store.commit("post/SET_POSTS", filteredPosts);
     this.$kakaoMap.addEventToMap(
       EVENT_TYPE.CENTER_CHANGE,

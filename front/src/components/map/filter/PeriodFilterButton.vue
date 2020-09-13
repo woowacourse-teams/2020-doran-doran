@@ -77,20 +77,20 @@ export default {
     },
     loadPosts() {
       const startDate = this.selected.startDate();
-      this.$store.commit("filter/SET_START_DATE", startDate);
-      this.$store.commit("filter/RESET_END_DATE");
+      this.$store.commit("post/filter/SET_START_DATE", startDate);
+      this.$store.commit("post/filter/RESET_END_DATE");
       this.filterPosts();
     },
     inputStartDate(date) {
       this.startDate = period.format(date + " 00:00:00");
-      this.$store.commit("filter/SET_START_DATE", this.startDate);
+      this.$store.commit("post/filter/SET_START_DATE", this.startDate);
       if (this.endDate) {
         this.handleUserInputFiltering();
       }
     },
     inputEndDate(date) {
       this.endDate = period.format(date + " 23:59:59");
-      this.$store.commit("filter/SET_END_DATE", this.endDate);
+      this.$store.commit("post/filter/SET_END_DATE", this.endDate);
       if (this.startDate) {
         this.handleUserInputFiltering();
       }
@@ -107,7 +107,7 @@ export default {
     },
     async filterPosts() {
       this.$store.commit("post/CLEAR_POSTS");
-      const filteredPosts = await this.$store.dispatch("filter/filterPosts");
+      const filteredPosts = await this.$store.dispatch("post/filter/filterPosts");
       this.$store.commit("post/SET_POSTS", filteredPosts);
       if (filteredPosts.length === 0) {
         this.$store.commit("snackbar/SHOW", ERROR_MESSAGE.NO_POST_MESSAGE);
@@ -119,8 +119,8 @@ export default {
   watch: {
     async selected(val) {
       if (val === this.periodOptions.CUSTOM) {
-        this.$store.commit("filter/SET_START_DATE", this.startDate);
-        this.$store.commit("filter/SET_END_DATE", this.endDate);
+        this.$store.commit("post/filter/SET_START_DATE", this.startDate);
+        this.$store.commit("post/filter/SET_END_DATE", this.endDate);
         await this.filterPosts();
         this.openCalendar();
         return;
