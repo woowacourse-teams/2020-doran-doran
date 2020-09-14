@@ -81,6 +81,9 @@ export default {
     posts: (state) => {
       return state.posts;
     },
+    isEmpty: (state) => {
+      return state.posts.length === 0;
+    },
     postsInBounds: (state) => (bounds) => {
       return state.posts.filter(
         ({ location }) =>

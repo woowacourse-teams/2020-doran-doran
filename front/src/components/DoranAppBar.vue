@@ -93,7 +93,7 @@ export default {
       }
       this.$store.commit("post/filter/SET_KEYWORD", this.keyword);
       await this.$store.dispatch("post/loadPosts");
-      if (this.$store.getters["post/posts"].length === 0) {
+      if (this.$store.getters["post/isEmpty"]) {
         this.$store.commit(
           "snackbar/SHOW",
           ERROR_MESSAGE.NO_SEARCH_RESULT_MESSAGE,
