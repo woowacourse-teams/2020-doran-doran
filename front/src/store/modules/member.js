@@ -1,4 +1,5 @@
 import api from "@/api/member";
+import LogRocket from "logrocket";
 
 export default {
   namespaced: true,
@@ -27,6 +28,7 @@ export default {
   actions: {
     async loadMember({ commit }) {
       const member = await api.loadMember();
+      LogRocket.identify(member.id);
       commit("SET_MEMBER", member);
     },
   },
