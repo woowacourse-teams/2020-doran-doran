@@ -4,7 +4,7 @@
 
 <script>
 export default {
-  name: "Report",
+  name: "ReportPage",
   data() {
     return {
       text: "신고된 글",
