@@ -46,16 +46,32 @@ export default {
   name: "PostCreateModal",
   data() {
     return {
+      flag: false,
       content: "",
       location: this.$kakaoMap.getCenterLocation(),
       buttonColor: DORAN_DORAN_COLORS.POINT_COLOR,
       rendered: false,
     };
   },
+  created() {
+    this.preventRoute();
+  },
   mounted() {
     this.rendered = true;
   },
   methods: {
+    preventRoute() {
+      const preventRoute = this.$router.beforeEach((to, from, next) => {
+        if (this.flag) {
+          this.$store.commit("appBar/MAP_PAGE_DEFAULT_MODE");
+          this.$store.commit("map/CHANGE_MODE", MAP_MODE.DEFAULT);
+          next(true);
+        }
+        this.rendered = false;
+        next(false);
+      });
+      this.$once("hook:destroyed", preventRoute);
+    },
     async createPost() {
       if (this.content.trim() === "") {
         this.$store.commit("snackbar/SHOW", ERROR_MESSAGE.NO_CONTENT_MESSAGE);
@@ -96,6 +112,7 @@ export default {
       this.rendered = false;
     },
     closeModal() {
+      this.flag = true;
       this.$store.commit("map/CHANGE_MODE", MAP_MODE.DEFAULT);
       this.$store.commit("appBar/MAP_PAGE_DEFAULT_MODE");
       this.$router.push("/");

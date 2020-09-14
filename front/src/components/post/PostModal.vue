@@ -60,7 +60,7 @@ import CommentList from "@/components/post/CommentList";
 import PostLocationModal from "@/components/post/PostLocationModal";
 import OptionsModal from "@/components/post/OptionsModal";
 import DoranAppBar from "@/components/DoranAppBar";
-import { ERROR_MESSAGE, LIKE_BUTTON_TYPE } from "@/utils/constants";
+import { ERROR_MESSAGE, LIKE_BUTTON_TYPE, MAP_MODE } from "@/utils/constants";
 
 const DELETE_POST_SUCCESS_MESSAGE = "👻 글이 삭제되었습니다.";
 const DELETE_POST_FAIL_MESSAGE = "😭 글 삭제에 실패했습니다.";
@@ -85,10 +85,7 @@ export default {
       return localStorage.getItem("accessToken");
     },
     isMine() {
-      return (
-        this.post.author.id ===
-        this.$store.getters["member/getMember"].id
-      );
+      return this.post.author.id === this.$store.getters["member/getMember"].id;
     },
     post: {
       get() {
@@ -118,8 +115,18 @@ export default {
   async created() {
     await this.$store.dispatch("post/loadPost", this.$route.params.id);
     this.$store.commit("appBar/POST_DETAIL_PAGE");
+    this.preventRoute();
   },
   methods: {
+    preventRoute() {
+      const preventRoute = this.$router.beforeEach((to, from, next) => {
+        this.$store.commit("appBar/MAP_PAGE_DEFAULT_MODE");
+        this.$store.commit("map/CHANGE_MODE", MAP_MODE.DEFAULT);
+        next(true);
+      });
+      this.$once("hook:destroyed", preventRoute);
+    },
+
     async remove() {
       await this.$store.dispatch("post/deletePost", this.post.id).catch((e) => {
         this.$store.commit("snackbar/SHOW", DELETE_POST_FAIL_MESSAGE);
