@@ -1,0 +1,68 @@
+@font-face {
+  font-family: BM_JUA;
+  src: url("BM_JUA.woff") format("woff");
+}
+
+* {
+  letter-spacing: -0.7px;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+
+.doran-doran-color {
+  background: linear-gradient(
+    320deg,
+    rgba(252, 144, 0, 1) 30%,
+    rgba(251, 203, 49, 1) 100%
+  );
+}
+
+a {
+  text-decoration: none;
+  color: black !important;
+}
+
+.font-size-x-large {
+  font-size: 2rem;
+}
+
+.font-size-regular {
+  font-size: 1rem;
+}
+
+.font-size-small {
+  font-size: 0.9rem;
+}
+
+.font-size-x-small {
+  font-size: 0.8rem;
+}
+
+.modal-mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 9998;
+  width: 100%;
+  height: 100%;
+  max-width: 500px;
+  margin: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+  text-align: center;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition-duration: 0.2s;
+  transition-property: opacity;
+  transition-timing-function: ease;
+}
+
+.fade-enter,
+.fade-leave-active {
+  opacity: 0;
+}

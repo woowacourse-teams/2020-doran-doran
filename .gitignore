@@ -1,8 +1,12 @@
+.DS_Store
 HELP.md
 .gradle
 build/
+src/main/generated/**
+src/main/resources/application-prod.properties
+src/main/resources/application-security.properties
 !gradle/wrapper/gradle-wrapper.jar
-!**/src/main/**
+!**/src/main/java/**
 !**/src/test/**
 
 ### STS ###
