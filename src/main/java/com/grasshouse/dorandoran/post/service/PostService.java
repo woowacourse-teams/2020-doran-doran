@@ -6,12 +6,10 @@ import com.grasshouse.dorandoran.common.exception.MemberMismatchException;
 import com.grasshouse.dorandoran.common.exception.PostNotFoundException;
 import com.grasshouse.dorandoran.member.domain.Member;
 import com.grasshouse.dorandoran.post.domain.Post;
-import com.grasshouse.dorandoran.post.dto.PostBoundsRequest;
 import com.grasshouse.dorandoran.post.dto.PostCreateRequest;
 import com.grasshouse.dorandoran.post.dto.PostCreateResponse;
 import com.grasshouse.dorandoran.post.dto.PostResponse;
 import com.grasshouse.dorandoran.post.repository.PostRepository;
-import com.grasshouse.dorandoran.post.repository.PostRepositorySupport;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class PostService {
 
     private final PostRepository postRepository;
-    private final PostRepositorySupport postRepositorySupport;
 
     @Transactional
     public PostCreateResponse createPost(PostCreateRequest request, Member member) {
@@ -34,8 +31,10 @@ public class PostService {
 
     @Transactional
     public PostResponse showPost(Long id) {
-        Post post = postRepositorySupport.findPostById(id);
-        return PostResponse.from(post);
+        Post post = postRepository.findById(id)
+            .orElseThrow(PostNotFoundException::new);
+
+        return PostResponse.from(post.filterAliveComments());
     }
 
     @Transactional
