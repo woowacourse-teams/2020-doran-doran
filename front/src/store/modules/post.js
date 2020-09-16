@@ -1,7 +1,11 @@
 import api from "@/api/posts";
+import filter from "@/store/modules/filter";
 
 export default {
   namespaced: true,
+  modules: {
+    filter,
+  },
   state: {
     post: {
       id: 0,
@@ -41,9 +45,6 @@ export default {
     CLEAR_POSTS(state) {
       state.posts = null;
     },
-    SET_TIMELINE_POSTS(state, timelinePosts) {
-      state.timelinePosts = timelinePosts;
-    },
     REMOVE_POST(state, postId) {
       const deleteIndex = state.posts.findIndex((post) => post.id === postId);
       state.posts.splice(deleteIndex, 1);
@@ -56,6 +57,11 @@ export default {
     async loadPost({ commit }, postId) {
       const data = await api.loadPost(postId);
       commit("SET_POST", data);
+    },
+    async loadPosts({ commit, dispatch }) {
+      commit("CLEAR_POSTS");
+      const posts = await dispatch("filter/filterPosts");
+      commit("SET_POSTS", posts);
     },
     async deletePost({ commit }, postId) {
       await api.deletePost(postId);
@@ -74,6 +80,9 @@ export default {
     },
     posts: (state) => {
       return state.posts;
+    },
+    isEmpty: (state) => {
+      return state.posts.length === 0;
     },
     postsInBounds: (state) => (bounds) => {
       return state.posts.filter(

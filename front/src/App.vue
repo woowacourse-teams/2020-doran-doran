@@ -74,10 +74,7 @@ export default {
       this.$router.beforeEach(async (to, from, next) => {
         if (to.path === "/" || to.path === "/timeline") {
           this.$store.commit("appBar/MAP_PAGE_DEFAULT_MODE");
-
-          this.$store.commit("post/CLEAR_POSTS");
-          const posts = await this.$store.dispatch("filter/filterPosts");
-          this.$store.commit("post/SET_POSTS", posts);
+          await this.$store.dispatch("post/loadPosts");
         }
         next(true);
       });

@@ -5,7 +5,6 @@ import member from "@/store/modules/member";
 import post from "@/store/modules/post";
 import memberSidebar from "@/store/modules/memberSidebar";
 import appBar from "@/store/modules/appBar";
-import filter from "@/store/modules/filter";
 import snackbar from "@/store/modules/snackbar";
 import map from "@/store/modules/map";
 
@@ -18,7 +17,6 @@ export default new Vuex.Store({
     member,
     memberSidebar,
     appBar,
-    filter,
     snackbar,
     map,
   },
