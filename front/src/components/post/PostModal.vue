@@ -126,9 +126,7 @@ export default {
         throw e;
       });
       this.$store.commit("snackbar/SHOW", DELETE_POST_SUCCESS_MESSAGE);
-      this.$store.commit("post/CLEAR_POSTS");
-      const filteredPosts = await this.$store.dispatch("filter/filterPosts");
-      this.$store.commit("post/SET_POSTS", filteredPosts);
+      await this.$store.dispatch("post/loadPosts");
       this.$router.go(-1);
     },
     hasLike(like) {
