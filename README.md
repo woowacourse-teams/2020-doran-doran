@@ -50,7 +50,11 @@
 
 안녕하세요! 팀 풀하우스입니다.
 
-[김예빈(엘리)](https://github.com/YebinK) [김현우(우)](https://github.com/hwookim) [서주원(레베카)](https://github.com/chws) [안예지(예지니어스)](https://github.com/YejiAhn) [정주용(오구)](https://github.com/LTTTTTE)
+- [김예빈(엘리)](https://github.com/YebinK)
+- [김현우(우)](https://github.com/hwookim)
+- [서주원(레베카)](https://github.com/chws)
+- [안예지(예지니어스)](https://github.com/YejiAhn)
+- [정주용(오구)](https://github.com/LTTTTTE)
 
 <br/>
 
@@ -67,14 +71,6 @@
 <br/>
 
 ### ❓ QnA
-
-Q. **웹 환경에서 위치를 받아오지 못해요.**
-
-A. Chrome 기준, F12를 눌러 개발자도구를 열고 수동 설정할 수 있습니다.
-
-<br/>
-
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/65c05a69-adc4-4ebe-9b1e-c099c4dc4303/Untitled.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/65c05a69-adc4-4ebe-9b1e-c099c4dc4303/Untitled.png)
 
 **Q. 댓글에 있는 거리는 무슨 거리인가요?**
 
