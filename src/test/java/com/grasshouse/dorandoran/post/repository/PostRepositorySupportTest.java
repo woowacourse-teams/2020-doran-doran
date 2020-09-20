@@ -1,6 +1,7 @@
 package com.grasshouse.dorandoran.post.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import com.grasshouse.dorandoran.comment.domain.Comment;
 import com.grasshouse.dorandoran.comment.repository.CommentRepository;
@@ -53,8 +54,12 @@ class PostRepositorySupportTest {
         List<Post> persistPosts = postRepositorySupport.findPostWithKeywordAndDate("글", null, null);
 
         assertThat(persistPosts).hasSize(1);
-        assertThat(persistPosts.get(0).getComments()).hasSize(1);
-        assertThat(persistPosts.get(0).getLikes()).hasSize(2);
+        assertAll(
+            () -> {
+                assertThat(persistPosts.get(0).getComments()).hasSize(1);
+                assertThat(persistPosts.get(0).getLikes()).hasSize(2);
+            }
+        );
     }
 
     @AfterEach
