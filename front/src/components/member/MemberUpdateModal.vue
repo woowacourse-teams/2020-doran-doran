@@ -22,7 +22,7 @@
           </v-btn>
           <v-btn
             text
-            :disabled="nicknameUpdateDisabled()"
+            :disabled="isUpdateDisabled"
             class="mb-2 text-subtitle-1 font-weight-bold amber--text text--accent-4"
             @click="updateMember"
           >
@@ -57,6 +57,12 @@ export default {
     member() {
       return this.$store.getters["member/getMember"];
     },
+    isUpdateDisabled() {
+      return (
+          this.member.nickname === this.newNickname ||
+          !this.newNickname.match(NICKNAME_REGEX)
+      );
+    },
   },
   mounted() {
     this.rendered = true;
@@ -75,12 +81,6 @@ export default {
     },
     closeModal() {
       this.$emit("close");
-    },
-    nicknameUpdateDisabled() {
-      return (
-        this.member.nickname === this.newNickname ||
-        !this.newNickname.match(NICKNAME_REGEX)
-      );
     },
     bounceOut() {
       this.rendered = false;
