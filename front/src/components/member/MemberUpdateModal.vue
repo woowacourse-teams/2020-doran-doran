@@ -50,9 +50,6 @@ export default {
         violated: (newVal) =>
           !!newVal.match(NICKNAME_REGEX) ||
           "닉네임은 숫자/한글/영어로 이루어져야 합니다.",
-        unchanged: (newNickname) =>
-          this.member.nickname !== newNickname ||
-          "새로운 닉네임을 입력해주세요.",
       },
     };
   },
