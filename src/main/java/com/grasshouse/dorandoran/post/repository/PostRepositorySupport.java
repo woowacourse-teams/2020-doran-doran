@@ -1,11 +1,8 @@
 package com.grasshouse.dorandoran.post.repository;
 
-import static com.grasshouse.dorandoran.comment.domain.QComment.comment;
 import static com.grasshouse.dorandoran.post.domain.QPost.post;
-import static com.grasshouse.dorandoran.post.domain.QPostLike.postLike;
 
 import com.grasshouse.dorandoran.common.baseentity.EntityStatus;
-import com.grasshouse.dorandoran.common.exception.PostNotFoundException;
 import com.grasshouse.dorandoran.post.domain.Post;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -27,26 +24,9 @@ public class PostRepositorySupport extends QuerydslRepositorySupport {
         this.jpaQueryFactory = jpaQueryFactory;
     }
 
-    public Post findPostById(Long postId) {
-        Post persistPost = jpaQueryFactory.selectFrom(post)
-            .distinct()
-            .leftJoin(post.comments, comment).fetchJoin()
-            .leftJoin(post.likes, postLike).fetchJoin()
-            .where(post.id.eq(postId))
-            .where(isPostAlive())
-            .fetchFirst();
-
-        if (persistPost == null) {
-            throw new PostNotFoundException();
-        }
-        return persistPost.filterAliveComments();
-    }
-
     public List<Post> findPostWithKeywordAndDate(String keyword, LocalDateTime startDate, LocalDateTime endDate) {
         List<Post> persistPosts = jpaQueryFactory.selectFrom(post)
             .distinct()
-            .leftJoin(post.comments, comment).fetchJoin()
-            .leftJoin(post.likes, postLike).fetchJoin()
             .where(isPostAlive())
             .where(containsKeyword(keyword), betweenDate(startDate, endDate))
             .fetch();
