@@ -28,12 +28,12 @@ public class MemberRepositoryTest {
 
     @DisplayName("[예외] 가능하지 않은 닉네임들로 Member를 생성한다.")
     @ParameterizedTest
-    @ValueSource(strings = {"일이삼사오육칠팔구십일이삼사오육", "ottffssentottffs", "1234567890123456"})
+    @ValueSource(strings = {"일이삼사오육칠팔구십일이삼사오육", "ottffssentottffs", "1234567890123456", "d;", "-"})
     void impossibleNicknameTest(String nickname) {
         Member member = Member.builder().nickname(nickname).oAuthId("oauthId").build();
         assertThatThrownBy(() -> {
             memberRepository.save(member);
-        }).isInstanceOf(ConstraintViolationException.class).hasMessageContaining("닉네임은 15자를");
+        }).isInstanceOf(ConstraintViolationException.class);
     }
 
     @AfterEach

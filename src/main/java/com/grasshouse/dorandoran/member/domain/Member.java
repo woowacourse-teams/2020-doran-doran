@@ -14,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -36,6 +37,7 @@ public class Member {
     private Long id;
 
     @Length(max = 15, message = "닉네임은 15자를 초과할 수 없습니다.")
+    @Pattern(regexp = "^[a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣0-9]+$", message = "닉네임은 한글/영어/숫자로만 이루어져야 합니다.")
     @NotBlank(message = "닉네임은 비어 있을 수 없습니다.")
     @Column(unique = true, nullable = false)
     private String nickname;
