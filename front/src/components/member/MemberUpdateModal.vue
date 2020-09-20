@@ -9,7 +9,7 @@
           maxlength="15"
           :counter="15"
           v-model="newNickname"
-          :rules="[rules.violated, rules.unchanged]"
+          :rules="Object.values(rules)"
           @keypress.enter="updateMember"
         />
         <div class="button-box">
@@ -41,7 +41,7 @@ import api from "@/api/member";
 const NICKNAME_REGEX = "^[a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣0-9]+$";
 
 export default {
-  name: "PostCreateModal",
+  name: "MemberUpdateModal",
   data() {
     return {
       rendered: false,
