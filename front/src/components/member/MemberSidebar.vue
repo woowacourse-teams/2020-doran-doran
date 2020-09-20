@@ -5,7 +5,7 @@
         mdi-window-close
       </v-icon>
 
-      <div class="ma-3 mt-10 mb-4" @click="login">
+      <div class="mx-3 mt-10 mb-4" @click="login">
         <v-avatar>
           <v-icon size="36">mdi-account-circle</v-icon>
         </v-avatar>
