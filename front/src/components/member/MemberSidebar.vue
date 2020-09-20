@@ -10,7 +10,7 @@
           <v-icon size="36">mdi-account-circle</v-icon>
         </v-avatar>
         <span class="font-weight-bold">
-          {{ shortNickname }} {{ nicknameTail }}
+          {{ shortenedNickname }} {{ nicknameTail }}
         </span>
       </div>
 
@@ -53,7 +53,7 @@ const LOGOUT_SUCCESS_MESSAGE = "성공적으로 로그아웃 되었습니다.";
 const FAILED_TO_DELETE_MEMBER_MESSAGE =
   "탈퇴에 실패했습니다. 다시 요청해주세요.";
 const DELETE_MEMBER_SUCCESS = "성공적으로 탈퇴를 완료했습니다.";
-const NICKNAME_LENGTH = 11;
+const MAX_NICKNAME_LENGTH = 11;
 
 export default {
   name: "MemberSidebar",
@@ -84,17 +84,14 @@ export default {
     isGuest() {
       return this.$store.getters["member/isGuest"];
     },
-    shortNickname() {
+    shortenedNickname() {
       return Array.from(this.member.nickname)
-        .slice(0, NICKNAME_LENGTH)
+        .slice(0, MAX_NICKNAME_LENGTH)
         .join("")
         .trim();
     },
     nicknameTail() {
-      if (Array.from(this.member.nickname).length > NICKNAME_LENGTH) {
-        return "...";
-      }
-      return "";
+      return this.member.nickname.length > MAX_NICKNAME_LENGTH ? "..." : "";
     },
     drawer: {
       get() {
