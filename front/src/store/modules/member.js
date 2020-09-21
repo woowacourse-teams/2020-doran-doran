@@ -10,6 +10,8 @@ export default {
       createdAt: "",
       updatedAt: "",
     },
+    locationInformation: false,
+    environment: "",
   },
   mutations: {
     SET_MEMBER(state, member) {
@@ -22,6 +24,18 @@ export default {
       state.member.picture = "";
       state.member.createdAt = "";
       state.member.updatedAt = "";
+    },
+    SET_LOCATION_INFORMATION_TRUE(state) {
+      state.locationInformation = true;
+    },
+    SET_LOCATION_INFORMATION_FALSE(state) {
+      state.locationInformation = false;
+    },
+    SET_ENVIRONMENT_PC(state) {
+      state.environment = "PC";
+    },
+    SET_ENVIRONMENT_MOBILE(state) {
+      state.environment = "MOBILE";
     },
   },
   actions: {
@@ -46,6 +60,12 @@ export default {
         state.member.id !== 0 &&
         state.member.createdAt === state.member.updatedAt
       );
+    },
+    hasLocationInformation: (state) => {
+      return state.locationInformation;
+    },
+    getEnvironment: (state) => {
+      return state.environment;
     },
   },
 };
