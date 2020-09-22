@@ -34,7 +34,7 @@
         hide-details
         append-outer-icon="mdi-window-close"
         class="search-input font-size-small"
-        @keypress.enter="filterPosts"
+        @keypress.enter="searchPlace"
         @click:append-outer="initializeMapPage"
       />
     </v-expand-x-transition>
@@ -75,6 +75,13 @@ export default {
     },
     toggleSearchInput() {
       this.isSearching = !this.isSearching;
+    },
+    searchPlace() {
+      if (this.keyword === "") {
+        this.$store.commit("snackbar/SHOW", ERROR_MESSAGE.NO_KEYWORD_INPUT);
+        return;
+      }
+      this.$kakaoMap.searchPlace(this.keyword);
     },
     async filterPosts() {
       if (this.keyword === "") {

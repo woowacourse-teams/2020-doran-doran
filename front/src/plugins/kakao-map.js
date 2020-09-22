@@ -38,7 +38,7 @@ export const KakaoMap = (() => {
   };
 
   const _createPlaces = () => {
-    return new kakao.maps.service.Places();
+    return new kakao.maps.services.Places();
   };
 
   const _createClusterer = () => {
@@ -253,15 +253,15 @@ export const KakaoMap = (() => {
   };
 
   const initPlaceSearch = () => {
-    _createInfoWindow();
-    _createPlaces();
+    infoWindow = _createInfoWindow();
+    places = _createPlaces();
   };
 
-  const placeSearch = (location) => {
-    places.keywordSearch(location, _placeSearchCallBack);
+  const searchPlace = (place) => {
+    places.keywordSearch(place, _searchPlaceCallBack);
   };
 
-  const _placeSearchCallBack = (data, status) => {
+  const _searchPlaceCallBack = (data, status) => {
     if (status === kakao.maps.services.Status.OK) {
       const bounds = new kakao.maps.LatLngBounds();
 
@@ -275,9 +275,9 @@ export const KakaoMap = (() => {
   };
 
   function displayMarker(place) {
-    const marker = new kakao.mapsMarker({
+    const marker = new kakao.maps.Marker({
       map: map,
-      position: new kakao.map.LatLng(place.y, place.x),
+      position: new kakao.maps.LatLng(place.y, place.x),
     });
 
     kakao.maps.event.addListener(marker, EVENT_TYPE.CLICK, function () {
@@ -332,7 +332,7 @@ export const KakaoMap = (() => {
     clearClusterer,
     clearPostOverlay,
     initPlaceSearch,
-    placeSearch,
+    searchPlace,
     getAddress,
     addEventToMap,
     setMap,

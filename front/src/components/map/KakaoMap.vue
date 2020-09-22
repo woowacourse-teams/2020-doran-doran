@@ -51,7 +51,7 @@ export default {
       EVENT_TYPE.CENTER_CHANGE,
       this.changeAppBarByCenterAddress,
     );
-    await this.$kakaoMap.initPlaceSearch();
+    this.$kakaoMap.initPlaceSearch();
     this.isMapRendered = true;
     this.$emit("render");
   },
