@@ -13,6 +13,7 @@ const routes = [
     name: "MapPage",
     component: MapPage,
     meta: {
+      postCreate: false,
       timeline: false,
       post: false,
     },
@@ -20,6 +21,9 @@ const routes = [
       {
         path: "post-create",
         name: "PostCreate",
+        meta: {
+          postCreate: true,
+        },
       },
       {
         path: "timeline",

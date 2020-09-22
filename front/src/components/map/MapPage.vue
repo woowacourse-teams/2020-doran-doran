@@ -31,6 +31,7 @@ import MapAssistantButtons from "@/components/map/MapAssistantButtons";
 import PeriodFilterButton from "@/components/map/filter/PeriodFilterButton";
 import TimelineModal from "@/components/timeline/TimelineModal";
 import PostModal from "@/components/post/PostModal";
+import { MAP_MODE } from "@/utils/constants";
 
 export default {
   name: "MapPage",
@@ -47,6 +48,7 @@ export default {
     return {
       isMapRendered: false,
       isInitialMember: false,
+      postCreate: this.$route.meta.postCreate,
       timeline: this.$route.meta.timeline,
       post: this.$route.meta.post,
     };
@@ -72,8 +74,14 @@ export default {
   },
   watch: {
     "$route.meta"(val) {
+      this.postCreate = val.postCreate;
       this.timeline = val.timeline;
       this.post = val.post;
+    },
+    postCreate(val) {
+      if (!val) {
+        this.$store.commit("map/CHANGE_MODE", MAP_MODE.DEFAULT);
+      }
     },
   },
 };
