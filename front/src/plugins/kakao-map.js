@@ -1,4 +1,5 @@
 import { KAKAO_MAP_APP_KEY } from "@/secure/appkey";
+import { EVENT_TYPE } from "@/utils/constants";
 
 const KAKAO_MAP_URL = "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=";
 const LIBRARY = "&libraries=services,clusterer";
@@ -16,6 +17,8 @@ export const KakaoMap = (() => {
   let postOverlays = [];
   let clusterer = null;
   let marker = null;
+  let infoWindow = null;
+  let places = null;
 
   const script = document.createElement("script");
   script.src = KAKAO_MAP_URL + KAKAO_MAP_APP_KEY + LIBRARY;
@@ -28,6 +31,14 @@ export const KakaoMap = (() => {
 
   const _createKakaoLocation = (location) => {
     return new kakao.maps.LatLng(location.latitude, location.longitude);
+  };
+
+  const _createInfoWindow = () => {
+    return new kakao.maps.InfoWindow({ zIndex: 1 });
+  };
+
+  const _createPlaces = () => {
+    return new kakao.maps.service.Places();
   };
 
   const _createClusterer = () => {
@@ -241,6 +252,42 @@ export const KakaoMap = (() => {
     postOverlays = [];
   };
 
+  const initPlaceSearch = () => {
+    _createInfoWindow();
+    _createPlaces();
+  };
+
+  const placeSearch = (location) => {
+    places.keywordSearch(location, _placeSearchCallBack);
+  };
+
+  const _placeSearchCallBack = (data, status) => {
+    if (status === kakao.maps.services.Status.OK) {
+      const bounds = new kakao.maps.LatLngBounds();
+
+      for (let i = 0; i < data.length; i++) {
+        displayMarker(data[i]);
+        bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
+      }
+
+      map.setBounds(bounds);
+    }
+  };
+
+  function displayMarker(place) {
+    const marker = new kakao.mapsMarker({
+      map: map,
+      position: new kakao.map.LatLng(place.y, place.x),
+    });
+
+    kakao.maps.event.addListener(marker, EVENT_TYPE.CLICK, function () {
+      infoWindow.setContent(
+        '<div style="font-size:12px;">' + place.place_name + "</div>",
+      );
+      infoWindow.open(map, marker);
+    });
+  }
+
   const _getAdministrativeAddress = (location) => {
     const geocoder = new kakao.maps.services.Geocoder();
     return new Promise((resolve) =>
@@ -284,6 +331,8 @@ export const KakaoMap = (() => {
     showPostOverlays,
     clearClusterer,
     clearPostOverlay,
+    initPlaceSearch,
+    placeSearch,
     getAddress,
     addEventToMap,
     setMap,
