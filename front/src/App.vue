@@ -49,6 +49,9 @@ export default {
     },
   },
   async created() {
+    if (this.$route.path !== "/") {
+      await this.$router.push("/");
+    }
     this.checkUrl();
     await this.checkToken();
     this.preventRoute();
