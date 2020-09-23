@@ -1,5 +1,7 @@
 const ERROR_MESSAGE = {
   UNIDENTIFIABLE_LOCATION: "😢 위치 정보를 확인할 수 없습니다.",
+  UNIDENTIFIABLE_LOCATION_PC: "😢 위치 정보를 불러올 수 없습니다. 모바일 환경 사용을 권장합니다.",
+  UNIDENTIFIABLE_LOCATION_MOBILE: "😢 위치 정보를 불러올 수 없습니다. 둘러보기만 가능합니다.",
   NO_CONTENT_MESSAGE: "🤔 내용을 입력해주세요.",
   NO_POST_MESSAGE: "😭 해당 기간에 글이 존재하지 않습니다.",
   NO_KEYWORD_INPUT: "🧐 키워드를 입력해주세요.",

@@ -36,15 +36,9 @@ export default {
   },
   async mounted() {
     const map = await this.$kakaoMap.drawMap(this.$refs.map);
+    await this.giveCustomizedMessage();
     this.$store.commit("map/SET_MAP", map);
-    await this.$kakaoMap
-      .setCenterByCurrentLocation()
-      .catch(() =>
-        this.$store.commit(
-          "snackbar/SHOW",
-          ERROR_MESSAGE.UNIDENTIFIABLE_LOCATION,
-        ),
-      );
+    await this.$kakaoMap.setCenterByCurrentLocation().catch(() => {});
     await this.changeAppBarByCenterAddress();
     await this.$store.dispatch("post/loadPosts");
     this.$kakaoMap.addEventToMap(
@@ -60,6 +54,46 @@ export default {
       const centerAddress = await this.$kakaoMap.getAddress(centerLocation);
       const address = Object.values(centerAddress).join(" ");
       this.$store.commit("appBar/CHANGE_ADDRESS", address);
+    },
+    async checkMemberLocationInformation() {
+      await this.$kakaoMap
+        .getCurrentLocation()
+        .then(() => {
+          this.$store.commit("member/SET_LOCATION_INFORMATION_TRUE");
+        })
+        .catch(() => {});
+    },
+    async checkMemberEnvironment() {
+      let isMobile = false;
+      const filter = "win16|win32|win64|mac|macIntel";
+      if (navigator.platform) {
+        isMobile = filter.indexOf(navigator.platform.toLowerCase()) < 0;
+      }
+      if (isMobile) {
+        await this.$store.commit("member/SET_ENVIRONMENT_MOBILE");
+      } else await this.$store.commit("member/SET_ENVIRONMENT_PC");
+    },
+    async giveCustomizedMessage() {
+      await this.checkMemberLocationInformation();
+      await this.checkMemberEnvironment();
+      const hasLocationInformation = this.$store.getters[
+        "member/hasLocationInformation"
+      ];
+      const environment = this.$store.getters["member/getEnvironment"];
+      if (!hasLocationInformation) {
+        if (environment === "PC") {
+          this.$store.commit(
+            "snackbar/SHOW",
+            ERROR_MESSAGE.UNIDENTIFIABLE_LOCATION_PC,
+          );
+        }
+        if (environment === "MOBILE") {
+          this.$store.commit(
+            "snackbar/SHOW",
+            ERROR_MESSAGE.UNIDENTIFIABLE_LOCATION_MOBILE,
+          );
+        }
+      }
     },
   },
   watch: {
