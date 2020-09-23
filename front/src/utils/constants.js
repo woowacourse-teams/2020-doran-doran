@@ -9,7 +9,7 @@ const ERROR_MESSAGE = {
 };
 
 const API_BASE_URL = {
-  EC2: "//dorandoran.io:8080",
+  EC2: process.env.VUE_APP_EC2,
 };
 
 const EVENT_TYPE = {
