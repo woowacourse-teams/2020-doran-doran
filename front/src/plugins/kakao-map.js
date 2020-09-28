@@ -16,6 +16,7 @@ export const KakaoMap = (() => {
   let map = null;
   let postOverlays = [];
   let placeMarkers = [];
+  let placeOverlay = null;
   let clusterer = null;
   let marker = null;
   let infoWindow = null;
@@ -40,6 +41,10 @@ export const KakaoMap = (() => {
 
   const _createPlaces = () => {
     return new kakao.maps.services.Places();
+  };
+
+  const _createPlaceOverlay = () => {
+    return new kakao.maps.CustomOverlay({});
   };
 
   const _createClusterer = () => {
@@ -254,8 +259,8 @@ export const KakaoMap = (() => {
   };
 
   const initPlaceSearch = () => {
-    infoWindow = _createInfoWindow();
     places = _createPlaces();
+    placeOverlay = _createPlaceOverlay();
   };
 
   const searchPlace = (place, reject) => {
@@ -294,10 +299,11 @@ export const KakaoMap = (() => {
     placeMarkers.push(marker);
 
     kakao.maps.event.addListener(marker, EVENT_TYPE.CLICK, function () {
-      infoWindow.setContent(
-        '<div style="font-size:12px;">' + place.place_name + "</div>",
+      placeOverlay.setContent(
+        "<div>" + place.place_name + "</div>",
       );
-      infoWindow.open(map, marker);
+      placeOverlay.setPosition(new kakao.maps.LatLng(place.y, place.x));
+      placeOverlay.setMap(map);
     });
   };
 
@@ -305,11 +311,10 @@ export const KakaoMap = (() => {
     if (placeMarkers.length !== 0) {
       placeMarkers.forEach((marker) => marker.setMap(null));
     }
-    if (infoWindow !== null) {
-      infoWindow.close();
+    if (placeOverlay.getMap !== null) {
+      placeOverlay.setMap(null);
     }
     placeMarkers = [];
-    infoWindow = _createInfoWindow();
   };
 
   const _getAdministrativeAddress = (location) => {
