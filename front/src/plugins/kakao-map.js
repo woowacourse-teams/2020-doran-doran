@@ -44,7 +44,9 @@ export const KakaoMap = (() => {
   };
 
   const _createPlaceOverlay = () => {
-    return new kakao.maps.CustomOverlay({});
+    return new kakao.maps.CustomOverlay({
+      yAnchor: 3.2,
+    });
   };
 
   const _createClusterer = () => {
@@ -300,7 +302,9 @@ export const KakaoMap = (() => {
 
     kakao.maps.event.addListener(marker, EVENT_TYPE.CLICK, function () {
       placeOverlay.setContent(
-        "<div>" + place.place_name + "</div>",
+        "<div class='place-overlay-style font-size-x-small'>" +
+          place.place_name +
+          "</div>",
       );
       placeOverlay.setPosition(new kakao.maps.LatLng(place.y, place.x));
       placeOverlay.setMap(map);
