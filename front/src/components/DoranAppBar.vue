@@ -103,6 +103,7 @@ export default {
     async initializeMapPage() {
       this.toggleSearchInput();
       this.keyword = "";
+      this.$kakaoMap.clearPlaceMarkers();
       this.$store.commit("post/filter/SET_KEYWORD", "");
       await this.$store.dispatch("post/loadPosts");
     },

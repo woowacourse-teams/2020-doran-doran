@@ -14,6 +14,7 @@ const API_BASE_URL = {
 
 const EVENT_TYPE = {
   CENTER_CHANGE: "center_changed",
+  CLICK: "click",
 };
 
 const MAP_MODE = {
