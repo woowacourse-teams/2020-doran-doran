@@ -81,7 +81,10 @@ export default {
         this.$store.commit("snackbar/SHOW", ERROR_MESSAGE.NO_KEYWORD_INPUT);
         return;
       }
-      this.$kakaoMap.searchPlace(this.keyword);
+      this.$kakaoMap.searchPlace(this.keyword, this.searchFail);
+    },
+    searchFail() {
+      this.$store.commit("snackbar/SHOW", ERROR_MESSAGE.NO_SEARCH_RESULT_MESSAGE);
     },
     async filterPosts() {
       if (this.keyword === "") {

@@ -257,11 +257,19 @@ export const KakaoMap = (() => {
     places = _createPlaces();
   };
 
-  const searchPlace = (place) => {
-    places.keywordSearch(place, _searchPlaceCallBack);
+  const searchPlace = (place, reject) => {
+    places.keywordSearch(place, (data, status) =>
+      _searchPlaceCallBack(data, status, reject),
+    );
   };
 
-  const _searchPlaceCallBack = (data, status) => {
+  const _searchPlaceCallBack = (data, status, reject) => {
+    if (status === kakao.maps.services.Status.ZERO_RESULT) {
+      const error = new Error(
+        kakao.maps.services.Status.ZERO_RESULT + " - there's no result",
+      );
+      reject(error);
+    }
     if (status === kakao.maps.services.Status.OK) {
       const bounds = new kakao.maps.LatLngBounds();
 
