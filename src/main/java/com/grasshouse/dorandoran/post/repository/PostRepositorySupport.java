@@ -24,9 +24,12 @@ public class PostRepositorySupport extends QuerydslRepositorySupport {
         this.jpaQueryFactory = jpaQueryFactory;
     }
 
+    //둘이 fetchjoin은 됨. 다만 comment가 중복으로 생기는 문제 (카테시안곱) 발생.
     public List<Post> findPostWithKeywordAndDate(String keyword, LocalDateTime startDate, LocalDateTime endDate) {
         List<Post> persistPosts = jpaQueryFactory.selectFrom(post)
             .distinct()
+            .leftJoin(post.comments).fetchJoin()
+            .leftJoin(post.likes)
             .where(isPostAlive())
             .where(containsKeyword(keyword), betweenDate(startDate, endDate))
             .fetch();
