@@ -50,12 +50,12 @@ export default {
       location: this.$kakaoMap.getCenterLocation(),
       buttonColor: DORAN_DORAN_COLORS.POINT_COLOR,
       rendered: false,
-      flag: false,
+      isTransitionDone: false,
     };
   },
   created() {
     const preventRoute = this.$router.beforeEach((to, from, next) => {
-      if (this.flag || to.path !== "/") {
+      if (this.isTransitionDone || to.path !== "/") {
         next(true);
       }
       this.rendered = false;
@@ -105,7 +105,7 @@ export default {
       this.rendered = false;
     },
     closeModal() {
-      this.flag = true;
+      this.isTransitionDone = true;
       this.$store.commit("map/CHANGE_MODE", MAP_MODE.DEFAULT);
       this.$store.commit("appBar/MAP_PAGE_DEFAULT_MODE");
       this.$router.push("/");
