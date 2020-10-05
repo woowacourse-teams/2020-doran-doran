@@ -50,7 +50,7 @@ class MemberServiceTest {
     @DisplayName("사용자의 닉네임을 업데이트한다.")
     @Test
     void update() {
-        MemberUpdateRequest request = new MemberUpdateRequest("new nickname");
+        MemberUpdateRequest request = new MemberUpdateRequest("NewNickname");
 
         MemberUpdateResponse response = memberService.update(member, request);
 
