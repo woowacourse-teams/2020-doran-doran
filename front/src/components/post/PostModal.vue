@@ -3,7 +3,7 @@
     <DoranAppBar />
     <div v-if="existMember" class="pa-4">
       <div class="mb-3">
-        <v-icon x-large class="mr-3">mdi-account-circle</v-icon>
+        <v-icon x-large class="mr-2">mdi-account-circle</v-icon>
         <span class="font-weight-bold">{{ post.author.nickname }}</span>
         <div class="float-right mt-2">
           {{ postDate }}
@@ -85,10 +85,7 @@ export default {
       return localStorage.getItem("accessToken");
     },
     isMine() {
-      return (
-        this.post.author.id ===
-        this.$store.getters["member/getMember"].id
-      );
+      return this.post.author.id === this.$store.getters["member/getMember"].id;
     },
     post: {
       get() {

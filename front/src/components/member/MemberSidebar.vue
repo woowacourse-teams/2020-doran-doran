@@ -1,16 +1,16 @@
 <template>
   <div>
     <v-navigation-drawer v-model="drawer" absolute temporary class="drawer">
-      <v-icon @click="hideSidebar" class="float-right ma-4">
+      <v-icon @click="hideSidebar" class="modal-close-btn">
         mdi-window-close
       </v-icon>
 
-      <div class="ma-5 mt-10 mb-5" @click="login">
+      <div class="mx-3 mt-10 mb-4" @click="login">
         <v-avatar>
           <v-icon size="36">mdi-account-circle</v-icon>
         </v-avatar>
-        <span class="mx-3 font-weight-bold">
-          {{ member.nickname }}
+        <span class="font-weight-bold">
+          {{ shortenedNickname }} {{ nicknameTail }}
         </span>
       </div>
 
@@ -53,6 +53,7 @@ const LOGOUT_SUCCESS_MESSAGE = "성공적으로 로그아웃 되었습니다.";
 const FAILED_TO_DELETE_MEMBER_MESSAGE =
   "탈퇴에 실패했습니다. 다시 요청해주세요.";
 const DELETE_MEMBER_SUCCESS = "성공적으로 탈퇴를 완료했습니다.";
+const MAX_NICKNAME_LENGTH = 11;
 
 export default {
   name: "MemberSidebar",
@@ -82,6 +83,15 @@ export default {
     },
     isGuest() {
       return this.$store.getters["member/isGuest"];
+    },
+    shortenedNickname() {
+      return Array.from(this.member.nickname)
+        .slice(0, MAX_NICKNAME_LENGTH)
+        .join("")
+        .trim();
+    },
+    nicknameTail() {
+      return this.member.nickname.length > MAX_NICKNAME_LENGTH ? "..." : "";
     },
     drawer: {
       get() {
@@ -148,5 +158,12 @@ export default {
 <style scoped>
 .drawer {
   z-index: 9999;
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 1;
 }
 </style>

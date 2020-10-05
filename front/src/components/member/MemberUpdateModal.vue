@@ -6,7 +6,10 @@
         <VTextField
           label="새 닉네임을 입력하세요."
           color="grey darken-2"
+          maxlength="15"
+          :counter="15"
           v-model="newNickname"
+          :rules="Object.values(rules)"
           @keypress.enter="updateMember"
         />
         <div class="button-box">
@@ -19,7 +22,7 @@
           </v-btn>
           <v-btn
             text
-            :disabled="nicknameNotChanged()"
+            :disabled="isUpdateDisabled"
             class="mb-2 text-subtitle-1 font-weight-bold amber--text text--accent-4"
             @click="updateMember"
           >
@@ -35,17 +38,30 @@
 <script>
 import api from "@/api/member";
 
+const NICKNAME_REGEX = "^[a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣0-9]+$";
+
 export default {
-  name: "PostCreateModal",
+  name: "MemberUpdateModal",
   data() {
     return {
       rendered: false,
       newNickname: "",
+      rules: {
+        regexViolation: (newVal) =>
+          !this.violateRegex(newVal) ||
+          "닉네임은 숫자/한글/영어로 이루어져야 합니다.",
+      },
     };
   },
   computed: {
     member() {
       return this.$store.getters["member/getMember"];
+    },
+    isUpdateDisabled() {
+      return (
+        this.isValueSame(this.member.nickname, this.newNickname) ||
+        this.violateRegex(this.newNickname)
+      );
     },
   },
   mounted() {
@@ -66,11 +82,14 @@ export default {
     closeModal() {
       this.$emit("close");
     },
-    nicknameNotChanged() {
-      return this.member.nickname === this.newNickname;
-    },
     bounceOut() {
       this.rendered = false;
+    },
+    isValueSame(oldVal, newVal) {
+      return oldVal === newVal;
+    },
+    violateRegex(val) {
+      return !val.match(NICKNAME_REGEX);
     },
   },
 };
