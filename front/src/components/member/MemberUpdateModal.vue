@@ -39,8 +39,6 @@
 import api from "@/api/member";
 
 const NICKNAME_REGEX = "^[a-zA-Zㄱ-ㅎㅏ-ㅣ가-힣0-9]+$";
-const VIOLATE_REGEX = (val) => !val.match(NICKNAME_REGEX);
-const IS_VALUE_SAME = (newVal, oldVal) => newVal === oldVal;
 
 export default {
   name: "MemberUpdateModal",
@@ -50,7 +48,7 @@ export default {
       newNickname: "",
       rules: {
         regexViolation: (newVal) =>
-          !VIOLATE_REGEX(newVal) ||
+          !this.violateRegex(newVal) ||
           "닉네임은 숫자/한글/영어로 이루어져야 합니다.",
       },
     };
@@ -61,8 +59,8 @@ export default {
     },
     isUpdateDisabled() {
       return (
-        IS_VALUE_SAME(this.member.nickname, this.newNickname) ||
-        VIOLATE_REGEX(this.newNickname)
+        this.isValueSame(this.member.nickname, this.newNickname) ||
+        this.violateRegex(this.newNickname)
       );
     },
   },
@@ -86,6 +84,12 @@ export default {
     },
     bounceOut() {
       this.rendered = false;
+    },
+    isValueSame(oldVal, newVal) {
+      return oldVal === newVal;
+    },
+    violateRegex(val) {
+      return !val.match(NICKNAME_REGEX);
     },
   },
 };
