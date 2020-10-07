@@ -4,13 +4,13 @@ import LoginPage from "@/components/login/LoginPage";
 import MapPage from "@/components/map/MapPage";
 import TimelineModal from "@/components/timeline/TimelineModal";
 import PostModal from "@/components/post/PostModal";
+import { pages } from "@/plugins/doran-pages";
 
 Vue.use(VueRouter);
 
 const routes = [
   {
-    path: "/",
-    name: "MapPage",
+    ...pages.map,
     component: MapPage,
     meta: {
       postCreate: false,
@@ -19,15 +19,13 @@ const routes = [
     },
     children: [
       {
-        path: "post-create",
-        name: "PostCreate",
+        ...pages.postCreate,
         meta: {
           postCreate: true,
         },
       },
       {
-        path: "timeline",
-        name: "TimelineModal",
+        ...pages.timeline,
         components: {
           page: TimelineModal,
         },
@@ -36,8 +34,7 @@ const routes = [
         },
       },
       {
-        path: "posts/:id",
-        name: "PostModal",
+        ...pages.post(":id"),
         components: {
           page: PostModal,
         },
@@ -48,8 +45,7 @@ const routes = [
     ],
   },
   {
-    path: "/login",
-    name: "LoginPage",
+    ...pages.login,
     component: LoginPage,
   },
 ];

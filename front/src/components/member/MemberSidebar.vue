@@ -117,7 +117,7 @@ export default {
     logout() {
       this.$store.commit("member/SET_LOGOUT_MEMBER");
       this.$store.commit("snackbar/SHOW", LOGOUT_SUCCESS_MESSAGE);
-      this.$router.push("/login");
+      this.$router.push(this.$pages.login);
     },
     openMemberDeleteDialog() {
       this.isDeleting = true;
@@ -135,7 +135,7 @@ export default {
       if (this.isDeleting) {
         this.$store.commit("member/SET_LOGOUT_MEMBER");
         this.$store.commit("snackbar/SHOW", DELETE_MEMBER_SUCCESS);
-        await this.$router.push("/login");
+        await this.$router.push(this.$pages.login);
         this.closeMemberDeleteDialog();
       }
     },

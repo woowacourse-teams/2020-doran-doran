@@ -55,7 +55,7 @@ export default {
   },
   created() {
     const preventRoute = this.$router.beforeEach((to, from, next) => {
-      if (this.isTransitionDone || to.path !== "/") {
+      if (this.isTransitionDone || to.path !== this.$pages.map.path) {
         next(true);
       }
       this.rendered = false;
@@ -108,7 +108,7 @@ export default {
       this.isTransitionDone = true;
       this.$store.commit("map/CHANGE_MODE", MAP_MODE.DEFAULT);
       this.$store.commit("appBar/MAP_PAGE_DEFAULT_MODE");
-      this.$router.push("/");
+      this.$router.push(this.$pages.map);
     },
   },
 };
