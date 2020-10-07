@@ -13,10 +13,18 @@ const routes = [
     name: "MapPage",
     component: MapPage,
     meta: {
+      postCreate: false,
       timeline: false,
       post: false,
     },
     children: [
+      {
+        path: "post-create",
+        name: "PostCreate",
+        meta: {
+          postCreate: true,
+        },
+      },
       {
         path: "timeline",
         name: "TimelineModal",

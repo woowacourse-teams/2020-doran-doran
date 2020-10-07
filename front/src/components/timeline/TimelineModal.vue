@@ -23,7 +23,7 @@ export default {
   data() {
     return {
       rendered: false,
-      flag: false,
+      isTransitionDone: false,
     };
   },
   computed: {
@@ -40,7 +40,7 @@ export default {
   },
   created() {
     const preventRoute = this.$router.beforeEach((to, from, next) => {
-      if (this.flag || to.path !== "/") {
+      if (this.isTransitionDone || to.path !== "/") {
         next(true);
       }
       this.rendered = false;
@@ -56,7 +56,7 @@ export default {
       this.rendered = false;
     },
     close() {
-      this.flag = true;
+      this.isTransitionDone = true;
       this.$router.go(-1);
     },
   },
