@@ -49,16 +49,21 @@ export default {
     },
   },
   async created() {
-    if (this.$route.path !== "/") {
-      await this.$router.push("/");
-    }
     this.checkUrl();
+    this.checkUrlToken();
     await this.checkToken();
     this.preventRoute();
     this.isInitialMember = this.$store.getters["member/isInitialMember"];
   },
   methods: {
     checkUrl() {
+      const isNotMapPage = this.$route.name !== "MapPage";
+      const isNotPostModal = this.$route.name !== "PostModal";
+      if (isNotMapPage && isNotPostModal) {
+        this.$router.push("/");
+      }
+    },
+    checkUrlToken() {
       const urlToken = location.href.split("token=")[1];
       if (urlToken) {
         localStorage.setItem("accessToken", urlToken);
