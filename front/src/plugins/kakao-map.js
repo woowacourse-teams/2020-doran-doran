@@ -19,7 +19,6 @@ export const KakaoMap = (() => {
   let placeOverlay = null;
   let clusterer = null;
   let marker = null;
-  let infoWindow = null;
   let places = null;
 
   const script = document.createElement("script");
@@ -33,10 +32,6 @@ export const KakaoMap = (() => {
 
   const _createKakaoLocation = (location) => {
     return new kakao.maps.LatLng(location.latitude, location.longitude);
-  };
-
-  const _createInfoWindow = () => {
-    return new kakao.maps.InfoWindow({ zIndex: 1 });
   };
 
   const _createPlaces = () => {
