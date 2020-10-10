@@ -119,6 +119,7 @@ export const KakaoMap = (() => {
     map = new kakao.maps.Map(mapContainer, options);
     postOverlays = [];
     clusterer = _createClusterer();
+    _initPlaceSearch();
 
     return map;
   };
@@ -255,7 +256,7 @@ export const KakaoMap = (() => {
     postOverlays = [];
   };
 
-  const initPlaceSearch = () => {
+  const _initPlaceSearch = () => {
     places = _createPlaces();
     placeOverlay = _createPlaceOverlay();
   };
@@ -310,7 +311,7 @@ export const KakaoMap = (() => {
     if (placeMarkers.length !== 0) {
       placeMarkers.forEach((marker) => marker.setMap(null));
     }
-    if (placeOverlay.getMap !== null) {
+    if (placeOverlay.getMap()) {
       placeOverlay.setMap(null);
     }
     placeMarkers = [];
@@ -359,7 +360,6 @@ export const KakaoMap = (() => {
     showPostOverlays,
     clearClusterer,
     clearPostOverlay,
-    initPlaceSearch,
     searchPlace,
     clearPlaceMarkers,
     getAddress,
