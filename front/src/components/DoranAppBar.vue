@@ -1,7 +1,6 @@
 <template>
   <v-app-bar flat max-height="56" color="white">
     <v-container
-      v-show="isSearching"
       fluid
       class="d-flex flex-row align-center justify-space-between pa-0"
     >
@@ -76,6 +75,10 @@ export default {
     toggleSearchInput() {
       this.isSearching = !this.isSearching;
     },
+    hideSearchInput() {
+      this.isSearching = false;
+      this.keyword = "";
+    },
     searchPlace() {
       if (this.keyword === "") {
         this.$store.commit("snackbar/SHOW", ERROR_MESSAGE.NO_KEYWORD_INPUT);
@@ -100,14 +103,19 @@ export default {
         );
       }
     },
-    async initializeMapPage() {
+    initializeMapPage() {
       this.toggleSearchInput();
       this.keyword = "";
       this.$kakaoMap.clearPlaceMarkers();
-      this.$store.commit("post/filter/SET_KEYWORD", "");
-      await this.$store.dispatch("post/loadPosts");
     },
   },
+  watch: {
+    searchButton() {
+      if (!this.searchButton) {
+        this.hideSearchInput();
+      }
+    }
+  }
 };
 </script>
 
