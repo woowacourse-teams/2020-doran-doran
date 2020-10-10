@@ -168,24 +168,31 @@ export const KakaoMap = (() => {
     return new kakao.maps.MarkerImage(src, size, options);
   };
 
-  const _createMarker = (position, image) => {
-    return new kakao.maps.Marker({
+  const _createMarker = (map, position, image) => {
+    const newMarker = new kakao.maps.Marker({
+      map: map,
       position: position,
       image: image,
     });
+    return newMarker;
   };
 
-  const setMarker = (location, img) => {
+  const setMarker = (location) => {
     if (!map || !location) {
       return;
     }
+    const kakaoLocation = _createKakaoLocation(location);
+    return _createMarker(map, kakaoLocation, null);
+  };
+
+  const setMarkerWithImage = (location, img) => {
+    if (!map || !location) {
+      return;
+    }
+    const kakaoLocation = _createKakaoLocation(location);
     const markerSize = new kakao.maps.Size(36, 36);
     const markerImage = _createMarkerImage(img, markerSize);
-
-    const kakaoLocation = _createKakaoLocation(location);
-    const newMarker = _createMarker(kakaoLocation, markerImage);
-    newMarker.setMap(map);
-    return newMarker;
+    return _createMarker(map, kakaoLocation, markerImage);
   };
 
   const setCenterByCurrentLocation = async () => {
@@ -195,7 +202,7 @@ export const KakaoMap = (() => {
     const currentLocation = await getCurrentLocation();
     setCenterLocation(currentLocation);
     if (!marker) {
-      marker = setMarker(currentLocation, CURRENT_MARKER_IMAGE);
+      marker = setMarkerWithImage(currentLocation, CURRENT_MARKER_IMAGE);
     } else {
       marker.setPosition(_createKakaoLocation(currentLocation));
     }
@@ -269,42 +276,42 @@ export const KakaoMap = (() => {
     );
   };
 
-  const _searchPlaceCallBack = (data, status, reject) => {
-    if (status === kakao.maps.services.Status.ZERO_RESULT) {
-      const error = new Error(
-        kakao.maps.services.Status.ZERO_RESULT + " - there's no result",
+  const _setPlaceOverlay = (name, location) => {
+    if (!placeOverlay.getMap()) {
+      placeOverlay.setContent(
+        `<div class='place-overlay-style font-size-x-small'>${name}</div>`,
       );
-      reject(error);
-    }
-    if (status === kakao.maps.services.Status.OK) {
-      const bounds = new kakao.maps.LatLngBounds();
-
-      for (let i = 0; i < data.length; i++) {
-        _displayMarker(data[i]);
-        bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
-      }
-
-      map.setBounds(bounds);
+      placeOverlay.setPosition(_createKakaoLocation(location));
+      placeOverlay.setMap(map);
+    } else {
+      placeOverlay.setMap(null);
     }
   };
 
-  const _displayMarker = (place) => {
-    const marker = new kakao.maps.Marker({
-      map: map,
-      position: new kakao.maps.LatLng(place.y, place.x),
-    });
-
+  const _setPlaceMarker = (place, bounds) => {
+    const location = {
+      longitude: place.x,
+      latitude: place.y,
+    };
+    const marker = setMarker(location);
     placeMarkers.push(marker);
 
-    kakao.maps.event.addListener(marker, EVENT_TYPE.CLICK, function () {
-      placeOverlay.setContent(
-        "<div class='place-overlay-style font-size-x-small'>" +
-          place.place_name +
-          "</div>",
-      );
-      placeOverlay.setPosition(new kakao.maps.LatLng(place.y, place.x));
-      placeOverlay.setMap(map);
-    });
+    kakao.maps.event.addListener(marker, EVENT_TYPE.CLICK, () =>
+      _setPlaceOverlay(place.place_name, location),
+    );
+
+    bounds.extend(_createKakaoLocation(location));
+  };
+
+  const _searchPlaceCallBack = (data, status, reject) => {
+    if (status === kakao.maps.services.Status.OK) {
+      const bounds = new kakao.maps.LatLngBounds();
+      data.forEach((place) => _setPlaceMarker(place, bounds));
+      map.setBounds(bounds);
+    } else {
+      reject();
+      throw new Error(status);
+    }
   };
 
   const clearPlaceMarkers = () => {
@@ -353,7 +360,7 @@ export const KakaoMap = (() => {
     getCenterLocation,
     setCenterLocation,
     setCenterByCurrentLocation,
-    setMarker,
+    setMarker: setMarkerWithImage,
     getBounds,
     setPostOverlay,
     hidePostOverlays,
