@@ -1,5 +1,6 @@
 import { KAKAO_MAP_APP_KEY } from "@/secure/appkey";
 import { EVENT_TYPE } from "@/utils/constants";
+import { PLACE_OVERLAY_TEMPLATE } from "@/utils/templates";
 
 const KAKAO_MAP_URL = "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=";
 const LIBRARY = "&libraries=services,clusterer";
@@ -278,9 +279,7 @@ export const KakaoMap = (() => {
 
   const _setPlaceOverlay = (name, location) => {
     if (!placeOverlay.getMap()) {
-      placeOverlay.setContent(
-        `<div class='place-overlay-style font-size-x-small'>${name}</div>`,
-      );
+      placeOverlay.setContent(PLACE_OVERLAY_TEMPLATE(name));
       placeOverlay.setPosition(_createKakaoLocation(location));
       placeOverlay.setMap(map);
     } else {
