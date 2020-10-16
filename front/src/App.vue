@@ -60,14 +60,14 @@ export default {
       const isNotMapPage = this.$route.name !== this.$pages.map.name;
       const isNotPostModal = this.$route.name !== this.$pages.post().name;
       if (isNotMapPage && isNotPostModal) {
-        this.$router.push(this.$pages.map.path);
+        this.$router.push(this.$pages.map);
       }
     },
     checkUrlToken() {
       const urlToken = location.href.split("token=")[1];
       if (urlToken) {
         localStorage.setItem("accessToken", urlToken);
-        this.$router.push(this.$pages.map.path);
+        this.$router.push(this.$pages.map);
       }
     },
     async checkToken() {
@@ -75,7 +75,7 @@ export default {
       if (storageToken && storageToken !== "guest") {
         await this.$store.dispatch("member/loadMember");
       } else if (!storageToken) {
-        await this.$router.push(this.$pages.login.path);
+        await this.$router.push(this.$pages.login);
       }
     },
     preventRoute() {
