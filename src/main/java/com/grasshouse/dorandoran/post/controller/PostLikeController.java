@@ -30,7 +30,8 @@ public class PostLikeController {
     }
 
     @DeleteMapping("/{postLikeId}")
-    public ResponseEntity<Void> deletePostLike(@PathVariable Long postLikeId, @LoginMember Member member) {
+    public ResponseEntity<Void> deletePostLike(@PathVariable Long postLikeId,
+        @LoginMember Member member) {
         postLikeService.deletePostLike(postLikeId, member);
         return ResponseEntity.noContent().build();
     }

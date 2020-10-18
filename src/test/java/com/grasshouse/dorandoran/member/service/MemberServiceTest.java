@@ -98,7 +98,12 @@ class MemberServiceTest {
             .build();
         postRepository.save(post);
 
-        Comment comment = Comment.builder().post(post).author(member).content("댓글").distance(0.0).build();
+        Comment comment = Comment.builder()
+            .post(post)
+            .author(member)
+            .content("댓글")
+            .distance(0.0)
+            .build();
         commentRepository.save(comment);
 
         assertThat(commentRepository.findAll()).hasSize(1);

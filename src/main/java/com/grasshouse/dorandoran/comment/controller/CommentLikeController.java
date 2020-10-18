@@ -23,7 +23,8 @@ public class CommentLikeController {
     private final CommentLikeService commentLikeService;
 
     @PostMapping
-    public ResponseEntity<Void> createCommentLike(@RequestBody @Valid CommentLikeCreateRequest request,
+    public ResponseEntity<Void> createCommentLike(
+        @RequestBody @Valid CommentLikeCreateRequest request,
         @LoginMember Member member) {
         Long commentLikeId = commentLikeService.createCommentLike(request, member);
         return ResponseEntity

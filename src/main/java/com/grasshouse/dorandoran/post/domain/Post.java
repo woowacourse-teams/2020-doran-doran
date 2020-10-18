@@ -64,7 +64,7 @@ public class Post {
 
     @Builder.Default
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<PostLike> likes = new HashSet<>();
+    private final Set<PostLike> likes = new HashSet<>();
 
     @NotNull
     @Embedded
@@ -91,7 +91,8 @@ public class Post {
     private EntityStatus status = EntityStatus.ALIVE;
 
     @Builder
-    public Post(Long id, Member author, String content, Location location, Address address, Address authorAddress) {
+    public Post(Long id, Member author, String content, Location location, Address address,
+        Address authorAddress) {
         this.id = id;
         setAuthor(author);
         this.content = content;

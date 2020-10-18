@@ -10,7 +10,7 @@ import lombok.Getter;
 public class PostCreateResponse {
 
     @NotNull
-    private Long id;
+    private final Long id;
 
     public static PostCreateResponse from(Post post) {
         return new PostCreateResponse(post.getId());

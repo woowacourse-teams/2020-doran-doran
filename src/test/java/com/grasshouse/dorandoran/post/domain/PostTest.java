@@ -1,7 +1,6 @@
 package com.grasshouse.dorandoran.post.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 import com.grasshouse.dorandoran.comment.domain.Comment;
 import com.grasshouse.dorandoran.fixture.AddressFixture;

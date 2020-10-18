@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class CommentRepositorySupport extends QuerydslRepositorySupport {
 
-    private JPAQueryFactory jpaQueryFactory;
+    private final JPAQueryFactory jpaQueryFactory;
 
     public CommentRepositorySupport(JPAQueryFactory jpaQueryFactory) {
         super(Comment.class);
