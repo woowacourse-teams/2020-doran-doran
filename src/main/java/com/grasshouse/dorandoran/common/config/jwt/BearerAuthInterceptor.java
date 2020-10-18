@@ -29,8 +29,8 @@ public class BearerAuthInterceptor implements HandlerInterceptor {
         String token = authExtractor.extract(request, "Bearer");
 
         String id = Optional.ofNullable(token)
-            .filter(t -> jwtTokenProvider.validateToken(t))
-            .map(t -> jwtTokenProvider.getSubject(t))
+            .filter(jwtTokenProvider::validateToken)
+            .map(jwtTokenProvider::getSubject)
             .orElseThrow(InvalidAuthenticationException::new);
 
         request.setAttribute("id", id);
