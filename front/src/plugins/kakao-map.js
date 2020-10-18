@@ -303,8 +303,7 @@ export const KakaoMap = (() => {
       data.forEach((place) => _setPlaceMarker(place, bounds));
       map.setBounds(bounds);
     } else {
-      reject();
-      throw new Error(status);
+      reject(status);
     }
   };
 

@@ -86,8 +86,12 @@ export default {
       }
       this.$kakaoMap.searchPlace(this.keyword, this.searchFail);
     },
-    searchFail() {
-      this.$store.commit("snackbar/SHOW", ERROR_MESSAGE.NO_SEARCH_RESULT_MESSAGE);
+    searchFail(errorMessage) {
+      if (errorMessage === "ZERO_RESULT") {
+        this.$store.commit("snackbar/SHOW", ERROR_MESSAGE.NO_SEARCH_RESULT_MESSAGE);
+      } else if (errorMessage === "ERROR") {
+        this.$store.commit("snackbar/SHOW", ERROR_MESSAGE.EXECUTION_ERROR);
+      }
     },
     async filterPosts() {
       if (this.keyword === "") {
@@ -114,8 +118,8 @@ export default {
       if (!this.searchButton) {
         this.hideSearchInput();
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
