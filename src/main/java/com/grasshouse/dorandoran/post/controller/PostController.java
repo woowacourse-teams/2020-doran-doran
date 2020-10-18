@@ -26,8 +26,10 @@ public class PostController {
     private final PostService postService;
 
     @PostMapping
-    public ResponseEntity<Void> createPost(@RequestBody @Valid PostCreateRequest request,
-        @LoginMember Member member) {
+    public ResponseEntity<Void> createPost(
+        @RequestBody @Valid PostCreateRequest request,
+        @LoginMember Member member
+    ) {
         PostCreateResponse response = postService.createPost(request, member);
         return ResponseEntity.created(URI.create("/posts/" + response.getId())).build();
     }

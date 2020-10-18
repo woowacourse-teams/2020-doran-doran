@@ -18,8 +18,10 @@ public class OAuth2ClientService implements OAuth2AuthorizedClientService {
     private final MemberRepository memberRepository;
 
     @Override
-    public void saveAuthorizedClient(OAuth2AuthorizedClient oAuth2AuthorizedClient,
-        Authentication authentication) {
+    public void saveAuthorizedClient(
+        OAuth2AuthorizedClient oAuth2AuthorizedClient,
+        Authentication authentication
+    ) {
         OAuth2User oauth2User = (OAuth2User) authentication.getPrincipal();
         String id = String.valueOf(oauth2User.getAttributes().get("id"));
         if (!memberRepository.existsMemberByoAuthId(id)) {
@@ -38,7 +40,8 @@ public class OAuth2ClientService implements OAuth2AuthorizedClientService {
     }
 
     @Override
-    public <T extends OAuth2AuthorizedClient> T loadAuthorizedClient(String clientRegistrationId,
+    public <T extends OAuth2AuthorizedClient> T loadAuthorizedClient(
+        String clientRegistrationId,
         String principalName) {
         throw new UnsupportedOperationException();
     }

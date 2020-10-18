@@ -23,8 +23,10 @@ public class CommentController {
     private final CommentService commentService;
 
     @PostMapping
-    public ResponseEntity<Void> createComment(@RequestBody @Valid CommentCreateRequest request,
-        @LoginMember Member member) {
+    public ResponseEntity<Void> createComment(
+        @RequestBody @Valid CommentCreateRequest request,
+        @LoginMember Member member
+    ) {
         Long commentId = commentService.createComment(request, member);
         return ResponseEntity
             .created(URI.create("/comments/" + commentId))

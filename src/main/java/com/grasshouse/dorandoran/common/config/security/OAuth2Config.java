@@ -14,7 +14,8 @@ public class OAuth2Config {
     @Bean
     public ClientRegistrationRepository clientRegistrationRepository(
         @Value("${kakao.client-id}") String clientId,
-        @Value("${kakao.client-secret}") String clientSecret) {
+        @Value("${kakao.client-secret}") String clientSecret
+    ) {
         final ClientRegistration clientRegistration = CustomOAuth2Provider.KAKAO
             .getBuilder()
             .clientId(clientId)

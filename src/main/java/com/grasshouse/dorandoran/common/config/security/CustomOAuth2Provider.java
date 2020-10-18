@@ -21,9 +21,10 @@ public enum CustomOAuth2Provider {
 
     private static final String DEFAULT_LOGIN_REDIRECT_URL = "{baseUrl}/login/oauth2/code/{registrationId}";
 
-    protected final ClientRegistration.Builder getBuilder(String registrationId,
-        ClientAuthenticationMethod method) {
-
+    protected final ClientRegistration.Builder getBuilder(
+        String registrationId,
+        ClientAuthenticationMethod method
+    ) {
         ClientRegistration.Builder builder = ClientRegistration.withRegistrationId(registrationId);
         builder.clientAuthenticationMethod(method);
         builder.authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE);
