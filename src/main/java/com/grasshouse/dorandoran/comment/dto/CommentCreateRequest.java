@@ -16,9 +16,6 @@ import org.hibernate.validator.constraints.Length;
 public class CommentCreateRequest {
 
     @NotNull
-    private Long memberId;
-
-    @NotNull
     private Long postId;
 
     @Length(max = 120)
