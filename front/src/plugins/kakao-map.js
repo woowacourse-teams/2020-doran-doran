@@ -165,34 +165,29 @@ export const KakaoMap = (() => {
     map.setCenter(targetLocation);
   };
 
-  const _createMarkerImage = (src, size, options) => {
-    return new kakao.maps.MarkerImage(src, size, options);
+  const _createMarkerImage = (img, size, options) => {
+    if (!img) {
+      return null;
+    }
+    return new kakao.maps.MarkerImage(img, size, options);
   };
 
   const _createMarker = (map, position, image) => {
-    const newMarker = new kakao.maps.Marker({
+    return new kakao.maps.Marker({
       map: map,
       position: position,
       image: image,
     });
-    return newMarker;
   };
 
-  const setMarker = (location) => {
-    if (!map || !location) {
-      return;
-    }
-    const kakaoLocation = _createKakaoLocation(location);
-    return _createMarker(map, kakaoLocation, null);
-  };
-
-  const setMarkerWithImage = (location, img) => {
+  const setMarker = (location, img) => {
     if (!map || !location) {
       return;
     }
     const kakaoLocation = _createKakaoLocation(location);
     const markerSize = new kakao.maps.Size(36, 36);
     const markerImage = _createMarkerImage(img, markerSize);
+
     return _createMarker(map, kakaoLocation, markerImage);
   };
 
@@ -203,7 +198,7 @@ export const KakaoMap = (() => {
     const currentLocation = await getCurrentLocation();
     setCenterLocation(currentLocation);
     if (!marker) {
-      marker = setMarkerWithImage(currentLocation, CURRENT_MARKER_IMAGE);
+      marker = setMarker(currentLocation, CURRENT_MARKER_IMAGE);
     } else {
       marker.setPosition(_createKakaoLocation(currentLocation));
     }
@@ -359,7 +354,7 @@ export const KakaoMap = (() => {
     getCenterLocation,
     setCenterLocation,
     setCenterByCurrentLocation,
-    setMarker: setMarkerWithImage,
+    setMarker,
     getBounds,
     setPostOverlay,
     hidePostOverlays,
