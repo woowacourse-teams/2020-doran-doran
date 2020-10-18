@@ -27,6 +27,8 @@ public class PostRepositorySupport extends QuerydslRepositorySupport {
     public List<Post> findPostWithKeywordAndDate(String keyword, LocalDateTime startDate, LocalDateTime endDate) {
         List<Post> persistPosts = jpaQueryFactory.selectFrom(post)
             .distinct()
+            .leftJoin(post.comments).fetchJoin()
+            .leftJoin(post.likes)
             .where(isPostAlive())
             .where(containsKeyword(keyword), betweenDate(startDate, endDate))
             .fetch();
