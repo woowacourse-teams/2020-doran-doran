@@ -1,7 +1,6 @@
 <template>
   <v-app-bar flat max-height="56" color="white">
     <v-container
-      v-show="isSearching"
       fluid
       class="d-flex flex-row align-center justify-space-between pa-0"
     >
@@ -34,7 +33,7 @@
         hide-details
         append-outer-icon="mdi-window-close"
         class="search-input font-size-small"
-        @keypress.enter="filterPosts"
+        @keypress.enter="searchPlace"
         @click:append-outer="initializeMapPage"
       />
     </v-expand-x-transition>
@@ -76,6 +75,24 @@ export default {
     toggleSearchInput() {
       this.isSearching = !this.isSearching;
     },
+    hideSearchInput() {
+      this.isSearching = false;
+      this.keyword = "";
+    },
+    searchPlace() {
+      if (this.keyword === "") {
+        this.$store.commit("snackbar/SHOW", ERROR_MESSAGE.NO_KEYWORD_INPUT);
+        return;
+      }
+      this.$kakaoMap.searchPlace(this.keyword, this.searchFail);
+    },
+    searchFail(errorMessage) {
+      if (errorMessage === "ZERO_RESULT") {
+        this.$store.commit("snackbar/SHOW", ERROR_MESSAGE.NO_SEARCH_RESULT_MESSAGE);
+      } else if (errorMessage === "ERROR") {
+        this.$store.commit("snackbar/SHOW", ERROR_MESSAGE.EXECUTION_ERROR);
+      }
+    },
     async filterPosts() {
       if (this.keyword === "") {
         this.$store.commit("snackbar/SHOW", ERROR_MESSAGE.NO_KEYWORD_INPUT);
@@ -90,11 +107,17 @@ export default {
         );
       }
     },
-    async initializeMapPage() {
+    initializeMapPage() {
       this.toggleSearchInput();
       this.keyword = "";
-      this.$store.commit("post/filter/SET_KEYWORD", "");
-      await this.$store.dispatch("post/loadPosts");
+      this.$kakaoMap.clearPlaceMarkers();
+    },
+  },
+  watch: {
+    searchButton() {
+      if (!this.searchButton) {
+        this.hideSearchInput();
+      }
     },
   },
 };

@@ -66,3 +66,10 @@ a {
 .fade-leave-active {
   opacity: 0;
 }
+
+.place-overlay-style {
+  padding-left: 7px;
+  padding-right: 7px;
+  background-color: white;
+  border-radius: 20px;
+}

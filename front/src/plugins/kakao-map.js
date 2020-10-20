@@ -1,4 +1,6 @@
 import { KAKAO_MAP_APP_KEY } from "@/secure/appkey";
+import { EVENT_TYPE } from "@/utils/constants";
+import { PLACE_OVERLAY_TEMPLATE } from "@/utils/templates";
 
 const KAKAO_MAP_URL = "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=";
 const LIBRARY = "&libraries=services,clusterer";
@@ -14,8 +16,11 @@ const CURRENT_MARKER_IMAGE =
 export const KakaoMap = (() => {
   let map = null;
   let postOverlays = [];
+  let placeMarkers = [];
+  let placeOverlay = null;
   let clusterer = null;
   let marker = null;
+  let places = null;
 
   const script = document.createElement("script");
   script.src = KAKAO_MAP_URL + KAKAO_MAP_APP_KEY + LIBRARY;
@@ -28,6 +33,16 @@ export const KakaoMap = (() => {
 
   const _createKakaoLocation = (location) => {
     return new kakao.maps.LatLng(location.latitude, location.longitude);
+  };
+
+  const _createPlaces = () => {
+    return new kakao.maps.services.Places();
+  };
+
+  const _createPlaceOverlay = () => {
+    return new kakao.maps.CustomOverlay({
+      yAnchor: 3.2,
+    });
   };
 
   const _createClusterer = () => {
@@ -105,6 +120,7 @@ export const KakaoMap = (() => {
     map = new kakao.maps.Map(mapContainer, options);
     postOverlays = [];
     clusterer = _createClusterer();
+    _initPlaceSearch();
 
     return map;
   };
@@ -149,12 +165,16 @@ export const KakaoMap = (() => {
     map.setCenter(targetLocation);
   };
 
-  const _createMarkerImage = (src, size, options) => {
-    return new kakao.maps.MarkerImage(src, size, options);
+  const _createMarkerImage = (img, size, options) => {
+    if (!img) {
+      return null;
+    }
+    return new kakao.maps.MarkerImage(img, size, options);
   };
 
-  const _createMarker = (position, image) => {
+  const _createMarker = (map, position, image) => {
     return new kakao.maps.Marker({
+      map: map,
       position: position,
       image: image,
     });
@@ -164,13 +184,11 @@ export const KakaoMap = (() => {
     if (!map || !location) {
       return;
     }
+    const kakaoLocation = _createKakaoLocation(location);
     const markerSize = new kakao.maps.Size(36, 36);
     const markerImage = _createMarkerImage(img, markerSize);
 
-    const kakaoLocation = _createKakaoLocation(location);
-    const newMarker = _createMarker(kakaoLocation, markerImage);
-    newMarker.setMap(map);
-    return newMarker;
+    return _createMarker(map, kakaoLocation, markerImage);
   };
 
   const setCenterByCurrentLocation = async () => {
@@ -241,6 +259,64 @@ export const KakaoMap = (() => {
     postOverlays = [];
   };
 
+  const _initPlaceSearch = () => {
+    places = _createPlaces();
+    placeOverlay = _createPlaceOverlay();
+  };
+
+  const searchPlace = (place, reject) => {
+    clearPlaceMarkers();
+
+    places.keywordSearch(place, (data, status) =>
+      _searchPlaceCallBack(data, status, reject),
+    );
+  };
+
+  const _setPlaceOverlay = (name, location) => {
+    if (!placeOverlay.getMap()) {
+      placeOverlay.setContent(PLACE_OVERLAY_TEMPLATE(name));
+      placeOverlay.setPosition(_createKakaoLocation(location));
+      placeOverlay.setMap(map);
+    } else {
+      placeOverlay.setMap(null);
+    }
+  };
+
+  const _setPlaceMarker = (place, bounds) => {
+    const location = {
+      longitude: place.x,
+      latitude: place.y,
+    };
+    const marker = setMarker(location);
+    placeMarkers.push(marker);
+
+    kakao.maps.event.addListener(marker, EVENT_TYPE.CLICK, () =>
+      _setPlaceOverlay(place.place_name, location),
+    );
+
+    bounds.extend(_createKakaoLocation(location));
+  };
+
+  const _searchPlaceCallBack = (data, status, reject) => {
+    if (status === kakao.maps.services.Status.OK) {
+      const bounds = new kakao.maps.LatLngBounds();
+      data.forEach((place) => _setPlaceMarker(place, bounds));
+      map.setBounds(bounds);
+    } else {
+      reject(status);
+    }
+  };
+
+  const clearPlaceMarkers = () => {
+    if (placeMarkers.length !== 0) {
+      placeMarkers.forEach((marker) => marker.setMap(null));
+    }
+    if (placeOverlay.getMap()) {
+      placeOverlay.setMap(null);
+    }
+    placeMarkers = [];
+  };
+
   const _getAdministrativeAddress = (location) => {
     const geocoder = new kakao.maps.services.Geocoder();
     return new Promise((resolve) =>
@@ -284,6 +360,8 @@ export const KakaoMap = (() => {
     showPostOverlays,
     clearClusterer,
     clearPostOverlay,
+    searchPlace,
+    clearPlaceMarkers,
     getAddress,
     addEventToMap,
     setMap,

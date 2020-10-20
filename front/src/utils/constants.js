@@ -4,6 +4,7 @@ const ERROR_MESSAGE = {
   NO_POST_MESSAGE: "😭 해당 기간에 글이 존재하지 않습니다.",
   NO_KEYWORD_INPUT: "🧐 키워드를 입력해주세요.",
   NO_SEARCH_RESULT_MESSAGE: "😭 해당 키워드의 검색 결과가 없습니다.",
+  EXECUTION_ERROR: "😭 에러가 발생했습니다.",
   INVALID_USER_DATE_INPUT: "😨 시작 날짜는 종료 날짜보다 뒤일 수 없습니다.",
   LOGIN_REQUIRED: "🔑 로그인이 필요해요.",
 };
@@ -14,6 +15,7 @@ const API_BASE_URL = {
 
 const EVENT_TYPE = {
   CENTER_CHANGE: "center_changed",
+  CLICK: "click",
 };
 
 const MAP_MODE = {
