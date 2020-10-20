@@ -97,12 +97,16 @@ export default {
     },
     handleUserInputFiltering() {
       if (this.startDate > this.endDate) {
-        this.$store.commit(
-          "snackbar/SHOW",
-          ERROR_MESSAGE.INVALID_USER_DATE_INPUT,
-        );
+        this.$store.commit("snackbar/SHOW", ERROR_MESSAGE.INVALID_DATE_ORDER);
         return;
       }
+
+      const beforeOneMonth = this.$moment(this.endDate).subtract(1, "months");
+      if (this.$moment(beforeOneMonth).isAfter(this.startDate)) {
+        this.$store.commit("snackbar/SHOW", ERROR_MESSAGE.INVALID_OVER_30_DAYS);
+        return;
+      }
+
       this.filterPosts();
     },
     async filterPosts() {
