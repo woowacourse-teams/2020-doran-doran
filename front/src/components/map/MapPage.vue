@@ -15,7 +15,10 @@
         목록
       </router-link>
       <MapAssistantButtons v-show="isDefaultMode" />
-      <PostCreateButton class="post-create-btn" />
+      <PostCreateButton
+        v-show="isLocationIdentifiable"
+        class="post-create-btn"
+      />
       <PostCreateModal v-if="isPostMode" />
       <TimelineModal v-if="timeline" />
     </template>
@@ -62,6 +65,9 @@ export default {
     },
     isPostMode() {
       return this.$store.getters["map/isPost"];
+    },
+    isLocationIdentifiable() {
+      return this.$store.getters["member/hasLocationInformation"];
     },
   },
   created() {
