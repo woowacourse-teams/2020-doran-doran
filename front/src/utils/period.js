@@ -38,11 +38,6 @@ const PERIOD_OPTIONS = {
     title: "30일 이내",
     startDate: () => period.ago(30, PERIOD_TYPE.DAY),
   },
-  ALL: {
-    order: 4,
-    title: "전체",
-    startDate: () => "",
-  },
   CUSTOM: {
     order: 5,
     title: "직접입력",
