@@ -1,5 +1,6 @@
 <template>
   <v-menu
+    refs="menu"
     v-model="menu"
     :close-on-content-click="false"
     :return-value.sync="dates"
@@ -11,7 +12,7 @@
         v-on="on"
         v-bind="attrs"
         v-model="joinDates"
-        :placeholder="'날짜 구간을 선택하세요.'"
+        :placeholder="'날짜를 입력해주세요.'"
         prepend-icon="mdi-calendar"
         readonly
         single-line
@@ -21,13 +22,13 @@
         class="font-size-x-small"
       />
     </template>
-    <VDatePicker
-      v-model="dates"
-      range
-      no-title
-      scrollable
-      @input="selectDate"
-    />
+    <div class="flex-column">
+      <VDatePicker v-model="dates" range no-title @input="selectDate" />
+      <div class="d-flex flex-row-reverse mb-3 mr-1">
+        <v-btn text @click="$refs.menu.save(dates)">선택</v-btn>
+        <v-btn text @click="menu = false">닫기</v-btn>
+      </div>
+    </div>
   </v-menu>
 </template>
 
@@ -71,7 +72,6 @@ export default {
         return;
       }
 
-      this.menu = false;
       this.$emit("select", this.dates);
     },
   },
@@ -80,7 +80,8 @@ export default {
 
 <style scoped>
 .v-menu__content {
-  min-height: 290px;
-  height: 290px;
+  min-height: 330px;
+  height: 330px;
+  background-color: white;
 }
 </style>
