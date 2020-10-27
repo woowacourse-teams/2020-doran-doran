@@ -35,8 +35,7 @@
         <onMismatch>DENY</onMismatch>
       </filter>
       <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-        <fileNamePattern>${LOG_BACKUP}/${LOG_CHILD_INFO}/info-%d{yyyy-MM-dd}.zip
-        </fileNamePattern>
+        <fileNamePattern>${LOG_BACKUP}/${LOG_CHILD_INFO}/info-%d{yyyy-MM-dd}.zip</fileNamePattern>
         <maxHistory>${MAX_HISTORY}</maxHistory>
       </rollingPolicy>
     </appender>
@@ -52,8 +51,7 @@
         <onMismatch>DENY</onMismatch>
       </filter>
       <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-        <fileNamePattern>${LOG_BACKUP}/${LOG_CHILD_WARN}/warn-%d{yyyy-MM-dd}.zip
-        </fileNamePattern>
+        <fileNamePattern>${LOG_BACKUP}/${LOG_CHILD_WARN}/warn-%d{yyyy-MM-dd}.zip</fileNamePattern>
         <maxHistory>${MAX_HISTORY}</maxHistory>
       </rollingPolicy>
     </appender>
@@ -69,8 +67,7 @@
         <onMismatch>DENY</onMismatch>
       </filter>
       <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-        <fileNamePattern>${LOG_BACKUP}/${LOG_CHILD_ERROR}/error-%d{yyyy-MM-dd}.zip
-        </fileNamePattern>
+        <fileNamePattern>${LOG_BACKUP}/${LOG_CHILD_ERROR}/error-%d{yyyy-MM-dd}.zip</fileNamePattern>
         <maxHistory>${MAX_HISTORY}</maxHistory>
       </rollingPolicy>
     </appender>
@@ -84,5 +81,6 @@
   </springProfile>
 
   <timestamp datePattern="yyyy-MM-dd" key="BY_DATE"/>
+
 
 </configuration>
