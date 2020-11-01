@@ -1,9 +1,8 @@
 <template>
   <v-menu
-    refs="menu"
     v-model="menu"
     :close-on-content-click="false"
-    :return-value.sync="dates"
+    :return-value.sync="joinDates"
     offset-y
     transition="scale-transition"
   >
@@ -12,6 +11,7 @@
         v-on="on"
         v-bind="attrs"
         v-model="joinDates"
+        @click="clear"
         :placeholder="'날짜를 입력해주세요.'"
         prepend-icon="mdi-calendar"
         readonly
@@ -23,10 +23,10 @@
       />
     </template>
     <div class="flex-column">
-      <VDatePicker v-model="dates" range no-title @input="selectDate" />
+      <VDatePicker v-model="dates" range no-title />
       <div class="d-flex flex-row-reverse mb-3 mr-1">
-        <v-btn text @click="$refs.menu.save(dates)">선택</v-btn>
-        <v-btn text @click="menu = false">닫기</v-btn>
+        <v-btn text @click="selected">선택</v-btn>
+        <v-btn text @click="close">닫기</v-btn>
       </div>
     </div>
   </v-menu>
@@ -44,17 +44,24 @@ export default {
     };
   },
   computed: {
-    joinDates() {
-      if (this.dates.length === 0) {
-        return "";
-      }
-      return this.dates.join(" ~ ");
+    joinDates: {
+      get() {
+        if (this.dates.length === 0) {
+          return "";
+        }
+        return this.dates.join(" ~ ");
+      },
+      set() {},
     },
   },
   methods: {
-    selectDate() {
+    clear() {
+      this.dates = [];
+    },
+    selected() {
       if (this.dates.length < 2) {
-        return;
+        this.$store.commit("snackbar/SHOW", ERROR_MESSAGE.INVALID_DATE_COUNT);
+        return false;
       }
 
       const startDate = this.$moment(this.dates[0]);
@@ -63,16 +70,21 @@ export default {
       if (startDate.isAfter(endDate)) {
         this.$store.commit("snackbar/SHOW", ERROR_MESSAGE.INVALID_DATE_ORDER);
         this.dates = [];
-        return;
+        return false;
       }
 
       if (startDate.isBefore(endDate.subtract(1, "months"))) {
         this.$store.commit("snackbar/SHOW", ERROR_MESSAGE.INVALID_OVER_30_DAYS);
         this.dates = [];
-        return;
+        return false;
       }
 
       this.$emit("select", this.dates);
+      this.menu = false;
+    },
+    close() {
+      this.dates = [];
+      this.menu = false;
     },
   },
 };
