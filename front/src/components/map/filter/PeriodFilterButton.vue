@@ -117,9 +117,11 @@ export default {
   watch: {
     async selected(val) {
       if (val === this.periodOptions.CUSTOM) {
-        this.$store.commit("post/filter/SET_START_DATE", this.startDate);
-        this.$store.commit("post/filter/SET_END_DATE", this.endDate);
-        await this.filterPosts();
+        if (this.startDate) {
+          this.$store.commit("post/filter/SET_START_DATE", this.startDate);
+          this.$store.commit("post/filter/SET_END_DATE", this.endDate);
+          await this.filterPosts();
+        }
         this.openCalendar();
         return;
       }
