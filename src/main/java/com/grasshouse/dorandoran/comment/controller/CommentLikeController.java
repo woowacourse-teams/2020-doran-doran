@@ -23,8 +23,10 @@ public class CommentLikeController {
     private final CommentLikeService commentLikeService;
 
     @PostMapping
-    public ResponseEntity<Void> createCommentLike(@RequestBody @Valid CommentLikeCreateRequest request,
-        @LoginMember Member member) {
+    public ResponseEntity<Void> createCommentLike(
+        @RequestBody @Valid CommentLikeCreateRequest request,
+        @LoginMember Member member
+    ) {
         Long commentLikeId = commentLikeService.createCommentLike(request, member);
         return ResponseEntity
             .created(URI.create("/comments/likes/" + commentLikeId))
@@ -32,8 +34,10 @@ public class CommentLikeController {
     }
 
     @DeleteMapping("/{commentLikeId}")
-    public ResponseEntity<Void> deleteCommentLike(@PathVariable Long commentLikeId,
-        @LoginMember Member member) {
+    public ResponseEntity<Void> deleteCommentLike(
+        @PathVariable Long commentLikeId,
+        @LoginMember Member member
+    ) {
         commentLikeService.deleteCommentLike(commentLikeId, member);
         return ResponseEntity.noContent().build();
     }

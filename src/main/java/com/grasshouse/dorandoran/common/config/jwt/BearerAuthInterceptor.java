@@ -19,8 +19,11 @@ public class BearerAuthInterceptor implements HandlerInterceptor {
     private final JwtTokenProvider jwtTokenProvider;
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
-        Object handler) {
+    public boolean preHandle(
+        HttpServletRequest request,
+        HttpServletResponse response,
+        Object handler
+    ) {
         if (request.getMethod().equals(ALLOW_HTTP_METHOD) && !requestUrlContains(request, "/me")) {
             return true;
         }
@@ -28,8 +31,8 @@ public class BearerAuthInterceptor implements HandlerInterceptor {
         String token = authExtractor.extract(request, "Bearer");
 
         String id = Optional.ofNullable(token)
-            .filter(t -> jwtTokenProvider.validateToken(t))
-            .map(t -> jwtTokenProvider.getSubject(t))
+            .filter(jwtTokenProvider::validateToken)
+            .map(jwtTokenProvider::getSubject)
             .orElseThrow(InvalidAuthenticationException::new);
 
         request.setAttribute("id", id);
@@ -43,14 +46,22 @@ public class BearerAuthInterceptor implements HandlerInterceptor {
     }
 
     @Override
-    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
-        ModelAndView modelAndView) {
+    public void postHandle(
+        HttpServletRequest request,
+        HttpServletResponse response,
+        Object handler,
+        ModelAndView modelAndView
+    ) {
 
     }
 
     @Override
-    public void afterCompletion(HttpServletRequest request, HttpServletResponse response,
-        Object handler, Exception ex) {
+    public void afterCompletion(
+        HttpServletRequest request,
+        HttpServletResponse response,
+        Object handler,
+        Exception ex
+    ) {
 
     }
 }

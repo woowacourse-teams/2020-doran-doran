@@ -21,8 +21,11 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
     private String url;
 
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-        Authentication authentication) throws IOException {
+    public void onAuthenticationSuccess(
+        HttpServletRequest request,
+        HttpServletResponse response,
+        Authentication authentication
+    ) throws IOException {
         OAuth2User oauth2User = (OAuth2User) authentication.getPrincipal();
         String id = String.valueOf(oauth2User.getAttributes().get("id"));
         String token = provider.createToken(id);

@@ -35,8 +35,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 
 class PostControllerTest extends CommonControllerTest {
@@ -54,7 +52,6 @@ class PostControllerTest extends CommonControllerTest {
     @Test
     void createPostWithLoginUser() throws Exception {
         PostCreateRequest postCreateRequest = PostCreateRequest.builder()
-            .memberId(PERSIST_MEMBER.getId())
             .content("new post")
             .location(JAMSIL_STATION)
             .authorAddress(AUTHOR_ADDRESS)
@@ -81,7 +78,6 @@ class PostControllerTest extends CommonControllerTest {
     @Test
     void createPostWithoutLogin() throws Exception {
         PostCreateRequest postCreateRequest = PostCreateRequest.builder()
-            .memberId(PERSIST_MEMBER.getId())
             .content("new post")
             .location(JAMSIL_STATION)
             .authorAddress(AUTHOR_ADDRESS)
@@ -158,7 +154,6 @@ class PostControllerTest extends CommonControllerTest {
     @Test
     void postCreateDtoTooLong() throws Exception {
         PostCreateRequest postCreateRequest = PostCreateRequest.builder()
-            .memberId(PERSIST_MEMBER.getId())
             .authorAddress(AUTHOR_ADDRESS)
             .content("안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요"
                 + "안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요"

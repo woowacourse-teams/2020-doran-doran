@@ -24,6 +24,7 @@ public class MemberResponse {
     private LocalDateTime updatedAt;
 
     public static MemberResponse from(Member member) {
-        return new MemberResponse(member.getId(), member.getNickname(), member.getCreatedAt(), member.getUpdatedAt());
+        return new MemberResponse(member.getId(), member.getNickname(), member.getCreatedAt(),
+            member.getUpdatedAt());
     }
 }

@@ -1,8 +1,8 @@
 package com.grasshouse.dorandoran.post.dto;
 
 import com.grasshouse.dorandoran.comment.dto.CommentResponse;
-import com.grasshouse.dorandoran.member.dto.MemberResponse;
 import com.grasshouse.dorandoran.common.baseentity.EntityStatus;
+import com.grasshouse.dorandoran.member.dto.MemberResponse;
 import com.grasshouse.dorandoran.post.domain.Address;
 import com.grasshouse.dorandoran.post.domain.Location;
 import com.grasshouse.dorandoran.post.domain.Post;

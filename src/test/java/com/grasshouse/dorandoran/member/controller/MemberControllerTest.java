@@ -64,7 +64,8 @@ class MemberControllerTest extends CommonControllerTest {
         MemberUpdateRequest memberUpdateRequest = new MemberUpdateRequest("new nickname");
         String request = objectMapper.writeValueAsString(memberUpdateRequest);
 
-        MemberUpdateResponse response = new MemberUpdateResponse(PERSIST_MEMBER.getId(), "new nickname");
+        MemberUpdateResponse response = new MemberUpdateResponse(PERSIST_MEMBER.getId(),
+            "new nickname");
 
         when(jwtTokenProvider.validateToken(anyString())).thenReturn(true);
         when(jwtTokenProvider.getSubject(anyString())).thenReturn("id");
@@ -79,7 +80,8 @@ class MemberControllerTest extends CommonControllerTest {
             .andDo(print())
             .andReturn();
 
-        assertThat(mvcResult.getResponse().getContentAsString()).contains(PERSIST_MEMBER.getId().toString());
+        assertThat(mvcResult.getResponse().getContentAsString())
+            .contains(PERSIST_MEMBER.getId().toString());
         assertThat(mvcResult.getResponse().getContentAsString()).contains("new nickname");
         verify(memberService).update(any(), any());
     }

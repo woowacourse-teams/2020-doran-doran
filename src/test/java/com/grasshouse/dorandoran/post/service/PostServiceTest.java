@@ -14,13 +14,11 @@ import com.grasshouse.dorandoran.common.exception.PostNotFoundException;
 import com.grasshouse.dorandoran.member.domain.Member;
 import com.grasshouse.dorandoran.member.repository.MemberRepository;
 import com.grasshouse.dorandoran.post.domain.Post;
-import com.grasshouse.dorandoran.post.dto.PostBoundsRequest;
 import com.grasshouse.dorandoran.post.dto.PostCreateRequest;
 import com.grasshouse.dorandoran.post.dto.PostCreateResponse;
 import com.grasshouse.dorandoran.post.dto.PostResponse;
 import com.grasshouse.dorandoran.post.repository.PostRepository;
 import java.util.List;
-import javax.swing.text.html.parser.Entity;
 import javax.validation.ConstraintViolationException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -59,7 +57,6 @@ class PostServiceTest {
     @Test
     void createPostTest() {
         PostCreateRequest postCreateRequest = PostCreateRequest.builder()
-            .memberId(member.getId())
             .authorAddress(AUTHOR_ADDRESS)
             .content("내용")
             .location(JAMSIL_STATION)
@@ -138,7 +135,6 @@ class PostServiceTest {
     @Test
     void postTooLong() {
         PostCreateRequest postCreateRequest = PostCreateRequest.builder()
-            .memberId(member.getId())
             .authorAddress(AUTHOR_ADDRESS)
             .content("안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요"
                 + "안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요"
@@ -157,7 +153,6 @@ class PostServiceTest {
     @Test
     void checkPostCreatedAt() {
         PostCreateRequest postCreateRequest = PostCreateRequest.builder()
-            .memberId(member.getId())
             .authorAddress(AUTHOR_ADDRESS)
             .content("내용")
             .location(JAMSIL_STATION)

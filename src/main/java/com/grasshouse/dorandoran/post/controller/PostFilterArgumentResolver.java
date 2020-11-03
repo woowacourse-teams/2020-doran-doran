@@ -28,8 +28,12 @@ public class PostFilterArgumentResolver implements HandlerMethodArgumentResolver
     }
 
     @Override
-    public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
-        NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
+    public Object resolveArgument(
+        MethodParameter parameter,
+        ModelAndViewContainer mavContainer,
+        NativeWebRequest webRequest,
+        WebDataBinderFactory binderFactory
+    ) {
         String keyword = webRequest.getParameter("keyword");
         String startDate = webRequest.getParameter("startDate");
         String endDate = webRequest.getParameter("endDate");

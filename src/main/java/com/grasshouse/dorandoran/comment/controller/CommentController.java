@@ -23,8 +23,10 @@ public class CommentController {
     private final CommentService commentService;
 
     @PostMapping
-    public ResponseEntity<Void> createComment(@RequestBody @Valid CommentCreateRequest request,
-        @LoginMember Member member) {
+    public ResponseEntity<Void> createComment(
+        @RequestBody @Valid CommentCreateRequest request,
+        @LoginMember Member member
+    ) {
         Long commentId = commentService.createComment(request, member);
         return ResponseEntity
             .created(URI.create("/comments/" + commentId))
@@ -32,7 +34,10 @@ public class CommentController {
     }
 
     @DeleteMapping("/{commentId}")
-    public ResponseEntity<Void> deleteComment(@PathVariable Long commentId, @LoginMember Member member) {
+    public ResponseEntity<Void> deleteComment(
+        @PathVariable Long commentId,
+        @LoginMember Member member
+    ) {
         commentService.deleteComment(commentId, member);
         return ResponseEntity.noContent().build();
     }
