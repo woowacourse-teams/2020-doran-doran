@@ -55,7 +55,6 @@ export default {
         return;
       }
       const data = {
-        memberId: 1,
         postId: this.postId,
         content: this.content,
         location: authorLocation,

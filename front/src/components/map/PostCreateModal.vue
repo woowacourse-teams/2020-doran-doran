@@ -85,7 +85,6 @@ export default {
         return;
       }
       const data = {
-        memberId: 1,
         content: this.content,
         location: postLocation,
         address: await this.$kakaoMap.getAddress(postLocation),

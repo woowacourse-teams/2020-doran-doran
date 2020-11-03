@@ -18,9 +18,6 @@ import org.hibernate.validator.constraints.Length;
 @AllArgsConstructor
 public class PostCreateRequest {
 
-    @NotNull
-    private Long memberId;
-
     private Address authorAddress;
 
     @Length(max = 200)
