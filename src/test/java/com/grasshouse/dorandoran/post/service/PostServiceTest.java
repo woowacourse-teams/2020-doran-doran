@@ -57,7 +57,6 @@ class PostServiceTest {
     @Test
     void createPostTest() {
         PostCreateRequest postCreateRequest = PostCreateRequest.builder()
-            .memberId(member.getId())
             .authorAddress(AUTHOR_ADDRESS)
             .content("내용")
             .location(JAMSIL_STATION)
@@ -136,7 +135,6 @@ class PostServiceTest {
     @Test
     void postTooLong() {
         PostCreateRequest postCreateRequest = PostCreateRequest.builder()
-            .memberId(member.getId())
             .authorAddress(AUTHOR_ADDRESS)
             .content("안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요"
                 + "안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요"
@@ -155,7 +153,6 @@ class PostServiceTest {
     @Test
     void checkPostCreatedAt() {
         PostCreateRequest postCreateRequest = PostCreateRequest.builder()
-            .memberId(member.getId())
             .authorAddress(AUTHOR_ADDRESS)
             .content("내용")
             .location(JAMSIL_STATION)

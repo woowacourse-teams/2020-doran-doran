@@ -70,7 +70,6 @@ class CommentServiceTest {
     @Test
     void createComment() {
         CommentCreateRequest request = CommentCreateRequest.builder()
-            .memberId(member.getId())
             .postId(post.getId())
             .content("댓글댓글")
             .location(GANGNAM_STATION)
@@ -106,7 +105,6 @@ class CommentServiceTest {
     @Test
     void commentTooLong() {
         CommentCreateRequest comment = CommentCreateRequest.builder()
-            .memberId(member.getId())
             .postId(post.getId())
             .content("댓글입니다댓글입니다댓글입니다댓글입니다댓글입니다댓글입니다댓글입니다댓글입니다"
                 + "댓글입니다댓글입니다댓글입니다댓글입니다댓글입니다댓글입니다댓글입니다댓글입니다"
@@ -123,7 +121,6 @@ class CommentServiceTest {
     @Test
     void checkCommentCreatedAt() {
         CommentCreateRequest commentCreateRequest = CommentCreateRequest.builder()
-            .memberId(member.getId())
             .postId(post.getId())
             .content("내용")
             .location(JAMSIL_STATION)

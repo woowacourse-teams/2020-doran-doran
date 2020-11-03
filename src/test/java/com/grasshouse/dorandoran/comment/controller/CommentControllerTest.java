@@ -44,7 +44,6 @@ class CommentControllerTest extends CommonControllerTest {
     @Test
     void createCommentWithLoginUser() throws Exception {
         CommentCreateRequest commentCreateRequest = CommentCreateRequest.builder()
-            .memberId(PERSIST_MEMBER.getId())
             .postId(1L)
             .content("댓글입니다.")
             .location(GANGNAM_STATION)
@@ -69,7 +68,6 @@ class CommentControllerTest extends CommonControllerTest {
     @Test
     void createCommentWithoutLogin() throws Exception {
         CommentCreateRequest commentCreateRequest = CommentCreateRequest.builder()
-            .memberId(PERSIST_MEMBER.getId())
             .postId(1L)
             .content("댓글입니다.")
             .location(GANGNAM_STATION)
@@ -132,7 +130,6 @@ class CommentControllerTest extends CommonControllerTest {
     @Test
     void commentCreateDtoTooLong() throws Exception {
         CommentCreateRequest commentCreateRequest = CommentCreateRequest.builder()
-            .memberId(PERSIST_MEMBER.getId())
             .postId(1L)
             .content("댓글입니다댓글입니다댓글입니다댓글입니다댓글입니다댓글입니다댓글입니다댓글입니다"
                 + "댓글입니다댓글입니다댓글입니다댓글입니다댓글입니다댓글입니다댓글입니다댓글입니다"
