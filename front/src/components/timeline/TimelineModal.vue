@@ -40,7 +40,7 @@ export default {
   },
   created() {
     const preventRoute = this.$router.beforeEach((to, from, next) => {
-      if (this.isTransitionDone || to.path !== this.$pages.map.path) {
+      if (this.isTransitionDone || to.path !== this.$pages.map().path) {
         next(true);
       }
       this.rendered = false;

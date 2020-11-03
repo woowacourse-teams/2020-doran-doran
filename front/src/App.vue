@@ -57,17 +57,17 @@ export default {
   },
   methods: {
     checkUrl() {
-      const isNotMapPage = this.$route.name !== this.$pages.map.name;
+      const isNotMapPage = this.$route.name !== this.$pages.map().name;
       const isNotPostModal = this.$route.name !== this.$pages.post().name;
       if (isNotMapPage && isNotPostModal) {
-        this.$router.push(this.$pages.map);
+        this.$router.push(this.$pages.map());
       }
     },
     checkUrlToken() {
       const urlToken = location.href.split("token=")[1];
       if (urlToken) {
         localStorage.setItem("accessToken", urlToken);
-        this.$router.push(this.$pages.map);
+        this.$router.push(this.$pages.map());
       }
     },
     async checkToken() {
@@ -75,12 +75,12 @@ export default {
       if (storageToken && storageToken !== "guest") {
         await this.$store.dispatch("member/loadMember");
       } else if (!storageToken) {
-        await this.$router.push(this.$pages.login);
+        await this.$router.push(this.$pages.login());
       }
     },
     preventRoute() {
       this.$router.beforeEach(async (to, from, next) => {
-        if (to.path === this.$pages.map.path || to.path === this.$pages.timeline.path) {
+        if (to.path === this.$pages.map().path || to.path === this.$pages.timeline().path) {
           this.$store.commit("appBar/MAP_PAGE_DEFAULT_MODE");
           await this.$store.dispatch("post/loadPosts");
         }

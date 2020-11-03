@@ -52,7 +52,7 @@ export default {
         this.$store.commit("snackbar/SHOW", MARKER_MODE_MESSAGE);
         this.$store.commit("appBar/MAP_PAGE_MARKER_MODE");
         this.$kakaoMap.clearPlaceMarkers();
-        this.$router.push(this.$pages.postCreate);
+        this.$router.push(this.$pages.postCreate());
       } else if (this.isMarkerMode) {
         this.$store.commit("map/CHANGE_MODE", MAP_MODE.POST);
       }

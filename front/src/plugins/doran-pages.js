@@ -1,15 +1,21 @@
 export const pages = {
-  map: {
-    path: "/",
-    name: "Map",
+  map: () => {
+    return {
+      path: "/",
+      name: "Map",
+    };
   },
-  postCreate: {
-    path: "/post-create",
-    name: "PostCreate",
+  postCreate: () => {
+    return {
+      path: "/post-create",
+      name: "PostCreate",
+    };
   },
-  timeline: {
-    path: "/timeline",
-    name: "Timeline",
+  timeline: () => {
+    return {
+      path: "/timeline",
+      name: "Timeline",
+    };
   },
   post: (id) => {
     return {
@@ -20,9 +26,11 @@ export const pages = {
       },
     };
   },
-  login: {
-    path: "/login",
-    name: "Login",
+  login: () => {
+    return {
+      path: "/login",
+      name: "Login",
+    };
   },
 };
 

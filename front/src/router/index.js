@@ -10,7 +10,7 @@ Vue.use(VueRouter);
 
 const routes = [
   {
-    ...pages.map,
+    ...pages.map(),
     component: MapPage,
     meta: {
       postCreate: false,
@@ -19,13 +19,13 @@ const routes = [
     },
     children: [
       {
-        ...pages.postCreate,
+        ...pages.postCreate(),
         meta: {
           postCreate: true,
         },
       },
       {
-        ...pages.timeline,
+        ...pages.timeline(),
         components: {
           page: TimelineModal,
         },
@@ -45,7 +45,7 @@ const routes = [
     ],
   },
   {
-    ...pages.login,
+    ...pages.login(),
     component: LoginPage,
   },
 ];
