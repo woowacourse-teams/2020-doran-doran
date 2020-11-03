@@ -24,8 +24,11 @@ public class PostRepositorySupport extends QuerydslRepositorySupport {
         this.jpaQueryFactory = jpaQueryFactory;
     }
 
-    public List<Post> findPostWithKeywordAndDate(String keyword, LocalDateTime startDate,
-        LocalDateTime endDate) {
+    public List<Post> findPostWithKeywordAndDate(
+        String keyword,
+        LocalDateTime startDate,
+        LocalDateTime endDate
+    ) {
         List<Post> persistPosts = jpaQueryFactory.selectFrom(post)
             .distinct()
             .leftJoin(post.comments).fetchJoin()
