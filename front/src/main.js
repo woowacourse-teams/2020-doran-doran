@@ -4,6 +4,7 @@ import router from "@/router";
 import store from "@/store";
 import vuetify from "@/plugins/vuetify";
 import KakaoMap from "@/plugins/kakao-map";
+import pages from "@/plugins/doran-pages";
 import VueAnalytics from "vue-analytics";
 import LogRocket from "logrocket";
 import {
@@ -20,6 +21,7 @@ LogRocket.init(LOGROCKET_APP_ID);
 
 Vue.config.productionTip = false;
 Vue.use(KakaoMap);
+Vue.use(pages);
 
 const moment = require("moment");
 require("moment/locale/ko");

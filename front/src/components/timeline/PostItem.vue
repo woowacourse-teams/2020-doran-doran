@@ -42,7 +42,7 @@ export default {
   },
   methods: {
     openPostModal() {
-      this.$router.push("posts/" + this.post.id);
+      this.$router.push(this.$pages.post(this.post.id));
     },
     hasLike(like) {
       return (

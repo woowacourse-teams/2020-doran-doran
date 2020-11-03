@@ -22,7 +22,7 @@ export default {
   methods: {
     guest() {
       localStorage.setItem("accessToken", "guest");
-      this.$router.push("/");
+      this.$router.push(this.$pages.map());
     },
     kakaoLogin() {
       window.location.href = API_BASE_URL.EC2 + "/oauth2/authorization/kakao";

@@ -6,7 +6,7 @@
       <PeriodFilterButton v-show="isDefaultMode" />
       <router-link
         v-show="isDefaultMode"
-        to="/timeline"
+        :to="this.$pages.timeline()"
         class="px-3 font-size-x-small timeline-btn"
       >
         <v-icon color="black" class="mb-1" small>
