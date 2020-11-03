@@ -1,6 +1,5 @@
 package com.grasshouse.dorandoran.common;
 
-import java.util.Arrays;
 import lombok.AllArgsConstructor;
 import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,8 +13,6 @@ public class WebRestController {
 
     @GetMapping("/profile")
     public String getProfile() {
-        return Arrays.stream(env.getActiveProfiles())
-            .findFirst()
-            .orElse("");
+        return env.getProperty("local.server.port");
     }
 }

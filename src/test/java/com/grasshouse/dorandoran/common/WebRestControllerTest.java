@@ -9,14 +9,14 @@ class WebRestControllerTest {
 
     @Test
     public void checkProfile() {
-        String expectedProfile = "set1";
+        String port = "8080";
         MockEnvironment env = new MockEnvironment();
-        env.addActiveProfile(expectedProfile);
+        env.setProperty("local.server.port", port);
 
         WebRestController controller = new WebRestController(env);
 
         String profile = controller.getProfile();
 
-        assertThat(profile).isEqualTo(expectedProfile);
+        assertThat(profile).isEqualTo(port);
     }
 }
