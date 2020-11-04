@@ -16,11 +16,9 @@ echo "> 8080 = $PROFILE_STATUS_8080"
 echo "> 8888 = $PROFILE_STATUS_8888"
 
 
-if [ $PROFILE_STATUS_8080 == 8080 ]
-then
+if [ $PROFILE_STATUS_8080 == 8080 ]; then
 	npm run build -- --mode development1 --http2
-elif [ $PROFILE_STATUS_8888 == 8888 ]
-then
+elif [ $PROFILE_STATUS_8888 == 8888 ]; then
 	npm run build -- --mode development2 --http2
 else
 	echo "> 일치하는 Profile이 없습니다. Profile: $PROFILE_STATUS_8080"
