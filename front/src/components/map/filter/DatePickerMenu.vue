@@ -65,9 +65,8 @@ export default {
       }
 
       if (this.dates.length === 1) {
-        const oneDate = this.dates[0];
-        this.dates = [oneDate, oneDate];
-        return;
+        const singleDate = this.dates[0];
+        this.dates = [singleDate, singleDate];
       }
 
       const startDate = new Date(this.dates[0]);
@@ -80,7 +79,7 @@ export default {
       }
 
       if (startDate > endDate) {
-        this.dates = [this.endDate, this.startDate];
+        this.dates = this.dates.reverse();
       }
 
       this.$emit("select", this.dates);
