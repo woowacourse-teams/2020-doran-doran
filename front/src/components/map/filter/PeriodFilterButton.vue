@@ -147,11 +147,10 @@ export default {
   left: 45px;
   z-index: 1;
   max-width: 60%;
-  padding-top: 5px;
-  padding-left: 10px;
   border-radius: 24px;
   box-shadow: 1px 1px 8px silver;
   background-color: white;
+  min-width: 190px;
 }
 
 .slide-right-enter-active {

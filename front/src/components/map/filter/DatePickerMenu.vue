@@ -92,8 +92,9 @@ export default {
 
 <style scoped>
 .v-menu__content {
-  min-height: 330px;
   height: 330px;
   background-color: white;
+  margin-top: 5px;
+  margin-left: -10px;
 }
 </style>
