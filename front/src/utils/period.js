@@ -39,7 +39,7 @@ const PERIOD_OPTIONS = {
     startDate: () => period.ago(30, PERIOD_TYPE.DAY),
   },
   CUSTOM: {
-    order: 5,
+    order: 4,
     title: "직접입력",
   },
 };
