@@ -6,8 +6,7 @@ const ERROR_MESSAGE = {
   NO_SEARCH_RESULT_MESSAGE: "😭 해당 키워드의 검색 결과가 없습니다.",
   EXECUTION_ERROR: "😭 에러가 발생했습니다.",
   INVALID_DATE_COUNT: "😨 시작 날짜와 종료 날짜를 입력해주세요.",
-  INVALID_DATE_ORDER: "😨 시작 날짜는 종료 날짜보다 뒤일 수 없습니다.",
-  INVALID_OVER_30_DAYS: "😨 최대 30일간 조회가 가능합니다.",
+  INVALID_OVER_A_MONTH: "😨 최대 한 달 간 조회가 가능합니다.",
   LOGIN_REQUIRED: "🔑 로그인이 필요해요.",
 };
 

@@ -59,24 +59,28 @@ export default {
       this.dates = [];
     },
     selected() {
-      if (this.dates.length < 2) {
+      if (this.dates.length < 1) {
         this.$store.commit("snackbar/SHOW", ERROR_MESSAGE.INVALID_DATE_COUNT);
-        return false;
+        return;
       }
 
-      const startDate = this.$moment(this.dates[0]);
-      const endDate = this.$moment(this.dates[1]);
-
-      if (startDate.isAfter(endDate)) {
-        this.$store.commit("snackbar/SHOW", ERROR_MESSAGE.INVALID_DATE_ORDER);
-        this.dates = [];
-        return false;
+      if (this.dates.length === 1) {
+        const oneDate = this.dates[0];
+        this.dates = [oneDate, oneDate];
+        return;
       }
 
-      if (startDate.isBefore(endDate.subtract(1, "months"))) {
-        this.$store.commit("snackbar/SHOW", ERROR_MESSAGE.INVALID_OVER_30_DAYS);
+      const startDate = new Date(this.dates[0]);
+      const endDate = new Date(this.dates[1]);
+
+      if (startDate < endDate.getMonth() - 1) {
+        this.$store.commit("snackbar/SHOW", ERROR_MESSAGE.INVALID_OVER_A_MONTH);
         this.dates = [];
-        return false;
+        return;
+      }
+
+      if (startDate > endDate) {
+        this.dates = [this.endDate, this.startDate];
       }
 
       this.$emit("select", this.dates);
