@@ -100,5 +100,6 @@ export default {
   background-color: white;
   margin-top: 5px;
   margin-left: -10px;
+  overflow: hidden;
 }
 </style>
