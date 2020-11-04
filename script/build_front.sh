@@ -9,6 +9,7 @@ echo $TRACKING_ID > ./front/src/secure/trackingid.js
 cd ./front
 npm install
 
+echo ">"
 echo "> 현재 구동중인 Set 확인"
 PROFILE_STATUS_8080=$(curl --connect-timeout 3 -XGET --fail-early https://woowacourse.com:8080/profile)
 PROFILE_STATUS_8888=$(curl --connect-timeout 3 -XGET --fail-early https://woowacourse.com:8888/profile)
@@ -25,3 +26,6 @@ else
 	echo "> 일치하는 Profile이 없습니다. Profile: $PROFILE_STATUS_8080"
   echo "> 일치하는 Profile이 없습니다. Profile: $PROFILE_STATUS_8888"
 fi
+
+echo ">"
+echo "> 프론트엔드 실행 완료"

@@ -22,6 +22,7 @@ elif [ $PROFILE_STATUS_8888 == 8888 ]; then
   IDLE_PORT=8080
   PAST_PORT=8888
 else
+  echo ">"
   echo "> 일치하는 Profile이 없습니다. Profile: $PROFILE_STATUS_8080"
   echo "> 일치하는 Profile이 없습니다. Profile: $PROFILE_STATUS_8888"
   echo "> set1을 할당합니다. IDLE_PROFILE: set1"
@@ -30,11 +31,13 @@ else
   PAST_PORT=8888
 fi
 
+echo ">"
 echo "> application.jar 교체"
 IDLE_APPLICATION=$IDLE_PROFILE-doran-doran-1.0.1-SNAPSHOT.jar
 IDLE_APPLICATION_PATH=$DEPLOY_PATH$IDLE_APPLICATION
 cp $DEPLOY_PATH$JAR_NAME $IDLE_APPLICATION_PATH
 
+echo ">"
 echo "> $IDLE_PROFILE 에서 구동중인 애플리케이션 pid 확인"
 IDLE_PID=$(pgrep -f $IDLE_APPLICATION)
 if [ -z $IDLE_PID ]; then
@@ -45,9 +48,11 @@ else
   sleep 5
 fi
 
+echo ">"
 echo "> $IDLE_PROFILE 배포"
 nohup java -jar -Duser.timezone=KST -Dspring.profiles.active=dev -Dspring.profiles.include=$IDLE_PROFILE $IDLE_APPLICATION_PATH 1> /dev/null 2>&1 &
 
+echo ">"
 echo "> $IDLE_PROFILE 10초 후 Health Check 시작"
 echo "> curl -XGET https://woowacourse.com:$IDLE_PORT/actuator/health"
 sleep 50
@@ -76,10 +81,10 @@ do
   sleep 10
 done
 
-echo "> 새 파일 실행 끝"
+echo "> 백엔드 실행 완료"
 
+echo ">"
 echo "> 기존 서버 종료"
-
 pid=`lsof -t -i :$PAST_PORT`
 for i in {1..3}; do
   if [ `lsof -t -i :$PAST_PORT` ]; then
