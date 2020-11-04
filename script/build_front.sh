@@ -1,4 +1,5 @@
 #!/bin/bash
+
 mkdir -p ./front/src/secure
 KAKAO_APP_KEY=`cat $KAKAO_APP_KEY_FILE`
 TRACKING_ID=`cat $TRACKING_ID_FILE`

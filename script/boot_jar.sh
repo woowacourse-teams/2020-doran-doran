@@ -1,3 +1,5 @@
+#!/bin/bash
+
 BASE_PATH=/home/ubuntu/dev
 DEPLOY_PATH=$BASE_PATH/jar/
 BUILD_PATH=$(ls $BASE_PATH/jar/*.jar)
@@ -35,8 +37,7 @@ cp $DEPLOY_PATH$JAR_NAME $IDLE_APPLICATION_PATH
 
 echo "> $IDLE_PROFILE 에서 구동중인 애플리케이션 pid 확인"
 IDLE_PID=$(pgrep -f $IDLE_APPLICATION)
-if [ -z $IDLE_PID ]
-then
+if [ -z $IDLE_PID ]; then
   echo "> 현재 구동중인 애플리케이션이 없으므로 종료하지 않습니다."
 else
   echo "> kill -9 $IDLE_PID"
@@ -65,8 +66,7 @@ do
     echo "> Health check: ${response}"
   fi
 
-  if [ $retry_count -eq 10 ]
-  then
+  if [ $retry_count -eq 10 ]; then
     echo "> Health check 실패"
     echo "> Nginx에 연결하지 않고 배포를 종료합니다."
     exit 1
