@@ -78,6 +78,8 @@ done
 
 echo "> 새 파일 실행 끝"
 
+echo "> 기존 서버 종료"
+
 pid=`lsof -t -i :$PAST_PORT`
 for i in {1..3}; do
   if [ `lsof -t -i :$PAST_PORT` ]; then
