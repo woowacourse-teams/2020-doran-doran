@@ -8,5 +8,11 @@ module.exports = {
         "@": path.join(__dirname, "src/"),
       },
     },
+    optimization: {
+      splitChunks: {
+        minSize: 10000,
+        maxSize: 500000,
+      },
+    },
   },
 };
