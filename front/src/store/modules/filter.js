@@ -13,9 +13,15 @@ export default {
       state.keyword = keyword;
     },
     SET_START_DATE(state, startDate) {
+      if (startDate === "") {
+        return;
+      }
       state.startDate = startDate;
     },
     SET_END_DATE(state, endDate) {
+      if (endDate === "") {
+        return;
+      }
       state.endDate = endDate;
     },
     RESET_END_DATE(state) {
