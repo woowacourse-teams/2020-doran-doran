@@ -6,9 +6,7 @@ import vuetify from "@/plugins/vuetify";
 import KakaoMap from "@/plugins/kakao-map";
 import pages from "@/plugins/doran-pages";
 import VueAnalytics from "vue-analytics";
-import LogRocket from "logrocket";
 import {
-  LOGROCKET_APP_ID,
   GOOGLE_ANALYTICS_TRACKING_ID,
 } from "@/secure/trackingid";
 
@@ -16,8 +14,6 @@ Vue.use(VueAnalytics, {
   id: GOOGLE_ANALYTICS_TRACKING_ID,
   router,
 });
-
-LogRocket.init(LOGROCKET_APP_ID);
 
 Vue.config.productionTip = false;
 Vue.use(KakaoMap);
