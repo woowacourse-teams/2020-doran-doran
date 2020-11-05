@@ -22,9 +22,9 @@ echo "> IDLE_PORT = $IDLE_PORT"
 
 echo ">"
 echo "> application.jar 교체"
-JAR_FILE=$(ls deploy/*.jar)
+JAR_FILE=$(ls *.jar)
 IDLE_APPLICATION=$IDLE_PROFILE-$JAR_FILE
-cp $JAR_FILE IDLE_APPLICATION
+cp $JAR_FILE $IDLE_APPLICATION
 
 echo ">"
 echo "> $IDLE_PORT 에서 작동 중인 애플리케이션 pid 확인"
