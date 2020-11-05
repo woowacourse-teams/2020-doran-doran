@@ -36,7 +36,7 @@ export default {
   },
   async mounted() {
     const map = await this.$kakaoMap.drawMap(this.$refs.map);
-    await this.giveCustomizedMessage();
+    await this.showCustomizedMessage();
     this.$store.commit("map/SET_MAP", map);
     await this.$kakaoMap.setCenterByCurrentLocation().catch(() => {});
     await this.changeAppBarByCenterAddress();
@@ -63,7 +63,7 @@ export default {
         })
         .catch(() => {});
     },
-    async checkMemberEnvironment() {
+    async checkOsEnvironment() {
       let isMobile = false;
       const filter = "win16|win32|win64|mac|macIntel";
       if (navigator.platform) {
@@ -73,9 +73,9 @@ export default {
         await this.$store.commit("member/SET_ENVIRONMENT_MOBILE");
       } else await this.$store.commit("member/SET_ENVIRONMENT_PC");
     },
-    async giveCustomizedMessage() {
+    async showCustomizedMessage() {
       await this.checkMemberLocationInformation();
-      await this.checkMemberEnvironment();
+      await this.checkOsEnvironment();
       const hasLocationInformation = this.$store.getters[
         "member/hasLocationInformation"
       ];
