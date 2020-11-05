@@ -18,4 +18,4 @@ else
   PREVIOUS_PORT=8888
 fi
 
-echo $PREVIOUS_PORT > previous_port.txt
+echo $PREVIOUS_PORT > script/previous_port.txt
