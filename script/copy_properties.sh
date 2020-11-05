@@ -3,6 +3,7 @@
 echo ">"
 echo "> copy_properties.sh"
 
+cp /home/ubuntu/mysecret/environment.txt ./script/environment.txt
 ENVIRONMENT=$(<script/environment.txt)
 
 cp /home/ubuntu/mysecret/$ENVIRONMENT-key/keystore.p12 ./src/main/resources/keystore.p12
