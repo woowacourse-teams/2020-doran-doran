@@ -3,7 +3,7 @@
 echo ">"
 echo "> boot_jar.sh"
 
-PREVIOUS_PORT=$(<previous_port.txt)
+PREVIOUS_PORT=$(<script/previous_port.txt)
 
 if [ $PREVIOUS_PORT == 8080 ]; then
   IDLE_PROFILE=set2
