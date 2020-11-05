@@ -23,6 +23,7 @@ elif [ ! -z $PORT_STATUS_8888 ]; then
   echo "> 8888 작동 중"
   PREVIOUS_PORT=8888
 else
+  echo "> 작동 중인 서버 없음"
   PREVIOUS_PORT=8888
 fi
 
