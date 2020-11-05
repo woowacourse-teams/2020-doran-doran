@@ -12,7 +12,7 @@ echo $TRACKING_ID > ./front/src/secure/trackingid.js
 cd ./front
 npm install
 
-PREVIOUS_PORT=$(<previous_port.txt)
+PREVIOUS_PORT=$(<script/previous_port.txt)
 echo "> 이전 서버 $PREVIOUS_PORT"
 
 if [ $PREVIOUS_PORT == 8888 ]; then
