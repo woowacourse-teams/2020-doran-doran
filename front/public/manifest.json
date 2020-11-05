@@ -1,0 +1,21 @@
+{
+  "name": "도란도란",
+  "short_name": "도란",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#3367D6",
+  "theme_color": "#3367D6",
+  "icons": [
+    {
+      "src": "/img/icons/doran-doran-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/img/icons/doran-doran-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ]
+}
