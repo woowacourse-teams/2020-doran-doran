@@ -3,11 +3,6 @@
 echo ">"
 echo "> boot_jar.sh"
 
-BASE_PATH=/home/ubuntu/dev
-DEPLOY_PATH=$BASE_PATH/jar/
-BUILD_PATH=$(ls $BASE_PATH/jar/*.jar)
-JAR_NAME=$(basename $BUILD_PATH)
-
 PREVIOUS_PORT=$(<previous_port.txt)
 
 if [ $PREVIOUS_PORT == 8080 ]; then
@@ -27,9 +22,9 @@ echo "> IDLE_PORT = $IDLE_PORT"
 
 echo ">"
 echo "> application.jar 교체"
-IDLE_APPLICATION=$IDLE_PROFILE-doran-doran-1.0.1-SNAPSHOT.jar
-IDLE_APPLICATION_PATH=$DEPLOY_PATH$IDLE_APPLICATION
-cp $DEPLOY_PATH$JAR_NAME $IDLE_APPLICATION_PATH
+JAR_FILE=$(ls *.jar)
+IDLE_APPLICATION=$IDLE_PROFILE-$JAR_FILE
+cp $JAR_FILE IDLE_APPLICATION
 
 echo ">"
 echo "> $IDLE_PORT 에서 작동 중인 애플리케이션 pid 확인"
@@ -43,11 +38,11 @@ else
 fi
 
 echo ">"
-echo "> $IDLE_PORT 배포"
-nohup java -jar -Duser.timezone=KST -Dspring.profiles.active=dev -Dspring.profiles.include=$IDLE_PROFILE $IDLE_APPLICATION_PATH 1> /dev/null 2>&1 &
+echo "> $IDLE_APPLICATION 실행"
+nohup java -jar -Duser.timezone=KST -Dspring.profiles.active=jar -Dspring.profiles.include=$IDLE_PROFILE $IDLE_APPLICATION 1> /jar/null 2>&1 &
 
 echo ">"
-echo "> $IDLE_PORT 10초 후 Health Check 시작"
+echo "> $IDLE_APPLICATION 10초 후 Health Check 시작"
 echo "> curl -XGET https://woowacourse.com:$IDLE_PORT/actuator/health"
 sleep 50
 
