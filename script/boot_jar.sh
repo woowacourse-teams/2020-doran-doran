@@ -8,7 +8,7 @@ PREVIOUS_PORT=$(<script/previous_port.txt)
 
 if [ $ENVIRONMENT == prod ]; then
   DOMAIN=dorandoran.io
-elif [ $ENVIRONMENT ]; then
+elif [ $ENVIRONMENT == dev ]; then
   DOMAIN=woowacourse.com
 fi
 
