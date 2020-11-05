@@ -38,12 +38,6 @@ public class PostService {
     }
 
     @Transactional
-    public List<PostResponse> showPosts() {
-        List<Post> posts = postRepository.findAll();
-        return PostResponse.listFrom(posts);
-    }
-
-    @Transactional
     public void deletePost(Long id, Member member) {
         Post post = postRepository.findById(id)
             .orElseThrow(PostNotFoundException::new);
