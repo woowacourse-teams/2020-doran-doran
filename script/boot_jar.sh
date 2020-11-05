@@ -30,7 +30,7 @@ echo "> IDLE_PORT = $IDLE_PORT"
 
 echo ">"
 echo "> application.jar 교체"
-BASE_PATH=/home/ubuntu/deploy
+BASE_PATH=/home/ubuntu/deploy/jar
 JAR_FILE=$(basename $(ls $BASE_PATH/*.jar))
 IDLE_APPLICATION="$IDLE_PROFILE-$JAR_FILE"
 
