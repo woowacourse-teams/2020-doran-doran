@@ -3,7 +3,15 @@
 echo ">"
 echo "> boot_jar.sh"
 
+ENVIRONMENT=$(<script/environment.txt)
 PREVIOUS_PORT=$(<script/previous_port.txt)
+
+if [ $ENVIRONMENT == prod ]; then
+  DOMAIN=dorandoran.io
+elif [ $ENVIRONMENT ]; then
+  DOMAIN=woowacourse.com
+fi
+
 
 if [ $PREVIOUS_PORT == 8080 ]; then
   IDLE_PROFILE=set2
@@ -43,16 +51,16 @@ fi
 
 echo ">"
 echo "> $IDLE_APPLICATION 실행"
-nohup java -jar -Duser.timezone=KST -Dspring.profiles.active=dev $BASE_PATH/$IDLE_APPLICATION 1> /dev/null 2>&1 &
+nohup java -jar -Duser.timezone=KST -Dspring.profiles.active=$ENVIRONMENT $BASE_PATH/$IDLE_APPLICATION 1> /dev/null 2>&1 &
 
 echo ">"
 echo "> $IDLE_APPLICATION 10초 후 Health Check 시작"
-echo "> curl -XGET https://woowacourse.com:$IDLE_PORT/actuator/health"
+echo "> curl -XGET https://$DOMAIN:$IDLE_PORT/actuator/health"
 sleep 50
 
 for retry_count in {1..10}
 do
-  response=$(curl -XGET https://woowacourse.com:$IDLE_PORT/actuator/health)
+  response=$(curl -XGET https://$DOMAIN:$IDLE_PORT/actuator/health)
   up_count=$(echo $response | grep 'UP' | wc -l)
 
   echo ">"

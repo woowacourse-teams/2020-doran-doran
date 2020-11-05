@@ -3,9 +3,17 @@
 echo ">"
 echo "> check_live_port.sh"
 
+ENVIRONMENT=$(<script/environment.txt)
+
+if [ $ENVIRONMENT == prod ]; then
+  DOMAIN=dorandoran.io
+elif [ $ENVIRONMENT ]; then
+  DOMAIN=woowacourse.com
+fi
+
 echo "> 살아있는 서버 체크"
-PORT_STATUS_8080=$(curl --connect-timeout 3 -XGET https://woowacourse.com:8080/profile)
-PORT_STATUS_8888=$(curl --connect-timeout 3 -XGET https://woowacourse.com:8888/profile)
+PORT_STATUS_8080=$(curl --connect-timeout 3 -XGET https://$DOMAIN:8080/profile)
+PORT_STATUS_8888=$(curl --connect-timeout 3 -XGET https://$DOMAIN:8888/profile)
 echo ">"
 
 if [ ! -z $PORT_STATUS_8080 ]; then
