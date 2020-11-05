@@ -79,10 +79,10 @@ export default {
       this.$store.commit("post/filter/RESET_END_DATE");
       this.filterPosts();
     },
-    inputDates(dates) {
-      this.startDate = period.format(dates[0] + " 00:00:00");
+    inputDates(startDate, endDate) {
+      this.startDate = period.format(startDate + " 00:00:00");
       this.$store.commit("post/filter/SET_START_DATE", this.startDate);
-      this.endDate = period.format(dates[1] + " 23:59:59");
+      this.endDate = period.format(endDate + " 23:59:59");
       this.$store.commit("post/filter/SET_END_DATE", this.endDate);
 
       this.filterPosts();

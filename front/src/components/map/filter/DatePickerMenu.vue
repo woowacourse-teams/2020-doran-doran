@@ -69,21 +69,26 @@ export default {
         this.dates = [singleDate, singleDate];
       }
 
-      const startDate = new Date(this.dates[0]);
-      const endDate = new Date(this.dates[1]);
+      let [startDate, endDate] = this.dates;
 
-      if (startDate < endDate.getMonth() - 1) {
+      if (startDate > endDate) {
+        this.dates = this.dates.reverse();
+        [startDate, endDate] = this.dates;
+      }
+
+      if (this.isOverAMonth(startDate, endDate)) {
         this.$store.commit("snackbar/SHOW", ERROR_MESSAGE.INVALID_OVER_A_MONTH);
         this.dates = [];
         return;
       }
 
-      if (startDate > endDate) {
-        this.dates = this.dates.reverse();
-      }
-
-      this.$emit("select", this.dates);
+      this.$emit("select", startDate, endDate);
       this.menu = false;
+    },
+    isOverAMonth(startDate, endDate) {
+      startDate = this.$moment(startDate);
+      endDate = this.$moment(endDate);
+      return startDate.isBefore(endDate.subtract(1, "months"));
     },
     close() {
       this.dates = [];
