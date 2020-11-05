@@ -22,9 +22,12 @@ echo "> IDLE_PORT = $IDLE_PORT"
 
 echo ">"
 echo "> application.jar 교체"
-BASE_PATH=deploy
+BASE_PATH=/home/ubuntu/deploy
 JAR_FILE=$(basename $(ls $BASE_PATH/*.jar))
 IDLE_APPLICATION=$IDLE_PROFILE-$JAR_FILE
+
+echo ">"
+echo "> $BASE_PATH/$IDLE_APPLICATION 생성"
 cp $BASE_PATH/$JAR_FILE $BASE_PATH/$IDLE_APPLICATION
 
 echo ">"
@@ -40,7 +43,7 @@ fi
 
 echo ">"
 echo "> $IDLE_APPLICATION 실행"
-nohup java -jar -Duser.timezone=KST -Dspring.profiles.active=dev -Dspring.profiles.include=$IDLE_PROFILE $IDLE_APPLICATION 1> /dev/null 2>&1 &
+nohup java -jar -Duser.timezone=KST -Dspring.profiles.active=prod $BASE_PATH/$IDLE_APPLICATION 1> /dev/null 2>&1 &
 
 echo ">"
 echo "> $IDLE_APPLICATION 10초 후 Health Check 시작"
