@@ -25,17 +25,11 @@ export default {
       state.member.createdAt = "";
       state.member.updatedAt = "";
     },
-    SET_LOCATION_INFORMATION_TRUE(state) {
-      state.locationInformation = true;
+    SET_LOCATION_INFORMATION(state, payload) {
+      state.locationInformation = payload;
     },
-    SET_LOCATION_INFORMATION_FALSE(state) {
-      state.locationInformation = false;
-    },
-    SET_ENVIRONMENT_PC(state) {
-      state.environment = "PC";
-    },
-    SET_ENVIRONMENT_MOBILE(state) {
-      state.environment = "MOBILE";
+    SET_ENVIRONMENT(state, environment) {
+      state.environment = environment;
     },
   },
   actions: {

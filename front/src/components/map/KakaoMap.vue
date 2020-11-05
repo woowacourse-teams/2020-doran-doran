@@ -59,7 +59,7 @@ export default {
       await this.$kakaoMap
         .getCurrentLocation()
         .then(() => {
-          this.$store.commit("member/SET_LOCATION_INFORMATION_TRUE");
+          this.$store.commit("member/SET_LOCATION_INFORMATION", true);
         })
         .catch(() => {});
     },
@@ -70,8 +70,8 @@ export default {
         isMobile = !filter.includes(navigator.platform.toLowerCase());
       }
       if (isMobile) {
-        await this.$store.commit("member/SET_ENVIRONMENT_MOBILE");
-      } else await this.$store.commit("member/SET_ENVIRONMENT_PC");
+        await this.$store.commit("member/SET_ENVIRONMENT", "MOBILE");
+      } else await this.$store.commit("member/SET_ENVIRONMENT", "PC");
     },
     async showCustomizedMessage() {
       await this.checkMemberLocationInformation();
