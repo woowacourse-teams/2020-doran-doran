@@ -40,7 +40,7 @@ fi
 
 echo ">"
 echo "> $IDLE_APPLICATION 실행"
-nohup java -jar -Duser.timezone=KST -Dspring.profiles.active=jar -Dspring.profiles.include=$IDLE_PROFILE $IDLE_APPLICATION 1> /jar/null 2>&1 &
+nohup java -jar -Duser.timezone=KST -Dspring.profiles.active=dev -Dspring.profiles.include=$IDLE_PROFILE $IDLE_APPLICATION 1> /dev/null 2>&1 &
 
 echo ">"
 echo "> $IDLE_APPLICATION 10초 후 Health Check 시작"
