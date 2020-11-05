@@ -13,7 +13,7 @@ cd ./front
 npm install
 
 PREVIOUS_PORT=$(<previous_port.txt)
-echo "> 이전 서버 $(PREVIOUS_PORT)"
+echo "> 이전 서버 $PREVIOUS_PORT"
 
 if [ $PREVIOUS_PORT == 8888 ]; then
 	npm run build -- --mode development1 --http2
