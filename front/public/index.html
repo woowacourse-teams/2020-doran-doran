@@ -7,7 +7,9 @@
       name="viewport"
       content="width=device-width,initial-scale=1.0,user-scalable=no"
     />
-    <link rel="icon" href="<%= BASE_URL %>doran-favicon.ico" sizes="180x180" />
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" sizes="192x192" href="img/icons/doran-doran-192.png">
+    <meta name="mobile-web-app-capable" content="yes">
     <title>도란도란</title>
     <link
       rel="stylesheet"
@@ -28,5 +30,22 @@
     </noscript>
     <div id="app"></div>
     <!-- built files will be auto injected -->
+    <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", function () {
+          navigator.serviceWorker.register("serviceWorkerCachePolicy.js").then(
+            function (registration) {
+              console.log(
+                "ServiceWorker registration successful with scope: ",
+                registration.scope,
+              );
+            },
+            function (err) {
+              console.log("ServiceWorker registration failed: ", err);
+            },
+          );
+        });
+      }
+    </script>
   </body>
 </html>
