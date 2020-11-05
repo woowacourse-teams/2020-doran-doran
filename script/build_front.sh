@@ -20,5 +20,5 @@ if [ $PREVIOUS_PORT == 8888 ]; then
 elif [ $PREVIOUS_PORT == 8080 ]; then
 	npm run build -- --mode development2 --http2
 else
-  echo ">오류 발생!"
+  echo "> 오류 발생!"
 fi
