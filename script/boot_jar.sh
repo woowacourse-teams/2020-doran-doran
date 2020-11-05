@@ -22,7 +22,7 @@ echo "> IDLE_PORT = $IDLE_PORT"
 
 echo ">"
 echo "> application.jar 교체"
-JAR_FILE=$(ls *.jar)
+JAR_FILE=$(ls deploy/*.jar)
 IDLE_APPLICATION=$IDLE_PROFILE-$JAR_FILE
 cp $JAR_FILE IDLE_APPLICATION
 
