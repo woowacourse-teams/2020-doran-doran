@@ -4,12 +4,6 @@ echo "**************************************************************************
 echo ">"
 echo "> build_front.sh"
 
-mkdir -p ./front/src/secure
-KAKAO_APP_KEY=`cat $KAKAO_APP_KEY_FILE`
-TRACKING_ID=`cat $TRACKING_ID_FILE`
-echo $KAKAO_APP_KEY > ./front/src/secure/appkey.js
-echo $TRACKING_ID > ./front/src/secure/trackingid.js
-
 cd ./front
 npm install
 
