@@ -4,7 +4,7 @@ echo "**************************************************************************
 echo ">"
 echo "> shut_down_previous_server.sh"
 
-PREVIOUS_PORT=$(<previous_port.txt)
+PREVIOUS_PORT=$(<script/previous_port.txt)
 PID=`lsof -t -i :$PREVIOUS_PORT`
 
 for i in {1..3}; do
