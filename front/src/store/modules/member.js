@@ -11,7 +11,6 @@ export default {
       updatedAt: "",
     },
     locationInformation: false,
-    environment: "",
   },
   mutations: {
     SET_MEMBER(state, member) {
@@ -27,9 +26,6 @@ export default {
     },
     SET_LOCATION_INFORMATION(state, payload) {
       state.locationInformation = payload;
-    },
-    SET_ENVIRONMENT(state, environment) {
-      state.environment = environment;
     },
   },
   actions: {
@@ -57,9 +53,6 @@ export default {
     },
     hasLocationInformation: (state) => {
       return state.locationInformation;
-    },
-    getEnvironment: (state) => {
-      return state.environment;
     },
   },
 };

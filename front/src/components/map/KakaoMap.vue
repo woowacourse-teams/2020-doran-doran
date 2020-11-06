@@ -63,34 +63,30 @@ export default {
         })
         .catch(() => {});
     },
-    async checkOsEnvironment() {
+    _checkIfMobile() {
       let isMobile = false;
       const filter = "win16|win32|win64|mac|macintel";
       if (navigator.platform) {
         isMobile = !filter.includes(navigator.platform.toLowerCase());
       }
-      if (isMobile) {
-        await this.$store.commit("member/SET_ENVIRONMENT", "MOBILE");
-      } else await this.$store.commit("member/SET_ENVIRONMENT", "PC");
+      return isMobile;
     },
     async showCustomizedMessage() {
       await this.checkMemberLocationInformation();
-      await this.checkOsEnvironment();
       const hasLocationInformation = this.$store.getters[
         "member/hasLocationInformation"
       ];
-      const environment = this.$store.getters["member/getEnvironment"];
+      let isMobile = this._checkIfMobile();
       if (!hasLocationInformation) {
-        if (environment === "PC") {
-          this.$store.commit(
-            "snackbar/SHOW",
-            ERROR_MESSAGE.UNIDENTIFIABLE_LOCATION_PC,
-          );
-        }
-        if (environment === "MOBILE") {
+        if (isMobile) {
           this.$store.commit(
             "snackbar/SHOW",
             ERROR_MESSAGE.UNIDENTIFIABLE_LOCATION_MOBILE,
+          );
+        } else {
+          this.$store.commit(
+            "snackbar/SHOW",
+            ERROR_MESSAGE.UNIDENTIFIABLE_LOCATION_PC,
           );
         }
       }
