@@ -111,7 +111,7 @@ export default {
   box-shadow: 0 0 40px 2px gray;
 }
 
-.app-container > div {
+.app-container > .v-application--wrap {
   min-height: 100%;
   height: 100%;
 }

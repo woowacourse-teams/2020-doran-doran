@@ -36,9 +36,7 @@
     </transition>
 
     <v-sheet v-show="isCalendarOpen" class="px-3 py-0 filter-calendar">
-      <DatePickerMenu :label="'시작 날짜'" @select="inputStartDate" />
-      <span class="mx-3 pt-2">~</span>
-      <DatePickerMenu :label="'종료 날짜'" @select="inputEndDate" />
+      <DatePickerMenu @select="inputDates" />
     </v-sheet>
   </div>
 </template>
@@ -81,28 +79,12 @@ export default {
       this.$store.commit("post/filter/RESET_END_DATE");
       this.filterPosts();
     },
-    inputStartDate(date) {
-      this.startDate = period.format(date + " 00:00:00");
+    inputDates(startDate, endDate) {
+      this.startDate = period.format(startDate + " 00:00:00");
       this.$store.commit("post/filter/SET_START_DATE", this.startDate);
-      if (this.endDate) {
-        this.handleUserInputFiltering();
-      }
-    },
-    inputEndDate(date) {
-      this.endDate = period.format(date + " 23:59:59");
+      this.endDate = period.format(endDate + " 23:59:59");
       this.$store.commit("post/filter/SET_END_DATE", this.endDate);
-      if (this.startDate) {
-        this.handleUserInputFiltering();
-      }
-    },
-    handleUserInputFiltering() {
-      if (this.startDate > this.endDate) {
-        this.$store.commit(
-          "snackbar/SHOW",
-          ERROR_MESSAGE.INVALID_USER_DATE_INPUT,
-        );
-        return;
-      }
+
       this.filterPosts();
     },
     async filterPosts() {
@@ -117,9 +99,11 @@ export default {
   watch: {
     async selected(val) {
       if (val === this.periodOptions.CUSTOM) {
-        this.$store.commit("post/filter/SET_START_DATE", this.startDate);
-        this.$store.commit("post/filter/SET_END_DATE", this.endDate);
-        await this.filterPosts();
+        if (this.startDate) {
+          this.$store.commit("post/filter/SET_START_DATE", this.startDate);
+          this.$store.commit("post/filter/SET_END_DATE", this.endDate);
+          await this.filterPosts();
+        }
         this.openCalendar();
         return;
       }
@@ -165,11 +149,10 @@ export default {
   left: 45px;
   z-index: 1;
   max-width: 60%;
-  padding-top: 5px;
-  padding-left: 10px;
   border-radius: 24px;
   box-shadow: 1px 1px 8px silver;
   background-color: white;
+  min-width: 190px;
 }
 
 .slide-right-enter-active {

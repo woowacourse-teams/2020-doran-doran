@@ -78,19 +78,6 @@ class PostServiceTest {
         assertThat(postResponse.getContent()).isEqualTo(persistPost.getContent());
     }
 
-    @DisplayName("전체 글을 조회한다.")
-    @Test
-    void showPostsTest() {
-        Post post = dummyPost();
-
-        Post persistPost = postRepository.save(post);
-
-        List<PostResponse> postResponses = postService.showPosts();
-
-        assertThat(postResponses).hasSize(1);
-        assertThat(postResponses.get(0).getContent()).isEqualTo(persistPost.getContent());
-    }
-
     @DisplayName("글을 삭제한다.")
     @Test
     void deletePostTest() {
