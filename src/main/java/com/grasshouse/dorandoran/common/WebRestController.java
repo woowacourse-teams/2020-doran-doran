@@ -11,8 +11,8 @@ public class WebRestController {
 
     private final Environment env;
 
-    @GetMapping("/profile")
-    public String getProfile() {
+    @GetMapping("/port")
+    public String getPort() {
         return env.getProperty("local.server.port");
     }
 }

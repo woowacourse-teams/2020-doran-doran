@@ -15,8 +15,6 @@ class WebRestControllerTest {
 
         WebRestController controller = new WebRestController(env);
 
-        String profile = controller.getProfile();
-
-        assertThat(profile).isEqualTo(port);
+        assertThat(controller.getPort()).isEqualTo(port);
     }
 }
