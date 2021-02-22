@@ -38,7 +38,7 @@
       </div>
       <CommentList :comments="post.comments" @load-post="loadPost" />
       <VSpacer class="bottom-spacer" />
-      <CommentInput :post-id="post.id" />
+      <CommentInput v-if="isLocationIdentifiable" :post-id="post.id" />
       <PostLocationModal
         v-if="isMapModalVisible"
         :location="post.location"
@@ -110,6 +110,9 @@ export default {
     },
     authorAddress() {
       return Object.values(this.post.authorAddress).join(" ");
+    },
+    isLocationIdentifiable() {
+      return this.$store.getters["member/hasLocationInformation"];
     },
   },
   async created() {

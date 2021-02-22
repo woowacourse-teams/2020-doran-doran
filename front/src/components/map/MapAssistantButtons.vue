@@ -18,6 +18,9 @@ export default {
     async setCenterByCurrentLocation() {
       await this.$kakaoMap
         .setCenterByCurrentLocation()
+        .then(() => {
+          this.$store.commit("member/SET_LOCATION_INFORMATION", true);
+        })
         .catch(() =>
           this.$store.commit(
             "snackbar/SHOW",

@@ -10,6 +10,7 @@ export default {
       createdAt: "",
       updatedAt: "",
     },
+    locationInformation: false,
   },
   mutations: {
     SET_MEMBER(state, member) {
@@ -22,6 +23,9 @@ export default {
       state.member.picture = "";
       state.member.createdAt = "";
       state.member.updatedAt = "";
+    },
+    SET_LOCATION_INFORMATION(state, payload) {
+      state.locationInformation = payload;
     },
   },
   actions: {
@@ -46,6 +50,9 @@ export default {
         state.member.id !== 0 &&
         state.member.createdAt === state.member.updatedAt
       );
+    },
+    hasLocationInformation: (state) => {
+      return state.locationInformation;
     },
   },
 };

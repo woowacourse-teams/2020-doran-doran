@@ -36,15 +36,9 @@ export default {
   },
   async mounted() {
     const map = await this.$kakaoMap.drawMap(this.$refs.map);
+    await this.showCustomizedMessage();
     this.$store.commit("map/SET_MAP", map);
-    await this.$kakaoMap
-      .setCenterByCurrentLocation()
-      .catch(() =>
-        this.$store.commit(
-          "snackbar/SHOW",
-          ERROR_MESSAGE.UNIDENTIFIABLE_LOCATION,
-        ),
-      );
+    await this.$kakaoMap.setCenterByCurrentLocation().catch(() => {});
     await this.changeAppBarByCenterAddress();
     await this.$store.dispatch("post/loadPosts");
     this.$kakaoMap.addEventToMap(
@@ -60,6 +54,42 @@ export default {
       const centerAddress = await this.$kakaoMap.getAddress(centerLocation);
       const address = Object.values(centerAddress).join(" ");
       this.$store.commit("appBar/CHANGE_ADDRESS", address);
+    },
+    async checkMemberLocationInformation() {
+      await this.$kakaoMap
+        .getCurrentLocation()
+        .then(() => {
+          this.$store.commit("member/SET_LOCATION_INFORMATION", true);
+        })
+        .catch(() => {});
+    },
+    _checkIfMobile() {
+      let isMobile = false;
+      const filter = "win16|win32|win64|mac|macintel";
+      if (navigator.platform) {
+        isMobile = !filter.includes(navigator.platform.toLowerCase());
+      }
+      return isMobile;
+    },
+    async showCustomizedMessage() {
+      await this.checkMemberLocationInformation();
+      const hasLocationInformation = this.$store.getters[
+        "member/hasLocationInformation"
+      ];
+      let isMobile = this._checkIfMobile();
+      if (!hasLocationInformation) {
+        if (isMobile) {
+          this.$store.commit(
+            "snackbar/SHOW",
+            ERROR_MESSAGE.UNIDENTIFIABLE_LOCATION_MOBILE,
+          );
+        } else {
+          this.$store.commit(
+            "snackbar/SHOW",
+            ERROR_MESSAGE.UNIDENTIFIABLE_LOCATION_PC,
+          );
+        }
+      }
     },
   },
   watch: {
